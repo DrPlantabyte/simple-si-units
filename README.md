@@ -15,7 +15,7 @@ This Rust library provides compiler-check types for the standard set of SI units
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
 ## Roadmap
-The version of this library will be incremented to reflect progress throught he various milestones. The goal is to read version 1.0 (API stable) as quickly as practical.
+The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
 
 * **V0.1.0** - Finish README and claim [crates.io](https://crates.io/) namespace
 * **V0.2.0** - Scope declaration
