@@ -69,7 +69,7 @@ impl<MT> Velocity for GVelocity<MT> {
 
 
 impl<NT, TT> Div<TT> for GLength<NT>
-where TT: Time<NumType=NT>, NT: Div<NT> + std::ops::Div<Output = NT>
+where TT: Time<NumType=NT>, NT: Div<NT> + Div<Output = NT>
 {
 	type Output = GVelocity<NT>;
 	fn div(self, rhs: TT) -> Self::Output {

@@ -1,5 +1,6 @@
 # simple-si-units
-This Rust library provides compiler-check types for the standard set of SI units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
+This Rust library provides compiler-checked types for the standard set of SI 
+units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
 
 ## What's included?
 * Official standard SI Units
@@ -13,6 +14,32 @@ This Rust library provides compiler-check types for the standard set of SI units
 * Not providing an exhaustive list of all possible types (but you can use thie library to implement them yourself)
 * Not supporting unusual number types (eg Big-Decimal)
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
+
+## How it works
+For each type of unit (eg Length), Simple SI Units provides a universal 
+trait type and a generic struct which implements common type conversion. For 
+example, here's how you could define a function that calculates the gravity 
+at the surface of a planet based on is size and mass:
+```rust
+todo!();
+```
+
+## Examples
+### Simulate a ball thrown from a slingshot
+```rust
+todo!();
+```
+
+### Represent the solar system and calculate orbital velocities
+```rust
+todo!();
+```
+
+### Calculate electrical current through a circuit
+```rust
+todo!();
+```
+
 
 ## Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
