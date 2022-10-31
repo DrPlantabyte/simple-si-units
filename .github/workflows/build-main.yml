@@ -1,4 +1,4 @@
-name: Rust
+name: Build
 
 on:
   push:
@@ -17,8 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
+      working-directory: ./simple-si-units-core
+      run: cargo build --verbose
+    - name: Build
+      working-directory: ./simple-si-units-macros
+      run: cargo build --verbose
+    - name: Build
       working-directory: ./simple-si-units
       run: cargo build --verbose
-    - name: Run tests
-      working-directory: ./simple-si-units
-      run: cargo test --verbose
