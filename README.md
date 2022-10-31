@@ -109,6 +109,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Magnetic Flux (V.s, aka Wb)
 * Magnetic Flux Density (Wb/m^2, aka T)
 * Catalytic Activity (mol/s)
+* Concentration (mol/m^3)
 * Luminous Flux (cd.sr, aka lm)
 * Illuminance (lm/m^2, aka lux)
 * Radioactivity (1/s, aka Bq)
