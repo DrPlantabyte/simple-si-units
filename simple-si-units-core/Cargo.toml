@@ -1,7 +1,7 @@
 [package]
 name = "simple-si-units-core"
 authors = ["Christopher Collin Hall"]
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 license = "MPL-2.0"
 description = "This is the shared dependencies for crate simple-si-units"
