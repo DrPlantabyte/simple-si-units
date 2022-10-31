@@ -86,7 +86,7 @@ impl LCGRand {
 }
 
 fn populate_system() -> Vec<MassPoint> {
-	let prng = 
+	let prng =
 }
 
 /*
