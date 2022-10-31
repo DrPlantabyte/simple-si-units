@@ -1,0 +1,18 @@
+[package]
+name = "simple-si-units-core"
+authors = ["Christopher Collin Hall"]
+version = "0.2.0"
+edition = "2021"
+license = "MPL-2.0"
+description = "This is the shared dependencies for crate simple-si-units"
+repository = "https://github.com/DrPlantabyte/simple-si-units"
+homepage = "https://github.com/DrPlantabyte/simple-si-units"
+readme = "README.md"
+documentation = "https://docs.rs/simple-si-units-core/"
+keywords = ["si-units", "units", "physics", "science", "measurement"]
+categories = ["science", "simulation"] # see https://crates.io/category_slugs
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# none

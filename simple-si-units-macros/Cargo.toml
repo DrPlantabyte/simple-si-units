@@ -1,0 +1,29 @@
+[package]
+name = "simple-si-units-macros"
+authors = ["Christopher Collin Hall"]
+version = "0.1.1"
+edition = "2021"
+license = "MPL-2.0"
+description = "This is the procedural macro library for crate simple-si-units"
+repository = "https://github.com/DrPlantabyte/simple-si-units"
+homepage = "https://github.com/DrPlantabyte/simple-si-units"
+readme = "README.md"
+documentation = "https://docs.rs/simple-si-units-macros/"
+keywords = ["si-units", "units", "physics", "science", "measurement"]
+categories = ["science", "simulation"] # see https://crates.io/category_slugs
+
+[lib]
+proc-macro = true
+
+
+[dependencies]
+simple-si-units-core = {path = "../simple-si-units-core"}
+# macro helpers
+syn = { version = "1.0", features = ["full", "extra-traits"] }
+quote = "1.0"
+
+
+[dev-dependencies]
+# macro debugging
+proc-macro2 = "1.0"
+macrotest = "1.0"
