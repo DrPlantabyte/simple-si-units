@@ -16,10 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build
+    - name: Build core
       working-directory: ./simple-si-units-core
       run: cargo build --verbose
-    - name: Build
+    - name: Build macros
       working-directory: ./simple-si-units-macros
       run: cargo build --verbose
     - name: Build
