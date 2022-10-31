@@ -6,3 +6,7 @@
 
 # lock file
 /Cargo.lock
+
+# IDE files
+/.idea/*
+/*.iml
