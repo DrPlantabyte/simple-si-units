@@ -1,7 +1,11 @@
 //! # Simple SI Units
 //! Work in progress...
 
-use core::ops::Div;
+pub use simple_si_units_macros::Unit;
+pub use simple_si_units_core::UnitData;
+
+
+
 
 /// Placeholder: Work in progress
 trait Length {
@@ -68,15 +72,16 @@ impl<MT> Velocity for GVelocity<MT> {
 }
 
 
-impl<NT, TT> Div<TT> for GLength<NT>
-where TT: Time<NumType=NT>, NT: Div<NT> + std::ops::Div<Output = NT>
+impl<DT, TT> std::ops::Div<TT> for GLength<DT>
+where TT: Time<NumType=DT>, DT: std::ops::Div<DT> + std::ops::Div<Output = DT>
 {
-	type Output = GVelocity<NT>;
+	type Output = GVelocity<DT>;
 	fn div(self, rhs: TT) -> Self::Output {
-		let y: GVelocity<NT> = GVelocity{mps: self.meters() / rhs.seconds()};
+		let y: GVelocity<DT> = GVelocity{mps: self.meters() / rhs.seconds()};
 		return y;
 	}
 }
+
 
 /// Unit tests
 #[cfg(test)]
@@ -90,5 +95,8 @@ mod tests {
 		let t = GTime{s: 2.0f64};
 		let v = d / t;
 		assert_eq!(v, GVelocity{mps: 2.5f64});
+		let a = 1;
+		let b = 2;
+		let c = &a + &a;
 	}
 }
