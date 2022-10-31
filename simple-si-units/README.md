@@ -1,4 +1,6 @@
 # simple-si-units
+![GitHub Workflow Build Status](https://github.com/DrPlantabyte/simple-si-units/actions/workflows/build-and-test.yml/badge.svg)
+
 This Rust library provides compiler-checked types for the standard set of SI 
 units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
 
@@ -10,18 +12,12 @@ units, as specified by the US [National Institute of Standards and Technology](h
 * Units are templated so that you can choose whether to use `f32` or `f64` or other number-like type as your concrete number type.
 * Optional, limited integration with [uom](https://crates.io/crates/uom)
 
-## What's NOT included?
-* Not supporting dimensional analysis
-* Not providing an exhaustive list of all possible types (but you can use this library to implement them yourself)
-* Not supporting unusual number types (eg Big-Decimal)
-* Not aiming for full integration with [uom](https://crates.io/crates/uom)
-
-## Units 
-This crate provides types for the following units. Other kinds of
+### Units
+This crate provides types for the following units. Other kinds of 
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 #### Base SI units (and example unit of measure):
-* Distance (meters)
+* Length (meters)
 * Mass (kilogram)
 * Time (seconds)
 * Temperature (kelvin)
@@ -40,8 +36,8 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Force (kg.m/s^2, aka N)
 * Pressure (N/m^2, aka Pa)
 * Energy (kg.m^2/s^2, aka J)
-* Charge (A.s, aka C)
-* Power (J/s, aka W)
+* Coulomb (A.s, aka C)
+* Watt (J/s, aka W)
 * Voltage (W/A, aka V)
 * Resistance (V/A, aka Ohm)
 * Conductance (1/ohm, aka S)
@@ -56,6 +52,12 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Radioactivity (1/s, aka Bq)
 * Absorbed Dose (J/kg, aka Gy)
 * Dose Equivalent (J/kg, aka Sv)
+
+## What's NOT included?
+* Not supporting dimensional analysis
+* Not providing an exhaustive list of all possible types (but you can use this library to implement them yourself)
+* Not supporting unusual number types (eg Big-Decimal)
+* Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
 ## Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
