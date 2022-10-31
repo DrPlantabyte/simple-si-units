@@ -16,10 +16,10 @@ categories = ["science", "simulation"] # see https://crates.io/category_slugs
 
 [dependencies]
 # required
-#simple-si-units-macros = {path = "../simple-si-units-macros"}
-#simple-si-units-core = {path = "../simple-si-units-core"}
-simple-si-units-macros = "0.2"
-simple-si-units-core = "0.2"
+simple-si-units-macros = {path = "../simple-si-units-macros"}
+simple-si-units-core = {path = "../simple-si-units-core"}
+#simple-si-units-macros = "0.2"
+#simple-si-units-core = "0.2"
 # optional
 serde = { version = "1.0", optional = true, features = ["derive"] }
 
