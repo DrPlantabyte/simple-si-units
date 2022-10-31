@@ -1,5 +1,5 @@
 # simple-si-units
-![GitHub Workflow Build Status](https://github.com/DrPlantabyte/simple-si-units/actions/workflows/build-and-test.yml/badge.svg)
+![GitHub Workflow Build Status](https://github.com/DrPlantabyte/simple-si-units/actions/workflows/build-n-test.yml/badge.svg)
 
 This Rust library provides compiler-checked types for the standard set of SI 
 units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
