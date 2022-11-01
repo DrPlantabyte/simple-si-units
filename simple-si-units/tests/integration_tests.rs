@@ -86,7 +86,13 @@ impl LCGRand {
 }
 
 fn populate_system() -> Vec<MassPoint> {
-	let prng =
+	let prng = LCGRand{seed: 1234876};
+	let mut system: Vec<MassPoint>::new();
+	for _ in 0..12 {
+		let p = MassPoint{
+			mass: Mass
+		}
+	}
 }
 
 /*
