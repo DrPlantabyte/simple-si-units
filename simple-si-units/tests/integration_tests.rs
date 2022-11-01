@@ -28,10 +28,23 @@ fn weighted_sum<T: UnitData>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f
 struct Mass<T: UnitData>{
 	pub kg: T
 }
+impl<T> Mass<T> where T: UnitData {
+	const EARTH_MASS_KG: T = T::from(5.972e24);
+	fn from_earth_mass(earth_mass: T) -> Self {
+		Mass{kg: Self::EARTH_MASS_KG * earth_mass}
+	}
+}
 
 #[derive(Unit, Debug, Copy, Clone)]
 struct Distance<T: UnitData>{
 	pub meters: T
+}
+
+impl<T> Distance<T> where T: UnitData {
+	const AU_M: T = T::from(1.495979e11);
+	fn from_au(au: T) -> Self{
+		Distance{meters: Self::AU_M * au}
+	}
 }
 
 #[derive(Unit, Debug, Copy, Clone)]
@@ -68,9 +81,9 @@ impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: UnitData {
 #[derive(Debug, Clone)]
 struct MassPoint {
 	mass: Mass<f64>,
-	pos: [Distance<f64>; 3],
-	vel: [Velocity<f64>; 3],
-	accel: [Acceleration<f64>; 3],
+	pos: [Distance<f64>; 2],
+	vel: [Velocity<f64>; 2],
+	accel: [Acceleration<f64>; 2],
 }
 
 const G: f64 = 6.67408e-1; // m3 kg-1 s-2
@@ -81,18 +94,23 @@ struct LCGRand {
 impl LCGRand {
 	fn rand_f64(mut self) -> f64 {
 		self.seed = (self.seed * 0x5DEECE66Du64 + 0xBu64) & 0xFFFFFFFFFFFFu64;
-		return ((self.state & 0xFFFFFFFFu64) as f64 / 0xFFFFFFFFu64 as f64) * 2.0 - 1.;
+		return (self.seed & 0xFFFFFFFFu64) as f64 / 0xFFFFFFFFu64 as f64;
 	}
 }
 
 fn populate_system() -> Vec<MassPoint> {
 	let prng = LCGRand{seed: 1234876};
-	let mut system: Vec<MassPoint>::new();
+	let mut system: Vec<MassPoint> = Vec::new();
 	for _ in 0..12 {
-		let p = MassPoint{
-			mass: Mass
-		}
+		system.push(MassPoint{
+			mass: Mass::from_earth_mass(prng.rand_f64() * 10.),
+			pos: [Distance::from_au(prng.rand_f64() * 20. - 10.),
+				Distance::from_au(prng.rand_f64() * 20. - 10.)],
+			vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
+			accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
+		});
 	}
+	return system;
 }
 
 /*
@@ -119,4 +137,9 @@ pub fn test_macro_reexport() {
 	let b2 = Bananas{count: 1};
 	println!("b1 - b2 = {:?}", b1 - b2);
 	println!("some_math(2.3, 1.0) = {:?}", some_math(2.3, 1.0));
+}
+#[test]
+pub fn placeholder_test() {
+	//  placeholder to ensure we fail the testing phase until tests are done
+	assert_eq!(1, 2)
 }
