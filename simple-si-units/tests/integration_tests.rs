@@ -41,8 +41,12 @@ struct Mass<T: UnitData>{
 }
 impl<T> Mass<T> where T: UnitData+From<f64> {
 	fn from_earth_mass(earth_mass: T) -> Self {
-		let EARTH_MASS_KG: T = T::from(5.972e24f64);
-		Mass{kg: EARTH_MASS_KG * earth_mass}
+		let earth_mass_kg: T = T::from(5.972e24f64);
+		Mass{kg: earth_mass_kg * earth_mass}
+	}
+	fn from_solar_mass(sun_mass: T) -> Self {
+		let sun_mass_kg: T = T::from(1.989e30f64);
+		Mass{kg: sun_mass_kg * sun_mass}
 	}
 }
 
@@ -53,8 +57,8 @@ struct Distance<T: UnitData>{
 
 impl<T> Distance<T> where T: UnitData+From<f64> {
 	fn from_au(au: T) -> Self{
-		let AU_M = T::from(1.495979e11f64);
-		Distance{meters: AU_M * au}
+		let au_m = T::from(1.495979e11f64);
+		Distance{meters: au_m * au}
 	}
 }
 // impl Distance<f32>  {
@@ -67,6 +71,12 @@ impl<T> Distance<T> where T: UnitData+From<f64> {
 #[derive(Unit, Debug, Copy, Clone)]
 struct Time<T: UnitData>{
 	pub seconds: T
+}
+impl<T> Time<T> where T: UnitData+From<f64> {
+	fn from_days(d: T) -> Self{
+		let day_s = T::from(86400f64);
+		Time{seconds: day_s * d}
+	}
 }
 
 #[derive(Unit, Debug, Copy, Clone)]
@@ -103,7 +113,6 @@ struct MassPoint {
 	accel: [Acceleration<f64>; 2],
 }
 
-const G: f64 = 6.67408e-1; // m3 kg-1 s-2
 
 struct LCGRand {
 	seed: u64
@@ -128,6 +137,12 @@ fn populate_system() -> Vec<MassPoint> {
 	println!("{:?}", _unused4.type_id());
 	//
 	let mut system: Vec<MassPoint> = Vec::new();
+	system.push(MassPoint{
+		mass: Mass::from_solar_mass(prng.rand_f64() + 0.5),
+		pos: [Distance{meters: 0.}, Distance{meters: 0.}],
+		vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
+		accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
+	});
 	for _ in 0..12 {
 		system.push(MassPoint{
 			mass: Mass::from_earth_mass(prng.rand_f64() * 10.),
@@ -138,6 +153,17 @@ fn populate_system() -> Vec<MassPoint> {
 		});
 	}
 	return system;
+}
+#[test]
+pub fn test_gravity_sim() {
+
+	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
+	let timestep = Time::from_days(1.);
+	let num_iters = 100;
+	let system = populate_system();
+	for _ in num_iters {
+		
+	}
 }
 
 /*
