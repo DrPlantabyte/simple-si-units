@@ -1,5 +1,4 @@
-use std::any::Any;
-use simple_si_units::{Unit, UnitData};
+use simple_si_units::{UnitStruct, NumLike};
 
 /*
 How it will work:
@@ -12,34 +11,34 @@ will need to use the num crate or implement their own wrapper type that implemen
 From<f64>
 */
 
-#[derive(Unit, Debug, Copy, Clone)]
+#[derive(UnitStruct, Debug, Copy, Clone)]
 struct Bananas<DT>{
 	pub count: DT
 }
 
 /// misc experimenting
-fn some_math<DT: simple_si_units_core::UnitData>(a: DT, b: DT) -> DT {
+fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 	return a + b;
 }
 
 
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct HyperVelocity<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct HyperVelocity<T: NumLike>{
 	square_meters_per_second: T
 }
 
-fn weighted_sum<T: UnitData>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:UnitData + From<f64>
+fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
+	T:NumLike + From<f64>
 {
 	return weight*a + (1.-weight)*b;
 }
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct Mass<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Mass<T: NumLike>{
 	pub kg: T
 }
-impl<T> Mass<T> where T: UnitData+From<f64> {
+impl<T> Mass<T> where T: NumLike+From<f64> {
 	fn from_earth_mass(earth_mass: T) -> Self {
 		let earth_mass_kg: T = T::from(5.972e24f64);
 		Mass{kg: earth_mass_kg * earth_mass}
@@ -48,14 +47,18 @@ impl<T> Mass<T> where T: UnitData+From<f64> {
 		let sun_mass_kg: T = T::from(1.989e30f64);
 		Mass{kg: sun_mass_kg * sun_mass}
 	}
+	fn from_g(g: T) -> Self {
+		let c: T = T::from(1e-3f64);
+		Mass{kg: c * g}
+	}
 }
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct Distance<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Distance<T: NumLike>{
 	pub meters: T
 }
 
-impl<T> Distance<T> where T: UnitData+From<f64> {
+impl<T> Distance<T> where T: NumLike+From<f64> {
 	fn from_au(au: T) -> Self{
 		let au_m = T::from(1.495979e11f64);
 		Distance{meters: au_m * au}
@@ -68,28 +71,28 @@ impl<T> Distance<T> where T: UnitData+From<f64> {
 // 	}
 // }
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct Time<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Time<T: NumLike>{
 	pub seconds: T
 }
-impl<T> Time<T> where T: UnitData+From<f64> {
+impl<T> Time<T> where T: NumLike+From<f64> {
 	fn from_days(d: T) -> Self{
 		let day_s = T::from(86400f64);
 		Time{seconds: day_s * d}
 	}
 }
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct Velocity<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Velocity<T: NumLike>{
 	pub mps: T
 }
 
-#[derive(Unit, Debug, Copy, Clone)]
-struct Acceleration<T: UnitData>{
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Acceleration<T: NumLike>{
 	pub mps2: T
 }
 
-impl<T> std::ops::Div<Time<T>> for Distance<T> where T: UnitData {
+impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
 	type Output = Velocity<T>;
 
 	fn div(self, rhs: Time<T>) -> Self::Output {
@@ -97,7 +100,7 @@ impl<T> std::ops::Div<Time<T>> for Distance<T> where T: UnitData {
 	}
 }
 
-impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: UnitData {
+impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
 	type Output = Acceleration<T>;
 
 	fn div(self, rhs: Time<T>) -> Self::Output {
@@ -124,6 +127,36 @@ impl LCGRand {
 	}
 }
 
+struct MyFloat32 {
+	x: f32
+}
+impl MyFloat32 {
+	pub fn new(n: f32) -> Self{return Self{x: n}}
+}
+impl From<f64> for MyFloat32 {
+	fn from(n: f64) -> Self {return Self::new(n as f32)}
+}
+impl std::ops::Add<Self> for MyFloat32 {
+	type Output = Self;
+	fn add(self, rhs: Self) -> Self::Output {Self{ x: self.x + rhs.x }}
+}
+impl std::ops::Sub<Self> for MyFloat32 {
+	type Output = Self;
+	fn sub(self, rhs: Self) -> Self::Output {Self{ x: self.x - rhs.x }}
+}
+impl std::ops::Div<Self> for MyFloat32 {
+	type Output = Self;
+	fn div(self, rhs: Self) -> Self::Output {Self{ x: self.x / rhs.x}}
+}
+impl std::ops::Mul<Self> for MyFloat32 {
+	type Output = Self;
+	fn mul(self, rhs: Self) -> Self::Output {Self{ x: self.x * rhs.x }}
+}
+fn my_fn() -> Mass<MyFloat32>{
+	let m = Mass::from_g(MyFloat32::new(1100_f32));
+	return m * MyFloat32::new(0.5);
+}
+
 fn populate_system() -> Vec<MassPoint> {
 	let mut prng = LCGRand{seed: 1234876};
 	//
@@ -133,8 +166,8 @@ fn populate_system() -> Vec<MassPoint> {
 	use num_complex::Complex;
 	let _unused3 = Distance{meters: Complex::from(123.456)};
 	// let _unused4 = Mass::from_earth_mass((prng.rand_f64() * 10.) as f32);
-	let _unused4 = Mass::from_earth_mass((prng.rand_f64() * 10.) as Float32);
-	println!("{:?}", _unused4.type_id());
+	let _unused4 = Mass::from_earth_mass(MyFloat32::new(123.456f32));
+	let _unused5 = my_fn();
 	//
 	let mut system: Vec<MassPoint> = Vec::new();
 	system.push(MassPoint{
@@ -154,6 +187,9 @@ fn populate_system() -> Vec<MassPoint> {
 	}
 	return system;
 }
+
+
+
 #[test]
 pub fn test_gravity_sim() {
 
@@ -161,9 +197,10 @@ pub fn test_gravity_sim() {
 	let timestep = Time::from_days(1.);
 	let num_iters = 100;
 	let system = populate_system();
-	for _ in num_iters {
+	for _ in 0..num_iters {
 		
 	}
+	todo!()
 }
 
 /*

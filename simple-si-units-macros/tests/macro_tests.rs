@@ -6,28 +6,28 @@ pub fn expand_macros() {
 }
 
 /////
-pub struct MyUnit<DT: simple_si_units_core::UnitData> {
+pub struct MyUnit<DT: simple_si_units_core::NumLike> {
 	v: DT,
 }
-impl<DT: simple_si_units_core::UnitData> std::ops::Add<Self> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Add<Self> for MyUnit<DT> {
 	type Output = Self;
 	fn add(self, rhs: Self) -> Self::Output {
 		return Self { v: self.v + rhs.v };
 	}
 }
-impl<DT: simple_si_units_core::UnitData> std::ops::Sub<Self> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Sub<Self> for MyUnit<DT> {
 	type Output = Self;
 	fn sub(self, rhs: Self) -> Self::Output {
 		return Self { v: self.v - rhs.v };
 	}
 }
-impl<DT: simple_si_units_core::UnitData> std::ops::Div<Self> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Div<Self> for MyUnit<DT> {
 	type Output = DT;
 	fn div(self, rhs: Self) -> Self::Output {
 		return self.v / rhs.v;
 	}
 }
-impl<DT: simple_si_units_core::UnitData> std::ops::Mul<DT> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Mul<DT> for MyUnit<DT> {
 	type Output = Self;
 	fn mul(self, rhs: DT) -> Self::Output {
 		return Self { v: self.v * rhs };
@@ -35,7 +35,7 @@ impl<DT: simple_si_units_core::UnitData> std::ops::Mul<DT> for MyUnit<DT> {
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for f64
 	where
-		DT: simple_si_units_core::UnitData + From<f64>,
+		DT: simple_si_units_core::NumLike + From<f64>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -46,7 +46,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for f64
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for f32
 	where
-		DT: simple_si_units_core::UnitData + From<f32>,
+		DT: simple_si_units_core::NumLike + From<f32>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -57,7 +57,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for f32
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for u8
 	where
-		DT: simple_si_units_core::UnitData + From<u8>,
+		DT: simple_si_units_core::NumLike + From<u8>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -68,7 +68,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for u8
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for i8
 	where
-		DT: simple_si_units_core::UnitData + From<i8>,
+		DT: simple_si_units_core::NumLike + From<i8>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -79,7 +79,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for i8
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for u16
 	where
-		DT: simple_si_units_core::UnitData + From<u16>,
+		DT: simple_si_units_core::NumLike + From<u16>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -90,7 +90,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for u16
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for i16
 	where
-		DT: simple_si_units_core::UnitData + From<i16>,
+		DT: simple_si_units_core::NumLike + From<i16>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -101,7 +101,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for i16
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for u32
 	where
-		DT: simple_si_units_core::UnitData + From<u32>,
+		DT: simple_si_units_core::NumLike + From<u32>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -112,7 +112,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for u32
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for i32
 	where
-		DT: simple_si_units_core::UnitData + From<i32>,
+		DT: simple_si_units_core::NumLike + From<i32>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -123,7 +123,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for i32
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for u64
 	where
-		DT: simple_si_units_core::UnitData + From<u64>,
+		DT: simple_si_units_core::NumLike + From<u64>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {
@@ -134,7 +134,7 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for u64
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for i64
 	where
-		DT: simple_si_units_core::UnitData + From<i64>,
+		DT: simple_si_units_core::NumLike + From<i64>,
 {
 	type Output = MyUnit<DT>;
 	fn mul(self, rhs: MyUnit<DT>) -> Self::Output {

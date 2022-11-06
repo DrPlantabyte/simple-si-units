@@ -1,8 +1,8 @@
 //! # Simple SI Units
 //! Work in progress...
 
-pub use simple_si_units_macros::Unit;
-pub use simple_si_units_core::UnitData;
+pub use simple_si_units_macros::UnitStruct;
+pub use simple_si_units_core::NumLike;
 
 
 
