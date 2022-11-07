@@ -194,7 +194,7 @@ fn populate_system() -> Vec<MassPoint> {
 	return system;
 }
 
-fn calc_gravity(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
+fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
 	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
 	let mut net_accel = [Acceleration{mps2: 0f64}, Acceleration{mps2: 0f64}];
 	for mp in masses {
@@ -217,9 +217,15 @@ pub fn test_gravity_sim() {
 	for _ in 0..num_iters {
 		// set accel
 		for n in 0..system.len() {
-			let pt = &system[n].pos;
-
+			let mut pt = &system[n].pos;
+			pt.accel = calc_gravity_at(&pt.pos, &system);
 		}
+		// mod velocity
+		todo!();
+		// mod position
+		todo!();
+		// print visualization
+		todo!();
 	}
 	todo!()
 }
