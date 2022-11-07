@@ -27,18 +27,18 @@ todo!();
 
 ## Adding your own units
 Simple SI Units does not provide an exhaustive list of possible units of 
-measure. To create your own units, use the `Unit` procedural macro and 
-`UnitData` trait bundle, like this:
+measure. To create your own units, use the `UnitStruct` procedural macro and 
+`NumLike` trait bundle, like this:
 
 ```rust
-use simple_si_units::{Unit, UnitData};
-#[derive(Unit, Debug, Copy, Clone)]
-struct HyperVelocity<T: UnitData>{
+use simple_si_units::{UnitStruct, NumLike};
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct HyperVelocity<T: NumLike>{
 	square_meters_per_second: T
 }
 
-fn weighted_sum<T: UnitData>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:UnitData + From<f64>
+fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
+	T:NumLike + From<f64>
 {
 	return weight*a + (1.-weight)*b;
 }
