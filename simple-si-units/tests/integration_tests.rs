@@ -25,7 +25,7 @@ fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct HyperVelocity<T: NumLike>{
-	square_meters_per_second: T
+	m2_per_second: T
 }
 
 fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
@@ -55,30 +55,30 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct Distance<T: NumLike>{
-	pub meters: T
+	pub m: T
 }
 
 impl<T> Distance<T> where T: NumLike+From<f64> {
 	fn from_au(au: T) -> Self{
 		let au_m = T::from(1.495979e11f64);
-		Distance{meters: au_m * au}
+		Distance{m: au_m * au}
 	}
 }
-// impl Distance<f32>  {
-// 	const AU_M_f32: f32 = 1.495979e11 as f32;
-// 	fn from_au(au: f32) -> Self{
-// 		Distance{meters: Self::AU_M_f32 * au}
-// 	}
-// }
+
+
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct Area<T: NumLike>{
+	pub m2: T
+}
 
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct Time<T: NumLike>{
-	pub seconds: T
+	pub s: T
 }
 impl<T> Time<T> where T: NumLike+From<f64> {
 	fn from_days(d: T) -> Self{
 		let day_s = T::from(86400f64);
-		Time{seconds: day_s * d}
+		Time{s: day_s * d}
 	}
 }
 
@@ -92,11 +92,17 @@ struct Acceleration<T: NumLike>{
 	pub mps2: T
 }
 
+impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		Area{m2: self.m * rhs.m}
+	}
+}
 impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
 	type Output = Velocity<T>;
 
 	fn div(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.meters / rhs.seconds}
+		Velocity{mps: self.m / rhs.s}
 	}
 }
 
@@ -104,7 +110,7 @@ impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
 	type Output = Acceleration<T>;
 
 	fn div(self, rhs: Time<T>) -> Self::Output {
-		Acceleration{mps2: self.mps / rhs.seconds}
+		Acceleration{mps2: self.mps / rhs.s}
 	}
 }
 
@@ -160,11 +166,11 @@ fn my_fn() -> Mass<MyFloat32>{
 fn populate_system() -> Vec<MassPoint> {
 	let mut prng = LCGRand{seed: 1234876};
 	//
-	let _unused = Distance{meters: 11.11f32};
+	let _unused = Distance{m: 11.11f32};
 	use num_bigfloat::BigFloat;
-	let _unused2 = Distance{meters: BigFloat::from(123.456)};
+	let _unused2 = Distance{m: BigFloat::from(123.456)};
 	use num_complex::Complex;
-	let _unused3 = Distance{meters: Complex::from(123.456)};
+	let _unused3 = Distance{m: Complex::from(123.456)};
 	// let _unused4 = Mass::from_earth_mass((prng.rand_f64() * 10.) as f32);
 	let _unused4 = Mass::from_earth_mass(MyFloat32::new(123.456f32));
 	let _unused5 = my_fn();
@@ -172,7 +178,7 @@ fn populate_system() -> Vec<MassPoint> {
 	let mut system: Vec<MassPoint> = Vec::new();
 	system.push(MassPoint{
 		mass: Mass::from_solar_mass(prng.rand_f64() + 0.5),
-		pos: [Distance{meters: 0.}, Distance{meters: 0.}],
+		pos: [Distance{m: 0.}, Distance{m: 0.}],
 		vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
 		accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
 	});
@@ -188,17 +194,32 @@ fn populate_system() -> Vec<MassPoint> {
 	return system;
 }
 
+fn calc_gravity(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
+	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
+	let mut net_accel = [Acceleration{mps2: 0f64}, Acceleration{mps2: 0f64}];
+	for mp in masses {
+		for i in 0..2 {
+			let di = pos[i] - mp.pos[i];
+			let di2 = di * di;
+			net_accel[i] += Acceleration{mps2: G * mp.mass.kg / di2.m2};
+		}
+	}
+	return net_accel;
+}
 
 
 #[test]
 pub fn test_gravity_sim() {
 
-	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
 	let timestep = Time::from_days(1.);
 	let num_iters = 100;
 	let system = populate_system();
 	for _ in 0..num_iters {
-		
+		// set accel
+		for n in 0..system.len() {
+			let pt = &system[n].pos;
+
+		}
 	}
 	todo!()
 }

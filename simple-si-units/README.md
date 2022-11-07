@@ -16,8 +16,8 @@ units, as specified by the US [National Institute of Standards and Technology](h
 This crate provides types for the following units. Other kinds of 
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
-#### Base SI units (and example unit of measure):
-* Length (meters)
+#### Base SI units (and standard unit of measure):
+* Distance (meters)
 * Mass (kilogram)
 * Time (seconds)
 * Temperature (kelvin)
