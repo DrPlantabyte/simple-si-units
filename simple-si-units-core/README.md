@@ -6,7 +6,7 @@ This crate exists to support the [simple-si-units](https://crates.io/crates/simp
 
 Crate [simple-si-units-core](https://crates.io/crates/simple-si-units-core) exports the following:
 
-#### UnitData
+#### NumLike
 This is an ergonomic trait bundle that combines the following:
 * std::ops::Add
 * std::ops::Sub
@@ -17,19 +17,19 @@ This is an ergonomic trait bundle that combines the following:
 Thus you can use this trait as part of a struct or function template definition, like this:
 
 ```rust
-use simple_si_units_core::UnitData;
-pub struct MyUnit<DT: UnitData> {
+use simple_si_units_core::NumLike;
+pub struct MyUnit<DT: NumLike> {
     v: DT,
 }
 
-impl<DT: simple_si_units_core::UnitData> std::ops::Add<Self> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Add<Self> for MyUnit<DT> {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {
         return Self { v: self.v + rhs.v };
     }
 }
 
-impl<DT: simple_si_units_core::UnitData> std::ops::Sub<Self> for MyUnit<DT> {
+impl<DT: simple_si_units_core::NumLike> std::ops::Sub<Self> for MyUnit<DT> {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self::Output {
         return Self { v: self.v - rhs.v };

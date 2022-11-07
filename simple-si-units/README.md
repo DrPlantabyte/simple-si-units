@@ -55,8 +55,9 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 ## What's NOT included?
 * Not supporting dimensional analysis
-* Not providing an exhaustive list of all possible types (but you can use this library to implement them yourself)
-* Not supporting unusual number types (eg Big-Decimal)
+* Not providing an exhaustive list of all possible unit types (but you can use 
+  this library to implement them yourself)
+* Not supporting unusual number types (eg integers)
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
 ## Roadmap
@@ -75,29 +76,85 @@ The version of this library will be incremented to reflect progress through the 
 * **V1.0.0** - Done
 
 ## How it works
-For each type of unit (eg Distance), Simple SI Units provides a struct to 
-represent the unit and which implements common type conversion. For 
-example, dividing a Distance by a Time results in a Velocity:
+For each type of unit (eg Distance), Simple SI Units provides a generic struct 
+to represent the unit and which implements common type conversion. For example, 
+dividing a Distance by a Time results in a Velocity:
 ```rust
 todo!();
 ```
 
+Since these structs use generic type templates for the internal data type, you 
+can use any number-like data type with these structs, including 
+[num_complex::Complex](https://crates.io/crates/num-complex) and 
+[num_bigfloat::BigFloat](https://crates.io/crates/num-bigfloat) (see caveat 
+section below regarding primitive types other than `f64`).
+
 ## Adding your own units
 Simple SI Units does not provide an exhaustive list of possible units of 
-measure. To create your own units, use the `Unit` procedural macro and 
-`UnitData` trait bundle, like this:
+measure. To create your own units, use the `UnitStruct` procedural macro and 
+`NumLike` trait bundle (`NumLike` is just shorthand for 
+`Sized+std::ops::*<Output=Self>`, you could instead use the `Num` trait from 
+the 
+[num-traits crate](https://crates.io/crates/num-traits) if you prefer):
 
 ```rust
-use simple_si_units::{Unit, UnitData};
-#[derive(Unit, Debug, Copy, Clone)]
-struct HyperVelocity<T: UnitData>{
+use simple_si_units::{UnitStruct, NumLike};
+#[derive(UnitStruct, Debug, Copy, Clone)]
+struct HyperVelocity<T: NumLike>{
 	square_meters_per_second: T
 }
 
-fn weighted_sum<T: UnitData>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:UnitData + From<f64>
+fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
+	T:NumLike + From<f64>
 {
 	return weight*a + (1.-weight)*b;
+}
+```
+
+## Caveats
+There are a few limitations owing to the Rust compiler's lack of 
+[type specialization](https://github.com/rust-lang/rust/issues/31844) in stable 
+Rust, the most notable of which is that some functions won't work with `f32` as 
+the input type.
+
+### Primitive types other than f64 
+Many of the member functions will only work with number types
+that implement `From<f64>` (because they need to multiply by an internal 
+coefficient of type `f64`), so while you can still instantiate these structs
+with f32 and other primitive types (eg `Mass{kg: 1.1_f32}` will work), you will
+have to wrap primitive types other than f64 to use the constructor functions
+(eg `Mass::from_g(1100_f32)` will *not* work). Thus to use `f32` or other
+primitives which are not convertible from `f64`, you will need to wrap them
+with an implementation of `From<f64>`. For example:
+```rust
+struct MyFloat32 {
+    x: f32
+}
+impl MyFloat32 {
+    pub fn new(n: f32) -> Self{return Self{x: n}}
+}
+impl From<f64> for MyFloat32 {
+    fn from(n: f64) -> Self {return Self::new(n as f32)}
+}
+impl std::ops::Add<Self> for MyFloat32 {
+    type Output = Self;
+    fn add(self, rhs: Self) -> Self::Output {Self{ x: self.x + rhs.x }}
+}
+impl std::ops::Sub<Self> for MyFloat32 {
+    type Output = Self;
+    fn sub(self, rhs: Self) -> Self::Output {Self{ x: self.x - rhs.x }}
+}
+impl std::ops::Div<Self> for MyFloat32 {
+    type Output = Self;
+    fn div(self, rhs: Self) -> Self::Output {Self{ x: self.x / rhs.x}}
+}
+impl std::ops::Mul<Self> for MyFloat32 {
+    type Output = Self;
+    fn mul(self, rhs: Self) -> Self::Output {Self{ x: self.x * rhs.x }}
+}
+fn my_fn() -> Mass<MyFloat32>{
+    let m = Mass::from_g(MyFloat32::new(1100_f32));
+    return m * MyFloat32::new(0.5);
 }
 ```
 
