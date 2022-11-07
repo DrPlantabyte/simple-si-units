@@ -18,9 +18,9 @@ units, as specified by the US [National Institute of Standards and Technology](h
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
 ## How it works
-For each type of unit (eg Length), Simple SI Units provides a struct to 
+For each type of unit (eg Distance), Simple SI Units provides a struct to 
 represent the unit and which implements common type conversion. For 
-example, dividing a Length by a Time results in a Velocity:
+example, dividing a Distance by a Time results in a Velocity:
 ```rust
 todo!();
 ```
@@ -64,13 +64,14 @@ todo!();
 ## Scope
 
 ### Organization
-This package consists of 3 crates: [simple-si-units](https://crates.
-io/crates/simple-si-units), [simple-si-units-core](https://crates.
-io/crates/simple-si-units-core), and [simple-si-units-macros](https://crates.
-io/crates/simple-si-units-macros). Users only need to include [simple-si-units]
-(https://crates.
-io/crates/simple-si-units), the other two crates exist only to support the 
-procedural macro provided by this crate. 
+This package consists of 3 crates: 
+[simple-si-units](https://crates.io/crates/simple-si-units), 
+[simple-si-units-core](https://crates.io/crates/simple-si-units-core), and 
+[simple-si-units-macros](https://crates.io/crates/simple-si-units-macros). 
+Users only need to include 
+[simple-si-units](https://crates.io/crates/simple-si-units), 
+the other two crates exist only to support the procedural macro 
+provided by this crate. 
 
 Additional crates may come in the future to provided more unit types for 
 specific applications, such as chemistry and astronomy.
@@ -80,7 +81,7 @@ This crate provides types for the following units. Other kinds of
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 #### Base SI units (and example unit of measure):
-* Length (meters)
+* Distance (meters)
 * Mass (kilogram)
 * Time (seconds)
 * Temperature (kelvin)
@@ -118,13 +119,13 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 ### Operators
 The above types implement basic arithmetic operators for conversion between 
-types (eg dividing a Length by a Time yields a Velocity), and also handle 
+types (eg dividing a Distance by a Time yields a Velocity), and also handle 
 multiplication and division by standard number types (such as f64). 
 
 Each type has a single public field, named for the reference unit of measure 
-for that type (eg meters for Length), and numerous to_* and from_* methods 
+for that type (eg meters for Distance), and numerous to_* and from_* methods 
 for converting to/from basic number types with a given unit of measure (eg 
-`Length::from_km(1.72)`).
+`Distance::from_km(1.72)`).
 
 ### Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
