@@ -1,3 +1,4 @@
+use std::borrow::BorrowMut;
 use simple_si_units::{UnitStruct, NumLike};
 
 /*
@@ -201,7 +202,7 @@ fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Accelerat
 		for i in 0..2 {
 			let di = pos[i] - mp.pos[i];
 			let di2 = di * di;
-			net_accel[i] += Acceleration{mps2: G * mp.mass.kg / di2.m2};
+			net_accel[i] = net_accel[i] + Acceleration{mps2: G * mp.mass.kg / di2.m2};
 		}
 	}
 	return net_accel;
@@ -213,12 +214,13 @@ pub fn test_gravity_sim() {
 
 	let timestep = Time::from_days(1.);
 	let num_iters = 100;
-	let system = populate_system();
+	let mut system = populate_system();
 	for _ in 0..num_iters {
 		// set accel
-		for n in 0..system.len() {
-			let mut pt = &system[n].pos;
-			pt.accel = calc_gravity_at(&pt.pos, &system);
+		let count = system.len();
+		for n in 0..count {
+			let pt = &system[n].pos;
+			system[n].accel = calc_gravity_at(pt, &system);
 		}
 		// mod velocity
 		todo!();
