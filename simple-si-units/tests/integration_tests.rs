@@ -1,4 +1,4 @@
-use std::borrow::BorrowMut;
+use std::time::Duration;
 use simple_si_units::{UnitStruct, NumLike};
 
 /*
@@ -61,8 +61,12 @@ struct Distance<T: NumLike>{
 
 impl<T> Distance<T> where T: NumLike+From<f64> {
 	fn from_au(au: T) -> Self{
-		let au_m = T::from(1.495979e11f64);
-		Distance{m: au_m * au}
+		let m_per_au = T::from(1.495979e11f64);
+		Distance{m: m_per_au * au}
+	}
+	fn to_au(self) -> T{
+		let au_per_m = T::from(6.684585e-12f64);
+		return au_per_m * self.m;
 	}
 }
 
@@ -115,6 +119,19 @@ impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
 	}
 }
 
+impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Distance{m: self.mps * rhs.s}
+	}
+}
+impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Velocity{mps: self.mps2 * rhs.s}
+	}
+}
+
 #[derive(Debug, Clone)]
 struct MassPoint {
 	mass: Mass<f64>,
@@ -129,7 +146,7 @@ struct LCGRand {
 }
 impl LCGRand {
 	fn rand_f64(&mut self) -> f64 {
-		self.seed = (self.seed * 0x5DEECE66Du64 + 0xBu64) & 0xFFFFFFFFFFFFu64;
+		self.seed = (self.seed.overflowing_mul(0x5DEECE66Du64).0.overflowing_add(0xBu64).0) & 0xFFFFFFFFFFFFu64;
 		return (self.seed & 0xFFFFFFFFu64) as f64 / 0xFFFFFFFFu64 as f64;
 	}
 }
@@ -208,28 +225,50 @@ fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Accelerat
 	return net_accel;
 }
 
+fn print_system(masses: &[MassPoint]) {
+	let mut rows: Vec<Vec<char>> = vec![vec!['.'; 20]; 20];
+	for mp in masses {
+		println!("{}", mp.pos[0].to_au());
+		let textx = 10 + (mp.pos[0].to_au()) as i32;
+		let texty = 10 + (mp.pos[1].to_au()) as i32;
+		if textx > 0 && textx < 20 && texty > 0 && texty < 20 {
+			rows[(19-texty) as usize][textx as usize] = 'O';
+		}
+	}
+	for row in rows {
+		let row_str = std::string::String::from_iter(row.iter());
+		println!("{}", row_str);
+	}
+}
 
 #[test]
 pub fn test_gravity_sim() {
-
+	use std::thread;
 	let timestep = Time::from_days(1.);
 	let num_iters = 100;
 	let mut system = populate_system();
 	for _ in 0..num_iters {
 		// set accel
-		let count = system.len();
-		for n in 0..count {
+		for n in 0..system.len() {
 			let pt = &system[n].pos;
 			system[n].accel = calc_gravity_at(pt, &system);
 		}
-		// mod velocity
-		todo!();
-		// mod position
-		todo!();
+		// set velocity
+		for n in 0..system.len() {
+			for i in 0..2 {
+				system[n].vel[i] = system[n].vel[i] + system[n].accel[i] * timestep;
+			}
+		}
+		// set position
+		for n in 0..system.len() {
+			for i in 0..2 {
+				system[n].pos[i] = system[n].pos[i] + system[n].vel[i] * timestep;
+			}
+		}
 		// print visualization
-		todo!();
+		print_system(&system);
+		thread::sleep(Duration::from_millis(100));
 	}
-	todo!()
 }
 
 /*
