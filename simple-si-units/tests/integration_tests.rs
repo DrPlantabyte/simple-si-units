@@ -227,13 +227,15 @@ fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Accelerat
 
 fn print_system(masses: &[MassPoint]) {
 	let mut rows: Vec<Vec<char>> = vec![vec!['.'; 20]; 20];
+	let mut i = 0; // TODO: remove
 	for mp in masses {
-		println!("{}", mp.pos[0].to_au());
+		println!("{}: ({}, {})", i, mp.pos[0].to_au(), mp.pos[1].to_au());
 		let textx = 10 + (mp.pos[0].to_au()) as i32;
 		let texty = 10 + (mp.pos[1].to_au()) as i32;
 		if textx > 0 && textx < 20 && texty > 0 && texty < 20 {
 			rows[(19-texty) as usize][textx as usize] = 'O';
 		}
+		i += 1; // TODO: remove
 	}
 	for row in rows {
 		let row_str = std::string::String::from_iter(row.iter());
