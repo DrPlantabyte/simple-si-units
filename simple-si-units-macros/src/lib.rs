@@ -45,11 +45,21 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 				return Self{#data_name: self.#data_name + rhs.#data_name}
 			}
 		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::AddAssign for #name<#data_type> {
+			fn add_assign(&mut self, rhs: Self){
+				self.#data_name += rhs.#data_name;
+			}
+		}
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::Sub<Self> for
 		#name<#data_type> {
 			type Output = Self;
 			fn sub(self, rhs: Self) -> Self::Output {
 				return Self{#data_name: self.#data_name - rhs.#data_name}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::SubAssign for #name<#data_type> {
+			fn sub_assign(&mut self, rhs: Self){
+				self.#data_name -= rhs.#data_name;
 			}
 		}
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::Div<Self> for
@@ -59,6 +69,7 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 				return self.#data_name / rhs.#data_name;
 			}
 		}
+		// TODO: div by scalars
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::Mul<#data_type> for
 		#name<#data_type> {
 			type Output = Self;
@@ -146,7 +157,13 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 				return #name{#data_name: #data_type::from(self) * rhs.#data_name}
 			}
 		}
-
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Neg for
+		#name<#data_type> {
+			type Output = Self;
+			fn neg(self) -> Self::Output {
+				return Self{#data_name: self.#data_name.neg()}
+			}
+		}
 
 		// Mul DT by Self and Self by DT -> Self
 

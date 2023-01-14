@@ -76,6 +76,12 @@ struct Area<T: NumLike>{
 	pub m2: T
 }
 
+impl<T> Area<T> where T: NumLike+From<f64>+Into<f64> {
+	pub fn sqrt(self) -> Distance<T> {
+		return Distance{m: T::from(f64::sqrt(self.m2.into()))};
+	}
+}
+
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct Time<T: NumLike>{
 	pub s: T
@@ -164,9 +170,15 @@ impl std::ops::Add<Self> for MyFloat32 {
 	type Output = Self;
 	fn add(self, rhs: Self) -> Self::Output {Self{ x: self.x + rhs.x }}
 }
+impl std::ops::AddAssign<Self> for MyFloat32 {
+	fn add_assign(&mut self, rhs: Self){*self = Self{ x: self.x + rhs.x }}
+}
 impl std::ops::Sub<Self> for MyFloat32 {
 	type Output = Self;
 	fn sub(self, rhs: Self) -> Self::Output {Self{ x: self.x - rhs.x }}
+}
+impl std::ops::SubAssign<Self> for MyFloat32 {
+	fn sub_assign(&mut self, rhs: Self){*self = Self{ x: self.x - rhs.x }}
 }
 impl std::ops::Div<Self> for MyFloat32 {
 	type Output = Self;
@@ -175,6 +187,9 @@ impl std::ops::Div<Self> for MyFloat32 {
 impl std::ops::Mul<Self> for MyFloat32 {
 	type Output = Self;
 	fn mul(self, rhs: Self) -> Self::Output {Self{ x: self.x * rhs.x }}
+}impl std::ops::Neg for MyFloat32 {
+	type Output = Self;
+	fn neg(self) -> Self::Output {Self{ x: -self.x}}
 }
 fn my_fn() -> Mass<MyFloat32>{
 	let m = Mass::from_g(MyFloat32::new(1100_f32));
@@ -182,7 +197,7 @@ fn my_fn() -> Mass<MyFloat32>{
 }
 
 fn populate_system() -> Vec<MassPoint> {
-	let mut prng = LCGRand{seed: 1234876};
+	let mut prng = LCGRand{seed: 12348768};
 	//
 	let _unused = Distance{m: 11.11f32};
 	use num_bigfloat::BigFloat;
@@ -212,14 +227,25 @@ fn populate_system() -> Vec<MassPoint> {
 	return system;
 }
 
-fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
-	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
+fn calc_gravity_at(mass: &MassPoint, masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
+	use std::ptr;
+	const G: f64 = 6.67408e-11; // m3 kg-1 s-2
 	let mut net_accel = [Acceleration{mps2: 0f64}, Acceleration{mps2: 0f64}];
 	for mp in masses {
+		if ptr::eq(mass, mp) {
+			continue;
+		}
+		let pos = mass.pos;
+		let mut dsqr = Area{m2: 0.};
 		for i in 0..2 {
 			let di = pos[i] - mp.pos[i];
-			let di2 = di * di;
-			net_accel[i] = net_accel[i] + Acceleration{mps2: G * mp.mass.kg / di2.m2};
+			dsqr += di * di;
+		}
+		let d = dsqr.sqrt();
+		let nvec = [(pos[0] - mp.pos[0]).m / d.m, (pos[1] - mp.pos[1]).m / d.m];
+		let A = Acceleration{mps2: G * mp.mass.kg / dsqr.m2};
+		for i in 0..2 {
+			net_accel[i] = net_accel[i] + nvec[i] * A;
 		}
 	}
 	return net_accel;
@@ -227,33 +253,32 @@ fn calc_gravity_at(pos: &[Distance<f64>; 2], masses: &[MassPoint]) -> [Accelerat
 
 fn print_system(masses: &[MassPoint]) {
 	let mut rows: Vec<Vec<char>> = vec![vec!['.'; 20]; 20];
-	let mut i = 0; // TODO: remove
+	let mut i = 0;
 	for mp in masses {
-		println!("{}: ({}, {})", i, mp.pos[0].to_au(), mp.pos[1].to_au());
 		let textx = 10 + (mp.pos[0].to_au()) as i32;
 		let texty = 10 + (mp.pos[1].to_au()) as i32;
 		if textx > 0 && textx < 20 && texty > 0 && texty < 20 {
-			rows[(19-texty) as usize][textx as usize] = 'O';
+			rows[(19-texty) as usize][textx as usize] = match i { 0 => '*', _ => 'o'};
 		}
-		i += 1; // TODO: remove
+		i += 1;
 	}
 	for row in rows {
 		let row_str = std::string::String::from_iter(row.iter());
 		println!("{}", row_str);
 	}
+	println!();
 }
 
 #[test]
 pub fn test_gravity_sim() {
 	use std::thread;
-	let timestep = Time::from_days(1.);
+	let timestep = Time::from_days(10.);
 	let num_iters = 100;
 	let mut system = populate_system();
 	for _ in 0..num_iters {
 		// set accel
 		for n in 0..system.len() {
-			let pt = &system[n].pos;
-			system[n].accel = calc_gravity_at(pt, &system);
+			system[n].accel = calc_gravity_at(&system[n], &system);
 		}
 		// set velocity
 		for n in 0..system.len() {
@@ -261,6 +286,7 @@ pub fn test_gravity_sim() {
 				system[n].vel[i] = system[n].vel[i] + system[n].accel[i] * timestep;
 			}
 		}
+		print_system(&system);
 		// set position
 		for n in 0..system.len() {
 			for i in 0..2 {
