@@ -242,7 +242,7 @@ fn calc_gravity_at(mass: &MassPoint, masses: &[MassPoint]) -> [Acceleration<f64>
 			dsqr += di * di;
 		}
 		let d = dsqr.sqrt();
-		let nvec = [(pos[0] - mp.pos[0]).m / d.m, (pos[1] - mp.pos[1]).m / d.m];
+		let nvec = [(mp.pos[0] - pos[0]).m / d.m, (mp.pos[1] - pos[1]).m / d.m];
 		let A = Acceleration{mps2: G * mp.mass.kg / dsqr.m2};
 		for i in 0..2 {
 			net_accel[i] = net_accel[i] + nvec[i] * A;
