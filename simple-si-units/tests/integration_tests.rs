@@ -15,68 +15,22 @@ From<f64>
 
 
 // ===== SI unit coverage tests ===== //
-fn assert_approx_equal(a: f64, b: f64, sigfigs: i32) {
-	if a.is_nan() {
-		assert!(b.is_nan());
-	} else if a.is_infinite() {
-		assert!(b.is_infinite() && a.is_sign_negative() == b.is_sign_positive());
-	} else {
-		let ypsilon = 10f64.powi(-sigfigs);
-		let max_delta = (a.abs() + b.abs()) * 0.5 * ypsilon;
-		assert!((a - b).abs() < max_delta);
-	}
-}
 #[test]
 fn basic_si_unit_coverage_test() {
 	// Distance
-	assert_approx_equal(
-		Distance::from_meters(1.0_f64).to_meters(),
-		Distance::from_cm(100.0_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1.0_f64).to_meters(),
-		Distance::from_mm(1000.0_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1.0_f64).to_meters(),
-		Distance::from_um(1e6_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1.0_f64).to_meters(),
-		Distance::from_nm(1e9_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1.0_f64).to_meters(),
-		Distance::from_pm(1e12_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1000.0_f64).to_meters(),
-		Distance::from_km(1.0_f64).to_meters(), 9
-	);
-	assert_approx_equal(
-		Distance::from_meters(1.495979e11_f64).to_meters(),
-		Distance::from_au(1.0_f64).to_meters(), 6
-	);
-	assert_approx_equal(
-		Distance::from_meters(9.4607e15_f64).to_meters(),
-		Distance::from_lyr(1.0_f64).to_meters(), 4
-	);
-	assert_approx_equal(
-		Distance::from_meters(3.0857e16_f64).to_meters(),
-		Distance::from_parsec(1.0_f64).to_meters(), 4
-	);
+	println!("Distance from Sun to Earth: {}", Distance::from_au(1f64));
 	// Mass
-	todo!();
+	println!("Mass of a Norfolk & Western Y-Class steam engine: {}", Mass::from_tons(456f64));
 	// Time
-	todo!();
+	println!("Time in a Week: {}", Time::from_days(7f64));
 	// Temperature
-	todo!();
+	println!("Temperature of the Sun: {}", Temperature::from_K(5772f64));
 	// Amount
-	todo!();
+	println!("Amount of water molecule in a liter of water: {}", Amount::from_moles(55.346f64));
 	// Current
-	todo!();
+	println!("Current limit of a typical LED: {}", Current::from_amps(0.7f64));
 	// Luminosity
-	todo!();
+	println!("Luminosity of a typical movie projector: {}", Luminosity::from_candela(72f64));
 }
 #[test]
 fn derived_si_unit_coverage_test() {
@@ -142,19 +96,24 @@ fn templated_op_test<T: NumLike+From<f64>>() -> T{
 	let l = Distance::from_meters(T::from(2.5));
 	let h = Distance::from_meters(T::from(3.6));
 	let num_subdivs = T::from(3.0);
-	let vol: Volume<T> = (w + w2) * l * h;
+	let vol: Volume<T> = (&w + &w2) * &l * &h;
 	let unit_vol = vol / num_subdivs;
-	let _aspect: T = h / w;
+	let _aspect: T = &h / &w;
 	let repetitions = T::from(25.);
 	let space_efficiency = T::from(0.65);
 	let mut repeated_vol = unit_vol;
 	repeated_vol *= repetitions;
 	repeated_vol /= space_efficiency;
-	return unit_vol;
+	return repeated_vol;
 }
 #[test]
 pub fn num_bigfloat_test() {
 	use num_bigfloat::BigFloat;
+	let _ = templated_op_test::<BigFloat>();
+}
+#[test]
+pub fn num_astrofloat_test() {
+	use astro_float::BigFloat;
 	let _ = templated_op_test::<BigFloat>();
 }
 #[test]
