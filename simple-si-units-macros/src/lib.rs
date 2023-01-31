@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::{quote};
 use syn::*;
 
-// Test with $ rm .\tests\expand\derive_tester.expanded.rs ; cargo +nightly test -- --nocapture
+// Test with $ rm ./tests/expand/derive_tester.expanded.rs ; cargo +nightly test -- --nocapture
 
 #[proc_macro_derive(UnitStruct)]
 pub fn derive_unit(tokens: TokenStream) -> TokenStream {
@@ -39,6 +39,8 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 	let data_name = &fields[0].ident.as_ref().unwrap();
 	let data_type = &fields[0].ty;
 	let gen = quote! {
+		impl<#data_type> std::marker::Copy for #name<#data_type>
+			where #data_type: simple_si_units_core::NumLike + std::marker::Copy { }
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::Add<Self> for #name<#data_type> {
 			type Output = Self;
 			fn add(self, rhs: Self) -> Self::Output {

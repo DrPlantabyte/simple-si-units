@@ -2,7 +2,7 @@ use simple_si_units_macros::UnitStruct;
 use simple_si_units_core::NumLike;
 
 
-#[derive(UnitStruct)]
+#[derive(UnitStruct, Clone)]
 pub struct MyUnit<DT: NumLike>
 {
 	v: DT

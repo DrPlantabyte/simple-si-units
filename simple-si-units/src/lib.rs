@@ -21,12 +21,11 @@ impl<T> Display for Distance<T> where T: NumLike {
 		return write!(f, "{} m", self.m);
 	}
 }
-impl<T> Copy for Distance<T> where T: NumLike+Copy{} // <- does this work?
 impl<T> Distance<T> where T: NumLike {
-	pub fn from_meters(m: T) -> Self{
+	pub fn from_m(m: T) -> Self{
 		Distance{m}
 	}
-	pub fn to_meters(self) -> T{
+	pub fn to_m(self) -> T{
 		return self.m;
 	}
 }
@@ -76,44 +75,40 @@ mod unit_tests {
 	#[test]
 	fn distance_units() {
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_m(1.0_f64).to_m(), 9
+			Distance::from_m(1.0_f64).to_m(),
+			Distance::from_cm(100.0_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_cm(100.0_f64).to_meters(), 9
+			Distance::from_m(1.0_f64).to_m(),
+			Distance::from_mm(1000.0_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_mm(1000.0_f64).to_meters(), 9
+			Distance::from_m(1.0_f64).to_m(),
+			Distance::from_um(1e6_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_um(1e6_f64).to_meters(), 9
+			Distance::from_m(1.0_f64).to_m(),
+			Distance::from_nm(1e9_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_nm(1e9_f64).to_meters(), 9
+			Distance::from_m(1.0_f64).to_m(),
+			Distance::from_pm(1e12_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.0_f64).to_meters(),
-			Distance::from_pm(1e12_f64).to_meters(), 9
+			Distance::from_m(1000.0_f64).to_m(),
+			Distance::from_km(1.0_f64).to_m(), 9
 		);
 		assert_approx_equal(
-			Distance::from_meters(1000.0_f64).to_meters(),
-			Distance::from_km(1.0_f64).to_meters(), 9
+			Distance::from_m(1.495979e11_f64).to_m(),
+			Distance::from_au(1.0_f64).to_m(), 6
 		);
 		assert_approx_equal(
-			Distance::from_meters(1.495979e11_f64).to_meters(),
-			Distance::from_au(1.0_f64).to_meters(), 6
+			Distance::from_m(9.4607e15_f64).to_m(),
+			Distance::from_lyr(1.0_f64).to_m(), 4
 		);
 		assert_approx_equal(
-			Distance::from_meters(9.4607e15_f64).to_meters(),
-			Distance::from_lyr(1.0_f64).to_meters(), 4
-		);
-		assert_approx_equal(
-			Distance::from_meters(3.0857e16_f64).to_meters(),
-			Distance::from_parsec(1.0_f64).to_meters(), 4
+			Distance::from_m(3.0857e16_f64).to_m(),
+			Distance::from_parsec(1.0_f64).to_m(), 4
 		);
 	}
 
@@ -158,10 +153,6 @@ mod unit_tests {
 	}
 	#[test]
 	fn time_units() {
-		assert_approx_equal(
-			Time::from_s(1.0_f64).to_s(),
-			Time::from_seconds(1.0_f64).to_seconds(), 9
-		);
 		assert_approx_equal(
 			Time::from_s(1.0_f64).to_s(),
 			Time::from_ms(1000.0_f64).to_s(), 9
@@ -226,38 +217,22 @@ mod unit_tests {
 	#[test]
 	fn temperature_units() {
 		assert_approx_equal(
-			Temperature::from_kelvin(1.0_f64).to_kelvin(),
-			Temperature::from_K(1.0_f64).to_K(), 9
-		);
-		assert_approx_equal(
 			Temperature::from_K(272.15_f64).to_K(),
 			Temperature::from_C(0.0_f64).to_K(), 9
 		);
 		assert_approx_equal(
-			Temperature::from_K(272.15_f64).to_K(),
-			Temperature::from_celcius(0.0_f64).to_K(), 4
-		);
-		assert_approx_equal(
 			Temperature::from_C(0.0_f64).to_K(),
 			Temperature::from_F(32_f64).to_K(), 3
-		);
-		assert_approx_equal(
-			Temperature::from_C(0.0_f64).to_K(),
-			Temperature::from_fahrenheit(32_f64).to_K(), 3
 		);
 	}
 	#[test]
 	fn quantity_units() {
 		assert_approx_equal(
 			Quantity::from_count(6.0221415e23_f64).to_count(),
-			Quantity::from_moles(1.0_f64).to_count(), 7
-		);
-		assert_approx_equal(
-			Quantity::from_moles(1.0_f64).to_count(),
 			Quantity::from_mol(1.0_f64).to_count(), 7
 		);
 		assert_approx_equal(
-			Quantity::from_moles(1.0_f64).to_count(),
+			Quantity::from_mol(1.0_f64).to_count(),
 			Quantity::from_mmol(1000.0_f64).to_count(), 9
 		);
 		assert_approx_equal(
@@ -272,17 +247,9 @@ mod unit_tests {
 			Quantity::from_nmol(1.0_f64).to_count(),
 			Quantity::from_pmol(1000.0_f64).to_count(), 9
 		);
-		assert_approx_equal(
-			Quantity::from_count(12.0_f64).to_count(),
-			Quantity::from_dozen(1.0_f64).to_count(), 9
-		);
 	}
 	#[test]
 	fn current_units() {
-		assert_approx_equal(
-			Current::from_amps(1.0_f64).to_amps(),
-			Current::from_A(1.0_f64).to_A(), 9
-		);
 		assert_approx_equal(
 			Current::from_A(1.0_f64).to_A(),
 			Current::from_mA(1000.0_f64).to_A(), 9
@@ -314,10 +281,6 @@ mod unit_tests {
 	}
 	#[test]
 	fn luminosity_units() {
-		assert_approx_equal(
-			Luminosity::from_candela(1.0_f64).to_candela(),
-			Luminosity::from_cd(1.0_f64).to_cd(), 9
-		);
 		assert_approx_equal(
 			Luminosity::from_cd(1.0_f64).to_cd(),
 			Luminosity::from_mcd(1000.0_f64).to_cd(), 9
@@ -351,15 +314,7 @@ mod unit_tests {
 	#[test]
 	fn angle_units() {
 		assert_approx_equal(
-			Angle::from_radians(1.0_f64).to_radians(),
-			Angle::from_rad(1.0_f64).to_rad(), 9
-		);
-		assert_approx_equal(
 			Angle::from_deg(360.0_f64).to_rad(),
-			Angle::from_rad(6.283185307179586_f64).to_rad(), 9
-		);
-		assert_approx_equal(
-			Angle::from_degrees(360.0_f64).to_rad(),
 			Angle::from_rad(6.283185307179586_f64).to_rad(), 9
 		);
 	}
@@ -367,15 +322,11 @@ mod unit_tests {
 	fn solid_angle_units() {
 		assert_approx_equal(
 			SolidAngle::from_sr(1.0_f64).to_sr(),
-			SolidAngle::from_steradians(1.0_f64).to_steradians(), 9
+			SolidAngle::from_sr(1.0_f64).to_sr(), 9
 		);
 	}
 	#[test]
 	fn frequency_units() {
-		assert_approx_equal(
-			Frequency::from_hertz(1.0_f64).to_hertz(),
-			Frequency::from_Hz(1.0_f64).to_Hz(), 9
-		);
 		assert_approx_equal(
 			Frequency::from_kHz(1.0_f64).to_Hz(),
 			Frequency::from_Hz(1000.0_f64).to_Hz(), 9
@@ -395,15 +346,96 @@ mod unit_tests {
 	}
 	#[test]
 	fn area_units() {
-		todo!();
+		assert_approx_equal(
+			Area::from_m2(1.0_f64).to_m2(),
+			Area::from_cm2(10000.0_f64).to_m2(), 9
+		);
+		assert_approx_equal(
+			Area::from_cm2(1.0_f64).to_m2(),
+			Area::from_mm2(100.0_f64).to_m2(), 9
+		);
+		assert_approx_equal(
+			Area::from_mm2(1.0_f64).to_m2(),
+			Area::from_um2(1e6_f64).to_m2(), 9
+		);
+		assert_approx_equal(
+			Area::from_um2(1.0_f64).to_m2(),
+			Area::from_nm2(1e6_f64).to_m2(), 9
+		);
+		assert_approx_equal(
+			Area::from_km2(1.0_f64).to_m2(),
+			Area::from_m2(1e6_f64).to_m2(), 9
+		);
 	}
 	#[test]
 	fn volume_units() {
-		todo!();
+		assert_approx_equal(
+			Volume::from_L(1.0_f64).to_L(),
+			Volume::from_mL(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_mL(1.0_f64).to_L(),
+			Volume::from_uL(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_uL(1.0_f64).to_L(),
+			Volume::from_nL(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_nL(1.0_f64).to_L(),
+			Volume::from_pL(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_L(1.0_f64).to_L(),
+			Volume::from_cc(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_L(1.0_f64).to_L(),
+			Volume::from_cm3(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_m3(1.0_f64).to_L(),
+			Volume::from_L(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_kL(1.0_f64).to_L(),
+			Volume::from_L(1000.0_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_ML(1.0_f64).to_L(),
+			Volume::from_L(1e6_f64).to_L(), 9
+		);
+		assert_approx_equal(
+			Volume::from_GL(1.0_f64).to_L(),
+			Volume::from_L(1e9_f64).to_L(), 9
+		);
 	}
 	#[test]
 	fn velocity_units() {
-		todo!();
+		assert_approx_equal(
+			Velocity::from_mps(1.0_f64).to_mps(),
+			Velocity::from_cmps(100.0_f64).to_mps(), 9
+		);
+		assert_approx_equal(
+			Velocity::from_mps(1.0_f64).to_mps(),
+			Velocity::from_mmps(1000.0_f64).to_mps(), 9
+		);
+		assert_approx_equal(
+			Velocity::from_mps(1.0_f64).to_mps(),
+			Velocity::from_mph(3600.0_f64).to_mps(), 9
+		);
+		assert_approx_equal(
+			Velocity::from_mps(1.0_f64).to_mps(),
+			Velocity::from_mmph(1000.0_f64 * 3600.0_f64).to_mps(), 9
+		);
+		assert_approx_equal(
+			Velocity::from_kph(1.0_f64).to_mps(),
+			Velocity::from_mps(1000.0_f64 / 3600.0_f64).to_mps(), 9
+		);
+		assert_approx_equal(
+			Velocity::from_c(1.0_f64).to_mps(),
+			Velocity::from_mps(299792458_f64).to_mps(), 8
+		);
 	}
 	#[test]
 	fn acceleration_units() {

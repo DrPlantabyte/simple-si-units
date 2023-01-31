@@ -1,5 +1,6 @@
 use std::fmt::{Debug, Display, Formatter};
 use num_complex::ComplexFloat;
+use num_traits::Num;
 use simple_si_units::*;
 
 /*
@@ -135,7 +136,13 @@ pub fn placeholder_test() {
 struct Bananas<DT>{
 	pub count: DT
 }
-impl<DT> Copy for Bananas<DT> where DT: Copy {}
+// sadly, the following is not supported by the Rust compiler:
+// impl<S, D> std::convert::From<Bananas<S>> for Bananas<D>
+// 	where S: NumLike, D: NumLike + std::convert::From<S> {
+// 	fn from(value: Bananas<S>) -> Self {
+// 		Bananas{count: D::from(value.count)}
+// 	}
+// }
 fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 	return a + b;
 }
