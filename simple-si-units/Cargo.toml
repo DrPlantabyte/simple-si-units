@@ -22,6 +22,7 @@ simple-si-units-core = "0.3"
 #simple-si-units-core = { path = "../simple-si-units-core" }
 # optional
 serde = { version = "1.0", optional = true, features = ["derive"] }
+uom = { version = "0.33", optional = true, features = ["si", "std", "f64"]}
 
 [dev-dependencies]
 # test deps
@@ -30,6 +31,7 @@ num-bigfloat = "1.6"
 astro-float = "0.4"
 num-traits = "0.2"
 num = "0.4"
+uom = "0.33"
 
 [build-dependencies]
 # no build dependencies

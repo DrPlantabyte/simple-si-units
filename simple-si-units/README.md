@@ -74,7 +74,7 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.5.0** - Base SI units (distance, mass, time, temperature, amount, 
   electric current, luminosity)
 * **V0.6.0** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0** - Full coverage of all types of units
+* **V0.7.0** - Full test coverage of all types of units
 * **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0** - Full documentation coverage
 * **V1.0.0** - Done
