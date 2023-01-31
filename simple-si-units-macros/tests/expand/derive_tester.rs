@@ -7,9 +7,9 @@ pub struct MyUnit<DT: NumLike>
 {
 	v: DT
 }
-fn do_math<DT: NumLike>(a: MyUnit<DT>, b: MyUnit<DT>) -> DT{
-	let x = (a - b) / (a.clone() + b.clone());
-	return x * x;
+fn do_math<DT: NumLike>(a: MyUnit<DT>, b: MyUnit<DT>) -> DT {
+	let x = (&a - &b) / (&a + &b);
+	return x.clone() * x.clone();
 }
 
 #[test]

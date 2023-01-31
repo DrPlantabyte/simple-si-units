@@ -181,6 +181,128 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 			}
 		}
 
+		// ref operators automatically clone the referenced data for convenient ergonomics
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Add<Self> for &#name<#data_type> {
+			type Output = #name<#data_type>;
+			fn add(self, rhs: Self) -> Self::Output {
+				return Self::Output{#data_name: self.#data_name.clone() + rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Sub<Self> for
+		&#name<#data_type> {
+			type Output = #name<#data_type>;
+			fn sub(self, rhs: Self) -> Self::Output {
+				return Self::Output{#data_name: self.#data_name.clone() - rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Div<Self> for
+		&#name<#data_type> {
+			type Output = #data_type;
+			fn div(self, rhs: Self) -> Self::Output {
+				return self.#data_name.clone() / rhs.#data_name.clone();
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Div<#data_type> for
+		&#name<#data_type> {
+			type Output = #name<#data_type>;
+			fn div(self, rhs: #data_type) -> Self::Output {
+				return Self::Output{#data_name: self.#data_name.clone() / rhs}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Mul<#data_type> for
+		&#name<#data_type> {
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: #data_type) -> Self::Output {
+				return Self::Output{#data_name: self.#data_name.clone() * rhs}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 f64 where #data_type: simple_si_units_core::NumLike + From<f64>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 f32 where #data_type: simple_si_units_core::NumLike + From<f32>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 u8 where #data_type: simple_si_units_core::NumLike + From<u8>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 i8 where #data_type: simple_si_units_core::NumLike + From<i8>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 u16 where #data_type: simple_si_units_core::NumLike + From<u16>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 i16 where #data_type: simple_si_units_core::NumLike + From<i16>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 u32 where #data_type: simple_si_units_core::NumLike + From<u32>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 i32 where #data_type: simple_si_units_core::NumLike + From<i32>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 u64 where #data_type: simple_si_units_core::NumLike + From<u64>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type>
+		std::ops::Mul<&#name<#data_type>> for
+		 i64 where #data_type: simple_si_units_core::NumLike + From<i64>{
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#name<#data_type>) -> Self::Output {
+				return #name{#data_name: #data_type::from(self) * rhs.#data_name.clone()}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Neg for
+		&#name<#data_type> {
+			type Output = #name<#data_type>;
+			fn neg(self) -> Self::Output {
+				return Self::Output{#data_name: self.#data_name.clone().neg()}
+			}
+		}
 		// Mul DT by Self and Self by DT -> Self
 
         // impl #name {
