@@ -1,12 +1,17 @@
 use macrotest;
+use simple_si_units_core::NumLike;
+// expand macros with this command:
+// rm .\tests\expand\*.expanded.rs; cargo +nightly test --test macro_tests
+
 
 #[test]
 pub fn expand_macros() {
 	macrotest::expand("tests/expand/*.rs")
 }
 
-/////
-pub struct MyUnit<DT: simple_si_units_core::NumLike> {
+///// expanded output pasted here for compiler test
+#[derive(Clone)]
+pub struct MyUnit<DT: NumLike> {
 	v: DT,
 }
 impl<DT: simple_si_units_core::NumLike> std::ops::Add<Self> for MyUnit<DT> {
@@ -15,10 +20,20 @@ impl<DT: simple_si_units_core::NumLike> std::ops::Add<Self> for MyUnit<DT> {
 		return Self { v: self.v + rhs.v };
 	}
 }
+impl<DT: simple_si_units_core::NumLike> std::ops::AddAssign for MyUnit<DT> {
+	fn add_assign(&mut self, rhs: Self) {
+		self.v += rhs.v;
+	}
+}
 impl<DT: simple_si_units_core::NumLike> std::ops::Sub<Self> for MyUnit<DT> {
 	type Output = Self;
 	fn sub(self, rhs: Self) -> Self::Output {
 		return Self { v: self.v - rhs.v };
+	}
+}
+impl<DT: simple_si_units_core::NumLike> std::ops::SubAssign for MyUnit<DT> {
+	fn sub_assign(&mut self, rhs: Self) {
+		self.v -= rhs.v;
 	}
 }
 impl<DT: simple_si_units_core::NumLike> std::ops::Div<Self> for MyUnit<DT> {
@@ -27,10 +42,26 @@ impl<DT: simple_si_units_core::NumLike> std::ops::Div<Self> for MyUnit<DT> {
 		return self.v / rhs.v;
 	}
 }
+impl<DT: simple_si_units_core::NumLike> std::ops::Div<DT> for MyUnit<DT> {
+	type Output = Self;
+	fn div(self, rhs: DT) -> Self::Output {
+		return Self { v: self.v / rhs };
+	}
+}
+impl<DT: simple_si_units_core::NumLike> std::ops::DivAssign<DT> for MyUnit<DT> {
+	fn div_assign(&mut self, rhs: DT) {
+		self.v /= rhs;
+	}
+}
 impl<DT: simple_si_units_core::NumLike> std::ops::Mul<DT> for MyUnit<DT> {
 	type Output = Self;
 	fn mul(self, rhs: DT) -> Self::Output {
 		return Self { v: self.v * rhs };
+	}
+}
+impl<DT: simple_si_units_core::NumLike> std::ops::MulAssign<DT> for MyUnit<DT> {
+	fn mul_assign(&mut self, rhs: DT) {
+		self.v *= rhs;
 	}
 }
 impl<DT> std::ops::Mul<MyUnit<DT>> for f64
@@ -142,4 +173,14 @@ impl<DT> std::ops::Mul<MyUnit<DT>> for i64
 			v: DT::from(self) * rhs.v,
 		};
 	}
+}
+impl<DT: simple_si_units_core::NumLike> std::ops::Neg for MyUnit<DT> {
+	type Output = Self;
+	fn neg(self) -> Self::Output {
+		return Self { v: self.v.neg() };
+	}
+}
+fn do_math<DT: NumLike>(a: MyUnit<DT>, b: MyUnit<DT>) -> DT {
+	let x = (a.clone() - b.clone()) / (a.clone() + b.clone());
+	return x.clone() * x.clone();
 }

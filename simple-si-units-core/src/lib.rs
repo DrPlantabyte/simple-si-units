@@ -10,7 +10,7 @@ pub trait NumLike: std::ops::Add<Output=Self>
 + std::ops::Div<Output=Self>
 + std::ops::DivAssign
 + std::ops::Neg<Output=Self>
-+ Sized
++ Clone
 + Debug
 + Display
 {}
@@ -23,7 +23,7 @@ impl<T> NumLike for T where T: std::ops::Add<Output=Self>
 + std::ops::Div<Output=Self>
 + std::ops::DivAssign
 + std::ops::Neg<Output=Self>
-+ Sized
++ Clone
 + Debug
 + Display
 {}

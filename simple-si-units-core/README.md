@@ -18,6 +18,7 @@ This is an ergonomic trait bundle that combines the following:
 * std::ops::DivAssign
 * std::ops::Neg
 * Sized
+* Clone
 * Debug
 * Display
 

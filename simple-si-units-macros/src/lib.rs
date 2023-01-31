@@ -69,12 +69,28 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 				return self.#data_name / rhs.#data_name;
 			}
 		}
-		// TODO: div by scalars
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::Div<#data_type> for
+		#name<#data_type> {
+			type Output = Self;
+			fn div(self, rhs: #data_type) -> Self::Output {
+				return Self{#data_name: self.#data_name / rhs}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::DivAssign<#data_type> for #name<#data_type> {
+			fn div_assign(&mut self, rhs: #data_type){
+				self.#data_name /= rhs;
+			}
+		}
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::Mul<#data_type> for
 		#name<#data_type> {
 			type Output = Self;
 			fn mul(self, rhs: #data_type) -> Self::Output {
 				return Self{#data_name: self.#data_name * rhs}
+			}
+		}
+		impl<#data_type: simple_si_units_core::NumLike> std::ops::MulAssign<#data_type> for #name<#data_type> {
+			fn mul_assign(&mut self, rhs: #data_type){
+				self.#data_name *= rhs;
 			}
 		}
 		impl<#data_type>
