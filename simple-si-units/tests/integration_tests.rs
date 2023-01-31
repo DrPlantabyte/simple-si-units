@@ -1,5 +1,4 @@
-use std::time::Duration;
-use simple_si_units::{UnitStruct, NumLike};
+use simple_si_units::*;
 
 /*
 How it will work:
@@ -12,151 +11,63 @@ will need to use the num crate or implement their own wrapper type that implemen
 From<f64>
 */
 
+
+
+// ===== operator testing with various number types ===== //
+fn templated_op_test<T: NumLike+From<f64>>() -> T{
+	let w = Distance::from_meters(T::from(1.4));
+	let w2 = Distance::from_meters(T::from(0.4));
+	let l = Distance::from_meters(T::from(2.5));
+	let h = Distance::from_meters(T::from(3.6));
+	let num_subdivs = T::from(3.0);
+	// let vol: Volume<T> = (w + w2) * l * h; // TODO: uncomment
+	// let unit_vol = vol / num_subdivs;
+	// let _aspect: T = h / w;
+	// let repetitions = T::from(25.);
+	// let space_efficiency = T::from(0.65);
+	// let mut repeated_vol = unit_vol;
+	// repeated_vol *= repetitions;
+	// repeated_vol /= space_efficiency;
+	// return unit_vol;
+	todo!()
+}
+#[test]
+pub fn num_bigfloat_test() {
+	use num_bigfloat::BigFloat;
+	let _ = templated_op_test::<BigFloat>();
+}
+#[test]
+pub fn num_complex_test() {
+	use num_complex::Complex;
+	let _ = templated_op_test::<Complex<f64>>();
+}
+
+#[test]
+pub fn placeholder_test() {
+	//  placeholder to ensure we fail the testing phase until tests are done
+	assert_eq!(1, 2)
+}
+// ===== end of operator testing ===== //
+
+
+// ===== custom unit type test ===== //
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct Bananas<DT>{
 	pub count: DT
 }
-
-/// misc experimenting
 fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 	return a + b;
 }
-
-
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct HyperVelocity<T: NumLike>{
-	m2_per_second: T
+#[test]
+pub fn macro_reexport_test() {
+	let b1 = Bananas{count: 3};
+	let b2 = Bananas{count: 1};
+	println!("b1 - b2 = {:?}", b1 - b2);
+	println!("some_math(2.3, 1.0) = {:?}", some_math(2.3, 1.0));
 }
+// ===== end of custom unit type test ===== //
 
-fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:NumLike + From<f64>
-{
-	return weight*a + (1.-weight)*b;
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Mass<T: NumLike>{
-	pub kg: T
-}
-impl<T> Mass<T> where T: NumLike+From<f64> {
-	fn from_earth_mass(earth_mass: T) -> Self {
-		let earth_mass_kg: T = T::from(5.972e24f64);
-		Mass{kg: earth_mass_kg * earth_mass}
-	}
-	fn from_solar_mass(sun_mass: T) -> Self {
-		let sun_mass_kg: T = T::from(1.989e30f64);
-		Mass{kg: sun_mass_kg * sun_mass}
-	}
-	fn from_g(g: T) -> Self {
-		let c: T = T::from(1e-3f64);
-		Mass{kg: c * g}
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Distance<T: NumLike>{
-	pub m: T
-}
-
-impl<T> Distance<T> where T: NumLike+From<f64> {
-	fn from_au(au: T) -> Self{
-		let m_per_au = T::from(1.495979e11f64);
-		Distance{m: m_per_au * au}
-	}
-	fn to_au(self) -> T{
-		let au_per_m = T::from(6.684585e-12f64);
-		return au_per_m * self.m;
-	}
-}
-
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Area<T: NumLike>{
-	pub m2: T
-}
-
-impl<T> Area<T> where T: NumLike+From<f64>+Into<f64> {
-	pub fn sqrt(self) -> Distance<T> {
-		return Distance{m: T::from(f64::sqrt(self.m2.into()))};
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Time<T: NumLike>{
-	pub s: T
-}
-impl<T> Time<T> where T: NumLike+From<f64> {
-	fn from_days(d: T) -> Self{
-		let day_s = T::from(86400f64);
-		Time{s: day_s * d}
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Velocity<T: NumLike>{
-	pub mps: T
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Acceleration<T: NumLike>{
-	pub mps2: T
-}
-
-impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
-	type Output = Area<T>;
-	fn mul(self, rhs: Distance<T>) -> Self::Output {
-		Area{m2: self.m * rhs.m}
-	}
-}
-impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
-	type Output = Velocity<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.m / rhs.s}
-	}
-}
-
-impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
-	type Output = Acceleration<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Acceleration{mps2: self.mps / rhs.s}
-	}
-}
-
-impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
-	type Output = Distance<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Distance{m: self.mps * rhs.s}
-	}
-}
-impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
-	type Output = Velocity<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.mps2 * rhs.s}
-	}
-}
-
-#[derive(Debug, Clone)]
-struct MassPoint {
-	mass: Mass<f64>,
-	pos: [Distance<f64>; 2],
-	vel: [Velocity<f64>; 2],
-	accel: [Acceleration<f64>; 2],
-}
-
-
-struct LCGRand {
-	seed: u64
-}
-impl LCGRand {
-	fn rand_f64(&mut self) -> f64 {
-		self.seed = (self.seed.overflowing_mul(0x5DEECE66Du64).0.overflowing_add(0xBu64).0) & 0xFFFFFFFFFFFFu64;
-		return (self.seed & 0xFFFFFFFFu64) as f64 / 0xFFFFFFFFu64 as f64;
-	}
-}
-
+// ===== float32 wrapper test ===== //
 struct MyFloat32 {
 	x: f32
 }
@@ -191,141 +102,28 @@ impl std::ops::Mul<Self> for MyFloat32 {
 	type Output = Self;
 	fn neg(self) -> Self::Output {Self{ x: -self.x}}
 }
-fn my_fn() -> Mass<MyFloat32>{
-	let m = Mass::from_g(MyFloat32::new(1100_f32));
-	return m * MyFloat32::new(0.5);
-}
-
-fn populate_system() -> Vec<MassPoint> {
-	let mut prng = LCGRand{seed: 12348768};
-	//
-	let _unused = Distance{m: 11.11f32};
-	use num_bigfloat::BigFloat;
-	let _unused2 = Distance{m: BigFloat::from(123.456)};
-	use num_complex::Complex;
-	let _unused3 = Distance{m: Complex::from(123.456)};
-	// let _unused4 = Mass::from_earth_mass((prng.rand_f64() * 10.) as f32);
-	let _unused4 = Mass::from_earth_mass(MyFloat32::new(123.456f32));
-	let _unused5 = my_fn();
-	//
-	let mut system: Vec<MassPoint> = Vec::new();
-	system.push(MassPoint{
-		mass: Mass::from_solar_mass(prng.rand_f64() + 0.5),
-		pos: [Distance{m: 0.}, Distance{m: 0.}],
-		vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
-		accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
-	});
-	for _ in 0..12 {
-		system.push(MassPoint{
-			mass: Mass::from_earth_mass(prng.rand_f64() * 10.),
-			pos: [Distance::from_au(prng.rand_f64() * 20. - 10.),
-				Distance::from_au(prng.rand_f64() * 20. - 10.)],
-			vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
-			accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
-		});
-	}
-	return system;
-}
-
-fn calc_gravity_at(mass: &MassPoint, masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
-	use std::ptr;
-	const G: f64 = 6.67408e-11; // m3 kg-1 s-2
-	let mut net_accel = [Acceleration{mps2: 0f64}, Acceleration{mps2: 0f64}];
-	for mp in masses {
-		if ptr::eq(mass, mp) {
-			continue;
-		}
-		let pos = mass.pos;
-		let mut dsqr = Area{m2: 0.};
-		for i in 0..2 {
-			let di = pos[i] - mp.pos[i];
-			dsqr += di * di;
-		}
-		let d = dsqr.sqrt();
-		let nvec = [(mp.pos[0] - pos[0]).m / d.m, (mp.pos[1] - pos[1]).m / d.m];
-		let A = Acceleration{mps2: G * mp.mass.kg / dsqr.m2};
-		for i in 0..2 {
-			net_accel[i] = net_accel[i] + nvec[i] * A;
-		}
-	}
-	return net_accel;
-}
-
-fn print_system(masses: &[MassPoint]) {
-	let mut rows: Vec<Vec<char>> = vec![vec!['.'; 20]; 20];
-	let mut i = 0;
-	for mp in masses {
-		let textx = 10 + (mp.pos[0].to_au()) as i32;
-		let texty = 10 + (mp.pos[1].to_au()) as i32;
-		if textx > 0 && textx < 20 && texty > 0 && texty < 20 {
-			rows[(19-texty) as usize][textx as usize] = match i { 0 => '*', _ => 'o'};
-		}
-		i += 1;
-	}
-	for row in rows {
-		let row_str = std::string::String::from_iter(row.iter());
-		println!("{}", row_str);
-	}
-	println!();
-}
-
-#[test]
-pub fn test_gravity_sim() {
-	use std::thread;
-	let timestep = Time::from_days(10.);
-	let num_iters = 100;
-	let mut system = populate_system();
-	for _ in 0..num_iters {
-		// set accel
-		for n in 0..system.len() {
-			system[n].accel = calc_gravity_at(&system[n], &system);
-		}
-		// set velocity
-		for n in 0..system.len() {
-			for i in 0..2 {
-				system[n].vel[i] = system[n].vel[i] + system[n].accel[i] * timestep;
-			}
-		}
-		print_system(&system);
-		// set position
-		for n in 0..system.len() {
-			for i in 0..2 {
-				system[n].pos[i] = system[n].pos[i] + system[n].vel[i] * timestep;
-			}
-		}
-		// print visualization
-		print_system(&system);
-		thread::sleep(Duration::from_millis(100));
+impl std::ops::MulAssign for MyFloat32 {
+	fn mul_assign(&mut self, rhs: Self) {
+		self.x *= rhs.x;
 	}
 }
-
-/*
-// if only this worked:
-#[derive(Debug)]
-struct PowerUnit< const N: i32> {
-	pub value: f64
+impl std::ops::DivAssign for MyFloat32 {
+	fn div_assign(&mut self, rhs: Self) {
+		self.x /= rhs.x;
+	}
 }
-fn mul<const N: i32, const M: i32, const O: i32>(a: PowerUnit<N>, b: PowerUnit<M>) -> PowerUnit<O>
-where O: N+M
-{
-	let c: PowerUnit<O> = PowerUnit{
-		value: a.value * b.value,
-	};
-	return c;
-}
-
- */
-
-
-#[test]
-pub fn test_macro_reexport() {
-	let b1 = Bananas{count: 3};
-	let b2 = Bananas{count: 1};
-	println!("b1 - b2 = {:?}", b1 - b2);
-	println!("some_math(2.3, 1.0) = {:?}", some_math(2.3, 1.0));
+impl<T> Bananas<T> where T: NumLike+From<f64> {
+	fn from_bunch(b: T) -> Self{
+		let bunch_size = T::from(8f64);
+		Bananas{count: bunch_size * b}
+	}
 }
 #[test]
-pub fn placeholder_test() {
-	//  placeholder to ensure we fail the testing phase until tests are done
-	assert_eq!(1, 2)
+fn float_wrapper_test(){
+	let b = Bananas::from_bunch(MyFloat32::new(1.5f32));
+	let b2 = Bananas::from_bunch(MyFloat32::new(0.75f32));
+	let scale_factor = MyFloat32{x: 2.5};
+	let _total = (b + b2) * scale_factor;
 }
+// ===== end of float wrapper test ===== //
+

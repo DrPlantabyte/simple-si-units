@@ -6,94 +6,66 @@ pub use simple_si_units_core::NumLike;
 
 
 
-
+// TODO: implement display for to-string representation (and have pretty version with size-aware
+// unit suffixes)
 /// Placeholder: Work in progress
-trait Length {
-	type NumType;
-
-	/// Placeholder: Work in progress
-	fn meters(self) -> Self::NumType; 
+#[derive(UnitStruct, Debug, Copy, Clone)]
+pub struct Distance<T: NumLike>{
+	pub m: T
+}
+impl<T> Distance<T> where T: NumLike {
+	pub fn from_meters(m: T) -> Self{
+		Distance{m}
+	}
+	pub fn to_meters(self) -> T{
+		return self.m;
+	}
 }
 
-/// Placeholder: Work in progress
-trait Time {
-	type NumType;
-
-	/// Placeholder: Work in progress	
-	fn seconds(self) -> Self::NumType; 
-}
-
-/// Placeholder: Work in progress
-trait Velocity {
-	type NumType;
-	
-	/// Placeholder: Work in progress
-	fn meters_per_second(self) -> Self::NumType; 
-}
-
-
-/// Placeholder: Work in progress
-#[derive(Debug, Copy, Clone, PartialEq)]
-struct GLength<MT> {
-	m: MT
-}
-
-impl<MT> Length for GLength<MT> {
-	type NumType = MT;
-	fn meters(self) -> Self::NumType{
-		self.m
+impl<T> Distance<T> where T: NumLike+From<f64> {
+	pub fn from_au(au: T) -> Self{
+		let m_per_au = T::from(1.495979e11f64);
+		Distance{m: m_per_au * au}
+	}
+	pub fn to_au(self) -> T{
+		let au_per_m = T::from(6.684585e-12f64);
+		return au_per_m * self.m;
 	}
 }
 
 /// Placeholder: Work in progress
-#[derive(Debug, Copy, Clone, PartialEq)]
-struct GTime<MT> {
-	s: MT
+#[derive(UnitStruct, Debug, Copy, Clone)]
+pub struct Volume<T: NumLike>{
+	pub m3: T
 }
-
-impl<MT> Time for GTime<MT> {
-	type NumType = MT;
-	fn seconds(self) -> Self::NumType{
-		self.s
+impl<T> Volume<T> where T: NumLike {
+	pub fn from_cubic_meters(m3: T) -> Self{
+		Volume{m3: m3}
+	}
+	pub fn to_cubic_meters(self) -> T{
+		return self.m3;
 	}
 }
-
-/// Placeholder: Work in progress
-#[derive(Debug, Copy, Clone, PartialEq)]
-struct GVelocity<MT> {
-	mps: MT
-}
-
-impl<MT> Velocity for GVelocity<MT> {
-	type NumType = MT;
-	fn meters_per_second(self) -> Self::NumType{
-		self.mps
-	}
-}
-
-
-impl<DT, TT> std::ops::Div<TT> for GLength<DT>
-where TT: Time<NumType=DT>, DT: std::ops::Div<DT> + std::ops::Div<Output = DT>
-{
-	type Output = GVelocity<DT>;
-	fn div(self, rhs: TT) -> Self::Output {
-		let y: GVelocity<DT> = GVelocity{mps: self.meters() / rhs.seconds()};
-		return y;
-	}
-}
-
 
 /// Unit tests
 #[cfg(test)]
-mod tests {
+mod unit_tests {
 	use super::*;
 
 	/// Placeholder: Work in progress
 	#[test]
-	fn velocity_api() {
-		let d = GLength{m: 5.0f64};
-		let t = GTime{s: 2.0f64};
-		let v = d / t;
-		assert_eq!(v, GVelocity{mps: 2.5f64});
+	fn distance_add_subtract() {
+		todo!();
+	}
+	/// Placeholder: Work in progress
+	#[test]
+	fn distance_mul_div() {
+		todo!();
+	}
+	/// Placeholder: Work in progress
+	#[test]
+	fn distance_op_assign() {
+		// +=, -=, *=, /=
+		todo!();
 	}
 }
