@@ -9,10 +9,18 @@ Crate [simple-si-units-core](https://crates.io/crates/simple-si-units-core) expo
 #### NumLike
 This is an ergonomic trait bundle that combines the following:
 * std::ops::Add
+* std::ops::AddAssign
 * std::ops::Sub
+* std::ops::SubAssign
 * std::ops::Mul
+* std::ops::MulAssign
 * std::ops::Div
+* std::ops::DivAssign
+* std::ops::Neg
 * Sized
+* Clone
+* Debug
+* Display
 
 Thus you can use this trait as part of a struct or function template definition, like this:
 

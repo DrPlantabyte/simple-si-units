@@ -80,7 +80,7 @@ specific applications, such as chemistry and astronomy.
 This crate provides types for the following units. Other kinds of 
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
-#### Base SI units (and example unit of measure):
+#### Base SI units (and standard unit of measure):
 * Distance (meters)
 * Mass (kilogram)
 * Time (seconds)
@@ -116,6 +116,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Radioactivity (1/s, aka Bq)
 * Absorbed Dose (J/kg, aka Gy)
 * Dose Equivalent (J/kg, aka Sv)
+
 
 ### Operators
 The above types implement basic arithmetic operators for conversion between 

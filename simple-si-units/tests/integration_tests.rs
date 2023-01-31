@@ -1,4 +1,5 @@
-use simple_si_units::{UnitStruct, NumLike};
+use num_complex::ComplexFloat;
+use simple_si_units::*;
 
 /*
 How it will work:
@@ -11,122 +12,142 @@ will need to use the num crate or implement their own wrapper type that implemen
 From<f64>
 */
 
+
+
+// ===== SI unit coverage tests ===== //
+#[test]
+fn basic_si_unit_coverage_test() {
+	// Distance
+	println!("Distance from Sun to Earth: {}", Distance::from_au(1f64));
+	// Mass
+	println!("Mass of a Norfolk & Western Y-Class steam engine: {}", Mass::from_tons(456f64));
+	// Time
+	println!("Time in a Week: {}", Time::from_days(7f64));
+	// Temperature
+	println!("Temperature of the Sun: {}", Temperature::from_K(5772f64));
+	// Amount
+	println!("Amount of water molecule in a liter of water: {}", Amount::from_moles(55.346f64));
+	// Current
+	println!("Current limit of a typical LED: {}", Current::from_amps(0.7f64));
+	// Luminosity
+	println!("Luminosity of a typical movie projector: {}", Luminosity::from_candela(72f64));
+}
+#[test]
+fn derived_si_unit_coverage_test() {
+	// Angle (rad)
+	todo!();
+	// SolidAngle (sr)
+	todo!();
+	// Frequency (1/s)
+	todo!();
+	// Area (m^2)
+	todo!();
+	// Volume (m^3)
+	todo!();
+	// Velocity (m/s)
+	todo!();
+	// Acceleration (m/s^2)
+	todo!();
+	// Force (kg.m/s^2, aka N)
+	todo!();
+	// Pressure (N/m^2, aka Pa)
+	todo!();
+	// Energy (kg.m^2/s^2, aka J)
+	todo!();
+	// Coulomb (A.s, aka C)
+	todo!();
+	// Watt (J/s, aka W)
+	todo!();
+	// Voltage (W/A, aka V)
+	todo!();
+	// Resistance (V/A, aka Ohm)
+	todo!();
+	// Conductance (1/ohm, aka S)
+	todo!();
+	// Capacitance (C/V)
+	todo!();
+	// Inductance (Wb/A, aka H)
+	todo!();
+	// Magnetic Flux (V.s, aka Wb)
+	todo!();
+	// Magnetic Flux Density (Wb/m^2, aka T)
+	todo!();
+	// Catalytic Activity (mol/s)
+	todo!();
+	// Concentration (mol/m^3)
+	todo!();
+	// Luminous Flux (cd.sr, aka lm)
+	todo!();
+	// Illuminance (lm/m^2, aka lux)
+	todo!();
+	// Radioactivity (1/s, aka Bq)
+	todo!();
+	// Absorbed Dose (J/kg, aka Gy)
+	todo!();
+	// Dose Equivalent (J/kg, aka Sv)
+	todo!();
+}
+// ===== end of SI unit coverage tests ===== //
+
+// ===== operator testing with various number types ===== //
+fn templated_op_test<T: NumLike+From<f64>>() -> T{
+	let w = Distance::from_meters(T::from(1.4));
+	let w2 = Distance::from_meters(T::from(0.4));
+	let l = Distance::from_meters(T::from(2.5));
+	let h = Distance::from_meters(T::from(3.6));
+	let num_subdivs = T::from(3.0);
+	let vol: Volume<T> = (&w + &w2) * &l * &h;
+	let unit_vol = vol / num_subdivs;
+	let _aspect: T = &h / &w;
+	let repetitions = T::from(25.);
+	let space_efficiency = T::from(0.65);
+	let mut repeated_vol = unit_vol;
+	repeated_vol *= repetitions;
+	repeated_vol /= space_efficiency;
+	return repeated_vol;
+}
+#[test]
+pub fn num_bigfloat_test() {
+	use num_bigfloat::BigFloat;
+	let _ = templated_op_test::<BigFloat>();
+}
+#[test]
+pub fn num_astrofloat_test() {
+	use astro_float::BigFloat;
+	let _ = templated_op_test::<BigFloat>();
+}
+#[test]
+pub fn num_complex_test() {
+	use num_complex::Complex;
+	let _ = templated_op_test::<Complex<f64>>();
+}
+
+#[test]
+pub fn placeholder_test() {
+	//  placeholder to ensure we fail the testing phase until tests are done
+	assert_eq!(1, 2)
+}
+// ===== end of operator testing ===== //
+
+
+// ===== custom unit type test ===== //
 #[derive(UnitStruct, Debug, Copy, Clone)]
 struct Bananas<DT>{
 	pub count: DT
 }
-
-/// misc experimenting
 fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 	return a + b;
 }
-
-
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct HyperVelocity<T: NumLike>{
-	square_meters_per_second: T
+#[test]
+pub fn macro_reexport_test() {
+	let b1 = Bananas{count: 3};
+	let b2 = Bananas{count: 1};
+	println!("b1 - b2 = {:?}", b1 - b2);
+	println!("some_math(2.3, 1.0) = {:?}", some_math(2.3, 1.0));
 }
+// ===== end of custom unit type test ===== //
 
-fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:NumLike + From<f64>
-{
-	return weight*a + (1.-weight)*b;
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Mass<T: NumLike>{
-	pub kg: T
-}
-impl<T> Mass<T> where T: NumLike+From<f64> {
-	fn from_earth_mass(earth_mass: T) -> Self {
-		let earth_mass_kg: T = T::from(5.972e24f64);
-		Mass{kg: earth_mass_kg * earth_mass}
-	}
-	fn from_solar_mass(sun_mass: T) -> Self {
-		let sun_mass_kg: T = T::from(1.989e30f64);
-		Mass{kg: sun_mass_kg * sun_mass}
-	}
-	fn from_g(g: T) -> Self {
-		let c: T = T::from(1e-3f64);
-		Mass{kg: c * g}
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Distance<T: NumLike>{
-	pub meters: T
-}
-
-impl<T> Distance<T> where T: NumLike+From<f64> {
-	fn from_au(au: T) -> Self{
-		let au_m = T::from(1.495979e11f64);
-		Distance{meters: au_m * au}
-	}
-}
-// impl Distance<f32>  {
-// 	const AU_M_f32: f32 = 1.495979e11 as f32;
-// 	fn from_au(au: f32) -> Self{
-// 		Distance{meters: Self::AU_M_f32 * au}
-// 	}
-// }
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Time<T: NumLike>{
-	pub seconds: T
-}
-impl<T> Time<T> where T: NumLike+From<f64> {
-	fn from_days(d: T) -> Self{
-		let day_s = T::from(86400f64);
-		Time{seconds: day_s * d}
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Velocity<T: NumLike>{
-	pub mps: T
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-struct Acceleration<T: NumLike>{
-	pub mps2: T
-}
-
-impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
-	type Output = Velocity<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.meters / rhs.seconds}
-	}
-}
-
-impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
-	type Output = Acceleration<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Acceleration{mps2: self.mps / rhs.seconds}
-	}
-}
-
-#[derive(Debug, Clone)]
-struct MassPoint {
-	mass: Mass<f64>,
-	pos: [Distance<f64>; 2],
-	vel: [Velocity<f64>; 2],
-	accel: [Acceleration<f64>; 2],
-}
-
-
-struct LCGRand {
-	seed: u64
-}
-impl LCGRand {
-	fn rand_f64(&mut self) -> f64 {
-		self.seed = (self.seed * 0x5DEECE66Du64 + 0xBu64) & 0xFFFFFFFFFFFFu64;
-		return (self.seed & 0xFFFFFFFFu64) as f64 / 0xFFFFFFFFu64 as f64;
-	}
-}
-
+// ===== float32 wrapper test ===== //
 struct MyFloat32 {
 	x: f32
 }
@@ -140,9 +161,15 @@ impl std::ops::Add<Self> for MyFloat32 {
 	type Output = Self;
 	fn add(self, rhs: Self) -> Self::Output {Self{ x: self.x + rhs.x }}
 }
+impl std::ops::AddAssign<Self> for MyFloat32 {
+	fn add_assign(&mut self, rhs: Self){*self = Self{ x: self.x + rhs.x }}
+}
 impl std::ops::Sub<Self> for MyFloat32 {
 	type Output = Self;
 	fn sub(self, rhs: Self) -> Self::Output {Self{ x: self.x - rhs.x }}
+}
+impl std::ops::SubAssign<Self> for MyFloat32 {
+	fn sub_assign(&mut self, rhs: Self){*self = Self{ x: self.x - rhs.x }}
 }
 impl std::ops::Div<Self> for MyFloat32 {
 	type Output = Self;
@@ -151,85 +178,32 @@ impl std::ops::Div<Self> for MyFloat32 {
 impl std::ops::Mul<Self> for MyFloat32 {
 	type Output = Self;
 	fn mul(self, rhs: Self) -> Self::Output {Self{ x: self.x * rhs.x }}
+}impl std::ops::Neg for MyFloat32 {
+	type Output = Self;
+	fn neg(self) -> Self::Output {Self{ x: -self.x}}
 }
-fn my_fn() -> Mass<MyFloat32>{
-	let m = Mass::from_g(MyFloat32::new(1100_f32));
-	return m * MyFloat32::new(0.5);
-}
-
-fn populate_system() -> Vec<MassPoint> {
-	let mut prng = LCGRand{seed: 1234876};
-	//
-	let _unused = Distance{meters: 11.11f32};
-	use num_bigfloat::BigFloat;
-	let _unused2 = Distance{meters: BigFloat::from(123.456)};
-	use num_complex::Complex;
-	let _unused3 = Distance{meters: Complex::from(123.456)};
-	// let _unused4 = Mass::from_earth_mass((prng.rand_f64() * 10.) as f32);
-	let _unused4 = Mass::from_earth_mass(MyFloat32::new(123.456f32));
-	let _unused5 = my_fn();
-	//
-	let mut system: Vec<MassPoint> = Vec::new();
-	system.push(MassPoint{
-		mass: Mass::from_solar_mass(prng.rand_f64() + 0.5),
-		pos: [Distance{meters: 0.}, Distance{meters: 0.}],
-		vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
-		accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
-	});
-	for _ in 0..12 {
-		system.push(MassPoint{
-			mass: Mass::from_earth_mass(prng.rand_f64() * 10.),
-			pos: [Distance::from_au(prng.rand_f64() * 20. - 10.),
-				Distance::from_au(prng.rand_f64() * 20. - 10.)],
-			vel: [Velocity{mps: 0.}, Velocity{mps: 0.}],
-			accel: [Acceleration{mps2: 0.}, Acceleration{mps2: 0.}]
-		});
+impl std::ops::MulAssign for MyFloat32 {
+	fn mul_assign(&mut self, rhs: Self) {
+		self.x *= rhs.x;
 	}
-	return system;
 }
-
-
-
-#[test]
-pub fn test_gravity_sim() {
-
-	const G: f64 = 6.67408e-1; // m3 kg-1 s-2
-	let timestep = Time::from_days(1.);
-	let num_iters = 100;
-	let system = populate_system();
-	for _ in 0..num_iters {
-		
+impl std::ops::DivAssign for MyFloat32 {
+	fn div_assign(&mut self, rhs: Self) {
+		self.x /= rhs.x;
 	}
-	todo!()
 }
-
-/*
-// if only this worked:
-#[derive(Debug)]
-struct PowerUnit< const N: i32> {
-	pub value: f64
-}
-fn mul<const N: i32, const M: i32, const O: i32>(a: PowerUnit<N>, b: PowerUnit<M>) -> PowerUnit<O>
-where O: N+M
-{
-	let c: PowerUnit<O> = PowerUnit{
-		value: a.value * b.value,
-	};
-	return c;
-}
-
- */
-
-
-#[test]
-pub fn test_macro_reexport() {
-	let b1 = Bananas{count: 3};
-	let b2 = Bananas{count: 1};
-	println!("b1 - b2 = {:?}", b1 - b2);
-	println!("some_math(2.3, 1.0) = {:?}", some_math(2.3, 1.0));
+impl<T> Bananas<T> where T: NumLike+From<f64> {
+	fn from_bunch(b: T) -> Self{
+		let bunch_size = T::from(8f64);
+		Bananas{count: bunch_size * b}
+	}
 }
 #[test]
-pub fn placeholder_test() {
-	//  placeholder to ensure we fail the testing phase until tests are done
-	assert_eq!(1, 2)
+fn float_wrapper_test(){
+	let b = Bananas::from_bunch(MyFloat32::new(1.5f32));
+	let b2 = Bananas::from_bunch(MyFloat32::new(0.75f32));
+	let scale_factor = MyFloat32{x: 2.5};
+	let _total = (b + b2) * scale_factor;
 }
+// ===== end of float wrapper test ===== //
+

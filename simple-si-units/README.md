@@ -4,6 +4,9 @@
 This Rust library provides compiler-checked types for the standard set of SI 
 units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
 
+* Note from the developer: After a two-month pause for the holiday season, 
+  I'm back to working on this project. Thank you for your understanding! *
+
 ## What's included?
 * Official standard SI Units
 * Common secondary units, such as velocity
@@ -16,12 +19,12 @@ units, as specified by the US [National Institute of Standards and Technology](h
 This crate provides types for the following units. Other kinds of 
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
-#### Base SI units (and example unit of measure):
-* Length (meters)
+#### Base SI units (and standard unit of measure):
+* Distance, aka Length (meters)
 * Mass (kilogram)
 * Time (seconds)
 * Temperature (kelvin)
-* Amount (moles)
+* Amount, aka Quantity (moles)
 * Current (amperes)
 * Luminosity (candela)
 
@@ -37,7 +40,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Pressure (N/m^2, aka Pa)
 * Energy (kg.m^2/s^2, aka J)
 * Coulomb (A.s, aka C)
-* Watt (J/s, aka W)
+* Power, aka Watt (J/s, aka W)
 * Voltage (W/A, aka V)
 * Resistance (V/A, aka Ohm)
 * Conductance (1/ohm, aka S)
@@ -63,10 +66,11 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 ## Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
 
-* **V0.1.0** - Finish README and claim [crates.io](https://crates.io/) namespace
-* **V0.2.0** - Scope declaration
-* **V0.3.0** - Design API
-* **V0.4.0** - Unit and API tests
+* **V0.1.0 (Done!)** - Finish README and claim [crates.io](https://crates.io/) 
+  namespace
+* **V0.2.0 (Done!)** - Scope declaration
+* **V0.3.0 (Done!)** - Design API
+* **V0.4.0 (In progress...)** - Unit and API tests
 * **V0.5.0** - Base SI units (distance, mass, time, temperature, amount, 
   electric current, luminosity)
 * **V0.6.0** - Common secondary units (velocity, acceleration, energy, etc.)
@@ -74,6 +78,8 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0** - Full documentation coverage
 * **V1.0.0** - Done
+* **V1.1.0** - Add inverse of all provided units that don't already have an 
+  inverse equivalent (eg InverseArea = 1/Area)
 
 ## How it works
 For each type of unit (eg Distance), Simple SI Units provides a generic struct 
