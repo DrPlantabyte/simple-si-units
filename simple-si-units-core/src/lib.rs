@@ -1,3 +1,4 @@
+use std::fmt::{Debug, Display};
 
 // TODO: documentation
 pub trait NumLike: std::ops::Add<Output=Self>
@@ -10,6 +11,8 @@ pub trait NumLike: std::ops::Add<Output=Self>
 + std::ops::DivAssign
 + std::ops::Neg<Output=Self>
 + Sized
++ Debug
++ Display
 {}
 impl<T> NumLike for T where T: std::ops::Add<Output=Self>
 + std::ops::AddAssign
@@ -21,4 +24,6 @@ impl<T> NumLike for T where T: std::ops::Add<Output=Self>
 + std::ops::DivAssign
 + std::ops::Neg<Output=Self>
 + Sized
++ Debug
++ Display
 {}
