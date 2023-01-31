@@ -77,6 +77,8 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0** - Full documentation coverage
 * **V1.0.0** - Done
+* **V1.1.0** - Add inverse of all provided units that don't already have an 
+  inverse equivalent (eg InverseArea = 1/Area)
 
 ## How it works
 For each type of unit (eg Distance), Simple SI Units provides a generic struct 
