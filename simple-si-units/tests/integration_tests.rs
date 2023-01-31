@@ -1,3 +1,4 @@
+use std::fmt::{Debug, Display, Formatter};
 use num_complex::ComplexFloat;
 use simple_si_units::*;
 
@@ -104,7 +105,7 @@ fn templated_op_test<T: NumLike+From<f64>>() -> T{
 	let mut repeated_vol = unit_vol;
 	repeated_vol *= repetitions;
 	repeated_vol /= space_efficiency;
-	return repeated_vol;
+	return repeated_vol.to_L();
 }
 #[test]
 pub fn num_bigfloat_test() {
@@ -113,8 +114,7 @@ pub fn num_bigfloat_test() {
 }
 #[test]
 pub fn num_astrofloat_test() {
-	use astro_float::BigFloat;
-	let _ = templated_op_test::<BigFloat>();
+	todo!()
 }
 #[test]
 pub fn num_complex_test() {
@@ -131,10 +131,11 @@ pub fn placeholder_test() {
 
 
 // ===== custom unit type test ===== //
-#[derive(UnitStruct, Debug, Copy, Clone)]
+#[derive(UnitStruct, Debug, Clone)]
 struct Bananas<DT>{
 	pub count: DT
 }
+impl<DT> Copy for Bananas<DT> where DT: Copy {}
 fn some_math<DT: simple_si_units_core::NumLike>(a: DT, b: DT) -> DT {
 	return a + b;
 }
@@ -148,11 +149,17 @@ pub fn macro_reexport_test() {
 // ===== end of custom unit type test ===== //
 
 // ===== float32 wrapper test ===== //
+#[derive(Debug,Clone)]
 struct MyFloat32 {
 	x: f32
 }
 impl MyFloat32 {
 	pub fn new(n: f32) -> Self{return Self{x: n}}
+}
+impl Display for MyFloat32{
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		return std::fmt::Display::fmt(&self.x, f);
+	}
 }
 impl From<f64> for MyFloat32 {
 	fn from(n: f64) -> Self {return Self::new(n as f32)}

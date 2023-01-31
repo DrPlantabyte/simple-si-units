@@ -1,6 +1,7 @@
 //! # Simple SI Units
 //! Work in progress...
 
+use std::fmt::{Display, Formatter};
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
@@ -9,10 +10,18 @@ pub use simple_si_units_core::NumLike;
 // TODO: implement display for to-string representation (and have pretty version with size-aware
 // unit suffixes)
 /// Placeholder: Work in progress
-#[derive(UnitStruct, Debug, Copy, Clone)]
+#[derive(UnitStruct, Debug, Clone)]
 pub struct Distance<T: NumLike>{
 	pub m: T
 }
+
+impl<T> Display for Distance<T> where T: NumLike {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		// TODO: better display
+		return write!(f, "{} m", self.m);
+	}
+}
+impl<T> Copy for Distance<T> where T: NumLike+Copy{} // <- does this work?
 impl<T> Distance<T> where T: NumLike {
 	pub fn from_meters(m: T) -> Self{
 		Distance{m}
