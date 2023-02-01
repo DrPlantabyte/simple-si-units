@@ -115,7 +115,8 @@ pub fn num_bigfloat_test() {
 }
 #[test]
 pub fn num_astrofloat_test() {
-	todo!()
+	use astro_float::BigFloat;
+	let _ = templated_op_test::<BigFloat>();
 }
 #[test]
 pub fn num_complex_test() {
