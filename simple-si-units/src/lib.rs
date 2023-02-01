@@ -371,19 +371,87 @@ mod unit_tests {
 		);
 	}
 	#[test]
-	fn angular_velocity_units() {todo!();}
+	fn angular_velocity_units() {
+		assert_approx_equal(
+			AnglularVelocity::from_radps(6.283185307179586_f64 / 60.0_f64).to_radps(),
+			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+		);
+		assert_approx_equal(
+			AnglularVelocity::from_radps(6.283185307179586_f64).to_radps(),
+			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+		);
+		assert_approx_equal(
+			AnglularVelocity::from_degps(360.0_f64 / 60.0_f64).to_radps(),
+			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+		);
+		assert_approx_equal(
+			AnglularVelocity::from_degps(360.0_f64).to_radps(),
+			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+		);
+		let _ = AnglularVelocity::from_radps(1.0_f64).to_radps();
+		let _ = AnglularVelocity::from_radps(1.0_f64).to_degps();
+		let _ = AnglularVelocity::from_radps(1.0_f64).to_rpm();
+		let _ = AnglularVelocity::from_radps(1.0_f64).to_rps();
+	}
 	#[test]
-	fn angular_acceleration_units() {todo!();}
+	fn angular_acceleration_units() {
+		assert_approx_equal(
+			AnglularAcceleration::from_radps2(6.283185307179586_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+		);
+		assert_approx_equal(
+			AnglularAcceleration::from_radps2(6.283185307179586_f64).to_radps2(),
+			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+		);
+		assert_approx_equal(
+			AnglularAcceleration::from_degps2(360.0_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+		);
+		assert_approx_equal(
+			AnglularAcceleration::from_degps2(360.0_f64).to_radps2(),
+			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+		);
+		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_radps2();
+		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_degps2();
+		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rpm2();
+		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rps2();}
 	#[test]
-	fn moment_of_inertia_units() {todo!();}
+	fn moment_of_inertia_units() {
+		assert_approx_equal(
+			MomentOfInertia::from_kgm2(1.0_f64).to_kgm2(),
+			MomentOfInertia::from_gm2(1000.0_f64).to_kgm2(), 9
+		);
+		assert_approx_equal(
+			MomentOfInertia::from_kgm2(1.0_f64).to_kgm2(),
+			MomentOfInertia::from_gcm2(0.1_f64).to_kgm2(), 9
+		);
+		let _ = MomentOfInertia::from_kgm2(1.0_f64).to_kgm2();
+		let _ = MomentOfInertia::from_kgm2(1.0_f64).to_gm2();
+		let _ = MomentOfInertia::from_kgm2(1.0_f64).to_gcm2();
+	}
 	#[test]
-	fn torque_units() {todo!();}
+	fn torque_units() {
+		assert_approx_equal(
+			Torque::from_Nm(1.356_f64).to_Nm(),
+			Torque::from_ftlb(1.0_f64).to_ftlb(), 3
+		);
+		let _ = Torque::from_Nm(1.0_f64).to_Nm();
+		let _ = Torque::from_Nm(1.0_f64).to_ftlb();
+	}
 	#[test]
-	fn momentum_units() {todo!();}
+	fn momentum_units() {
+		assert_approx_equal(
+			Momentum::from_kgmps(1.0_f64).to_kgmps(),
+			Momentum::from_gcmps(10.0_f64).to_kgmps(), 9
+		);
+		let _ = Momentum::from_kgmps(1.0_f64).to_kgmps();
+		let _ = Momentum::from_kgmps(1.0_f64).to_gcmps();
+	}
 	#[test]
-	fn angular_momentum_units() {todo!();}
-	#[test]
-	fn angular_velocity_units() {todo!();}
+	fn angular_momentum_units() {
+		// only one unit of measure supported
+		let _ = AngularMomentum::from_kgm2radps(1.0_f64).to_kgm2radps();
+	}
 	#[test]
 	fn frequency_units() {
 		assert_approx_equal(
@@ -425,6 +493,20 @@ mod unit_tests {
 			Area::from_km2(1.0_f64).to_m2(),
 			Area::from_m2(1e6_f64).to_m2(), 9
 		);
+	}
+	#[test]
+	fn area_density_units() {
+		assert_approx_equal(
+			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
+			AreaDensity::from_gm2(1000.0_f64).to_kgm2(), 9
+		);
+		assert_approx_equal(
+			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
+			AreaDensity::from_gcm2(0.1_f64).to_kgm2(), 9
+		);
+		let _ = AreaDensity::from_kgm2(1.0_f64).to_kgm2();
+		let _ = AreaDensity::from_kgm2(1.0_f64).to_gm2();
+		let _ = AreaDensity::from_kgm2(1.0_f64).to_gcm2();
 	}
 	#[test]
 	fn volume_units() {
@@ -1102,17 +1184,17 @@ mod unit_tests {
 	}
 	/// Placeholder: Work in progress
 	#[test]
-	fn distance_add_subtract() {
+	fn add_subtract_test() {
 		todo!();
 	}
 	/// Placeholder: Work in progress
 	#[test]
-	fn distance_mul_div() {
+	fn mul_div_test() {
 		todo!();
 	}
 	/// Placeholder: Work in progress
 	#[test]
-	fn distance_op_assign() {
+	fn op_assign_test() {
 		// +=, -=, *=, /=
 		todo!();
 	}

@@ -38,6 +38,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Solid Angle (sr)
 * Frequency (1/s, aka Hz)
 * Area (m^2)
+* Area Density (kg.m^2)
 * Volume (m^3)
 * Velocity (m/s)
 * Acceleration (m/s^2)
