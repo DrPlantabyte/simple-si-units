@@ -1,6 +1,8 @@
 use std::io::Write;
 use std::time::Duration;
 use simple_si_units::{UnitStruct, NumLike};
+use simple_si_units::base::{Distance, Mass, Time};
+use simple_si_units::mechanical::{Velocity, Acceleration, Area};
 
 #[test]
 pub fn placeholder_test() {
@@ -9,116 +11,6 @@ pub fn placeholder_test() {
 }
 
 // ===== ASTROPHYSICS SIMULATION ===== //
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Distance<T: NumLike>{ // TODO: remove
-	pub m: T
-}
-impl<T> Distance<T> where T: NumLike {
-	pub fn from_meters(m: T) -> Self{
-		Distance{m}
-	}
-	pub fn to_meters(self) -> T{
-		return self.m;
-	}
-}
-
-impl<T> Distance<T> where T: NumLike+From<f64> {
-	pub fn from_au(au: T) -> Self{
-		let m_per_au = T::from(1.495979e11f64);
-		Distance{m: m_per_au * au}
-	}
-	pub fn to_au(self) -> T{
-		let au_per_m = T::from(6.684585e-12f64);
-		return au_per_m * self.m;
-	}
-}
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Mass<T: NumLike>{ // TODO: remove
-	pub kg: T
-}
-impl<T> Mass<T> where T: NumLike+From<f64> {
-	pub fn from_earth_mass(earth_mass: T) -> Self {
-		let earth_mass_kg: T = T::from(5.972e24f64);
-		Mass{kg: earth_mass_kg * earth_mass}
-	}
-	pub fn from_solar_mass(sun_mass: T) -> Self {
-		let sun_mass_kg: T = T::from(1.989e30f64);
-		Mass{kg: sun_mass_kg * sun_mass}
-	}
-	pub fn from_g(g: T) -> Self {
-		let c: T = T::from(1e-3f64);
-		Mass{kg: c * g}
-	}
-}
-
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Area<T: NumLike>{ // TODO: remove
-	pub m2: T
-}
-
-impl<T> Area<T> where T: NumLike+From<f64>+Into<f64> {
-	pub fn sqrt(self) -> Distance<T> {
-		return Distance{m: T::from(f64::sqrt(self.m2.into()))};
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Time<T: NumLike>{ // TODO: remove
-	pub s: T
-}
-impl<T> Time<T> where T: NumLike+From<f64> {
-	fn from_days(d: T) -> Self{
-		let day_s = T::from(86400f64);
-		Time{s: day_s * d}
-	}
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Velocity<T: NumLike>{ // TODO: remove
-	pub mps: T
-}
-
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Acceleration<T: NumLike>{ // TODO: remove
-	pub mps2: T
-}
-
-impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
-	type Output = Area<T>;
-	fn mul(self, rhs: Distance<T>) -> Self::Output {
-		Area{m2: self.m * rhs.m}
-	}
-}
-impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
-	type Output = Velocity<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.m / rhs.s}
-	}
-}
-
-impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
-	type Output = Acceleration<T>;
-
-	fn div(self, rhs: Time<T>) -> Self::Output {
-		Acceleration{mps2: self.mps / rhs.s}
-	}
-}
-
-impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
-	type Output = Distance<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Distance{m: self.mps * rhs.s}
-	}
-}
-impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
-	type Output = Velocity<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Velocity{mps: self.mps2 * rhs.s}
-	}
-}
-
 #[derive(Debug, Clone)]
 struct MassPoint {
 	mass: Mass<f64>,
