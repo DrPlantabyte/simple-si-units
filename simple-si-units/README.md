@@ -40,6 +40,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Area (m^2)
 * Area Density (kg.m^2)
 * Volume (m^3)
+* Density (kg/L)
 * Velocity (m/s)
 * Acceleration (m/s^2)
 * Momentum (kg.m/s)

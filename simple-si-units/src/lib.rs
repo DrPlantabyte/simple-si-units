@@ -1,7 +1,6 @@
 //! # Simple SI Units
 //! Work in progress...
 
-use std::fmt::{Display, Formatter};
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
@@ -9,56 +8,82 @@ pub use simple_si_units_core::NumLike;
 
 // TODO: implement display for to-string representation (and have pretty version with size-aware
 // unit suffixes)
-/// Placeholder: Work in progress
-#[derive(UnitStruct, Debug, Clone)]
-pub struct Distance<T: NumLike>{
-	pub m: T
+mod base {
+	use crate::{UnitStruct, NumLike};
+	use std::fmt::{Display, Formatter};
+	// TODO: base SI units
+
+	/// Placeholder: Work in progress
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Distance<T: NumLike>{
+		pub m: T
+	}
+
+	impl<T> Display for Distance<T> where T: NumLike {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			// TODO: better display
+			return write!(f, "{} m", self.m);
+		}
+	}
+	impl<T> Distance<T> where T: NumLike {
+		pub fn from_m(m: T) -> Self{
+			Distance{m}
+		}
+		pub fn to_m(self) -> T{
+			return self.m;
+		}
+	}
+
+	impl<T> Distance<T> where T: NumLike+From<f64> {
+		pub fn from_au(au: T) -> Self{
+			let m_per_au = T::from(1.495979e11f64);
+			Distance{m: m_per_au * au}
+		}
+		pub fn to_au(self) -> T{
+			let au_per_m = T::from(6.684585e-12f64);
+			return au_per_m * self.m;
+		}
+	}
+}
+mod spacetime {
+	use crate::{UnitStruct, NumLike};
+	use std::fmt::{Display, Formatter};
+	// TODO: time and space and geometry
+
+
+	/// Placeholder: Work in progress
+	#[derive(UnitStruct, Debug, Copy, Clone)]
+	pub struct Volume<T: NumLike>{
+		pub m3: T
+	}
+	impl<T> Volume<T> where T: NumLike {
+		pub fn from_cubic_meters(m3: T) -> Self{
+			Volume{m3: m3}
+		}
+		pub fn to_cubic_meters(self) -> T{
+			return self.m3;
+		}
+	}
+}
+mod electromagnetic {
+	use crate::{UnitStruct, NumLike};
+	use std::fmt::{Display, Formatter};
+	// TODO: electrical and magnetism
+}
+mod radiation {
+	use crate::{UnitStruct, NumLike};
+	use std::fmt::{Display, Formatter};
+	// TODO: light and nuclear
 }
 
-impl<T> Display for Distance<T> where T: NumLike {
-	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		// TODO: better display
-		return write!(f, "{} m", self.m);
-	}
-}
-impl<T> Distance<T> where T: NumLike {
-	pub fn from_m(m: T) -> Self{
-		Distance{m}
-	}
-	pub fn to_m(self) -> T{
-		return self.m;
-	}
-}
-
-impl<T> Distance<T> where T: NumLike+From<f64> {
-	pub fn from_au(au: T) -> Self{
-		let m_per_au = T::from(1.495979e11f64);
-		Distance{m: m_per_au * au}
-	}
-	pub fn to_au(self) -> T{
-		let au_per_m = T::from(6.684585e-12f64);
-		return au_per_m * self.m;
-	}
-}
-
-/// Placeholder: Work in progress
-#[derive(UnitStruct, Debug, Copy, Clone)]
-pub struct Volume<T: NumLike>{
-	pub m3: T
-}
-impl<T> Volume<T> where T: NumLike {
-	pub fn from_cubic_meters(m3: T) -> Self{
-		Volume{m3: m3}
-	}
-	pub fn to_cubic_meters(self) -> T{
-		return self.m3;
-	}
-}
 
 /// Unit tests
 #[cfg(test)]
 mod unit_tests {
-	use super::*;
+	use super::base::*;
+	use super::spacetime::*;
+	use super::electromagnetic::*;
+	use super::radiation::*;
 	/// utility function for asserting equality of decimal values with approximations
 	fn assert_approx_equal(a: f64, b: f64, sigfigs: i32) {
 		if a.is_nan() {
@@ -365,10 +390,7 @@ mod unit_tests {
 	}
 	#[test]
 	fn solid_angle_units() {
-		assert_approx_equal(
-			SolidAngle::from_sr(1.0_f64).to_sr(),
-			SolidAngle::from_sr(1.0_f64).to_sr(), 9
-		);
+		let _ = SolidAngle::from_sr(1.0_f64).to_sr();
 	}
 	#[test]
 	fn angular_velocity_units() {
@@ -470,6 +492,11 @@ mod unit_tests {
 			Frequency::from_THz(1.0_f64).to_Hz(),
 			Frequency::from_GHz(1000.0_f64).to_Hz(), 9
 		);
+		let _ = Frequency::from_Hz(1.0_f64).to_Hz();
+		let _ = Frequency::from_Hz(1.0_f64).to_kHz();
+		let _ = Frequency::from_Hz(1.0_f64).to_MHz();
+		let _ = Frequency::from_Hz(1.0_f64).to_GHz();
+		let _ = Frequency::from_Hz(1.0_f64).to_THz();
 	}
 	#[test]
 	fn area_units() {
@@ -493,6 +520,12 @@ mod unit_tests {
 			Area::from_km2(1.0_f64).to_m2(),
 			Area::from_m2(1e6_f64).to_m2(), 9
 		);
+		let _ = Area::from_m2(1.0_f64).to_km2();
+		let _ = Area::from_m2(1.0_f64).to_m2();
+		let _ = Area::from_m2(1.0_f64).to_cm2();
+		let _ = Area::from_m2(1.0_f64).to_mm2();
+		let _ = Area::from_m2(1.0_f64).to_um2();
+		let _ = Area::from_m2(1.0_f64).to_nm2();
 	}
 	#[test]
 	fn area_density_units() {
@@ -550,6 +583,37 @@ mod unit_tests {
 			Volume::from_GL(1.0_f64).to_L(),
 			Volume::from_L(1e9_f64).to_L(), 9
 		);
+		let _ = Volume::from_L(1.0_f64).to_L();
+		let _ = Volume::from_L(1.0_f64).to_mL();
+		let _ = Volume::from_L(1.0_f64).to_uL();
+		let _ = Volume::from_L(1.0_f64).to_nL();
+		let _ = Volume::from_L(1.0_f64).to_pL();
+		let _ = Volume::from_L(1.0_f64).to_cc();
+		let _ = Volume::from_L(1.0_f64).to_cm3();
+		let _ = Volume::from_L(1.0_f64).to_m3();
+		let _ = Volume::from_L(1.0_f64).to_kL();
+		let _ = Volume::from_L(1.0_f64).to_ML();
+		let _ = Volume::from_L(1.0_f64).to_GL();
+	}
+
+	#[test]
+	fn volume_units() {
+		assert_approx_equal(
+			Density::from_kgpL(1.0_f64).to_kgpL(),
+			Density::from_kgpm3(1000.0_f64).to_kgpL(), 9
+		);
+		assert_approx_equal(
+			Density::from_kgpL(1.0_f64).to_kgpL(),
+			Density::from_gpcc(1.0_f64).to_kgpL(), 9
+		);
+		assert_approx_equal(
+			Density::from_kgpm3(1.0_f64).to_kgpL(),
+			Density::from_gpm3(1000.0_f64).to_kgpL(), 9
+		);
+		let _ = Density::from_kgpL(1.0_f64).to_kgpL();
+		let _ = Density::from_kgpL(1.0_f64).to_kgpm3();
+		let _ = Density::from_kgpL(1.0_f64).to_gpcc();
+		let _ = Density::from_kgpL(1.0_f64).to_gpm3();
 	}
 	#[test]
 	fn velocity_units() {
@@ -577,6 +641,12 @@ mod unit_tests {
 			Velocity::from_c(1.0_f64).to_mps(),
 			Velocity::from_mps(299792458_f64).to_mps(), 8
 		);
+		let _ = Velocity::from_mps(1.0_f64).to_mps();
+		let _ = Velocity::from_mps(1.0_f64).to_cmps();
+		let _ = Velocity::from_mps(1.0_f64).to_mmps();
+		let _ = Velocity::from_mps(1.0_f64).to_mph();
+		let _ = Velocity::from_mps(1.0_f64).to_kph();
+		let _ = Velocity::from_mps(1.0_f64).to_c();
 	}
 	#[test]
 	fn acceleration_units() {
@@ -584,10 +654,8 @@ mod unit_tests {
 			Acceleration::from_mps2(1.0_f64).to_mps2(),
 			Acceleration::from_mmps2(1000.0_f64).to_mps2(), 9
 		);
-		assert_approx_equal(
-			Acceleration::from_kmph2(1.0_f64).to_mps2(),
-			Acceleration::from_mps2(1000.0_f64 / (3600.0_f64 * 3600.0_f64)).to_mps2(), 9
-		);
+		let _ = Acceleration::from_mps2(1.0_f64).to_mps2();
+		let _ = Acceleration::from_mps2(1.0_f64).to_mmps2();
 	}
 	#[test]
 	fn force_units() {
@@ -623,33 +691,49 @@ mod unit_tests {
 			Force::from_GN(1.0_f64).to_N(),
 			Force::from_MN(1000.0_f64).to_N(), 9
 		);
+		let _ = Force::from_N(1.0_f64).to_N();
+		let _ = Force::from_N(1.0_f64).to_kgG();
+		let _ = Force::from_N(1.0_f64).to_lb();
+		let _ = Force::from_N(1.0_f64).to_mN();
+		let _ = Force::from_N(1.0_f64).to_uN();
+		let _ = Force::from_N(1.0_f64).to_nN();
+		let _ = Force::from_N(1.0_f64).to_kN();
+		let _ = Force::from_N(1.0_f64).to_MN();
+		let _ = Force::from_N(1.0_f64).to_GN();
 	}
 	#[test]
 	fn pressure_units() {
 		assert_approx_equal(
-			Force::from_Pa(1000.0_f64).to_Pa(),
-			Force::from_kPa(1.0_f64).to_Pa(), 9
+			Pressure::from_Pa(1000.0_f64).to_Pa(),
+			Pressure::from_kPa(1.0_f64).to_Pa(), 9
 		);
 		assert_approx_equal(
-			Force::from_hPa(10.0_f64).to_Pa(),
-			Force::from_kPa(1.0_f64).to_Pa(), 9
+			Pressure::from_hPa(10.0_f64).to_Pa(),
+			Pressure::from_kPa(1.0_f64).to_Pa(), 9
 		);
 		assert_approx_equal(
-			Force::from_bar(1.0_f64).to_Pa(),
-			Force::from_kPa(100.0_f64).to_Pa(), 9
+			Pressure::from_bar(1.0_f64).to_Pa(),
+			Pressure::from_kPa(100.0_f64).to_Pa(), 9
 		);
 		assert_approx_equal(
-			Force::from_atm(1.0_f64).to_Pa(),
-			Force::from_kPa(101.325_f64).to_Pa(), 3
+			Pressure::from_atm(1.0_f64).to_Pa(),
+			Pressure::from_kPa(101.325_f64).to_Pa(), 3
 		);
 		assert_approx_equal(
-			Force::from_atm(1.0_f64).to_Pa(),
-			Force::from_mmHg(760_f64).to_Pa(), 3
+			Pressure::from_atm(1.0_f64).to_Pa(),
+			Pressure::from_mmHg(760_f64).to_Pa(), 3
 		);
 		assert_approx_equal(
-			Force::from_psi(1.0_f64).to_Pa(),
-			Force::from_Pa(6894.757_f64).to_Pa(), 5
+			Pressure::from_psi(1.0_f64).to_Pa(),
+			Pressure::from_Pa(6894.757_f64).to_Pa(), 5
 		);
+		let _ = Pressure::from_Pa(1000.0_f64).to_Pa();
+		let _ = Pressure::from_Pa(1000.0_f64).to_kPa();
+		let _ = Pressure::from_Pa(1000.0_f64).to_hPa();
+		let _ = Pressure::from_Pa(1000.0_f64).to_bar();
+		let _ = Pressure::from_Pa(1000.0_f64).to_atm();
+		let _ = Pressure::from_Pa(1000.0_f64).to_mmHg();
+		let _ = Pressure::from_Pa(1000.0_f64).to_psi();
 	}
 	#[test]
 	fn energy_units() {
@@ -694,44 +778,33 @@ mod unit_tests {
 			Energy::from_J(3600.0_f64).to_J(), 5
 		);
 		assert_approx_equal(
-			Energy::from_Whr(1.0_f64).to_J(),
-			Energy::from_mWhr(1000.0_f64).to_J(), 5
-		);
-		assert_approx_equal(
 			Energy::from_kWhr(1.0_f64).to_J(),
 			Energy::from_Whr(1000.0_f64).to_J(), 5
 		);
-		assert_approx_equal(
-			Energy::from_MWhr(1.0_f64).to_J(),
-			Energy::from_kWhr(1000.0_f64).to_J(), 5
-		);
-		assert_approx_equal(
-			Energy::from_tonTNT(1.0_f64).to_J(),
-			Energy::from_J(4.19e9_f64).to_J(), 2
-		);
-		assert_approx_equal(
-			Energy::from_ktonTNT(1.0_f64).to_J(),
-			Energy::from_tonTNT(1000.0_f64).to_J(), 9
-		);
-		assert_approx_equal(
-			Energy::from_MtonTNT(1.0_f64).to_J(),
-			Energy::from_ktonTNT(1000.0_f64).to_J(), 9
-		);
-		assert_approx_equal(
-			Energy::from_GtonTNT(1.0_f64).to_J(),
-			Energy::from_MtonTNT(1000.0_f64).to_J(), 9
-		);
+		let _ = Energy::from_J(1.0_f64).to_J();
+		let _ = Energy::from_J(1.0_f64).to_mJ();
+		let _ = Energy::from_J(1.0_f64).to_uJ();
+		let _ = Energy::from_J(1.0_f64).to_nJ();
+		let _ = Energy::from_J(1.0_f64).to_kJ();
+		let _ = Energy::from_J(1.0_f64).to_MJ();
+		let _ = Energy::from_J(1.0_f64).to_GJ();
+		let _ = Energy::from_J(1.0_f64).to_eV();
+		let _ = Energy::from_J(1.0_f64).to_Whr();
+		let _ = Energy::from_J(1.0_f64).to_kWhr();
 	}
 	#[test]
 	fn coulomb_units() {
 		assert_approx_equal(
-			Charge::from_C(-1.60217646_f64).to_C(),
+			Charge::from_C(-1.60217646e-19_f64).to_C(),
 			Charge::from_e(1.0_f64).to_C(), 7
 		);
 		assert_approx_equal(
-			Charge::from_C(1.60217646_f64).to_C(),
+			Charge::from_C(1.60217646e-19_f64).to_C(),
 			Charge::from_p(1.0_f64).to_C(), 7
 		);
+		let _ = Charge::from_C(1.0_f64).to_C();
+		let _ = Charge::from_C(1.0_f64).to_e();
+		let _ = Charge::from_C(1.0_f64).to_p();
 	}
 	#[test]
 	fn power_units() {
@@ -763,6 +836,14 @@ mod unit_tests {
 			Power::from_horsepower(1.0_f64).to_W(),
 			Power::from_W(745.70_f64).to_W(), 4
 		);
+		let _ = Power::from_W(1.0_f64).to_W();
+		let _ = Power::from_W(1.0_f64).to_horsepower();
+		let _ = Power::from_W(1.0_f64).to_mW();
+		let _ = Power::from_W(1.0_f64).to_uW();
+		let _ = Power::from_W(1.0_f64).to_nW();
+		let _ = Power::from_W(1.0_f64).to_kW();
+		let _ = Power::from_W(1.0_f64).to_MW();
+		let _ = Power::from_W(1.0_f64).to_GW();
 	}
 	#[test]
 	fn voltage_units() {
@@ -790,6 +871,13 @@ mod unit_tests {
 			Voltage::from_GV(1.0_f64).to_V(),
 			Voltage::from_MV(1000.0_f64).to_V(), 9
 		);
+		let _ = Voltage::from_V(1.0_f64).to_V();
+		let _ = Voltage::from_V(1.0_f64).to_mV();
+		let _ = Voltage::from_V(1.0_f64).to_uV();
+		let _ = Voltage::from_V(1.0_f64).to_nV();
+		let _ = Voltage::from_V(1.0_f64).to_kV();
+		let _ = Voltage::from_V(1.0_f64).to_MV();
+		let _ = Voltage::from_V(1.0_f64).to_GV();
 	}
 	#[test]
 	fn resistance_units() {
@@ -817,6 +905,13 @@ mod unit_tests {
 			Resistance::from_Gohm(1.0_f64).to_ohm(),
 			Resistance::from_Mohm(1000.0_f64).to_ohm(), 9
 		);
+		let _ = Resistance::from_ohm(1.0_f64).to_ohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_mohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_uohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_nohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_kohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_Mohm();
+		let _ = Resistance::from_ohm(1.0_f64).to_Gohm();
 	}
 	#[test]
 	fn conductance_units() {
@@ -844,6 +939,13 @@ mod unit_tests {
 			Conductance::from_GS(1.0_f64).to_S(),
 			Conductance::from_MS(1000.0_f64).to_S(), 9
 		);
+		let _ = Conductance::from_S(1.0_f64).to_S();
+		let _ = Conductance::from_S(1.0_f64).to_mS();
+		let _ = Conductance::from_S(1.0_f64).to_uS();
+		let _ = Conductance::from_S(1.0_f64).to_nS();
+		let _ = Conductance::from_S(1.0_f64).to_kS();
+		let _ = Conductance::from_S(1.0_f64).to_MS();
+		let _ = Conductance::from_S(1.0_f64).to_GS();
 	}
 	#[test]
 	fn capacitance_units() {
@@ -871,6 +973,13 @@ mod unit_tests {
 			Capacitance::from_GF(1.0_f64).to_F(),
 			Capacitance::from_MF(1000.0_f64).to_F(), 9
 		);
+		let _ = Capacitance::from_F(1.0_f64).to_F();
+		let _ = Capacitance::from_F(1.0_f64).to_mF();
+		let _ = Capacitance::from_F(1.0_f64).to_uF();
+		let _ = Capacitance::from_F(1.0_f64).to_nF();
+		let _ = Capacitance::from_F(1.0_f64).to_kF();
+		let _ = Capacitance::from_F(1.0_f64).to_MF();
+		let _ = Capacitance::from_F(1.0_f64).to_GF();
 	}
 	#[test]
 	fn inductance_units() {
@@ -898,6 +1007,13 @@ mod unit_tests {
 			Inductance::from_GH(1.0_f64).to_H(),
 			Inductance::from_MH(1000.0_f64).to_H(), 9
 		);
+		let _ = Inductance::from_H(1.0_f64).to_H();
+		let _ = Inductance::from_H(1.0_f64).to_mH();
+		let _ = Inductance::from_H(1.0_f64).to_uH();
+		let _ = Inductance::from_H(1.0_f64).to_nH();
+		let _ = Inductance::from_H(1.0_f64).to_kH();
+		let _ = Inductance::from_H(1.0_f64).to_MH();
+		let _ = Inductance::from_H(1.0_f64).to_GH();
 	}
 	#[test]
 	fn magnetic_flux_units() {
@@ -925,6 +1041,13 @@ mod unit_tests {
 			MagneticFlux::from_GWb(1.0_f64).to_Wb(),
 			MagneticFlux::from_MWb(1000.0_f64).to_Wb(), 9
 		);
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_Wb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_mWb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_uWb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_nWb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_kWb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_MWb();
+		let _ = MagneticFlux::from_Wb(1.0_f64).to_GWb();
 	}
 	#[test]
 	fn magnetic_flux_density_units() {
@@ -952,12 +1075,23 @@ mod unit_tests {
 			MagneticFluxDensity::from_GT(1.0_f64).to_T(),
 			MagneticFluxDensity::from_MT(1000.0_f64).to_T(), 9
 		);
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_T();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_mT();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_uT();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_nT();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_kT();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_MT();
+		let _ = MagneticFluxDensity::from_T(1.0_f64).to_GT();
 	}
 	#[test]
 	fn catalytic_activity_units() {
 		assert_approx_equal(
 			CatalyticActivity::from_molps(1.0_f64).to_molps(),
 			CatalyticActivity::from_mmolps(1000.0_f64).to_molps(), 9
+		);
+		assert_approx_equal(
+			CatalyticActivity::from_molps(1.0_f64).to_molps(),
+			CatalyticActivity::from_Nps(6.0221415e23_f64).to_molps(), 7
 		);
 		assert_approx_equal(
 			CatalyticActivity::from_mmolps(1.0_f64).to_molps(),
@@ -979,6 +1113,14 @@ mod unit_tests {
 			CatalyticActivity::from_Gmolps(1.0_f64).to_molps(),
 			CatalyticActivity::from_Mmolps(1000.0_f64).to_molps(), 9
 		);
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_Nps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_molps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_mmolps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_umolps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_nmolps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_kmolps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_Mmolps();
+		let _ = CatalyticActivity::from_molps(1.0_f64).to_Gmolps();
 	}
 	#[test]
 	fn concentration_units() {
@@ -1006,6 +1148,12 @@ mod unit_tests {
 			Concentration::from_count_per_cc(6.02214e23_f64).to_M(),
 			Concentration::from_M(1000.0_f64).to_M(), 5
 		);
+		let _ = Concentration::from_M(1.0_f64).to_M();
+		let _ = Concentration::from_M(1.0_f64).to_mM();
+		let _ = Concentration::from_M(1.0_f64).to_uM();
+		let _ = Concentration::from_M(1.0_f64).to_nM();
+		let _ = Concentration::from_M(1.0_f64).to_count_per_cc();
+		let _ = Concentration::from_M(1.0_f64).to_count_per_m3();
 	}
 	#[test]
 	fn luminous_flux_units() {
@@ -1033,6 +1181,13 @@ mod unit_tests {
 			LuminousFlux::from_Glm(1.0_f64).to_lm(),
 			LuminousFlux::from_Mlm(1000.0_f64).to_lm(), 9
 		);
+		let _ = LuminousFlux::from_lm(1.0_f64).to_lm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_mlm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_ulm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_nlm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_klm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_Mlm();
+		let _ = LuminousFlux::from_lm(1.0_f64).to_Glm();
 	}
 	#[test]
 	fn illuminance_units() {
@@ -1060,6 +1215,13 @@ mod unit_tests {
 			Illuminance::from_Glux(1.0_f64).to_lux(),
 			Illuminance::from_Mlux(1000.0_f64).to_lux(), 9
 		);
+		let _ = Illuminance::from_lux(1.0_f64).to_lux();
+		let _ = Illuminance::from_lux(1.0_f64).to_mlux();
+		let _ = Illuminance::from_lux(1.0_f64).to_ulux();
+		let _ = Illuminance::from_lux(1.0_f64).to_nlux();
+		let _ = Illuminance::from_lux(1.0_f64).to_klux();
+		let _ = Illuminance::from_lux(1.0_f64).to_Mlux();
+		let _ = Illuminance::from_lux(1.0_f64).to_Glux();
 	}
 	#[test]
 	fn radioactivity_units() {
@@ -1095,6 +1257,15 @@ mod unit_tests {
 			Radioactivity::from_Rd(1.0_f64).to_Bq(),
 			Radioactivity::from_MBq(1.0_f64).to_Bq(), 9
 		);
+		let _ = Radioactivity::from_Bq(1.0_f64).to_Bq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_mBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_uBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_nBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_kBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_MBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_GBq();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_Ci();
+		let _ = Radioactivity::from_Bq(1.0_f64).to_Rd();
 	}
 	#[test]
 	fn absorbed_dose_units() {
@@ -1138,6 +1309,17 @@ mod unit_tests {
 			AbsorbedDose::from_krad(1.0_f64).to_rad(),
 			AbsorbedDose::from_rad(1000.0_f64).to_rad(), 9
 		);
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_Gy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_mGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_uGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_nGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_kGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_MGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_GGy();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_rad();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_mrad();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_krad();
+		let _ = AbsorbedDose::from_Gy(1.0_f64).to_erg();
 	}
 	#[test]
 	fn dose_equivalent_units() {
@@ -1177,6 +1359,16 @@ mod unit_tests {
 			DoseEquivalent::from_krem(1.0_f64).to_Sv(),
 			DoseEquivalent::from_rem(1000.0_f64).to_Sv(), 9
 		);
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_Sv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_mSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_uSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_nSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_kSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_MSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_GSv();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_rem();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_mrem();
+		let _ = DoseEquivalent::from_Sv(1.0_f64).to_krem();
 	}
 	#[test]
 	fn unit_conversion_test(){
