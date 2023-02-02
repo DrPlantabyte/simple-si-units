@@ -1,6 +1,6 @@
 //! # Simple SI Units
 //! Work in progress...
-
+#![allow(non_snake_case)]
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
@@ -8,7 +8,7 @@ pub use simple_si_units_core::NumLike;
 
 // TODO: implement display for to-string representation (and have pretty version with size-aware
 // unit suffixes)
-mod base {
+pub mod base {
 	use crate::{UnitStruct, NumLike};
 	use std::fmt::{Display, Formatter};
 	// TODO: base SI units
@@ -44,15 +44,102 @@ mod base {
 			return au_per_m * self.m;
 		}
 	}
+
+
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Mass<T: NumLike>{ // TODO: remove
+	pub kg: T
+	}
+	impl<T> Mass<T> where T: NumLike+From<f64> {
+		pub fn from_earth_mass(earth_mass: T) -> Self {
+			let earth_mass_kg: T = T::from(5.972e24f64);
+			Mass{kg: earth_mass_kg * earth_mass}
+		}
+		pub fn from_solar_mass(sun_mass: T) -> Self {
+			let sun_mass_kg: T = T::from(1.989e30f64);
+			Mass{kg: sun_mass_kg * sun_mass}
+		}
+		pub fn from_g(g: T) -> Self {
+			let c: T = T::from(1e-3f64);
+			Mass{kg: c * g}
+		}
+	}
+
+
+
+	#[derive(UnitStruct, Debug, Copy, Clone)]
+	pub struct Time<T: NumLike>{ // TODO: remove
+	pub s: T
+	}
+	impl<T> Time<T> where T: NumLike+From<f64> {
+		pub fn from_days(d: T) -> Self{
+			let day_s = T::from(86400f64);
+			Time{s: day_s * d}
+		}
+	}
 }
-mod spacetime {
+pub mod mechanical {
 	use crate::{UnitStruct, NumLike};
+	use crate::base::*;
 	use std::fmt::{Display, Formatter};
 	// TODO: time and space and geometry
 
-
-	/// Placeholder: Work in progress
 	#[derive(UnitStruct, Debug, Copy, Clone)]
+	pub struct Area<T: NumLike>{ // TODO: remove
+		pub m2: T
+	}
+
+	impl<T> Area<T> where T: NumLike+From<f64>+Into<f64> {
+		pub fn sqrt(self) -> Distance<T> {
+			return Distance{m: T::from(f64::sqrt(self.m2.into()))};
+		}
+	}
+
+
+	#[derive(UnitStruct, Debug, Copy, Clone)]
+	pub struct Velocity<T: NumLike>{ // TODO: remove
+		pub mps: T
+	}
+
+	#[derive(UnitStruct, Debug, Copy, Clone)]
+	pub struct Acceleration<T: NumLike>{ // TODO: remove
+	pub mps2: T
+	}
+
+	impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
+		type Output = Area<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Area{m2: self.m * rhs.m}
+		}
+	}
+	impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Velocity{mps: self.m / rhs.s}
+		}
+	}
+
+	impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Acceleration{mps2: self.mps / rhs.s}
+		}
+	}
+
+	impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Distance{m: self.mps * rhs.s}
+		}
+	}
+	impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Velocity{mps: self.mps2 * rhs.s}
+		}
+	}
+	/// Placeholder: Work in progress
+	#[derive(UnitStruct, Debug, Clone)]
 	pub struct Volume<T: NumLike>{
 		pub m3: T
 	}
@@ -65,13 +152,15 @@ mod spacetime {
 		}
 	}
 }
-mod electromagnetic {
+pub mod electromagnetic {
 	use crate::{UnitStruct, NumLike};
+	use crate::base::*;
 	use std::fmt::{Display, Formatter};
 	// TODO: electrical and magnetism
 }
-mod radiation {
+pub mod radiation {
 	use crate::{UnitStruct, NumLike};
+	use crate::base::*;
 	use std::fmt::{Display, Formatter};
 	// TODO: light and nuclear
 }
@@ -80,8 +169,9 @@ mod radiation {
 /// Unit tests
 #[cfg(test)]
 mod unit_tests {
+	use num_traits::Zero;
 	use super::base::*;
-	use super::spacetime::*;
+	use super::mechanical::*;
 	use super::electromagnetic::*;
 	use super::radiation::*;
 	/// utility function for asserting equality of decimal values with approximations
@@ -89,7 +179,9 @@ mod unit_tests {
 		if a.is_nan() {
 			assert!(b.is_nan());
 		} else if a.is_infinite() {
-			assert!(b.is_infinite() && a.is_sign_negative() == b.is_sign_positive());
+			assert!(b.is_infinite() && a.is_sign_positive() == b.is_sign_positive());
+		} else if a.is_zero() {
+			assert!(b.is_zero());
 		} else {
 			let ypsilon = 10f64.powi(-sigfigs);
 			let max_delta = (a.abs() + b.abs()) * 0.5 * ypsilon;
@@ -1371,23 +1463,78 @@ mod unit_tests {
 		let _ = DoseEquivalent::from_Sv(1.0_f64).to_krem();
 	}
 	#[test]
+	#[allow(dead_code)]
+	#[allow(unused_variables)]
 	fn unit_conversion_test(){
-		todo!();
+		let av: AngularVelocity<f64> = Angle::from_rad(1.0) / Time::from_s(1.0);
+		let aa: AngularAcceleration<f64> = av / Time::from_s(1.0);
+		let mi: MomentOfInertia<f64> = Mass::from_kg(1.0) * (Distance::from_m(1.0) * Distance::from_m(1.0));
+		let am: AngularMomentum<f64> = mi * av;
+		let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
+		let f:  Frequency<f64> = 1.0 / Time::from_s(1.0);
+		let a:  Area<f64> = Distance::from_m(1.0) * Distance::from_m(1.0);
+		let ad: AreaDensity<f64> = a * Mass::from_kg(1.0);
+		let v:  Volume<f64> = a * Distance::from_m(1.0);
+		let v2: Velocity<f64> = Distance::from_m(1.0) / Time::from_s(1.0);
+		let a2: Acceleration<f64> = v2 / Time::from_s(1.0);
+		let m:  Momentum<f64> = Mass::from_kg(1.0) * v2;
+		let f:  Force<f64> = Mass::from_kg(1.0) * a2;
+		let p:  Pressure<f64> = f / a;
+		let e:  Energy<f64> = f * Distance::from_m(1.0);
+		let c:  Charge<f64> = Current::from_A(1.0) * Time::from_s(1.0);
+		let p2: Power<f64> = e / Time::from_s(1.0);
+		let v3: Voltage<f64> = p2 / Current::from_A(1.0);
+		let r:  Resistance<f64> = v3 / Current::from_A(1.0);
+		let c2: Conductance<f64> = 1.0 / r;
+		let c3: Capacitance<f64> = c / v3;
+		let mf: MagneticFlux<f64> = v3 * Time::from_s(1.0);
+		let i:  Inductance<f64> = mf / Current::from_A(1.0);
+		let md: MagneticFluxDensity<f64> = mf / a;
+		let c4: Concentration<f64> = Concentration::from_mol(1.0);
+		let ca: CatalyticActivity<f64> = c4 / Time::from_s(1.0);
+		let lm: LuminousFlux<f64> = Luminosity::from_cd(1.0) * SolidAngle::from_sr(1.0);
+		let lx: Illuminance<f64> = lm / a;
+		// note: nuclear radiation units are not uniquely identifiable
+		let tr: Time<f64> = 1.0 / Radioactivity::from_Bq(1.0); // equivalent to Hz
+		let md: Energy<f64> = AbsorbedDose::from_Gy(1.0) * Mass::from_kg(1.0);
+		let me: Energy<f64> = DoseEquivalent::from_Sv(1.0) * Mass::from_kg(1.0);
 	}
 	/// Placeholder: Work in progress
 	#[test]
 	fn add_subtract_test() {
-		todo!();
+		// Note: math operators are implemented by the proc macro, so all units behave identically
+		// therefore only need to test one of them to ensure all are compliant
+		let d1 = Distance::from_m(2.5);
+		let d2 = Distance::from_m(1.0);
+		assert_approx_equal((d1+d2).to_m(), 3.5, 9);
+		assert_approx_equal((d2+d1).to_m(), 3.5, 9);
+		assert_approx_equal((d1-d2).to_m(), 1.5, 9);
+		assert_approx_equal((d2-d1).to_m(), -1.5, 9);
+		assert_approx_equal((d1-d1).to_m(), 0.0, 9);
 	}
 	/// Placeholder: Work in progress
 	#[test]
 	fn mul_div_test() {
-		todo!();
+		let d1 = Distance::from_m(2.5);
+		let d2 = Distance::from_m(2.0);
+		assert_approx_equal(d1/d2, 1.25, 9);
+		assert_approx_equal(d2/d1, 0.8, 9);
+		assert_approx_equal((d1*d2).to_m2(), 5.0, 9);
+		assert_approx_equal((d2*d1).to_m2(), 5.0, 9);
 	}
 	/// Placeholder: Work in progress
 	#[test]
 	fn op_assign_test() {
 		// +=, -=, *=, /=
-		todo!();
+		let mut d1 = Distance::from_m(2.5);
+		let mut d2 = Distance::from_m(2.0);
+		d1 += d2;
+		assert_approx_equal(d1.to_m(), 4.5, 9);
+		d2 -= d1;
+		assert_approx_equal(d2.to_m(), -2.5, 9);
+		d1 *= 2.0;
+		assert_approx_equal(d1.to_m(), 9.0, 9);
+		d2 /= -2.0;
+		assert_approx_equal(d2.to_m(), 5.0, 9);
 	}
 }

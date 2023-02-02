@@ -78,8 +78,8 @@ The version of this library will be incremented to reflect progress through the 
   namespace
 * **V0.2.0 (Done!)** - Scope declaration
 * **V0.3.0 (Done!)** - Design API
-* **V0.4.0 (In progress...)** - Unit and API tests
-* **V0.5.0** - Base SI units (distance, mass, time, temperature, amount, 
+* **V0.4.0 (Done!)** - Unit and API tests
+* **V0.5.0 (In progress...)** - Base SI units (distance, mass, time, temperature, amount, 
   electric current, luminosity)
 * **V0.6.0** - Common secondary units (velocity, acceleration, energy, etc.)
 * **V0.7.0** - Full test coverage of all types of units
