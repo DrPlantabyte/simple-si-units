@@ -47,7 +47,7 @@ pub mod base {
 
 
 	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Mass<T: NumLike>{ // TODO: remove
+	pub struct Mass<T: NumLike>{ 
 	pub kg: T
 	}
 	impl<T> Mass<T> where T: NumLike+From<f64> {
@@ -67,8 +67,8 @@ pub mod base {
 
 
 
-	#[derive(UnitStruct, Debug, Copy, Clone)]
-	pub struct Time<T: NumLike>{ // TODO: remove
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Time<T: NumLike>{ 
 	pub s: T
 	}
 	impl<T> Time<T> where T: NumLike+From<f64> {
@@ -84,8 +84,8 @@ pub mod mechanical {
 	use std::fmt::{Display, Formatter};
 	// TODO: time and space and geometry
 
-	#[derive(UnitStruct, Debug, Copy, Clone)]
-	pub struct Area<T: NumLike>{ // TODO: remove
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Area<T: NumLike>{ 
 		pub m2: T
 	}
 
@@ -96,13 +96,13 @@ pub mod mechanical {
 	}
 
 
-	#[derive(UnitStruct, Debug, Copy, Clone)]
-	pub struct Velocity<T: NumLike>{ // TODO: remove
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Velocity<T: NumLike>{ 
 		pub mps: T
 	}
 
-	#[derive(UnitStruct, Debug, Copy, Clone)]
-	pub struct Acceleration<T: NumLike>{ // TODO: remove
+	#[derive(UnitStruct, Debug, Clone)]
+	pub struct Acceleration<T: NumLike>{ 
 	pub mps2: T
 	}
 
