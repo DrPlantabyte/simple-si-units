@@ -30,21 +30,29 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 #### Derived units:
 * Angle (rad)
+* Angular Velocity (rad/s)
+* Angular Acceleration (rad/s^2)
+* Moment of Inertia (kg.m^2)
+* Angular Momentum (kg.m^2.rad/s)
+* Torque (kg.m^2/s^2, aka N.m)
 * Solid Angle (sr)
 * Frequency (1/s, aka Hz)
 * Area (m^2)
+* Area Density (kg.m^2)
 * Volume (m^3)
+* Density (kg/L)
 * Velocity (m/s)
 * Acceleration (m/s^2)
+* Momentum (kg.m/s)
 * Force (kg.m/s^2, aka N)
 * Pressure (N/m^2, aka Pa)
 * Energy (kg.m^2/s^2, aka J)
-* Coulomb (A.s, aka C)
+* Charge, aka Coulomb (A.s, aka C)
 * Power, aka Watt (J/s, aka W)
 * Voltage (W/A, aka V)
 * Resistance (V/A, aka Ohm)
 * Conductance (1/ohm, aka S)
-* Capacitance (C/V)
+* Capacitance (C/V, aka F)
 * Inductance (Wb/A, aka H)
 * Magnetic Flux (V.s, aka Wb)
 * Magnetic Flux Density (Wb/m^2, aka T)
@@ -74,7 +82,7 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.5.0** - Base SI units (distance, mass, time, temperature, amount, 
   electric current, luminosity)
 * **V0.6.0** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0** - Full coverage of all types of units
+* **V0.7.0** - Full test coverage of all types of units
 * **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0** - Full documentation coverage
 * **V1.0.0** - Done
