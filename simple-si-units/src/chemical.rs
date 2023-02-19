@@ -1,6 +1,8 @@
 
 //! This module provides chemical SI units, such as catalytic activity 
 //! and chemical concentration.
+use std::fmt;
+
 
 /// The catalytic activity unit type, defined as moles per second in SI units
 #[derive(UnitStruct, Debug, Clone)]
@@ -9,6 +11,16 @@ pub struct CatalyticActivity<T: NumLike>{
 }
 
 impl<T> CatalyticActivity<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "moles per second";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "molps";
+	}
 
 	/// Returns a new catalytic activity value from the given number of moles per second
 	///
@@ -24,7 +36,13 @@ impl<T> CatalyticActivity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for CatalyticActivity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.molps, Self::unit_symbol())
+	}
+}
+
+impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	
 	// TODO: CatalyticActivity * Time -> Amount
 
@@ -42,6 +60,16 @@ pub struct Concentration<T: NumLike>{
 
 impl<T> Concentration<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "moles per cubic meter";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "molpm3";
+	}
+
 	/// Returns a new chemical concentration value from the given number of moles per cubic meter
 	///
 	/// # Arguments
@@ -56,7 +84,13 @@ impl<T> Concentration<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Concentration<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.molpm3, Self::unit_symbol())
+	}
+}
+
+impl<T> Concentration<T> where T: NumLike+From<f64> {
 	
 	// TODO: Concentration * Volume -> Amount
 

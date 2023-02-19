@@ -1,6 +1,8 @@
 
 //! This module provides mechanical SI units, such as angular velocity 
 //! and velocity.
+use std::fmt;
+
 
 /// The angular velocity unit type, defined as radians per second in SI units
 #[derive(UnitStruct, Debug, Clone)]
@@ -9,6 +11,16 @@ pub struct AngularVelocity<T: NumLike>{
 }
 
 impl<T> AngularVelocity<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "radians per second";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "radps";
+	}
 
 	/// Returns a new angular velocity value from the given number of radians per second
 	///
@@ -24,7 +36,13 @@ impl<T> AngularVelocity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for AngularVelocity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.radps, Self::unit_symbol())
+	}
+}
+
+impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	
 	// TODO: AngularVelocity * Time -> Angle
 
@@ -52,6 +70,16 @@ pub struct AngularAcceleration<T: NumLike>{
 
 impl<T> AngularAcceleration<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "radians per second squared";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "radps2";
+	}
+
 	/// Returns a new angular acceleration value from the given number of radians per second squared
 	///
 	/// # Arguments
@@ -66,7 +94,13 @@ impl<T> AngularAcceleration<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for AngularAcceleration<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.radps2, Self::unit_symbol())
+	}
+}
+
+impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	
 	// TODO: AngularAcceleration * Time -> AngularVelocity
 
@@ -84,6 +118,16 @@ pub struct MomentOfInertia<T: NumLike>{
 
 impl<T> MomentOfInertia<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilogram meters squared";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kgm2";
+	}
+
 	/// Returns a new moment of inertia value from the given number of kilogram meters squared
 	///
 	/// # Arguments
@@ -98,7 +142,13 @@ impl<T> MomentOfInertia<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for MomentOfInertia<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kgm2, Self::unit_symbol())
+	}
+}
+
+impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	
 	// TODO: MomentOfInertia / Mass -> Area
 
@@ -116,6 +166,16 @@ pub struct AngularMomentum<T: NumLike>{
 
 impl<T> AngularMomentum<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilogram meters squared radians per second";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kgm2radps";
+	}
+
 	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
 	///
 	/// # Arguments
@@ -130,7 +190,13 @@ impl<T> AngularMomentum<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for AngularMomentum<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kgm2radps, Self::unit_symbol())
+	}
+}
+
+impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
 	// TODO: AngularMomentum / AngularVelocity -> AreaDensity
 
@@ -148,6 +214,16 @@ pub struct Torque<T: NumLike>{
 
 impl<T> Torque<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "newton meters";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "Nm";
+	}
+
 	/// Returns a new torque value from the given number of newton meters
 	///
 	/// # Arguments
@@ -162,7 +238,13 @@ impl<T> Torque<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Torque<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.Nm, Self::unit_symbol())
+	}
+}
+
+impl<T> Torque<T> where T: NumLike+From<f64> {
 	
 	// TODO: Torque / Distance -> Force
 
@@ -202,6 +284,16 @@ pub struct Frequency<T: NumLike>{
 
 impl<T> Frequency<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "hertz";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "Hz";
+	}
+
 	/// Returns a new frequency value from the given number of hertz
 	///
 	/// # Arguments
@@ -216,7 +308,13 @@ impl<T> Frequency<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Frequency<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.Hz, Self::unit_symbol())
+	}
+}
+
+impl<T> Frequency<T> where T: NumLike+From<f64> {
 	
 	// TODO: Frequency * Distance -> Velocity
 
@@ -252,6 +350,16 @@ pub struct AreaDensity<T: NumLike>{
 
 impl<T> AreaDensity<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilograms per square meter";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kgm2";
+	}
+
 	/// Returns a new area density value from the given number of kilograms per square meter
 	///
 	/// # Arguments
@@ -266,7 +374,13 @@ impl<T> AreaDensity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kgm2, Self::unit_symbol())
+	}
+}
+
+impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
 	// TODO: AreaDensity / Mass -> Area
 
@@ -284,6 +398,16 @@ pub struct Density<T: NumLike>{
 
 impl<T> Density<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilograms per liter";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kgpL";
+	}
+
 	/// Returns a new density value from the given number of kilograms per liter
 	///
 	/// # Arguments
@@ -298,7 +422,13 @@ impl<T> Density<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Density<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kgpL, Self::unit_symbol())
+	}
+}
+
+impl<T> Density<T> where T: NumLike+From<f64> {
 	
 }
 
@@ -309,6 +439,16 @@ pub struct Velocity<T: NumLike>{
 }
 
 impl<T> Velocity<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "meters per second";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "mps";
+	}
 
 	/// Returns a new velocity value from the given number of meters per second
 	///
@@ -324,7 +464,13 @@ impl<T> Velocity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Velocity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.mps, Self::unit_symbol())
+	}
+}
+
+impl<T> Velocity<T> where T: NumLike+From<f64> {
 	
 	// TODO: Velocity / Distance -> Frequency
 
@@ -356,6 +502,16 @@ pub struct Acceleration<T: NumLike>{
 
 impl<T> Acceleration<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "meters per second squared";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "mps2";
+	}
+
 	/// Returns a new acceleration value from the given number of meters per second squared
 	///
 	/// # Arguments
@@ -370,7 +526,13 @@ impl<T> Acceleration<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Acceleration<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.mps2, Self::unit_symbol())
+	}
+}
+
+impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	
 	// TODO: Acceleration * Distance -> DoseEquivalent
 
@@ -394,6 +556,16 @@ pub struct Momentum<T: NumLike>{
 
 impl<T> Momentum<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilogram meters per second";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kgmps";
+	}
+
 	/// Returns a new momentum value from the given number of kilogram meters per second
 	///
 	/// # Arguments
@@ -408,7 +580,13 @@ impl<T> Momentum<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Momentum<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kgmps, Self::unit_symbol())
+	}
+}
+
+impl<T> Momentum<T> where T: NumLike+From<f64> {
 	
 	// TODO: Momentum / Mass -> Velocity
 
@@ -434,6 +612,16 @@ pub struct Force<T: NumLike>{
 
 impl<T> Force<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "newtons";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "N";
+	}
+
 	/// Returns a new force value from the given number of newtons
 	///
 	/// # Arguments
@@ -448,7 +636,13 @@ impl<T> Force<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Force<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.N, Self::unit_symbol())
+	}
+}
+
+impl<T> Force<T> where T: NumLike+From<f64> {
 	
 	// TODO: Force * Distance -> Energy
 
@@ -478,6 +672,16 @@ pub struct Pressure<T: NumLike>{
 
 impl<T> Pressure<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "pascals";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "Pa";
+	}
+
 	/// Returns a new pressure value from the given number of pascals
 	///
 	/// # Arguments
@@ -492,7 +696,13 @@ impl<T> Pressure<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Pressure<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.Pa, Self::unit_symbol())
+	}
+}
+
+impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
 	// TODO: Pressure * Area -> Force
 
@@ -508,6 +718,16 @@ pub struct Energy<T: NumLike>{
 
 impl<T> Energy<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "joules";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "J";
+	}
+
 	/// Returns a new energy value from the given number of joules
 	///
 	/// # Arguments
@@ -522,7 +742,13 @@ impl<T> Energy<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Energy<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.J, Self::unit_symbol())
+	}
+}
+
+impl<T> Energy<T> where T: NumLike+From<f64> {
 	
 	// TODO: Energy / Distance -> Force
 
@@ -566,6 +792,16 @@ pub struct Power<T: NumLike>{
 
 impl<T> Power<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "watts";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "W";
+	}
+
 	/// Returns a new power value from the given number of watts
 	///
 	/// # Arguments
@@ -580,7 +816,13 @@ impl<T> Power<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Power<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.W, Self::unit_symbol())
+	}
+}
+
+impl<T> Power<T> where T: NumLike+From<f64> {
 	
 	// TODO: Power * Time -> Energy
 

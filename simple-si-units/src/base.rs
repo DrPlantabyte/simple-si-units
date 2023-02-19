@@ -1,6 +1,8 @@
 
 //! This module provides base SI units, such as distance (aka length) 
 //! and amount.
+use std::fmt;
+
 
 /// The distance (aka length) unit type, defined as meters in SI units
 #[derive(UnitStruct, Debug, Clone)]
@@ -9,6 +11,16 @@ pub struct Distance<T: NumLike>{
 }
 
 impl<T> Distance<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "meters";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "m";
+	}
 
 	/// Returns a new distance value from the given number of meters
 	///
@@ -21,6 +33,12 @@ impl<T> Distance<T> where T: NumLike {
 	/// Returns this distance value in meters
 	pub fn to_m(self) -> T {
 		return self.m;
+	}
+}
+
+impl<T> fmt::Display for Distance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.m, Self::unit_symbol())
 	}
 }
 
@@ -50,6 +68,16 @@ pub struct Mass<T: NumLike>{
 
 impl<T> Mass<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "kilograms";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "kg";
+	}
+
 	/// Returns a new mass value from the given number of kilograms
 	///
 	/// # Arguments
@@ -64,7 +92,13 @@ impl<T> Mass<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Mass<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.kg, Self::unit_symbol())
+	}
+}
+
+impl<T> Mass<T> where T: NumLike+From<f64> {
 	
 	// TODO: Mass * Area -> AreaDensity
 
@@ -86,6 +120,16 @@ pub struct Time<T: NumLike>{
 
 impl<T> Time<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "seconds";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "s";
+	}
+
 	/// Returns a new time value from the given number of seconds
 	///
 	/// # Arguments
@@ -100,7 +144,13 @@ impl<T> Time<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Time<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.s, Self::unit_symbol())
+	}
+}
+
+impl<T> Time<T> where T: NumLike+From<f64> {
 	
 	// TODO: Time * Current -> Charge
 
@@ -142,6 +192,16 @@ pub struct Temperature<T: NumLike>{
 
 impl<T> Temperature<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "degrees kelvin";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "K";
+	}
+
 	/// Returns a new temperature value from the given number of degrees kelvin
 	///
 	/// # Arguments
@@ -156,7 +216,13 @@ impl<T> Temperature<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Temperature<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.K, Self::unit_symbol())
+	}
+}
+
+impl<T> Temperature<T> where T: NumLike+From<f64> {
 	
 }
 
@@ -167,6 +233,16 @@ pub struct Amount<T: NumLike>{
 }
 
 impl<T> Amount<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "moles";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "mol";
+	}
 
 	/// Returns a new amount value from the given number of moles
 	///
@@ -182,7 +258,13 @@ impl<T> Amount<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Amount<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.mol, Self::unit_symbol())
+	}
+}
+
+impl<T> Amount<T> where T: NumLike+From<f64> {
 	
 	// TODO: Amount / Time -> CatalyticActivity
 
@@ -204,6 +286,16 @@ pub struct Current<T: NumLike>{
 
 impl<T> Current<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "amperes";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "A";
+	}
+
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
@@ -218,7 +310,13 @@ impl<T> Current<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Current<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.A, Self::unit_symbol())
+	}
+}
+
+impl<T> Current<T> where T: NumLike+From<f64> {
 	
 	// TODO: Current * Time -> Charge
 
@@ -248,6 +346,16 @@ pub struct Luminosity<T: NumLike>{
 
 impl<T> Luminosity<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "candela";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "cd";
+	}
+
 	/// Returns a new luminosity value from the given number of candela
 	///
 	/// # Arguments
@@ -262,7 +370,13 @@ impl<T> Luminosity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Luminosity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.cd, Self::unit_symbol())
+	}
+}
+
+impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	
 	// TODO: Luminosity * SolidAngle -> LuminousFlux
 

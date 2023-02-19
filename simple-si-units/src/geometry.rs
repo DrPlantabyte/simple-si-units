@@ -1,6 +1,8 @@
 
 //! This module provides geometry SI units, such as angle 
 //! and volume.
+use std::fmt;
+
 
 /// The angle unit type, defined as radians in SI units
 #[derive(UnitStruct, Debug, Clone)]
@@ -9,6 +11,16 @@ pub struct Angle<T: NumLike>{
 }
 
 impl<T> Angle<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "radians";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "rad";
+	}
 
 	/// Returns a new angle value from the given number of radians
 	///
@@ -24,7 +36,13 @@ impl<T> Angle<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Angle<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.rad, Self::unit_symbol())
+	}
+}
+
+impl<T> Angle<T> where T: NumLike+From<f64> {
 	
 	// TODO: Angle / Time -> AngularVelocity
 
@@ -42,6 +60,16 @@ pub struct SolidAngle<T: NumLike>{
 
 impl<T> SolidAngle<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "steradian";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "sr";
+	}
+
 	/// Returns a new solid angle value from the given number of steradian
 	///
 	/// # Arguments
@@ -56,7 +84,13 @@ impl<T> SolidAngle<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for SolidAngle<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.sr, Self::unit_symbol())
+	}
+}
+
+impl<T> SolidAngle<T> where T: NumLike+From<f64> {
 	
 	// TODO: SolidAngle * Luminosity -> LuminousFlux
 
@@ -69,6 +103,16 @@ pub struct Area<T: NumLike>{
 }
 
 impl<T> Area<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "square meters";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "m2";
+	}
 
 	/// Returns a new area value from the given number of square meters
 	///
@@ -84,7 +128,13 @@ impl<T> Area<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Area<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.m2, Self::unit_symbol())
+	}
+}
+
+impl<T> Area<T> where T: NumLike+From<f64> {
 	
 	// TODO: Area * Distance -> Volume
 
@@ -106,6 +156,16 @@ pub struct Volume<T: NumLike>{
 
 impl<T> Volume<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "cubic meters";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "m3";
+	}
+
 	/// Returns a new volume value from the given number of cubic meters
 	///
 	/// # Arguments
@@ -120,7 +180,13 @@ impl<T> Volume<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Volume<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.m3, Self::unit_symbol())
+	}
+}
+
+impl<T> Volume<T> where T: NumLike+From<f64> {
 	
 	// TODO: Volume / Distance -> Area
 

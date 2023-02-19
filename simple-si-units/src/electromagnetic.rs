@@ -1,6 +1,8 @@
 
 //! This module provides electromagnetic SI units, such as electric charge (aka coulombs) 
 //! and magnetic flux.
+use std::fmt;
+
 
 /// The electric charge (aka coulombs) unit type, defined as coulombs in SI units
 #[derive(UnitStruct, Debug, Clone)]
@@ -9,6 +11,16 @@ pub struct Charge<T: NumLike>{
 }
 
 impl<T> Charge<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "coulombs";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "C";
+	}
 
 	/// Returns a new electric charge value from the given number of coulombs
 	///
@@ -24,7 +36,13 @@ impl<T> Charge<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Charge<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.C, Self::unit_symbol())
+	}
+}
+
+impl<T> Charge<T> where T: NumLike+From<f64> {
 	
 	// TODO: Charge / Time -> Current
 
@@ -54,6 +72,16 @@ pub struct Voltage<T: NumLike>{
 
 impl<T> Voltage<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "volts";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "V";
+	}
+
 	/// Returns a new voltage value from the given number of volts
 	///
 	/// # Arguments
@@ -68,7 +96,13 @@ impl<T> Voltage<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Voltage<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.V, Self::unit_symbol())
+	}
+}
+
+impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
 	// TODO: Voltage * Time -> MagneticFlux
 
@@ -98,6 +132,16 @@ pub struct Resistance<T: NumLike>{
 
 impl<T> Resistance<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "ohms";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "Ohm";
+	}
+
 	/// Returns a new electrical resistance value from the given number of ohms
 	///
 	/// # Arguments
@@ -112,7 +156,13 @@ impl<T> Resistance<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Resistance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.Ohm, Self::unit_symbol())
+	}
+}
+
+impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
 	// TODO: Resistance * Time -> Inductance
 
@@ -136,6 +186,16 @@ pub struct Conductance<T: NumLike>{
 
 impl<T> Conductance<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "siemens";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "S";
+	}
+
 	/// Returns a new electrical conductance value from the given number of siemens
 	///
 	/// # Arguments
@@ -150,7 +210,13 @@ impl<T> Conductance<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Conductance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.S, Self::unit_symbol())
+	}
+}
+
+impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
 	// TODO: Conductance * Time -> Capacitance
 
@@ -174,6 +240,16 @@ pub struct Capacitance<T: NumLike>{
 
 impl<T> Capacitance<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "farads";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "F";
+	}
+
 	/// Returns a new electrical capacitance value from the given number of farads
 	///
 	/// # Arguments
@@ -188,7 +264,13 @@ impl<T> Capacitance<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Capacitance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.F, Self::unit_symbol())
+	}
+}
+
+impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
 	// TODO: Capacitance / Time -> Conductance
 
@@ -210,6 +292,16 @@ pub struct Inductance<T: NumLike>{
 
 impl<T> Inductance<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "henries";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "H";
+	}
+
 	/// Returns a new inductance value from the given number of henries
 	///
 	/// # Arguments
@@ -224,7 +316,13 @@ impl<T> Inductance<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Inductance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.H, Self::unit_symbol())
+	}
+}
+
+impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
 	// TODO: Inductance / Time -> Resistance
 
@@ -246,6 +344,16 @@ pub struct MagneticFlux<T: NumLike>{
 
 impl<T> MagneticFlux<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "webers";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "Wb";
+	}
+
 	/// Returns a new magnetic flux value from the given number of webers
 	///
 	/// # Arguments
@@ -260,7 +368,13 @@ impl<T> MagneticFlux<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.Wb, Self::unit_symbol())
+	}
+}
+
+impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
 	// TODO: MagneticFlux / Time -> Voltage
 
@@ -294,6 +408,16 @@ pub struct MagneticFluxDensity<T: NumLike>{
 
 impl<T> MagneticFluxDensity<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "teslas";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "T";
+	}
+
 	/// Returns a new magnetic flux density value from the given number of teslas
 	///
 	/// # Arguments
@@ -308,7 +432,13 @@ impl<T> MagneticFluxDensity<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.T, Self::unit_symbol())
+	}
+}
+
+impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
 	// TODO: MagneticFluxDensity * Area -> MagneticFlux
 
@@ -321,6 +451,16 @@ pub struct LuminousFlux<T: NumLike>{
 }
 
 impl<T> LuminousFlux<T> where T: NumLike {
+
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "lumens";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "lm";
+	}
 
 	/// Returns a new luminous flux value from the given number of lumens
 	///
@@ -336,7 +476,13 @@ impl<T> LuminousFlux<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.lm, Self::unit_symbol())
+	}
+}
+
+impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
 	// TODO: LuminousFlux / Luminosity -> SolidAngle
 
@@ -352,6 +498,16 @@ pub struct Illuminance<T: NumLike>{
 
 impl<T> Illuminance<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "lux";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "lux";
+	}
+
 	/// Returns a new illuminance value from the given number of lux
 	///
 	/// # Arguments
@@ -366,7 +522,13 @@ impl<T> Illuminance<T> where T: NumLike {
 	}
 }
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> fmt::Display for Illuminance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.lux, Self::unit_symbol())
+	}
+}
+
+impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	
 }
 

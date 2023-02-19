@@ -1,6 +1,8 @@
 MODULE_TEMPLATE='''
 //! This module provides %(category)s SI units, such as %(example1)s 
 //! and %(example2)s.
+use std::fmt;
+
 %(content)s
 
 '''
@@ -14,6 +16,16 @@ pub struct %(code name)s<T: NumLike>{
 
 impl<T> %(code name)s<T> where T: NumLike {
 
+	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	pub fn unit_name() -> &'static str {
+		return "%(unit name)s";
+	}
+	
+	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	pub fn unit_symbol() -> &'static str {
+		return "%(unit symbol)s";
+	}
+
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
 	///
 	/// # Arguments
@@ -24,13 +36,17 @@ impl<T> %(code name)s<T> where T: NumLike {
 	
 	/// Returns this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(unit symbol)s;
+		return self.%(unit symbol)s.clone();
 	}
 }
 
-// TODO: implement Display
+impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", self.%(unit symbol)s, Self::unit_symbol())
+	}
+}
 
-impl<T> Distance<T> where T: NumLike+From<f64> {
+impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 	%(to-and-from)s
 }
 '''
