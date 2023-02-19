@@ -2,6 +2,12 @@
 //! This module provides chemical SI units, such as catalytic activity 
 //! and chemical concentration.
 use std::fmt;
+use super::base::*;
+use super::chemical::*;
+use super::electromagnetic::*;
+use super::geometry::*;
+use super::mechanical::*;
+use super::nuclear::*;
 
 
 /// The catalytic activity unit type, defined as moles per second in SI units
@@ -30,25 +36,46 @@ impl<T> CatalyticActivity<T> where T: NumLike {
 		CatalyticActivity{molps}
 	}
 	
-	/// Returns this catalytic activity value in moles per second
+	/// Returns a copy of this catalytic activity value in moles per second
 	pub fn to_molps(self) -> T {
-		return self.molps;
+		return self.molps.clone();
 	}
 }
 
 impl<T> fmt::Display for CatalyticActivity<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.molps, Self::unit_symbol())
+		write!(f, "{} {}", &self.molps, Self::unit_symbol())
 	}
 }
 
 impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	
-	// TODO: CatalyticActivity * Time -> Amount
+	// CatalyticActivity * Time -> Amount
+	// TODO: docstring
+	impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Amount{mol: self.molps * rhs.s}
+		}
+	}
 
-	// TODO: CatalyticActivity / Amount -> Frequency
+	// CatalyticActivity / Amount -> Frequency
+	// TODO: docstring
+	impl<T> std::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Amount<T>) -> Self::Output {
+			Frequency{Hz: self.molps / rhs.mol}
+		}
+	}
 
-	// TODO: CatalyticActivity / Frequency -> Amount
+	// CatalyticActivity / Frequency -> Amount
+	// TODO: docstring
+	impl<T> std::ops::Div<Frequency<T>> for CatalyticActivity<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Amount{mol: self.molps / rhs.Hz}
+		}
+	}
 
 }
 
@@ -78,21 +105,28 @@ impl<T> Concentration<T> where T: NumLike {
 		Concentration{molpm3}
 	}
 	
-	/// Returns this chemical concentration value in moles per cubic meter
+	/// Returns a copy of this chemical concentration value in moles per cubic meter
 	pub fn to_molpm3(self) -> T {
-		return self.molpm3;
+		return self.molpm3.clone();
 	}
 }
 
 impl<T> fmt::Display for Concentration<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.molpm3, Self::unit_symbol())
+		write!(f, "{} {}", &self.molpm3, Self::unit_symbol())
 	}
 }
 
 impl<T> Concentration<T> where T: NumLike+From<f64> {
 	
-	// TODO: Concentration * Volume -> Amount
+	// Concentration * Volume -> Amount
+	// TODO: docstring
+	impl<T> std::ops::Mul<Volume<T>> for Concentration<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn mul(self, rhs: Volume<T>) -> Self::Output {
+			Amount{mol: self.molpm3 * rhs.m3}
+		}
+	}
 
 }
 

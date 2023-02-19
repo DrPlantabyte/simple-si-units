@@ -2,6 +2,12 @@
 //! This module provides electromagnetic SI units, such as electric charge (aka coulombs) 
 //! and magnetic flux.
 use std::fmt;
+use super::base::*;
+use super::chemical::*;
+use super::electromagnetic::*;
+use super::geometry::*;
+use super::mechanical::*;
+use super::nuclear::*;
 
 
 /// The electric charge (aka coulombs) unit type, defined as coulombs in SI units
@@ -30,37 +36,100 @@ impl<T> Charge<T> where T: NumLike {
 		Charge{C}
 	}
 	
-	/// Returns this electric charge value in coulombs
+	/// Returns a copy of this electric charge value in coulombs
 	pub fn to_C(self) -> T {
-		return self.C;
+		return self.C.clone();
 	}
 }
 
 impl<T> fmt::Display for Charge<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.C, Self::unit_symbol())
+		write!(f, "{} {}", &self.C, Self::unit_symbol())
 	}
 }
 
 impl<T> Charge<T> where T: NumLike+From<f64> {
 	
-	// TODO: Charge / Time -> Current
+	// Charge / Time -> Current
+	// TODO: docstring
+	impl<T> std::ops::Div<Time<T>> for Charge<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Current{A: self.C / rhs.s}
+		}
+	}
 
-	// TODO: Charge / Current -> Time
+	// Charge / Current -> Time
+	// TODO: docstring
+	impl<T> std::ops::Div<Current<T>> for Charge<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Time{s: self.C / rhs.A}
+		}
+	}
 
-	// TODO: Charge * Frequency -> Current
+	// Charge * Frequency -> Current
+	// TODO: docstring
+	impl<T> std::ops::Mul<Frequency<T>> for Charge<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Current{A: self.C * rhs.Hz}
+		}
+	}
 
-	// TODO: Charge * Voltage -> Energy
+	// Charge * Voltage -> Energy
+	// TODO: docstring
+	impl<T> std::ops::Mul<Voltage<T>> for Charge<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Voltage<T>) -> Self::Output {
+			Energy{J: self.C * rhs.V}
+		}
+	}
 
-	// TODO: Charge / Voltage -> Capacitance
+	// Charge / Voltage -> Capacitance
+	// TODO: docstring
+	impl<T> std::ops::Div<Voltage<T>> for Charge<T> where T: NumLike {
+		type Output = Capacitance<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Capacitance{F: self.C / rhs.V}
+		}
+	}
 
-	// TODO: Charge * Resistance -> MagneticFlux
+	// Charge * Resistance -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Mul<Resistance<T>> for Charge<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: Resistance<T>) -> Self::Output {
+			MagneticFlux{Wb: self.C * rhs.Ohm}
+		}
+	}
 
-	// TODO: Charge / Conductance -> MagneticFlux
+	// Charge / Conductance -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Div<Conductance<T>> for Charge<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Conductance<T>) -> Self::Output {
+			MagneticFlux{Wb: self.C / rhs.S}
+		}
+	}
 
-	// TODO: Charge / Capacitance -> Voltage
+	// Charge / Capacitance -> Voltage
+	// TODO: docstring
+	impl<T> std::ops::Div<Capacitance<T>> for Charge<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Capacitance<T>) -> Self::Output {
+			Voltage{V: self.C / rhs.F}
+		}
+	}
 
-	// TODO: Charge / MagneticFlux -> Conductance
+	// Charge / MagneticFlux -> Conductance
+	// TODO: docstring
+	impl<T> std::ops::Div<MagneticFlux<T>> for Charge<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Conductance{S: self.C / rhs.Wb}
+		}
+	}
 
 }
 
@@ -90,37 +159,100 @@ impl<T> Voltage<T> where T: NumLike {
 		Voltage{V}
 	}
 	
-	/// Returns this voltage value in volts
+	/// Returns a copy of this voltage value in volts
 	pub fn to_V(self) -> T {
-		return self.V;
+		return self.V.clone();
 	}
 }
 
 impl<T> fmt::Display for Voltage<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.V, Self::unit_symbol())
+		write!(f, "{} {}", &self.V, Self::unit_symbol())
 	}
 }
 
 impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
-	// TODO: Voltage * Time -> MagneticFlux
+	// Voltage * Time -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Mul<Time<T>> for Voltage<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			MagneticFlux{Wb: self.V * rhs.s}
+		}
+	}
 
-	// TODO: Voltage * Current -> Power
+	// Voltage * Current -> Power
+	// TODO: docstring
+	impl<T> std::ops::Mul<Current<T>> for Voltage<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Current<T>) -> Self::Output {
+			Power{W: self.V * rhs.A}
+		}
+	}
 
-	// TODO: Voltage / Current -> Resistance
+	// Voltage / Current -> Resistance
+	// TODO: docstring
+	impl<T> std::ops::Div<Current<T>> for Voltage<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Resistance{Ohm: self.V / rhs.A}
+		}
+	}
 
-	// TODO: Voltage / Frequency -> MagneticFlux
+	// Voltage / Frequency -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Div<Frequency<T>> for Voltage<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			MagneticFlux{Wb: self.V / rhs.Hz}
+		}
+	}
 
-	// TODO: Voltage * Charge -> Energy
+	// Voltage * Charge -> Energy
+	// TODO: docstring
+	impl<T> std::ops::Mul<Charge<T>> for Voltage<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Charge<T>) -> Self::Output {
+			Energy{J: self.V * rhs.C}
+		}
+	}
 
-	// TODO: Voltage / Resistance -> Current
+	// Voltage / Resistance -> Current
+	// TODO: docstring
+	impl<T> std::ops::Div<Resistance<T>> for Voltage<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Resistance<T>) -> Self::Output {
+			Current{A: self.V / rhs.Ohm}
+		}
+	}
 
-	// TODO: Voltage * Conductance -> Current
+	// Voltage * Conductance -> Current
+	// TODO: docstring
+	impl<T> std::ops::Mul<Conductance<T>> for Voltage<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Conductance<T>) -> Self::Output {
+			Current{A: self.V * rhs.S}
+		}
+	}
 
-	// TODO: Voltage * Capacitance -> Charge
+	// Voltage * Capacitance -> Charge
+	// TODO: docstring
+	impl<T> std::ops::Mul<Capacitance<T>> for Voltage<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
+			Charge{C: self.V * rhs.F}
+		}
+	}
 
-	// TODO: Voltage / MagneticFlux -> Frequency
+	// Voltage / MagneticFlux -> Frequency
+	// TODO: docstring
+	impl<T> std::ops::Div<MagneticFlux<T>> for Voltage<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Frequency{Hz: self.V / rhs.Wb}
+		}
+	}
 
 }
 
@@ -150,31 +282,73 @@ impl<T> Resistance<T> where T: NumLike {
 		Resistance{Ohm}
 	}
 	
-	/// Returns this electrical resistance value in ohms
+	/// Returns a copy of this electrical resistance value in ohms
 	pub fn to_Ohm(self) -> T {
-		return self.Ohm;
+		return self.Ohm.clone();
 	}
 }
 
 impl<T> fmt::Display for Resistance<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.Ohm, Self::unit_symbol())
+		write!(f, "{} {}", &self.Ohm, Self::unit_symbol())
 	}
 }
 
 impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
-	// TODO: Resistance * Time -> Inductance
+	// Resistance * Time -> Inductance
+	// TODO: docstring
+	impl<T> std::ops::Mul<Time<T>> for Resistance<T> where T: NumLike {
+		type Output = Inductance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Inductance{H: self.Ohm * rhs.s}
+		}
+	}
 
-	// TODO: Resistance * Current -> Voltage
+	// Resistance * Current -> Voltage
+	// TODO: docstring
+	impl<T> std::ops::Mul<Current<T>> for Resistance<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn mul(self, rhs: Current<T>) -> Self::Output {
+			Voltage{V: self.Ohm * rhs.A}
+		}
+	}
 
-	// TODO: Resistance / Frequency -> Inductance
+	// Resistance / Frequency -> Inductance
+	// TODO: docstring
+	impl<T> std::ops::Div<Frequency<T>> for Resistance<T> where T: NumLike {
+		type Output = Inductance<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Inductance{H: self.Ohm / rhs.Hz}
+		}
+	}
 
-	// TODO: Resistance * Charge -> MagneticFlux
+	// Resistance * Charge -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Mul<Charge<T>> for Resistance<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: Charge<T>) -> Self::Output {
+			MagneticFlux{Wb: self.Ohm * rhs.C}
+		}
+	}
 
-	// TODO: Resistance * Capacitance -> Time
+	// Resistance * Capacitance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Mul<Capacitance<T>> for Resistance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
+			Time{s: self.Ohm * rhs.F}
+		}
+	}
 
-	// TODO: Resistance / Inductance -> Frequency
+	// Resistance / Inductance -> Frequency
+	// TODO: docstring
+	impl<T> std::ops::Div<Inductance<T>> for Resistance<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Inductance<T>) -> Self::Output {
+			Frequency{Hz: self.Ohm / rhs.H}
+		}
+	}
 
 }
 
@@ -204,31 +378,73 @@ impl<T> Conductance<T> where T: NumLike {
 		Conductance{S}
 	}
 	
-	/// Returns this electrical conductance value in siemens
+	/// Returns a copy of this electrical conductance value in siemens
 	pub fn to_S(self) -> T {
-		return self.S;
+		return self.S.clone();
 	}
 }
 
 impl<T> fmt::Display for Conductance<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.S, Self::unit_symbol())
+		write!(f, "{} {}", &self.S, Self::unit_symbol())
 	}
 }
 
 impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
-	// TODO: Conductance * Time -> Capacitance
+	// Conductance * Time -> Capacitance
+	// TODO: docstring
+	impl<T> std::ops::Mul<Time<T>> for Conductance<T> where T: NumLike {
+		type Output = Capacitance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Capacitance{F: self.S * rhs.s}
+		}
+	}
 
-	// TODO: Conductance / Frequency -> Capacitance
+	// Conductance / Frequency -> Capacitance
+	// TODO: docstring
+	impl<T> std::ops::Div<Frequency<T>> for Conductance<T> where T: NumLike {
+		type Output = Capacitance<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Capacitance{F: self.S / rhs.Hz}
+		}
+	}
 
-	// TODO: Conductance * Voltage -> Current
+	// Conductance * Voltage -> Current
+	// TODO: docstring
+	impl<T> std::ops::Mul<Voltage<T>> for Conductance<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Voltage<T>) -> Self::Output {
+			Current{A: self.S * rhs.V}
+		}
+	}
 
-	// TODO: Conductance / Capacitance -> Frequency
+	// Conductance / Capacitance -> Frequency
+	// TODO: docstring
+	impl<T> std::ops::Div<Capacitance<T>> for Conductance<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Capacitance<T>) -> Self::Output {
+			Frequency{Hz: self.S / rhs.F}
+		}
+	}
 
-	// TODO: Conductance * Inductance -> Time
+	// Conductance * Inductance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Mul<Inductance<T>> for Conductance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn mul(self, rhs: Inductance<T>) -> Self::Output {
+			Time{s: self.S * rhs.H}
+		}
+	}
 
-	// TODO: Conductance * MagneticFlux -> Charge
+	// Conductance * MagneticFlux -> Charge
+	// TODO: docstring
+	impl<T> std::ops::Mul<MagneticFlux<T>> for Conductance<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Charge{C: self.S * rhs.Wb}
+		}
+	}
 
 }
 
@@ -258,29 +474,64 @@ impl<T> Capacitance<T> where T: NumLike {
 		Capacitance{F}
 	}
 	
-	/// Returns this electrical capacitance value in farads
+	/// Returns a copy of this electrical capacitance value in farads
 	pub fn to_F(self) -> T {
-		return self.F;
+		return self.F.clone();
 	}
 }
 
 impl<T> fmt::Display for Capacitance<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.F, Self::unit_symbol())
+		write!(f, "{} {}", &self.F, Self::unit_symbol())
 	}
 }
 
 impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
-	// TODO: Capacitance / Time -> Conductance
+	// Capacitance / Time -> Conductance
+	// TODO: docstring
+	impl<T> std::ops::Div<Time<T>> for Capacitance<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Conductance{S: self.F / rhs.s}
+		}
+	}
 
-	// TODO: Capacitance * Frequency -> Conductance
+	// Capacitance * Frequency -> Conductance
+	// TODO: docstring
+	impl<T> std::ops::Mul<Frequency<T>> for Capacitance<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Conductance{S: self.F * rhs.Hz}
+		}
+	}
 
-	// TODO: Capacitance * Voltage -> Charge
+	// Capacitance * Voltage -> Charge
+	// TODO: docstring
+	impl<T> std::ops::Mul<Voltage<T>> for Capacitance<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn mul(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.F * rhs.V}
+		}
+	}
 
-	// TODO: Capacitance * Resistance -> Time
+	// Capacitance * Resistance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Mul<Resistance<T>> for Capacitance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn mul(self, rhs: Resistance<T>) -> Self::Output {
+			Time{s: self.F * rhs.Ohm}
+		}
+	}
 
-	// TODO: Capacitance / Conductance -> Time
+	// Capacitance / Conductance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Div<Conductance<T>> for Capacitance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Conductance<T>) -> Self::Output {
+			Time{s: self.F / rhs.S}
+		}
+	}
 
 }
 
@@ -310,29 +561,64 @@ impl<T> Inductance<T> where T: NumLike {
 		Inductance{H}
 	}
 	
-	/// Returns this inductance value in henries
+	/// Returns a copy of this inductance value in henries
 	pub fn to_H(self) -> T {
-		return self.H;
+		return self.H.clone();
 	}
 }
 
 impl<T> fmt::Display for Inductance<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.H, Self::unit_symbol())
+		write!(f, "{} {}", &self.H, Self::unit_symbol())
 	}
 }
 
 impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
-	// TODO: Inductance / Time -> Resistance
+	// Inductance / Time -> Resistance
+	// TODO: docstring
+	impl<T> std::ops::Div<Time<T>> for Inductance<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Resistance{Ohm: self.H / rhs.s}
+		}
+	}
 
-	// TODO: Inductance * Current -> MagneticFlux
+	// Inductance * Current -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Mul<Current<T>> for Inductance<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.H * rhs.A}
+		}
+	}
 
-	// TODO: Inductance * Frequency -> Resistance
+	// Inductance * Frequency -> Resistance
+	// TODO: docstring
+	impl<T> std::ops::Mul<Frequency<T>> for Inductance<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Resistance{Ohm: self.H * rhs.Hz}
+		}
+	}
 
-	// TODO: Inductance / Resistance -> Time
+	// Inductance / Resistance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Div<Resistance<T>> for Inductance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Resistance<T>) -> Self::Output {
+			Time{s: self.H / rhs.Ohm}
+		}
+	}
 
-	// TODO: Inductance * Conductance -> Time
+	// Inductance * Conductance -> Time
+	// TODO: docstring
+	impl<T> std::ops::Mul<Conductance<T>> for Inductance<T> where T: NumLike {
+		type Output = Time<T>;
+		fn mul(self, rhs: Conductance<T>) -> Self::Output {
+			Time{s: self.H * rhs.S}
+		}
+	}
 
 }
 
@@ -362,41 +648,118 @@ impl<T> MagneticFlux<T> where T: NumLike {
 		MagneticFlux{Wb}
 	}
 	
-	/// Returns this magnetic flux value in webers
+	/// Returns a copy of this magnetic flux value in webers
 	pub fn to_Wb(self) -> T {
-		return self.Wb;
+		return self.Wb.clone();
 	}
 }
 
 impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.Wb, Self::unit_symbol())
+		write!(f, "{} {}", &self.Wb, Self::unit_symbol())
 	}
 }
 
 impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
-	// TODO: MagneticFlux / Time -> Voltage
+	// MagneticFlux / Time -> Voltage
+	// TODO: docstring
+	impl<T> std::ops::Div<Time<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Voltage{V: self.Wb / rhs.s}
+		}
+	}
 
-	// TODO: MagneticFlux * Current -> Energy
+	// MagneticFlux * Current -> Energy
+	// TODO: docstring
+	impl<T> std::ops::Mul<Current<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Current<T>) -> Self::Output {
+			Energy{J: self.Wb * rhs.A}
+		}
+	}
 
-	// TODO: MagneticFlux / Current -> Inductance
+	// MagneticFlux / Current -> Inductance
+	// TODO: docstring
+	impl<T> std::ops::Div<Current<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Inductance<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Inductance{H: self.Wb / rhs.A}
+		}
+	}
 
-	// TODO: MagneticFlux * Frequency -> Voltage
+	// MagneticFlux * Frequency -> Voltage
+	// TODO: docstring
+	impl<T> std::ops::Mul<Frequency<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Voltage{V: self.Wb * rhs.Hz}
+		}
+	}
 
-	// TODO: MagneticFlux / Area -> MagneticFluxDensity
+	// MagneticFlux / Area -> MagneticFluxDensity
+	// TODO: docstring
+	impl<T> std::ops::Div<Area<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = MagneticFluxDensity<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			MagneticFluxDensity{T: self.Wb / rhs.m2}
+		}
+	}
 
-	// TODO: MagneticFlux / Charge -> Resistance
+	// MagneticFlux / Charge -> Resistance
+	// TODO: docstring
+	impl<T> std::ops::Div<Charge<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Resistance{Ohm: self.Wb / rhs.C}
+		}
+	}
 
-	// TODO: MagneticFlux / Voltage -> Time
+	// MagneticFlux / Voltage -> Time
+	// TODO: docstring
+	impl<T> std::ops::Div<Voltage<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Time{s: self.Wb / rhs.V}
+		}
+	}
 
-	// TODO: MagneticFlux / Resistance -> Charge
+	// MagneticFlux / Resistance -> Charge
+	// TODO: docstring
+	impl<T> std::ops::Div<Resistance<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Resistance<T>) -> Self::Output {
+			Charge{C: self.Wb / rhs.Ohm}
+		}
+	}
 
-	// TODO: MagneticFlux * Conductance -> Charge
+	// MagneticFlux * Conductance -> Charge
+	// TODO: docstring
+	impl<T> std::ops::Mul<Conductance<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn mul(self, rhs: Conductance<T>) -> Self::Output {
+			Charge{C: self.Wb * rhs.S}
+		}
+	}
 
-	// TODO: MagneticFlux / Inductance -> Current
+	// MagneticFlux / Inductance -> Current
+	// TODO: docstring
+	impl<T> std::ops::Div<Inductance<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Inductance<T>) -> Self::Output {
+			Current{A: self.Wb / rhs.H}
+		}
+	}
 
-	// TODO: MagneticFlux / MagneticFluxDensity -> Area
+	// MagneticFlux / MagneticFluxDensity -> Area
+	// TODO: docstring
+	impl<T> std::ops::Div<MagneticFluxDensity<T>> for MagneticFlux<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
+			Area{m2: self.Wb / rhs.T}
+		}
+	}
 
 }
 
@@ -426,21 +789,28 @@ impl<T> MagneticFluxDensity<T> where T: NumLike {
 		MagneticFluxDensity{T}
 	}
 	
-	/// Returns this magnetic flux density value in teslas
+	/// Returns a copy of this magnetic flux density value in teslas
 	pub fn to_T(self) -> T {
-		return self.T;
+		return self.T.clone();
 	}
 }
 
 impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.T, Self::unit_symbol())
+		write!(f, "{} {}", &self.T, Self::unit_symbol())
 	}
 }
 
 impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
-	// TODO: MagneticFluxDensity * Area -> MagneticFlux
+	// MagneticFluxDensity * Area -> MagneticFlux
+	// TODO: docstring
+	impl<T> std::ops::Mul<Area<T>> for MagneticFluxDensity<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: Area<T>) -> Self::Output {
+			MagneticFlux{Wb: self.T * rhs.m2}
+		}
+	}
 
 }
 
@@ -470,23 +840,37 @@ impl<T> LuminousFlux<T> where T: NumLike {
 		LuminousFlux{lm}
 	}
 	
-	/// Returns this luminous flux value in lumens
+	/// Returns a copy of this luminous flux value in lumens
 	pub fn to_lm(self) -> T {
-		return self.lm;
+		return self.lm.clone();
 	}
 }
 
 impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.lm, Self::unit_symbol())
+		write!(f, "{} {}", &self.lm, Self::unit_symbol())
 	}
 }
 
 impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
-	// TODO: LuminousFlux / Luminosity -> SolidAngle
+	// LuminousFlux / Luminosity -> SolidAngle
+	// TODO: docstring
+	impl<T> std::ops::Div<Luminosity<T>> for LuminousFlux<T> where T: NumLike {
+		type Output = SolidAngle<T>;
+		fn div(self, rhs: Luminosity<T>) -> Self::Output {
+			SolidAngle{sr: self.lm / rhs.cd}
+		}
+	}
 
-	// TODO: LuminousFlux / SolidAngle -> Luminosity
+	// LuminousFlux / SolidAngle -> Luminosity
+	// TODO: docstring
+	impl<T> std::ops::Div<SolidAngle<T>> for LuminousFlux<T> where T: NumLike {
+		type Output = Luminosity<T>;
+		fn div(self, rhs: SolidAngle<T>) -> Self::Output {
+			Luminosity{cd: self.lm / rhs.sr}
+		}
+	}
 
 }
 
@@ -516,15 +900,15 @@ impl<T> Illuminance<T> where T: NumLike {
 		Illuminance{lux}
 	}
 	
-	/// Returns this illuminance value in lux
+	/// Returns a copy of this illuminance value in lux
 	pub fn to_lux(self) -> T {
-		return self.lux;
+		return self.lux.clone();
 	}
 }
 
 impl<T> fmt::Display for Illuminance<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.lux, Self::unit_symbol())
+		write!(f, "{} {}", &self.lux, Self::unit_symbol())
 	}
 }
 

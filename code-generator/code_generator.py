@@ -64,6 +64,7 @@ def generate_unit_conversions(data_row: Series, conversions: DataFrame) -> str:
 	converts = conversions[conversions['left-side'] == left_unit]
 	for i, row in converts.iterrows():
 		out_buf += UNIT_CONVERSION_TEMPLATE % {
+			'capital op-function': str(row['op-function']).capitalize(),
 			**data_row,
 			**row
 		}
@@ -77,7 +78,8 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 	for kv in siunit_measure_lut.items():
 		if len(kv[1]) > 1:
 			print('WARNING: dimensionally equivalent measures (%s): %s' % kv)
-	# blacklist a few illogical combinations:
+	siunit_symbol_lut: Dict[str, str] = {row['name']: row['unit symbol'] for _, row in data.iterrows()}
+		# blacklist a few illogical combinations:
 	input_blacklist: Set[str] = set([
 		'radioactivity', 'absorbed dose', 'dose equivalent',
 	])
@@ -118,7 +120,7 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							other_name, other_unit,
 							output_name, mul_unit
 						))
-						unit_conversions.append((this_name, '*', other_name, output_name, to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '*', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
 			div_unit = this_unit / other_unit
 			if div_unit in siunit_measure_lut:
 				for other_name in siunit_measure_lut[other_unit]:
@@ -131,8 +133,8 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							other_name, other_unit,
 							output_name, div_unit
 						))
-						unit_conversions.append((this_name, '/', other_name, output_name, to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
-	return DataFrame(unit_conversions, columns=['left-side', 'operator', 'right-side', 'result', 'code left-side', 'code right-side', 'code result'])
+						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '/', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
 
 class SIUnits:
 	def __init__(self, numerator: List[str], denominator: List[str]):

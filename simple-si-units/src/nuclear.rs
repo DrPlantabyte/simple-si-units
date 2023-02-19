@@ -2,6 +2,12 @@
 //! This module provides nuclear SI units, such as radioactivity 
 //! and radiation dose equivalent.
 use std::fmt;
+use super::base::*;
+use super::chemical::*;
+use super::electromagnetic::*;
+use super::geometry::*;
+use super::mechanical::*;
+use super::nuclear::*;
 
 
 /// The radioactivity unit type, defined as becquerel in SI units
@@ -30,15 +36,15 @@ impl<T> Radioactivity<T> where T: NumLike {
 		Radioactivity{Bq}
 	}
 	
-	/// Returns this radioactivity value in becquerel
+	/// Returns a copy of this radioactivity value in becquerel
 	pub fn to_Bq(self) -> T {
-		return self.Bq;
+		return self.Bq.clone();
 	}
 }
 
 impl<T> fmt::Display for Radioactivity<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.Bq, Self::unit_symbol())
+		write!(f, "{} {}", &self.Bq, Self::unit_symbol())
 	}
 }
 
@@ -72,21 +78,28 @@ impl<T> AbsorbedDose<T> where T: NumLike {
 		AbsorbedDose{Gy}
 	}
 	
-	/// Returns this absorbed dose value in gray
+	/// Returns a copy of this absorbed dose value in gray
 	pub fn to_Gy(self) -> T {
-		return self.Gy;
+		return self.Gy.clone();
 	}
 }
 
 impl<T> fmt::Display for AbsorbedDose<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.Gy, Self::unit_symbol())
+		write!(f, "{} {}", &self.Gy, Self::unit_symbol())
 	}
 }
 
 impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	
-	// TODO: AbsorbedDose * Mass -> Energy
+	// AbsorbedDose * Mass -> Energy
+	// TODO: docstring
+	impl<T> std::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Energy{J: self.Gy * rhs.kg}
+		}
+	}
 
 }
 
@@ -116,21 +129,28 @@ impl<T> DoseEquivalent<T> where T: NumLike {
 		DoseEquivalent{Sv}
 	}
 	
-	/// Returns this dose equivalent value in sievert
+	/// Returns a copy of this dose equivalent value in sievert
 	pub fn to_Sv(self) -> T {
-		return self.Sv;
+		return self.Sv.clone();
 	}
 }
 
 impl<T> fmt::Display for DoseEquivalent<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", self.Sv, Self::unit_symbol())
+		write!(f, "{} {}", &self.Sv, Self::unit_symbol())
 	}
 }
 
 impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	
-	// TODO: DoseEquivalent * Mass -> Energy
+	// DoseEquivalent * Mass -> Energy
+	// TODO: docstring
+	impl<T> std::ops::Mul<Mass<T>> for DoseEquivalent<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Energy{J: self.Sv * rhs.kg}
+		}
+	}
 
 }
 
