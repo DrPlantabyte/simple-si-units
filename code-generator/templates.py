@@ -48,6 +48,10 @@ impl<T> %(code name)s<T> where T: NumLike {
 
 impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		let unit_symbol: &str;
+		if self.%(unit symbol)s < %(min value) { unit_symbol = "%(min symbol)s";
+		%(pick display symbol)s
+		else { unit_symbol = "%(max symbol)s";
 		write!(f, "{} {}", &self.%(unit symbol)s, Self::unit_symbol())
 	}
 }
