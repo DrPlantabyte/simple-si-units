@@ -5,175 +5,23 @@ pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
 
-
-// TODO: implement display for to-string representation (and have pretty version with size-aware
-// unit suffixes)
-pub mod base {
-	use crate::{UnitStruct, NumLike};
-	use std::fmt::{Display, Formatter};
-	// TODO: base SI units
-
-	/// Placeholder: Work in progress
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Distance<T: NumLike>{
-		pub m: T
-	}
-
-	impl<T> Display for Distance<T> where T: NumLike {
-		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-			// TODO: better display
-			return write!(f, "{} m", self.m);
-		}
-	}
-	impl<T> Distance<T> where T: NumLike {
-		pub fn from_m(m: T) -> Self{
-			Distance{m}
-		}
-		pub fn to_m(self) -> T{
-			return self.m;
-		}
-	}
-
-	impl<T> Distance<T> where T: NumLike+From<f64> {
-		pub fn from_au(au: T) -> Self{
-			let m_per_au = T::from(1.495979e11f64);
-			Distance{m: m_per_au * au}
-		}
-		pub fn to_au(self) -> T{
-			let au_per_m = T::from(6.684585e-12f64);
-			return au_per_m * self.m;
-		}
-	}
-
-
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Mass<T: NumLike>{ 
-	pub kg: T
-	}
-	impl<T> Mass<T> where T: NumLike+From<f64> {
-		pub fn from_earth_mass(earth_mass: T) -> Self {
-			let earth_mass_kg: T = T::from(5.972e24f64);
-			Mass{kg: earth_mass_kg * earth_mass}
-		}
-		pub fn from_solar_mass(sun_mass: T) -> Self {
-			let sun_mass_kg: T = T::from(1.989e30f64);
-			Mass{kg: sun_mass_kg * sun_mass}
-		}
-		pub fn from_g(g: T) -> Self {
-			let c: T = T::from(1e-3f64);
-			Mass{kg: c * g}
-		}
-	}
-
-
-
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Time<T: NumLike>{ 
-	pub s: T
-	}
-	impl<T> Time<T> where T: NumLike+From<f64> {
-		pub fn from_days(d: T) -> Self{
-			let day_s = T::from(86400f64);
-			Time{s: day_s * d}
-		}
-	}
-}
-pub mod mechanical {
-	use crate::{UnitStruct, NumLike};
-	use crate::base::*;
-	use std::fmt::{Display, Formatter};
-	// TODO: time and space and geometry
-
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Area<T: NumLike>{ 
-		pub m2: T
-	}
-
-	impl<T> Area<T> where T: NumLike+From<f64>+Into<f64> {
-		pub fn sqrt(self) -> Distance<T> {
-			return Distance{m: T::from(f64::sqrt(self.m2.into()))};
-		}
-	}
-
-
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Velocity<T: NumLike>{ 
-		pub mps: T
-	}
-
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Acceleration<T: NumLike>{ 
-	pub mps2: T
-	}
-
-	impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
-		type Output = Area<T>;
-		fn mul(self, rhs: Distance<T>) -> Self::Output {
-			Area{m2: self.m * rhs.m}
-		}
-	}
-	impl<T> std::ops::Div<Time<T>> for Distance<T> where T: NumLike {
-		type Output = Velocity<T>;
-		fn div(self, rhs: Time<T>) -> Self::Output {
-			Velocity{mps: self.m / rhs.s}
-		}
-	}
-
-	impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
-		type Output = Acceleration<T>;
-		fn div(self, rhs: Time<T>) -> Self::Output {
-			Acceleration{mps2: self.mps / rhs.s}
-		}
-	}
-
-	impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
-		type Output = Distance<T>;
-		fn mul(self, rhs: Time<T>) -> Self::Output {
-			Distance{m: self.mps * rhs.s}
-		}
-	}
-	impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
-		type Output = Velocity<T>;
-		fn mul(self, rhs: Time<T>) -> Self::Output {
-			Velocity{mps: self.mps2 * rhs.s}
-		}
-	}
-	/// Placeholder: Work in progress
-	#[derive(UnitStruct, Debug, Clone)]
-	pub struct Volume<T: NumLike>{
-		pub m3: T
-	}
-	impl<T> Volume<T> where T: NumLike {
-		pub fn from_cubic_meters(m3: T) -> Self{
-			Volume{m3: m3}
-		}
-		pub fn to_cubic_meters(self) -> T{
-			return self.m3;
-		}
-	}
-}
-pub mod electromagnetic {
-	use crate::{UnitStruct, NumLike};
-	use crate::base::*;
-	use std::fmt::{Display, Formatter};
-	// TODO: electrical and magnetism
-}
-pub mod radiation {
-	use crate::{UnitStruct, NumLike};
-	use crate::base::*;
-	use std::fmt::{Display, Formatter};
-	// TODO: light and nuclear
-}
-
+pub mod base;
+pub mod chemical;
+pub mod electromagnetic;
+pub mod geometry;
+pub mod mechanical;
+pub mod nuclear;
 
 /// Unit tests
 #[cfg(test)]
 mod unit_tests {
 	use num_traits::Zero;
 	use super::base::*;
-	use super::mechanical::*;
+	use super::chemical::*;
 	use super::electromagnetic::*;
-	use super::radiation::*;
+	use super::geometry::*;
+	use super::mechanical::*;
+	use super::nuclear::*;
 	/// utility function for asserting equality of decimal values with approximations
 	fn assert_approx_equal(a: f64, b: f64, sigfigs: i32) {
 		if a.is_nan() {

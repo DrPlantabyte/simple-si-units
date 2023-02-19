@@ -1,0 +1,42 @@
+category,name,desc first name,desc name,unit name,unit symbol,si units
+base,distance,distance (aka length),distance,meters,m,m
+base,mass,mass,mass,kilograms,kg,kg
+base,time,time,time,seconds,s,s
+base,temperature,temperature,temperature,degrees kelvin,K,K
+base,amount,amount,amount,moles,mol,mol
+base,current,electrical current,electrical current,amperes,A,A
+base,luminosity,luminosity,luminosity,candela,cd,cd
+geometry,angle,angle,angle,radians,rad,rad
+mechanical,angular velocity,angular velocity,angular velocity,radians per second,radps,rad/s
+mechanical,angular acceleration,angular acceleration,angular acceleration,radians per second squared,radps2,rad/s^2
+mechanical,moment of inertia,moment of inertia,moment of inertia,kilogram meters squared,kgm2,kg.m^2
+mechanical,angular momentum,angular momentum,angular momentum,kilogram meters squared radians per second,kgm2radps,kg.m^2.rad/s
+mechanical,torque,torque,torque,newton meters,Nm,kg.m^2/s^2
+geometry,solid angle,solid angle,solid angle,steradian,sr,sr
+mechanical,frequency,frequency,frequency,hertz,Hz,1/s
+geometry,area,area,area,square meters,m2,m^2
+mechanical,area density,area density,area density,kilograms per square meter,kgm2,kg.m^2
+geometry,volume,volume,volume,cubic meters,m3,m^3
+mechanical,density,density,density,kilograms per liter,kgpL,kg/L
+mechanical,velocity,velocity,velocity,meters per second,mps,m/s
+mechanical,acceleration,acceleration,acceleration,meters per second squared,mps2,m/s^2
+mechanical,momentum,momentum,momentum,kilogram meters per second,kgmps,kg.m/s
+mechanical,force,force,force,newtons,N,kg.m/s^2
+mechanical,pressure,pressure,pressure,pascals,Pa,kg/m.s^2
+mechanical,energy,energy,energy,joules,J,kg.m^2/s^2
+electromagnetic,charge,electric charge (aka coulombs),electric charge,coulombs,C,A.s
+mechanical,power,power (aka watts),power,watts,W,kg.m^2/s^3
+electromagnetic,voltage,voltage,voltage,volts,V,kg.m^2/A.s^3
+electromagnetic,resistance,electrical resistance,electrical resistance,ohms,Ohm,kg.m^2/A^2.s^3
+electromagnetic,conductance,electrical conductance,electrical conductance,siemens,S,A^2.s^3/kg.m^2
+electromagnetic,capacitance,electrical capacitance,electrical capacitance,farads,F,s^4.A^2/kg.m^2
+electromagnetic,inductance,inductance,inductance,henries,H,kg.m^2/A^2.s^2
+electromagnetic,magnetic flux,magnetic flux,magnetic flux,webers,Wb,kg.m^2/A.s^2
+electromagnetic,magnetic flux density,magnetic flux density,magnetic flux density,teslas,T,kg/A.s^2
+chemical,catalytic activity,catalytic activity,catalytic activity,moles per second,molps,mol/s
+chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3
+electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.sr
+electromagnetic,illuminance,illuminance,illuminance,lux,lux,lm/m^2
+nuclear,radioactivity,radioactivity,radioactivity,becquerel,Bq,1/s
+nuclear,absorbed dose,absorbed radiation dose,absorbed dose,gray,Gy,m^2/s^2
+nuclear,dose equivalent,radiation dose equivalent,dose equivalent,sievert,Sv,m^2/s^2
