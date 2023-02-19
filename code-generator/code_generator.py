@@ -14,37 +14,36 @@ def main(*args):
 	:param args: CLI args
 	'''
 	this_dir = path.dirname(path.abspath(__file__))
-	src_file = path.join(this_dir, 'ref', 'lib.rs')
+	project_root_dir= path.dirname(this_dir)
+	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-conversions.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data)
-	generated_code = generate_modules(data, conversions)
-	with open(src_file, 'r', newline='\n') as fin:
-		src_content = fin.read()
-		start_signal = '// START OF GENERATED CODE'
-		end_signal = '// END OF GENERATED CODE'
-		front = src_content[0:src_content.find(start_signal) + len(start_signal) + 1]
-		back = src_content[src_content.rfind(end_signal):]
-		generated_file_content = front + '\n' + generated_code + '\n' + back
-	print(generated_file_content)
-	raise Exception('Work in Progress (WIP)')
-
-def generate_modules(data: DataFrame, conversions: DataFrame) -> str:
+	#
 	data = add_capital_names(data, columns='category,name,desc first name,desc name,unit name'.split(','))
 	data.insert(0, 'code name', data['name'].apply(to_code_name))
 	conversions.insert(len(conversions.columns), 'op-function', conversions['operator'].apply(op_function_name))
 	conversions = add_capital_names(conversions, columns=['left-side', 'right-side', 'result', 'operator'])
-	out_buf = ''
+	#
 	modules = data['category'].unique()
-	for module in modules:
-		mod_units = data[data['category'] == module]
-		print(mod_units)
-		out_buf += MODULE_TEMPLATE % {
-			'category': module,
-			'example1': mod_units['desc first name'].iloc[0],
-			'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
-			'content': generate_unit_structs(mod_units, conversions)
-		}
+	for module_name in modules:
+		module_file = path.join(main_proj_dir, 'src', '%s.rs' % module_name)
+		generated_code = generate_modules(module_name, data, conversions)
+		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
+		with open(module_file, 'w', newline='\n') as fout:
+			fout.write(generated_code)
+	raise Exception('Work in Progress (WIP)')
+
+def generate_modules(module: str, data: DataFrame, conversions: DataFrame) -> str:
+	out_buf = ''
+	mod_units = data[data['category'] == module]
+	print(mod_units)
+	out_buf += MODULE_TEMPLATE % {
+		'category': module,
+		'example1': mod_units['desc first name'].iloc[0],
+		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
+		'content': generate_unit_structs(mod_units, conversions)
+	}
 	return out_buf
 
 def generate_unit_structs(data: DataFrame, conversions: DataFrame) -> str:
