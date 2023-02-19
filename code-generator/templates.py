@@ -57,13 +57,38 @@ impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 }
 '''
 
+DISPLAY_UNIT_TEMPLATE = '''
+	// TODO
+'''
+
 UNIT_CONVERSION_TEMPLATE='''
 	// %(code left-side)s %(operator)s %(code right-side)s -> %(code result)s
-	// TODO: docstring
+	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
 	impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
 		type Output = %(code result)s<T>;
 		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
 			%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s}
+		}
+	}
+	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+	impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
+		type Output = %(code result)s<T>;
+		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
+			%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s}
+		}
+	}
+	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+	impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
+		type Output = %(code result)s<T>;
+		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
+			%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s.clone()}
+		}
+	}
+	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+	impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
+		type Output = %(code result)s<T>;
+		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
+			%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s.clone()}
 		}
 	}
 '''

@@ -1,63 +1,63 @@
-name,unit name,unit symbol,slope,offset
-distance,meters,m,1.000000000000000E+00,
-distance,meters,meters,1.000000000000000E+00,
-distance,millimeters,cm,1.000000000000000E-02,
-distance,millimeters,mm,1.000000000000000E-03,
-distance,micrometers,um,1.000000000000000E-06,
-distance,nanometers,nm,1.000000000000000E-09,
-distance,picometers,pm,1.000000000000000E-12,
-distance,kilometers,km,1.000000000000000E+03,
-distance,astronomical units,au,1.495978707000000E+11,
-distance,parsecs,parsec,3.085680479993550E+16,
-distance,light-years,lyr,9.460528169656200E+15,
-mass,kilograms,kg,1.000000000000000E+00,
-mass,kilograms,kilograms,1.000000000000000E+00,
-mass,grams,g,1.000000000000000E-03,
-mass,milligrams,mg,1.000000000000000E-06,
-mass,micrograms,ug,1.000000000000000E-09,
-mass,nanograms,ng,1.000000000000000E-12,
-mass,picograms,pg,1.000000000000000E-15,
-mass,tons,ton,1.000000000000000E+03,
-mass,earth masses,earth_mass,5.972200000000000E+24,
-mass,jupiter masses,jupiter_mass,1.898600000000000E+27,
-mass,solar masses,solar_mass,1.988550000000000E+30,
-time,seconds,s,1.000000000000000E+00,
-time,seconds,seconds,1.000000000000000E+00,
-time,milliseconds,ms,1.000000000000000E-03,
-time,microseconds,us,1.000000000000000E-06,
-time,nanoseconds,ns,1.000000000000000E-09,
-time,picoseconds,ps,1.000000000000000E-12,
-time,minutes,min,6.000000000000000E+01,
-time,hours,hr,3.600000000000000E+03,
-time,days,d,8.640000000000000E+04,
-time,years,yr,3.155692519008000E+07,
-time,millennia,kyr,3.155692519008000E+10,
-time,million years,Myr,3.155692519008000E+13,
-time,billion years,Gyr,3.155692519008000E+16,
-temperature,degrees kelvin,K,1.000000000000000E+00,
-temperature,degrees celsius,C,1.000000000000000E+00,273.15
-temperature,degrees celsius,celsius,1.000000000000000E+00,273.15
-temperature,degrees fahrenheit,F,5.555555555555560E-01,459.67
-quantity,count,count,1.000000000000000E+00,
-quantity,moles,moles,6.022140760000000E+23,
-quantity,moles,mol,6.022140760000000E+23,
-quantity,millimoles,,6.022140760000000E+20,
-quantity,micromoles,,6.022140760000000E+17,
-quantity,nanomoles,,6.022140760000000E+14,
-quantity,picomoles,,6.022140760000000E+11,
-current,amperes,A,1.000000000000000E+00,
-current,amperes,amps,1.000000000000000E+00,
-current,milliamps,,1.000000000000000E-03,
-current,microamps,,1.000000000000000E-06,
-current,nanoamps,,1.000000000000000E-09,
-current,kiloamps,,1.000000000000000E+03,
-current,mega-amps,,1.000000000000000E+06,
-current,giga-amps,,1.000000000000000E+09,
-luminosity,candela,cd,1.000000000000000E+00,
-luminosity,candela,candela,1.000000000000000E+00,
-luminosity,millicondela,mcd,1.000000000000000E-03,
-luminosity,microcondela,ucd,1.000000000000000E-06,
-luminosity,nanocondela,ncd,1.000000000000000E-09,
-luminosity,kilocandela,kcd,1.000000000000000E+03,
-luminosity,megacandela,Mcd,1.000000000000000E+06,
-luminosity,gigacandela,Gcd,1.000000000000000E+09,
+name,unit name,unit symbol,slope,offset,display
+distance,meters,m,1,,Y
+distance,meters,meters,1,,Y
+distance,millimeters,cm,0.01,,N
+distance,millimeters,mm,0.001,,Y
+distance,micrometers,um,0.000001,,Y
+distance,nanometers,nm,0.000000001,,Y
+distance,picometers,pm,1E-12,,Y
+distance,kilometers,km,1000,,Y
+distance,astronomical units,au,149597870700,,Y
+distance,parsecs,parsec,3.08568047999355E+016,,N
+distance,light-years,lyr,9.4605281696562E+015,,Y
+mass,kilograms,kg,1,,Y
+mass,kilograms,kilograms,1,,N
+mass,grams,g,0.001,,Y
+mass,milligrams,mg,0.000001,,Y
+mass,micrograms,ug,0.000000001,,Y
+mass,nanograms,ng,1E-12,,Y
+mass,picograms,pg,1E-15,,Y
+mass,tons,ton,1000,,Y
+mass,earth masses,earth_mass,5.9722E+024,,N
+mass,jupiter masses,jupiter_mass,1.8986E+027,,N
+mass,solar masses,solar_mass,1.98855E+030,,N
+time,seconds,s,1,,Y
+time,seconds,seconds,1,,N
+time,milliseconds,ms,0.001,,Y
+time,microseconds,us,0.000001,,Y
+time,nanoseconds,ns,0.000000001,,Y
+time,picoseconds,ps,1E-12,,Y
+time,minutes,min,60,,Y
+time,hours,hr,3600,,Y
+time,days,d,86400,,Y
+time,years,yr,31556925.19008,,Y
+time,millennia,kyr,31556925190.08,,N
+time,million years,Myr,31556925190080,,N
+time,billion years,Gyr,3.155692519008E+016,,N
+temperature,degrees kelvin,K,1,,N
+temperature,degrees celsius,C,1,273.15,Y
+temperature,degrees celsius,celsius,1,273.15,N
+temperature,degrees fahrenheit,F,0.555555555555556,459.67,N
+quantity,count,count,1,,Y
+quantity,moles,moles,6.02214076E+023,,N
+quantity,moles,mol,6.02214076E+023,,Y
+quantity,millimoles,mmol,6.02214076E+020,,Y
+quantity,micromoles,umol,6.02214076E+017,,Y
+quantity,nanomoles,nmol,602214076000000,,Y
+quantity,picomoles,pmol,602214076000,,Y
+current,amperes,A,1,,Y
+current,amperes,amps,1,,N
+current,milliamps,mA,0.001,,Y
+current,microamps,uA,0.000001,,Y
+current,nanoamps,nA,0.000000001,,Y
+current,kiloamps,kA,1000,,N
+current,mega-amps,MA,1000000,,N
+current,giga-amps,GA,1000000000,,N
+luminosity,candela,cd,1,,Y
+luminosity,candela,candela,1,,N
+luminosity,millicondela,mcd,0.001,,Y
+luminosity,microcondela,ucd,0.000001,,Y
+luminosity,nanocondela,ncd,0.000000001,,Y
+luminosity,kilocandela,kcd,1000,,Y
+luminosity,megacandela,Mcd,1000000,,Y
+luminosity,gigacandela,Gcd,1000000000,,Y

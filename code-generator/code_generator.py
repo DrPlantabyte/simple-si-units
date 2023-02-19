@@ -23,7 +23,7 @@ def main(*args):
 	data = add_capital_names(data, columns='category,name,desc first name,desc name,unit name'.split(','))
 	data.insert(0, 'code name', data['name'].apply(to_code_name))
 	conversions.insert(len(conversions.columns), 'op-function', conversions['operator'].apply(op_function_name))
-	conversions = add_capital_names(conversions, columns=['left-side', 'right-side', 'result', 'operator'])
+	conversions = add_capital_names(conversions, columns=['left-side', 'right-side', 'result', 'operator', 'verbing'])
 	#
 	modules = data['category'].unique()
 	for module_name in modules:
@@ -120,7 +120,7 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							other_name, other_unit,
 							output_name, mul_unit
 						))
-						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '*', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '*', 'multiplying', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
 			div_unit = this_unit / other_unit
 			if div_unit in siunit_measure_lut:
 				for other_name in siunit_measure_lut[other_unit]:
@@ -133,8 +133,8 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							other_name, other_unit,
 							output_name, div_unit
 						))
-						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '/', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
-	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
+						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '/', 'dividing', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'verbing', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
 
 class SIUnits:
 	def __init__(self, numerator: List[str], denominator: List[str]):
