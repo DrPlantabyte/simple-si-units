@@ -37,6 +37,6 @@ chemical,catalytic activity,catalytic activity,catalytic activity,moles per seco
 chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3
 electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.sr
 electromagnetic,illuminance,illuminance,illuminance,lux,lux,lm/m^2
-nuclear,radioactivity,radioactivity,radioactivity,becquerel,Bq,1/s
-nuclear,absorbed dose,absorbed radiation dose,absorbed dose,gray,Gy,m^2/s^2
-nuclear,dose equivalent,radiation dose equivalent,dose equivalent,sievert,Sv,m^2/s^2
+nuclear,radioactivity,radioactivity,radioactivity,becquerels,Bq,1/s
+nuclear,absorbed dose,absorbed radiation dose,absorbed dose,grays,Gy,m^2/s^2
+nuclear,dose equivalent,radiation dose equivalent,dose equivalent,sieverts,Sv,m^2/s^2

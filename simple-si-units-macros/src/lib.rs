@@ -4,6 +4,8 @@ use syn::*;
 
 // Test with $ rm ./tests/expand/derive_tester.expanded.rs ; cargo +nightly test -- --nocapture
 
+// TODO: <, <=, >, >=, ==
+
 #[proc_macro_derive(UnitStruct)]
 pub fn derive_unit(tokens: TokenStream) -> TokenStream {
 	// convert the input tokens into an ast, specially from a derive

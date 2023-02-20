@@ -8,22 +8,23 @@ use super::electromagnetic::*;
 use super::geometry::*;
 use super::mechanical::*;
 use super::nuclear::*;
+use serde::{Serialize, Deserialize};
 
 
 /// The angle unit type, defined as radians in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Angle<T: NumLike>{
 	pub rad: T
 }
 
 impl<T> Angle<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of angle: "radians"
 	pub fn unit_name() -> &'static str {
 		return "radians";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of angle: "rad" for radians
 	pub fn unit_symbol() -> &'static str {
 		return "rad";
 	}
@@ -51,48 +52,111 @@ impl<T> fmt::Display for Angle<T> where T: NumLike {
 impl<T> Angle<T> where T: NumLike+From<f64> {
 	
 	// Angle / Time -> AngularVelocity
-	// TODO: docstring
+	/// Dividing a Angle by a Time returns a value of type AngularVelocity
 	impl<T> std::ops::Div<Time<T>> for Angle<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			AngularVelocity{radps: self.rad / rhs.s}
 		}
 	}
+	/// Dividing a Angle by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Div<Time<T>> for &Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad.clone() / rhs.s}
+		}
+	}
+	/// Dividing a Angle by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&Time<T>> for Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad / rhs.s.clone()}
+		}
+	}
+	/// Dividing a Angle by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&Time<T>> for &Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad.clone() / rhs.s.clone()}
+		}
+	}
 
 	// Angle / AngularVelocity -> Time
-	// TODO: docstring
+	/// Dividing a Angle by a AngularVelocity returns a value of type Time
 	impl<T> std::ops::Div<AngularVelocity<T>> for Angle<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
 			Time{s: self.rad / rhs.radps}
 		}
 	}
+	/// Dividing a Angle by a AngularVelocity returns a value of type Time
+	impl<T> std::ops::Div<AngularVelocity<T>> for &Angle<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Time{s: self.rad.clone() / rhs.radps}
+		}
+	}
+	/// Dividing a Angle by a AngularVelocity returns a value of type Time
+	impl<T> std::ops::Div<&AngularVelocity<T>> for Angle<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Time{s: self.rad / rhs.radps.clone()}
+		}
+	}
+	/// Dividing a Angle by a AngularVelocity returns a value of type Time
+	impl<T> std::ops::Div<&AngularVelocity<T>> for &Angle<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Time{s: self.rad.clone() / rhs.radps.clone()}
+		}
+	}
 
 	// Angle * Frequency -> AngularVelocity
-	// TODO: docstring
+	/// Multiplying a Angle by a Frequency returns a value of type AngularVelocity
 	impl<T> std::ops::Mul<Frequency<T>> for Angle<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			AngularVelocity{radps: self.rad * rhs.Hz}
 		}
 	}
+	/// Multiplying a Angle by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<Frequency<T>> for &Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a Angle by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Frequency<T>> for Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a Angle by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Frequency<T>> for &Angle<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.rad.clone() * rhs.Hz.clone()}
+		}
+	}
 
 }
 
 /// The solid angle unit type, defined as steradian in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct SolidAngle<T: NumLike>{
 	pub sr: T
 }
 
 impl<T> SolidAngle<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of solid angle: "steradian"
 	pub fn unit_name() -> &'static str {
 		return "steradian";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of solid angle: "sr" for steradian
 	pub fn unit_symbol() -> &'static str {
 		return "sr";
 	}
@@ -120,30 +184,51 @@ impl<T> fmt::Display for SolidAngle<T> where T: NumLike {
 impl<T> SolidAngle<T> where T: NumLike+From<f64> {
 	
 	// SolidAngle * Luminosity -> LuminousFlux
-	// TODO: docstring
+	/// Multiplying a SolidAngle by a Luminosity returns a value of type LuminousFlux
 	impl<T> std::ops::Mul<Luminosity<T>> for SolidAngle<T> where T: NumLike {
 		type Output = LuminousFlux<T>;
 		fn mul(self, rhs: Luminosity<T>) -> Self::Output {
 			LuminousFlux{lm: self.sr * rhs.cd}
 		}
 	}
+	/// Multiplying a SolidAngle by a Luminosity returns a value of type LuminousFlux
+	impl<T> std::ops::Mul<Luminosity<T>> for &SolidAngle<T> where T: NumLike {
+		type Output = LuminousFlux<T>;
+		fn mul(self, rhs: Luminosity<T>) -> Self::Output {
+			LuminousFlux{lm: self.sr.clone() * rhs.cd}
+		}
+	}
+	/// Multiplying a SolidAngle by a Luminosity returns a value of type LuminousFlux
+	impl<T> std::ops::Mul<&Luminosity<T>> for SolidAngle<T> where T: NumLike {
+		type Output = LuminousFlux<T>;
+		fn mul(self, rhs: Luminosity<T>) -> Self::Output {
+			LuminousFlux{lm: self.sr * rhs.cd.clone()}
+		}
+	}
+	/// Multiplying a SolidAngle by a Luminosity returns a value of type LuminousFlux
+	impl<T> std::ops::Mul<&Luminosity<T>> for &SolidAngle<T> where T: NumLike {
+		type Output = LuminousFlux<T>;
+		fn mul(self, rhs: Luminosity<T>) -> Self::Output {
+			LuminousFlux{lm: self.sr.clone() * rhs.cd.clone()}
+		}
+	}
 
 }
 
 /// The area unit type, defined as square meters in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Area<T: NumLike>{
 	pub m2: T
 }
 
 impl<T> Area<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of area: "square meters"
 	pub fn unit_name() -> &'static str {
 		return "square meters";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of area: "m2" for square meters
 	pub fn unit_symbol() -> &'static str {
 		return "m2";
 	}
@@ -171,66 +256,171 @@ impl<T> fmt::Display for Area<T> where T: NumLike {
 impl<T> Area<T> where T: NumLike+From<f64> {
 	
 	// Area * Distance -> Volume
-	// TODO: docstring
+	/// Multiplying a Area by a Distance returns a value of type Volume
 	impl<T> std::ops::Mul<Distance<T>> for Area<T> where T: NumLike {
 		type Output = Volume<T>;
 		fn mul(self, rhs: Distance<T>) -> Self::Output {
 			Volume{m3: self.m2 * rhs.m}
 		}
 	}
+	/// Multiplying a Area by a Distance returns a value of type Volume
+	impl<T> std::ops::Mul<Distance<T>> for &Area<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Volume{m3: self.m2.clone() * rhs.m}
+		}
+	}
+	/// Multiplying a Area by a Distance returns a value of type Volume
+	impl<T> std::ops::Mul<&Distance<T>> for Area<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Volume{m3: self.m2 * rhs.m.clone()}
+		}
+	}
+	/// Multiplying a Area by a Distance returns a value of type Volume
+	impl<T> std::ops::Mul<&Distance<T>> for &Area<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Volume{m3: self.m2.clone() * rhs.m.clone()}
+		}
+	}
 
 	// Area / Distance -> Distance
-	// TODO: docstring
+	/// Dividing a Area by a Distance returns a value of type Distance
 	impl<T> std::ops::Div<Distance<T>> for Area<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn div(self, rhs: Distance<T>) -> Self::Output {
 			Distance{m: self.m2 / rhs.m}
 		}
 	}
+	/// Dividing a Area by a Distance returns a value of type Distance
+	impl<T> std::ops::Div<Distance<T>> for &Area<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Distance{m: self.m2.clone() / rhs.m}
+		}
+	}
+	/// Dividing a Area by a Distance returns a value of type Distance
+	impl<T> std::ops::Div<&Distance<T>> for Area<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Distance{m: self.m2 / rhs.m.clone()}
+		}
+	}
+	/// Dividing a Area by a Distance returns a value of type Distance
+	impl<T> std::ops::Div<&Distance<T>> for &Area<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Distance{m: self.m2.clone() / rhs.m.clone()}
+		}
+	}
 
 	// Area * Mass -> AreaDensity
-	// TODO: docstring
+	/// Multiplying a Area by a Mass returns a value of type AreaDensity
 	impl<T> std::ops::Mul<Mass<T>> for Area<T> where T: NumLike {
 		type Output = AreaDensity<T>;
 		fn mul(self, rhs: Mass<T>) -> Self::Output {
 			AreaDensity{kgm2: self.m2 * rhs.kg}
 		}
 	}
+	/// Multiplying a Area by a Mass returns a value of type AreaDensity
+	impl<T> std::ops::Mul<Mass<T>> for &Area<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			AreaDensity{kgm2: self.m2.clone() * rhs.kg}
+		}
+	}
+	/// Multiplying a Area by a Mass returns a value of type AreaDensity
+	impl<T> std::ops::Mul<&Mass<T>> for Area<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			AreaDensity{kgm2: self.m2 * rhs.kg.clone()}
+		}
+	}
+	/// Multiplying a Area by a Mass returns a value of type AreaDensity
+	impl<T> std::ops::Mul<&Mass<T>> for &Area<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			AreaDensity{kgm2: self.m2.clone() * rhs.kg.clone()}
+		}
+	}
 
 	// Area * Pressure -> Force
-	// TODO: docstring
+	/// Multiplying a Area by a Pressure returns a value of type Force
 	impl<T> std::ops::Mul<Pressure<T>> for Area<T> where T: NumLike {
 		type Output = Force<T>;
 		fn mul(self, rhs: Pressure<T>) -> Self::Output {
 			Force{N: self.m2 * rhs.Pa}
 		}
 	}
+	/// Multiplying a Area by a Pressure returns a value of type Force
+	impl<T> std::ops::Mul<Pressure<T>> for &Area<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Force{N: self.m2.clone() * rhs.Pa}
+		}
+	}
+	/// Multiplying a Area by a Pressure returns a value of type Force
+	impl<T> std::ops::Mul<&Pressure<T>> for Area<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Force{N: self.m2 * rhs.Pa.clone()}
+		}
+	}
+	/// Multiplying a Area by a Pressure returns a value of type Force
+	impl<T> std::ops::Mul<&Pressure<T>> for &Area<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Force{N: self.m2.clone() * rhs.Pa.clone()}
+		}
+	}
 
 	// Area * MagneticFluxDensity -> MagneticFlux
-	// TODO: docstring
+	/// Multiplying a Area by a MagneticFluxDensity returns a value of type MagneticFlux
 	impl<T> std::ops::Mul<MagneticFluxDensity<T>> for Area<T> where T: NumLike {
 		type Output = MagneticFlux<T>;
 		fn mul(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
 			MagneticFlux{Wb: self.m2 * rhs.T}
 		}
 	}
+	/// Multiplying a Area by a MagneticFluxDensity returns a value of type MagneticFlux
+	impl<T> std::ops::Mul<MagneticFluxDensity<T>> for &Area<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
+			MagneticFlux{Wb: self.m2.clone() * rhs.T}
+		}
+	}
+	/// Multiplying a Area by a MagneticFluxDensity returns a value of type MagneticFlux
+	impl<T> std::ops::Mul<&MagneticFluxDensity<T>> for Area<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
+			MagneticFlux{Wb: self.m2 * rhs.T.clone()}
+		}
+	}
+	/// Multiplying a Area by a MagneticFluxDensity returns a value of type MagneticFlux
+	impl<T> std::ops::Mul<&MagneticFluxDensity<T>> for &Area<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn mul(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
+			MagneticFlux{Wb: self.m2.clone() * rhs.T.clone()}
+		}
+	}
 
 }
 
 /// The volume unit type, defined as cubic meters in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Volume<T: NumLike>{
 	pub m3: T
 }
 
 impl<T> Volume<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of volume: "cubic meters"
 	pub fn unit_name() -> &'static str {
 		return "cubic meters";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of volume: "m3" for cubic meters
 	pub fn unit_symbol() -> &'static str {
 		return "m3";
 	}
@@ -258,38 +448,122 @@ impl<T> fmt::Display for Volume<T> where T: NumLike {
 impl<T> Volume<T> where T: NumLike+From<f64> {
 	
 	// Volume / Distance -> Area
-	// TODO: docstring
+	/// Dividing a Volume by a Distance returns a value of type Area
 	impl<T> std::ops::Div<Distance<T>> for Volume<T> where T: NumLike {
 		type Output = Area<T>;
 		fn div(self, rhs: Distance<T>) -> Self::Output {
 			Area{m2: self.m3 / rhs.m}
 		}
 	}
+	/// Dividing a Volume by a Distance returns a value of type Area
+	impl<T> std::ops::Div<Distance<T>> for &Volume<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Area{m2: self.m3.clone() / rhs.m}
+		}
+	}
+	/// Dividing a Volume by a Distance returns a value of type Area
+	impl<T> std::ops::Div<&Distance<T>> for Volume<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Area{m2: self.m3 / rhs.m.clone()}
+		}
+	}
+	/// Dividing a Volume by a Distance returns a value of type Area
+	impl<T> std::ops::Div<&Distance<T>> for &Volume<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Area{m2: self.m3.clone() / rhs.m.clone()}
+		}
+	}
 
 	// Volume / Area -> Distance
-	// TODO: docstring
+	/// Dividing a Volume by a Area returns a value of type Distance
 	impl<T> std::ops::Div<Area<T>> for Volume<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn div(self, rhs: Area<T>) -> Self::Output {
 			Distance{m: self.m3 / rhs.m2}
 		}
 	}
+	/// Dividing a Volume by a Area returns a value of type Distance
+	impl<T> std::ops::Div<Area<T>> for &Volume<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Distance{m: self.m3.clone() / rhs.m2}
+		}
+	}
+	/// Dividing a Volume by a Area returns a value of type Distance
+	impl<T> std::ops::Div<&Area<T>> for Volume<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Distance{m: self.m3 / rhs.m2.clone()}
+		}
+	}
+	/// Dividing a Volume by a Area returns a value of type Distance
+	impl<T> std::ops::Div<&Area<T>> for &Volume<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Distance{m: self.m3.clone() / rhs.m2.clone()}
+		}
+	}
 
 	// Volume * Pressure -> Energy
-	// TODO: docstring
+	/// Multiplying a Volume by a Pressure returns a value of type Energy
 	impl<T> std::ops::Mul<Pressure<T>> for Volume<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Pressure<T>) -> Self::Output {
 			Energy{J: self.m3 * rhs.Pa}
 		}
 	}
+	/// Multiplying a Volume by a Pressure returns a value of type Energy
+	impl<T> std::ops::Mul<Pressure<T>> for &Volume<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Energy{J: self.m3.clone() * rhs.Pa}
+		}
+	}
+	/// Multiplying a Volume by a Pressure returns a value of type Energy
+	impl<T> std::ops::Mul<&Pressure<T>> for Volume<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Energy{J: self.m3 * rhs.Pa.clone()}
+		}
+	}
+	/// Multiplying a Volume by a Pressure returns a value of type Energy
+	impl<T> std::ops::Mul<&Pressure<T>> for &Volume<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Pressure<T>) -> Self::Output {
+			Energy{J: self.m3.clone() * rhs.Pa.clone()}
+		}
+	}
 
 	// Volume * Concentration -> Amount
-	// TODO: docstring
+	/// Multiplying a Volume by a Concentration returns a value of type Amount
 	impl<T> std::ops::Mul<Concentration<T>> for Volume<T> where T: NumLike {
 		type Output = Amount<T>;
 		fn mul(self, rhs: Concentration<T>) -> Self::Output {
 			Amount{mol: self.m3 * rhs.molpm3}
+		}
+	}
+	/// Multiplying a Volume by a Concentration returns a value of type Amount
+	impl<T> std::ops::Mul<Concentration<T>> for &Volume<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn mul(self, rhs: Concentration<T>) -> Self::Output {
+			Amount{mol: self.m3.clone() * rhs.molpm3}
+		}
+	}
+	/// Multiplying a Volume by a Concentration returns a value of type Amount
+	impl<T> std::ops::Mul<&Concentration<T>> for Volume<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn mul(self, rhs: Concentration<T>) -> Self::Output {
+			Amount{mol: self.m3 * rhs.molpm3.clone()}
+		}
+	}
+	/// Multiplying a Volume by a Concentration returns a value of type Amount
+	impl<T> std::ops::Mul<&Concentration<T>> for &Volume<T> where T: NumLike {
+		type Output = Amount<T>;
+		fn mul(self, rhs: Concentration<T>) -> Self::Output {
+			Amount{mol: self.m3.clone() * rhs.molpm3.clone()}
 		}
 	}
 

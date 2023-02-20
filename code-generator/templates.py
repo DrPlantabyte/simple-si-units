@@ -8,6 +8,7 @@ use super::electromagnetic::*;
 use super::geometry::*;
 use super::mechanical::*;
 use super::nuclear::*;
+use serde::{Serialize, Deserialize};
 
 %(content)s
 
@@ -15,19 +16,19 @@ use super::nuclear::*;
 
 UNIT_STRUCT_DEFINITION_TEMPLATE='''
 /// The %(desc first name)s unit type, defined as %(unit name)s in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct %(code name)s<T: NumLike>{
 	pub %(unit symbol)s: T
 }
 
 impl<T> %(code name)s<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of %(desc name)s: "%(unit name)s"
 	pub fn unit_name() -> &'static str {
 		return "%(unit name)s";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of %(desc name)s: "%(unit symbol)s" for %(unit name)s
 	pub fn unit_symbol() -> &'static str {
 		return "%(unit symbol)s";
 	}
@@ -48,10 +49,6 @@ impl<T> %(code name)s<T> where T: NumLike {
 
 impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		let unit_symbol: &str;
-		if self.%(unit symbol)s < %(min value) { unit_symbol = "%(min symbol)s";
-		%(pick display symbol)s
-		else { unit_symbol = "%(max symbol)s";
 		write!(f, "{} {}", &self.%(unit symbol)s, Self::unit_symbol())
 	}
 }
@@ -61,8 +58,34 @@ impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 }
 '''
 
-DISPLAY_UNIT_TEMPLATE = '''
-	// TODO
+TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
+	/// Returns a copy of this %(desc name)s value in %(unit name)s
+	pub fn to_%(unit symbol)s(self) -> T {
+		return (self.%(unit symbol)s.clone() - T::from(%(offset)s_f64)) / T::from(%(slope)s_f64);
+	}
+
+	/// Returns a new %(desc name)s value from the given number of %(unit name)s
+	///
+	/// # Arguments
+	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
+	pub fn from_%(unit symbol)s(%(unit symbol)s: T) -> Self {
+		%(code name)s{%(si unit symbol)s: %(unit symbol)s * T::from(%(slope)s_f64) + T::from(%(offset)s_f64)}
+	}
+'''
+
+TO_FROM_SLOPE_TEMPLATE = '''
+	/// Returns a copy of this %(desc name)s value in %(unit name)s
+	pub fn to_%(unit symbol)s(self) -> T {
+		return self.%(unit symbol)s.clone() / T::from(%(slope)s_f64);
+	}
+
+	/// Returns a new %(desc name)s value from the given number of %(unit name)s
+	///
+	/// # Arguments
+	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
+	pub fn from_%(unit symbol)s(%(unit symbol)s: T) -> Self {
+		%(code name)s{%(si unit symbol)s: %(unit symbol)s * T::from(%(slope)s_f64)}
+	}
 '''
 
 UNIT_CONVERSION_TEMPLATE='''

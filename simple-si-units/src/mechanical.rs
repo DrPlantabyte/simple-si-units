@@ -8,22 +8,23 @@ use super::electromagnetic::*;
 use super::geometry::*;
 use super::mechanical::*;
 use super::nuclear::*;
+use serde::{Serialize, Deserialize};
 
 
 /// The angular velocity unit type, defined as radians per second in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct AngularVelocity<T: NumLike>{
 	pub radps: T
 }
 
 impl<T> AngularVelocity<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of angular velocity: "radians per second"
 	pub fn unit_name() -> &'static str {
 		return "radians per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of angular velocity: "radps" for radians per second
 	pub fn unit_symbol() -> &'static str {
 		return "radps";
 	}
@@ -51,93 +52,261 @@ impl<T> fmt::Display for AngularVelocity<T> where T: NumLike {
 impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	
 	// AngularVelocity * Time -> Angle
-	// TODO: docstring
+	/// Multiplying a AngularVelocity by a Time returns a value of type Angle
 	impl<T> std::ops::Mul<Time<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = Angle<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			Angle{rad: self.radps * rhs.s}
 		}
 	}
+	/// Multiplying a AngularVelocity by a Time returns a value of type Angle
+	impl<T> std::ops::Mul<Time<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Angle{rad: self.radps.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a AngularVelocity by a Time returns a value of type Angle
+	impl<T> std::ops::Mul<&Time<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Angle{rad: self.radps * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a AngularVelocity by a Time returns a value of type Angle
+	impl<T> std::ops::Mul<&Time<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Angle{rad: self.radps.clone() * rhs.s.clone()}
+		}
+	}
 
 	// AngularVelocity / Time -> AngularAcceleration
-	// TODO: docstring
+	/// Dividing a AngularVelocity by a Time returns a value of type AngularAcceleration
 	impl<T> std::ops::Div<Time<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = AngularAcceleration<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			AngularAcceleration{radps2: self.radps / rhs.s}
 		}
 	}
+	/// Dividing a AngularVelocity by a Time returns a value of type AngularAcceleration
+	impl<T> std::ops::Div<Time<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps.clone() / rhs.s}
+		}
+	}
+	/// Dividing a AngularVelocity by a Time returns a value of type AngularAcceleration
+	impl<T> std::ops::Div<&Time<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps / rhs.s.clone()}
+		}
+	}
+	/// Dividing a AngularVelocity by a Time returns a value of type AngularAcceleration
+	impl<T> std::ops::Div<&Time<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps.clone() / rhs.s.clone()}
+		}
+	}
 
 	// AngularVelocity / Angle -> Frequency
-	// TODO: docstring
+	/// Dividing a AngularVelocity by a Angle returns a value of type Frequency
 	impl<T> std::ops::Div<Angle<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Angle<T>) -> Self::Output {
 			Frequency{Hz: self.radps / rhs.rad}
 		}
 	}
+	/// Dividing a AngularVelocity by a Angle returns a value of type Frequency
+	impl<T> std::ops::Div<Angle<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Angle<T>) -> Self::Output {
+			Frequency{Hz: self.radps.clone() / rhs.rad}
+		}
+	}
+	/// Dividing a AngularVelocity by a Angle returns a value of type Frequency
+	impl<T> std::ops::Div<&Angle<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Angle<T>) -> Self::Output {
+			Frequency{Hz: self.radps / rhs.rad.clone()}
+		}
+	}
+	/// Dividing a AngularVelocity by a Angle returns a value of type Frequency
+	impl<T> std::ops::Div<&Angle<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Angle<T>) -> Self::Output {
+			Frequency{Hz: self.radps.clone() / rhs.rad.clone()}
+		}
+	}
 
 	// AngularVelocity / AngularAcceleration -> Time
-	// TODO: docstring
+	/// Dividing a AngularVelocity by a AngularAcceleration returns a value of type Time
 	impl<T> std::ops::Div<AngularAcceleration<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
 			Time{s: self.radps / rhs.radps2}
 		}
 	}
+	/// Dividing a AngularVelocity by a AngularAcceleration returns a value of type Time
+	impl<T> std::ops::Div<AngularAcceleration<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+			Time{s: self.radps.clone() / rhs.radps2}
+		}
+	}
+	/// Dividing a AngularVelocity by a AngularAcceleration returns a value of type Time
+	impl<T> std::ops::Div<&AngularAcceleration<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+			Time{s: self.radps / rhs.radps2.clone()}
+		}
+	}
+	/// Dividing a AngularVelocity by a AngularAcceleration returns a value of type Time
+	impl<T> std::ops::Div<&AngularAcceleration<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+			Time{s: self.radps.clone() / rhs.radps2.clone()}
+		}
+	}
 
 	// AngularVelocity * MomentOfInertia -> AngularMomentum
-	// TODO: docstring
+	/// Multiplying a AngularVelocity by a MomentOfInertia returns a value of type AngularMomentum
 	impl<T> std::ops::Mul<MomentOfInertia<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = AngularMomentum<T>;
 		fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
 			AngularMomentum{kgm2radps: self.radps * rhs.kgm2}
 		}
 	}
+	/// Multiplying a AngularVelocity by a MomentOfInertia returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<MomentOfInertia<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps.clone() * rhs.kgm2}
+		}
+	}
+	/// Multiplying a AngularVelocity by a MomentOfInertia returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&MomentOfInertia<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps * rhs.kgm2.clone()}
+		}
+	}
+	/// Multiplying a AngularVelocity by a MomentOfInertia returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&MomentOfInertia<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps.clone() * rhs.kgm2.clone()}
+		}
+	}
 
 	// AngularVelocity * AreaDensity -> AngularMomentum
-	// TODO: docstring
+	/// Multiplying a AngularVelocity by a AreaDensity returns a value of type AngularMomentum
 	impl<T> std::ops::Mul<AreaDensity<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = AngularMomentum<T>;
 		fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
 			AngularMomentum{kgm2radps: self.radps * rhs.kgm2}
 		}
 	}
+	/// Multiplying a AngularVelocity by a AreaDensity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<AreaDensity<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps.clone() * rhs.kgm2}
+		}
+	}
+	/// Multiplying a AngularVelocity by a AreaDensity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AreaDensity<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps * rhs.kgm2.clone()}
+		}
+	}
+	/// Multiplying a AngularVelocity by a AreaDensity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AreaDensity<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.radps.clone() * rhs.kgm2.clone()}
+		}
+	}
 
 	// AngularVelocity * Frequency -> AngularAcceleration
-	// TODO: docstring
+	/// Multiplying a AngularVelocity by a Frequency returns a value of type AngularAcceleration
 	impl<T> std::ops::Mul<Frequency<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = AngularAcceleration<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			AngularAcceleration{radps2: self.radps * rhs.Hz}
 		}
 	}
+	/// Multiplying a AngularVelocity by a Frequency returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<Frequency<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a AngularVelocity by a Frequency returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<&Frequency<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a AngularVelocity by a Frequency returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<&Frequency<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.radps.clone() * rhs.Hz.clone()}
+		}
+	}
 
 	// AngularVelocity / Frequency -> Angle
-	// TODO: docstring
+	/// Dividing a AngularVelocity by a Frequency returns a value of type Angle
 	impl<T> std::ops::Div<Frequency<T>> for AngularVelocity<T> where T: NumLike {
 		type Output = Angle<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			Angle{rad: self.radps / rhs.Hz}
 		}
 	}
+	/// Dividing a AngularVelocity by a Frequency returns a value of type Angle
+	impl<T> std::ops::Div<Frequency<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Angle{rad: self.radps.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a AngularVelocity by a Frequency returns a value of type Angle
+	impl<T> std::ops::Div<&Frequency<T>> for AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Angle{rad: self.radps / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a AngularVelocity by a Frequency returns a value of type Angle
+	impl<T> std::ops::Div<&Frequency<T>> for &AngularVelocity<T> where T: NumLike {
+		type Output = Angle<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Angle{rad: self.radps.clone() / rhs.Hz.clone()}
+		}
+	}
 
 }
 
 /// The angular acceleration unit type, defined as radians per second squared in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct AngularAcceleration<T: NumLike>{
 	pub radps2: T
 }
 
 impl<T> AngularAcceleration<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of angular acceleration: "radians per second squared"
 	pub fn unit_name() -> &'static str {
 		return "radians per second squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of angular acceleration: "radps2" for radians per second squared
 	pub fn unit_symbol() -> &'static str {
 		return "radps2";
 	}
@@ -165,48 +334,111 @@ impl<T> fmt::Display for AngularAcceleration<T> where T: NumLike {
 impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	
 	// AngularAcceleration * Time -> AngularVelocity
-	// TODO: docstring
+	/// Multiplying a AngularAcceleration by a Time returns a value of type AngularVelocity
 	impl<T> std::ops::Mul<Time<T>> for AngularAcceleration<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			AngularVelocity{radps: self.radps2 * rhs.s}
 		}
 	}
+	/// Multiplying a AngularAcceleration by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<Time<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a AngularAcceleration by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Time<T>> for AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2 * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a AngularAcceleration by a Time returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Time<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2.clone() * rhs.s.clone()}
+		}
+	}
 
 	// AngularAcceleration / AngularVelocity -> Frequency
-	// TODO: docstring
+	/// Dividing a AngularAcceleration by a AngularVelocity returns a value of type Frequency
 	impl<T> std::ops::Div<AngularVelocity<T>> for AngularAcceleration<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
 			Frequency{Hz: self.radps2 / rhs.radps}
 		}
 	}
+	/// Dividing a AngularAcceleration by a AngularVelocity returns a value of type Frequency
+	impl<T> std::ops::Div<AngularVelocity<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Frequency{Hz: self.radps2.clone() / rhs.radps}
+		}
+	}
+	/// Dividing a AngularAcceleration by a AngularVelocity returns a value of type Frequency
+	impl<T> std::ops::Div<&AngularVelocity<T>> for AngularAcceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Frequency{Hz: self.radps2 / rhs.radps.clone()}
+		}
+	}
+	/// Dividing a AngularAcceleration by a AngularVelocity returns a value of type Frequency
+	impl<T> std::ops::Div<&AngularVelocity<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			Frequency{Hz: self.radps2.clone() / rhs.radps.clone()}
+		}
+	}
 
 	// AngularAcceleration / Frequency -> AngularVelocity
-	// TODO: docstring
+	/// Dividing a AngularAcceleration by a Frequency returns a value of type AngularVelocity
 	impl<T> std::ops::Div<Frequency<T>> for AngularAcceleration<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			AngularVelocity{radps: self.radps2 / rhs.Hz}
 		}
 	}
+	/// Dividing a AngularAcceleration by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Div<Frequency<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a AngularAcceleration by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&Frequency<T>> for AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2 / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a AngularAcceleration by a Frequency returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&Frequency<T>> for &AngularAcceleration<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			AngularVelocity{radps: self.radps2.clone() / rhs.Hz.clone()}
+		}
+	}
 
 }
 
 /// The moment of inertia unit type, defined as kilogram meters squared in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct MomentOfInertia<T: NumLike>{
 	pub kgm2: T
 }
 
 impl<T> MomentOfInertia<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of moment of inertia: "kilogram meters squared"
 	pub fn unit_name() -> &'static str {
 		return "kilogram meters squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of moment of inertia: "kgm2" for kilogram meters squared
 	pub fn unit_symbol() -> &'static str {
 		return "kgm2";
 	}
@@ -234,48 +466,111 @@ impl<T> fmt::Display for MomentOfInertia<T> where T: NumLike {
 impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	
 	// MomentOfInertia / Mass -> Area
-	// TODO: docstring
+	/// Dividing a MomentOfInertia by a Mass returns a value of type Area
 	impl<T> std::ops::Div<Mass<T>> for MomentOfInertia<T> where T: NumLike {
 		type Output = Area<T>;
 		fn div(self, rhs: Mass<T>) -> Self::Output {
 			Area{m2: self.kgm2 / rhs.kg}
 		}
 	}
+	/// Dividing a MomentOfInertia by a Mass returns a value of type Area
+	impl<T> std::ops::Div<Mass<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2.clone() / rhs.kg}
+		}
+	}
+	/// Dividing a MomentOfInertia by a Mass returns a value of type Area
+	impl<T> std::ops::Div<&Mass<T>> for MomentOfInertia<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2 / rhs.kg.clone()}
+		}
+	}
+	/// Dividing a MomentOfInertia by a Mass returns a value of type Area
+	impl<T> std::ops::Div<&Mass<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2.clone() / rhs.kg.clone()}
+		}
+	}
 
 	// MomentOfInertia * AngularVelocity -> AngularMomentum
-	// TODO: docstring
+	/// Multiplying a MomentOfInertia by a AngularVelocity returns a value of type AngularMomentum
 	impl<T> std::ops::Mul<AngularVelocity<T>> for MomentOfInertia<T> where T: NumLike {
 		type Output = AngularMomentum<T>;
 		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
 			AngularMomentum{kgm2radps: self.kgm2 * rhs.radps}
 		}
 	}
+	/// Multiplying a MomentOfInertia by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<AngularVelocity<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2.clone() * rhs.radps}
+		}
+	}
+	/// Multiplying a MomentOfInertia by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for MomentOfInertia<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2 * rhs.radps.clone()}
+		}
+	}
+	/// Multiplying a MomentOfInertia by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2.clone() * rhs.radps.clone()}
+		}
+	}
 
 	// MomentOfInertia / Area -> Mass
-	// TODO: docstring
+	/// Dividing a MomentOfInertia by a Area returns a value of type Mass
 	impl<T> std::ops::Div<Area<T>> for MomentOfInertia<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: Area<T>) -> Self::Output {
 			Mass{kg: self.kgm2 / rhs.m2}
 		}
 	}
+	/// Dividing a MomentOfInertia by a Area returns a value of type Mass
+	impl<T> std::ops::Div<Area<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2.clone() / rhs.m2}
+		}
+	}
+	/// Dividing a MomentOfInertia by a Area returns a value of type Mass
+	impl<T> std::ops::Div<&Area<T>> for MomentOfInertia<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2 / rhs.m2.clone()}
+		}
+	}
+	/// Dividing a MomentOfInertia by a Area returns a value of type Mass
+	impl<T> std::ops::Div<&Area<T>> for &MomentOfInertia<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2.clone() / rhs.m2.clone()}
+		}
+	}
 
 }
 
 /// The angular momentum unit type, defined as kilogram meters squared radians per second in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct AngularMomentum<T: NumLike>{
 	pub kgm2radps: T
 }
 
 impl<T> AngularMomentum<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of angular momentum: "kilogram meters squared radians per second"
 	pub fn unit_name() -> &'static str {
 		return "kilogram meters squared radians per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of angular momentum: "kgm2radps" for kilogram meters squared radians per second
 	pub fn unit_symbol() -> &'static str {
 		return "kgm2radps";
 	}
@@ -303,48 +598,111 @@ impl<T> fmt::Display for AngularMomentum<T> where T: NumLike {
 impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
 	// AngularMomentum / AngularVelocity -> AreaDensity
-	// TODO: docstring
+	/// Dividing a AngularMomentum by a AngularVelocity returns a value of type AreaDensity
 	impl<T> std::ops::Div<AngularVelocity<T>> for AngularMomentum<T> where T: NumLike {
 		type Output = AreaDensity<T>;
 		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
 			AreaDensity{kgm2: self.kgm2radps / rhs.radps}
 		}
 	}
+	/// Dividing a AngularMomentum by a AngularVelocity returns a value of type AreaDensity
+	impl<T> std::ops::Div<AngularVelocity<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AreaDensity{kgm2: self.kgm2radps.clone() / rhs.radps}
+		}
+	}
+	/// Dividing a AngularMomentum by a AngularVelocity returns a value of type AreaDensity
+	impl<T> std::ops::Div<&AngularVelocity<T>> for AngularMomentum<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AreaDensity{kgm2: self.kgm2radps / rhs.radps.clone()}
+		}
+	}
+	/// Dividing a AngularMomentum by a AngularVelocity returns a value of type AreaDensity
+	impl<T> std::ops::Div<&AngularVelocity<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AreaDensity<T>;
+		fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AreaDensity{kgm2: self.kgm2radps.clone() / rhs.radps.clone()}
+		}
+	}
 
 	// AngularMomentum / MomentOfInertia -> AngularVelocity
-	// TODO: docstring
+	/// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
 	impl<T> std::ops::Div<MomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
 			AngularVelocity{radps: self.kgm2radps / rhs.kgm2}
 		}
 	}
+	/// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
+	impl<T> std::ops::Div<MomentOfInertia<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps.clone() / rhs.kgm2}
+		}
+	}
+	/// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&MomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps / rhs.kgm2.clone()}
+		}
+	}
+	/// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&MomentOfInertia<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps.clone() / rhs.kgm2.clone()}
+		}
+	}
 
 	// AngularMomentum / AreaDensity -> AngularVelocity
-	// TODO: docstring
+	/// Dividing a AngularMomentum by a AreaDensity returns a value of type AngularVelocity
 	impl<T> std::ops::Div<AreaDensity<T>> for AngularMomentum<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn div(self, rhs: AreaDensity<T>) -> Self::Output {
 			AngularVelocity{radps: self.kgm2radps / rhs.kgm2}
 		}
 	}
+	/// Dividing a AngularMomentum by a AreaDensity returns a value of type AngularVelocity
+	impl<T> std::ops::Div<AreaDensity<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps.clone() / rhs.kgm2}
+		}
+	}
+	/// Dividing a AngularMomentum by a AreaDensity returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&AreaDensity<T>> for AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps / rhs.kgm2.clone()}
+		}
+	}
+	/// Dividing a AngularMomentum by a AreaDensity returns a value of type AngularVelocity
+	impl<T> std::ops::Div<&AreaDensity<T>> for &AngularMomentum<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+			AngularVelocity{radps: self.kgm2radps.clone() / rhs.kgm2.clone()}
+		}
+	}
 
 }
 
 /// The torque unit type, defined as newton meters in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Torque<T: NumLike>{
 	pub Nm: T
 }
 
 impl<T> Torque<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of torque: "newton meters"
 	pub fn unit_name() -> &'static str {
 		return "newton meters";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of torque: "Nm" for newton meters
 	pub fn unit_symbol() -> &'static str {
 		return "Nm";
 	}
@@ -372,147 +730,411 @@ impl<T> fmt::Display for Torque<T> where T: NumLike {
 impl<T> Torque<T> where T: NumLike+From<f64> {
 	
 	// Torque / Distance -> Force
-	// TODO: docstring
+	/// Dividing a Torque by a Distance returns a value of type Force
 	impl<T> std::ops::Div<Distance<T>> for Torque<T> where T: NumLike {
 		type Output = Force<T>;
 		fn div(self, rhs: Distance<T>) -> Self::Output {
 			Force{N: self.Nm / rhs.m}
 		}
 	}
-
-	// Torque / Mass -> DoseEquivalent
-	// TODO: docstring
-	impl<T> std::ops::Div<Mass<T>> for Torque<T> where T: NumLike {
-		type Output = DoseEquivalent<T>;
-		fn div(self, rhs: Mass<T>) -> Self::Output {
-			DoseEquivalent{Sv: self.Nm / rhs.kg}
+	/// Dividing a Torque by a Distance returns a value of type Force
+	impl<T> std::ops::Div<Distance<T>> for &Torque<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.Nm.clone() / rhs.m}
+		}
+	}
+	/// Dividing a Torque by a Distance returns a value of type Force
+	impl<T> std::ops::Div<&Distance<T>> for Torque<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.Nm / rhs.m.clone()}
+		}
+	}
+	/// Dividing a Torque by a Distance returns a value of type Force
+	impl<T> std::ops::Div<&Distance<T>> for &Torque<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.Nm.clone() / rhs.m.clone()}
 		}
 	}
 
 	// Torque / Time -> Power
-	// TODO: docstring
+	/// Dividing a Torque by a Time returns a value of type Power
 	impl<T> std::ops::Div<Time<T>> for Torque<T> where T: NumLike {
 		type Output = Power<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			Power{W: self.Nm / rhs.s}
 		}
 	}
+	/// Dividing a Torque by a Time returns a value of type Power
+	impl<T> std::ops::Div<Time<T>> for &Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.Nm.clone() / rhs.s}
+		}
+	}
+	/// Dividing a Torque by a Time returns a value of type Power
+	impl<T> std::ops::Div<&Time<T>> for Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.Nm / rhs.s.clone()}
+		}
+	}
+	/// Dividing a Torque by a Time returns a value of type Power
+	impl<T> std::ops::Div<&Time<T>> for &Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.Nm.clone() / rhs.s.clone()}
+		}
+	}
 
 	// Torque / Current -> MagneticFlux
-	// TODO: docstring
+	/// Dividing a Torque by a Current returns a value of type MagneticFlux
 	impl<T> std::ops::Div<Current<T>> for Torque<T> where T: NumLike {
 		type Output = MagneticFlux<T>;
 		fn div(self, rhs: Current<T>) -> Self::Output {
 			MagneticFlux{Wb: self.Nm / rhs.A}
 		}
 	}
+	/// Dividing a Torque by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<Current<T>> for &Torque<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.Nm.clone() / rhs.A}
+		}
+	}
+	/// Dividing a Torque by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<&Current<T>> for Torque<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.Nm / rhs.A.clone()}
+		}
+	}
+	/// Dividing a Torque by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<&Current<T>> for &Torque<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.Nm.clone() / rhs.A.clone()}
+		}
+	}
 
 	// Torque * Frequency -> Power
-	// TODO: docstring
+	/// Multiplying a Torque by a Frequency returns a value of type Power
 	impl<T> std::ops::Mul<Frequency<T>> for Torque<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			Power{W: self.Nm * rhs.Hz}
 		}
 	}
+	/// Multiplying a Torque by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<Frequency<T>> for &Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.Nm.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a Torque by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<&Frequency<T>> for Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.Nm * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a Torque by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<&Frequency<T>> for &Torque<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.Nm.clone() * rhs.Hz.clone()}
+		}
+	}
 
 	// Torque / Volume -> Pressure
-	// TODO: docstring
+	/// Dividing a Torque by a Volume returns a value of type Pressure
 	impl<T> std::ops::Div<Volume<T>> for Torque<T> where T: NumLike {
 		type Output = Pressure<T>;
 		fn div(self, rhs: Volume<T>) -> Self::Output {
 			Pressure{Pa: self.Nm / rhs.m3}
 		}
 	}
+	/// Dividing a Torque by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<Volume<T>> for &Torque<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.Nm.clone() / rhs.m3}
+		}
+	}
+	/// Dividing a Torque by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<&Volume<T>> for Torque<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.Nm / rhs.m3.clone()}
+		}
+	}
+	/// Dividing a Torque by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<&Volume<T>> for &Torque<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.Nm.clone() / rhs.m3.clone()}
+		}
+	}
 
 	// Torque / Velocity -> Momentum
-	// TODO: docstring
+	/// Dividing a Torque by a Velocity returns a value of type Momentum
 	impl<T> std::ops::Div<Velocity<T>> for Torque<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn div(self, rhs: Velocity<T>) -> Self::Output {
 			Momentum{kgmps: self.Nm / rhs.mps}
 		}
 	}
+	/// Dividing a Torque by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<Velocity<T>> for &Torque<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.Nm.clone() / rhs.mps}
+		}
+	}
+	/// Dividing a Torque by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<&Velocity<T>> for Torque<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.Nm / rhs.mps.clone()}
+		}
+	}
+	/// Dividing a Torque by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<&Velocity<T>> for &Torque<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.Nm.clone() / rhs.mps.clone()}
+		}
+	}
 
 	// Torque / Momentum -> Velocity
-	// TODO: docstring
+	/// Dividing a Torque by a Momentum returns a value of type Velocity
 	impl<T> std::ops::Div<Momentum<T>> for Torque<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn div(self, rhs: Momentum<T>) -> Self::Output {
 			Velocity{mps: self.Nm / rhs.kgmps}
 		}
 	}
+	/// Dividing a Torque by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<Momentum<T>> for &Torque<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.Nm.clone() / rhs.kgmps}
+		}
+	}
+	/// Dividing a Torque by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<&Momentum<T>> for Torque<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.Nm / rhs.kgmps.clone()}
+		}
+	}
+	/// Dividing a Torque by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<&Momentum<T>> for &Torque<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.Nm.clone() / rhs.kgmps.clone()}
+		}
+	}
 
 	// Torque / Force -> Distance
-	// TODO: docstring
+	/// Dividing a Torque by a Force returns a value of type Distance
 	impl<T> std::ops::Div<Force<T>> for Torque<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn div(self, rhs: Force<T>) -> Self::Output {
 			Distance{m: self.Nm / rhs.N}
 		}
 	}
+	/// Dividing a Torque by a Force returns a value of type Distance
+	impl<T> std::ops::Div<Force<T>> for &Torque<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.Nm.clone() / rhs.N}
+		}
+	}
+	/// Dividing a Torque by a Force returns a value of type Distance
+	impl<T> std::ops::Div<&Force<T>> for Torque<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.Nm / rhs.N.clone()}
+		}
+	}
+	/// Dividing a Torque by a Force returns a value of type Distance
+	impl<T> std::ops::Div<&Force<T>> for &Torque<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.Nm.clone() / rhs.N.clone()}
+		}
+	}
 
 	// Torque / Pressure -> Volume
-	// TODO: docstring
+	/// Dividing a Torque by a Pressure returns a value of type Volume
 	impl<T> std::ops::Div<Pressure<T>> for Torque<T> where T: NumLike {
 		type Output = Volume<T>;
 		fn div(self, rhs: Pressure<T>) -> Self::Output {
 			Volume{m3: self.Nm / rhs.Pa}
 		}
 	}
+	/// Dividing a Torque by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<Pressure<T>> for &Torque<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.Nm.clone() / rhs.Pa}
+		}
+	}
+	/// Dividing a Torque by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<&Pressure<T>> for Torque<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.Nm / rhs.Pa.clone()}
+		}
+	}
+	/// Dividing a Torque by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<&Pressure<T>> for &Torque<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.Nm.clone() / rhs.Pa.clone()}
+		}
+	}
 
 	// Torque / Charge -> Voltage
-	// TODO: docstring
+	/// Dividing a Torque by a Charge returns a value of type Voltage
 	impl<T> std::ops::Div<Charge<T>> for Torque<T> where T: NumLike {
 		type Output = Voltage<T>;
 		fn div(self, rhs: Charge<T>) -> Self::Output {
 			Voltage{V: self.Nm / rhs.C}
 		}
 	}
+	/// Dividing a Torque by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<Charge<T>> for &Torque<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.Nm.clone() / rhs.C}
+		}
+	}
+	/// Dividing a Torque by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<&Charge<T>> for Torque<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.Nm / rhs.C.clone()}
+		}
+	}
+	/// Dividing a Torque by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<&Charge<T>> for &Torque<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.Nm.clone() / rhs.C.clone()}
+		}
+	}
 
 	// Torque / Power -> Time
-	// TODO: docstring
+	/// Dividing a Torque by a Power returns a value of type Time
 	impl<T> std::ops::Div<Power<T>> for Torque<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: Power<T>) -> Self::Output {
 			Time{s: self.Nm / rhs.W}
 		}
 	}
+	/// Dividing a Torque by a Power returns a value of type Time
+	impl<T> std::ops::Div<Power<T>> for &Torque<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.Nm.clone() / rhs.W}
+		}
+	}
+	/// Dividing a Torque by a Power returns a value of type Time
+	impl<T> std::ops::Div<&Power<T>> for Torque<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.Nm / rhs.W.clone()}
+		}
+	}
+	/// Dividing a Torque by a Power returns a value of type Time
+	impl<T> std::ops::Div<&Power<T>> for &Torque<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.Nm.clone() / rhs.W.clone()}
+		}
+	}
 
 	// Torque / Voltage -> Charge
-	// TODO: docstring
+	/// Dividing a Torque by a Voltage returns a value of type Charge
 	impl<T> std::ops::Div<Voltage<T>> for Torque<T> where T: NumLike {
 		type Output = Charge<T>;
 		fn div(self, rhs: Voltage<T>) -> Self::Output {
 			Charge{C: self.Nm / rhs.V}
 		}
 	}
+	/// Dividing a Torque by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<Voltage<T>> for &Torque<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.Nm.clone() / rhs.V}
+		}
+	}
+	/// Dividing a Torque by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<&Voltage<T>> for Torque<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.Nm / rhs.V.clone()}
+		}
+	}
+	/// Dividing a Torque by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<&Voltage<T>> for &Torque<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.Nm.clone() / rhs.V.clone()}
+		}
+	}
 
 	// Torque / MagneticFlux -> Current
-	// TODO: docstring
+	/// Dividing a Torque by a MagneticFlux returns a value of type Current
 	impl<T> std::ops::Div<MagneticFlux<T>> for Torque<T> where T: NumLike {
 		type Output = Current<T>;
 		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 			Current{A: self.Nm / rhs.Wb}
 		}
 	}
+	/// Dividing a Torque by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<MagneticFlux<T>> for &Torque<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.Nm.clone() / rhs.Wb}
+		}
+	}
+	/// Dividing a Torque by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<&MagneticFlux<T>> for Torque<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.Nm / rhs.Wb.clone()}
+		}
+	}
+	/// Dividing a Torque by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<&MagneticFlux<T>> for &Torque<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.Nm.clone() / rhs.Wb.clone()}
+		}
+	}
 
 }
 
 /// The frequency unit type, defined as hertz in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Frequency<T: NumLike>{
 	pub Hz: T
 }
 
 impl<T> Frequency<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of frequency: "hertz"
 	pub fn unit_name() -> &'static str {
 		return "hertz";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of frequency: "Hz" for hertz
 	pub fn unit_symbol() -> &'static str {
 		return "Hz";
 	}
@@ -540,129 +1162,381 @@ impl<T> fmt::Display for Frequency<T> where T: NumLike {
 impl<T> Frequency<T> where T: NumLike+From<f64> {
 	
 	// Frequency * Distance -> Velocity
-	// TODO: docstring
+	/// Multiplying a Frequency by a Distance returns a value of type Velocity
 	impl<T> std::ops::Mul<Distance<T>> for Frequency<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn mul(self, rhs: Distance<T>) -> Self::Output {
 			Velocity{mps: self.Hz * rhs.m}
 		}
 	}
+	/// Multiplying a Frequency by a Distance returns a value of type Velocity
+	impl<T> std::ops::Mul<Distance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Velocity{mps: self.Hz.clone() * rhs.m}
+		}
+	}
+	/// Multiplying a Frequency by a Distance returns a value of type Velocity
+	impl<T> std::ops::Mul<&Distance<T>> for Frequency<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Velocity{mps: self.Hz * rhs.m.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Distance returns a value of type Velocity
+	impl<T> std::ops::Mul<&Distance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Velocity{mps: self.Hz.clone() * rhs.m.clone()}
+		}
+	}
 
 	// Frequency * Amount -> CatalyticActivity
-	// TODO: docstring
+	/// Multiplying a Frequency by a Amount returns a value of type CatalyticActivity
 	impl<T> std::ops::Mul<Amount<T>> for Frequency<T> where T: NumLike {
 		type Output = CatalyticActivity<T>;
 		fn mul(self, rhs: Amount<T>) -> Self::Output {
 			CatalyticActivity{molps: self.Hz * rhs.mol}
 		}
 	}
+	/// Multiplying a Frequency by a Amount returns a value of type CatalyticActivity
+	impl<T> std::ops::Mul<Amount<T>> for &Frequency<T> where T: NumLike {
+		type Output = CatalyticActivity<T>;
+		fn mul(self, rhs: Amount<T>) -> Self::Output {
+			CatalyticActivity{molps: self.Hz.clone() * rhs.mol}
+		}
+	}
+	/// Multiplying a Frequency by a Amount returns a value of type CatalyticActivity
+	impl<T> std::ops::Mul<&Amount<T>> for Frequency<T> where T: NumLike {
+		type Output = CatalyticActivity<T>;
+		fn mul(self, rhs: Amount<T>) -> Self::Output {
+			CatalyticActivity{molps: self.Hz * rhs.mol.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Amount returns a value of type CatalyticActivity
+	impl<T> std::ops::Mul<&Amount<T>> for &Frequency<T> where T: NumLike {
+		type Output = CatalyticActivity<T>;
+		fn mul(self, rhs: Amount<T>) -> Self::Output {
+			CatalyticActivity{molps: self.Hz.clone() * rhs.mol.clone()}
+		}
+	}
 
 	// Frequency * Angle -> AngularVelocity
-	// TODO: docstring
+	/// Multiplying a Frequency by a Angle returns a value of type AngularVelocity
 	impl<T> std::ops::Mul<Angle<T>> for Frequency<T> where T: NumLike {
 		type Output = AngularVelocity<T>;
 		fn mul(self, rhs: Angle<T>) -> Self::Output {
 			AngularVelocity{radps: self.Hz * rhs.rad}
 		}
 	}
+	/// Multiplying a Frequency by a Angle returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<Angle<T>> for &Frequency<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Angle<T>) -> Self::Output {
+			AngularVelocity{radps: self.Hz.clone() * rhs.rad}
+		}
+	}
+	/// Multiplying a Frequency by a Angle returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Angle<T>> for Frequency<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Angle<T>) -> Self::Output {
+			AngularVelocity{radps: self.Hz * rhs.rad.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Angle returns a value of type AngularVelocity
+	impl<T> std::ops::Mul<&Angle<T>> for &Frequency<T> where T: NumLike {
+		type Output = AngularVelocity<T>;
+		fn mul(self, rhs: Angle<T>) -> Self::Output {
+			AngularVelocity{radps: self.Hz.clone() * rhs.rad.clone()}
+		}
+	}
 
 	// Frequency * AngularVelocity -> AngularAcceleration
-	// TODO: docstring
+	/// Multiplying a Frequency by a AngularVelocity returns a value of type AngularAcceleration
 	impl<T> std::ops::Mul<AngularVelocity<T>> for Frequency<T> where T: NumLike {
 		type Output = AngularAcceleration<T>;
 		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
 			AngularAcceleration{radps2: self.Hz * rhs.radps}
 		}
 	}
+	/// Multiplying a Frequency by a AngularVelocity returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<AngularVelocity<T>> for &Frequency<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.Hz.clone() * rhs.radps}
+		}
+	}
+	/// Multiplying a Frequency by a AngularVelocity returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for Frequency<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.Hz * rhs.radps.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a AngularVelocity returns a value of type AngularAcceleration
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for &Frequency<T> where T: NumLike {
+		type Output = AngularAcceleration<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularAcceleration{radps2: self.Hz.clone() * rhs.radps.clone()}
+		}
+	}
 
 	// Frequency * Torque -> Power
-	// TODO: docstring
+	/// Multiplying a Frequency by a Torque returns a value of type Power
 	impl<T> std::ops::Mul<Torque<T>> for Frequency<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Torque<T>) -> Self::Output {
 			Power{W: self.Hz * rhs.Nm}
 		}
 	}
+	/// Multiplying a Frequency by a Torque returns a value of type Power
+	impl<T> std::ops::Mul<Torque<T>> for &Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Torque<T>) -> Self::Output {
+			Power{W: self.Hz.clone() * rhs.Nm}
+		}
+	}
+	/// Multiplying a Frequency by a Torque returns a value of type Power
+	impl<T> std::ops::Mul<&Torque<T>> for Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Torque<T>) -> Self::Output {
+			Power{W: self.Hz * rhs.Nm.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Torque returns a value of type Power
+	impl<T> std::ops::Mul<&Torque<T>> for &Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Torque<T>) -> Self::Output {
+			Power{W: self.Hz.clone() * rhs.Nm.clone()}
+		}
+	}
 
 	// Frequency * Energy -> Power
-	// TODO: docstring
+	/// Multiplying a Frequency by a Energy returns a value of type Power
 	impl<T> std::ops::Mul<Energy<T>> for Frequency<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Energy<T>) -> Self::Output {
 			Power{W: self.Hz * rhs.J}
 		}
 	}
+	/// Multiplying a Frequency by a Energy returns a value of type Power
+	impl<T> std::ops::Mul<Energy<T>> for &Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Energy<T>) -> Self::Output {
+			Power{W: self.Hz.clone() * rhs.J}
+		}
+	}
+	/// Multiplying a Frequency by a Energy returns a value of type Power
+	impl<T> std::ops::Mul<&Energy<T>> for Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Energy<T>) -> Self::Output {
+			Power{W: self.Hz * rhs.J.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Energy returns a value of type Power
+	impl<T> std::ops::Mul<&Energy<T>> for &Frequency<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Energy<T>) -> Self::Output {
+			Power{W: self.Hz.clone() * rhs.J.clone()}
+		}
+	}
 
 	// Frequency * Velocity -> Acceleration
-	// TODO: docstring
+	/// Multiplying a Frequency by a Velocity returns a value of type Acceleration
 	impl<T> std::ops::Mul<Velocity<T>> for Frequency<T> where T: NumLike {
 		type Output = Acceleration<T>;
 		fn mul(self, rhs: Velocity<T>) -> Self::Output {
 			Acceleration{mps2: self.Hz * rhs.mps}
 		}
 	}
+	/// Multiplying a Frequency by a Velocity returns a value of type Acceleration
+	impl<T> std::ops::Mul<Velocity<T>> for &Frequency<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Acceleration{mps2: self.Hz.clone() * rhs.mps}
+		}
+	}
+	/// Multiplying a Frequency by a Velocity returns a value of type Acceleration
+	impl<T> std::ops::Mul<&Velocity<T>> for Frequency<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Acceleration{mps2: self.Hz * rhs.mps.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Velocity returns a value of type Acceleration
+	impl<T> std::ops::Mul<&Velocity<T>> for &Frequency<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Acceleration{mps2: self.Hz.clone() * rhs.mps.clone()}
+		}
+	}
 
 	// Frequency * Momentum -> Force
-	// TODO: docstring
+	/// Multiplying a Frequency by a Momentum returns a value of type Force
 	impl<T> std::ops::Mul<Momentum<T>> for Frequency<T> where T: NumLike {
 		type Output = Force<T>;
 		fn mul(self, rhs: Momentum<T>) -> Self::Output {
 			Force{N: self.Hz * rhs.kgmps}
 		}
 	}
+	/// Multiplying a Frequency by a Momentum returns a value of type Force
+	impl<T> std::ops::Mul<Momentum<T>> for &Frequency<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Force{N: self.Hz.clone() * rhs.kgmps}
+		}
+	}
+	/// Multiplying a Frequency by a Momentum returns a value of type Force
+	impl<T> std::ops::Mul<&Momentum<T>> for Frequency<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Force{N: self.Hz * rhs.kgmps.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Momentum returns a value of type Force
+	impl<T> std::ops::Mul<&Momentum<T>> for &Frequency<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Force{N: self.Hz.clone() * rhs.kgmps.clone()}
+		}
+	}
 
 	// Frequency * Charge -> Current
-	// TODO: docstring
+	/// Multiplying a Frequency by a Charge returns a value of type Current
 	impl<T> std::ops::Mul<Charge<T>> for Frequency<T> where T: NumLike {
 		type Output = Current<T>;
 		fn mul(self, rhs: Charge<T>) -> Self::Output {
 			Current{A: self.Hz * rhs.C}
 		}
 	}
+	/// Multiplying a Frequency by a Charge returns a value of type Current
+	impl<T> std::ops::Mul<Charge<T>> for &Frequency<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Charge<T>) -> Self::Output {
+			Current{A: self.Hz.clone() * rhs.C}
+		}
+	}
+	/// Multiplying a Frequency by a Charge returns a value of type Current
+	impl<T> std::ops::Mul<&Charge<T>> for Frequency<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Charge<T>) -> Self::Output {
+			Current{A: self.Hz * rhs.C.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Charge returns a value of type Current
+	impl<T> std::ops::Mul<&Charge<T>> for &Frequency<T> where T: NumLike {
+		type Output = Current<T>;
+		fn mul(self, rhs: Charge<T>) -> Self::Output {
+			Current{A: self.Hz.clone() * rhs.C.clone()}
+		}
+	}
 
 	// Frequency * Capacitance -> Conductance
-	// TODO: docstring
+	/// Multiplying a Frequency by a Capacitance returns a value of type Conductance
 	impl<T> std::ops::Mul<Capacitance<T>> for Frequency<T> where T: NumLike {
 		type Output = Conductance<T>;
 		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
 			Conductance{S: self.Hz * rhs.F}
 		}
 	}
+	/// Multiplying a Frequency by a Capacitance returns a value of type Conductance
+	impl<T> std::ops::Mul<Capacitance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
+			Conductance{S: self.Hz.clone() * rhs.F}
+		}
+	}
+	/// Multiplying a Frequency by a Capacitance returns a value of type Conductance
+	impl<T> std::ops::Mul<&Capacitance<T>> for Frequency<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
+			Conductance{S: self.Hz * rhs.F.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Capacitance returns a value of type Conductance
+	impl<T> std::ops::Mul<&Capacitance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Conductance<T>;
+		fn mul(self, rhs: Capacitance<T>) -> Self::Output {
+			Conductance{S: self.Hz.clone() * rhs.F.clone()}
+		}
+	}
 
 	// Frequency * Inductance -> Resistance
-	// TODO: docstring
+	/// Multiplying a Frequency by a Inductance returns a value of type Resistance
 	impl<T> std::ops::Mul<Inductance<T>> for Frequency<T> where T: NumLike {
 		type Output = Resistance<T>;
 		fn mul(self, rhs: Inductance<T>) -> Self::Output {
 			Resistance{Ohm: self.Hz * rhs.H}
 		}
 	}
+	/// Multiplying a Frequency by a Inductance returns a value of type Resistance
+	impl<T> std::ops::Mul<Inductance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn mul(self, rhs: Inductance<T>) -> Self::Output {
+			Resistance{Ohm: self.Hz.clone() * rhs.H}
+		}
+	}
+	/// Multiplying a Frequency by a Inductance returns a value of type Resistance
+	impl<T> std::ops::Mul<&Inductance<T>> for Frequency<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn mul(self, rhs: Inductance<T>) -> Self::Output {
+			Resistance{Ohm: self.Hz * rhs.H.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a Inductance returns a value of type Resistance
+	impl<T> std::ops::Mul<&Inductance<T>> for &Frequency<T> where T: NumLike {
+		type Output = Resistance<T>;
+		fn mul(self, rhs: Inductance<T>) -> Self::Output {
+			Resistance{Ohm: self.Hz.clone() * rhs.H.clone()}
+		}
+	}
 
 	// Frequency * MagneticFlux -> Voltage
-	// TODO: docstring
+	/// Multiplying a Frequency by a MagneticFlux returns a value of type Voltage
 	impl<T> std::ops::Mul<MagneticFlux<T>> for Frequency<T> where T: NumLike {
 		type Output = Voltage<T>;
 		fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
 			Voltage{V: self.Hz * rhs.Wb}
 		}
 	}
+	/// Multiplying a Frequency by a MagneticFlux returns a value of type Voltage
+	impl<T> std::ops::Mul<MagneticFlux<T>> for &Frequency<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Voltage{V: self.Hz.clone() * rhs.Wb}
+		}
+	}
+	/// Multiplying a Frequency by a MagneticFlux returns a value of type Voltage
+	impl<T> std::ops::Mul<&MagneticFlux<T>> for Frequency<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Voltage{V: self.Hz * rhs.Wb.clone()}
+		}
+	}
+	/// Multiplying a Frequency by a MagneticFlux returns a value of type Voltage
+	impl<T> std::ops::Mul<&MagneticFlux<T>> for &Frequency<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Voltage{V: self.Hz.clone() * rhs.Wb.clone()}
+		}
+	}
 
 }
 
 /// The area density unit type, defined as kilograms per square meter in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct AreaDensity<T: NumLike>{
 	pub kgm2: T
 }
 
 impl<T> AreaDensity<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of area density: "kilograms per square meter"
 	pub fn unit_name() -> &'static str {
 		return "kilograms per square meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of area density: "kgm2" for kilograms per square meter
 	pub fn unit_symbol() -> &'static str {
 		return "kgm2";
 	}
@@ -690,48 +1564,111 @@ impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
 impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
 	// AreaDensity / Mass -> Area
-	// TODO: docstring
+	/// Dividing a AreaDensity by a Mass returns a value of type Area
 	impl<T> std::ops::Div<Mass<T>> for AreaDensity<T> where T: NumLike {
 		type Output = Area<T>;
 		fn div(self, rhs: Mass<T>) -> Self::Output {
 			Area{m2: self.kgm2 / rhs.kg}
 		}
 	}
+	/// Dividing a AreaDensity by a Mass returns a value of type Area
+	impl<T> std::ops::Div<Mass<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2.clone() / rhs.kg}
+		}
+	}
+	/// Dividing a AreaDensity by a Mass returns a value of type Area
+	impl<T> std::ops::Div<&Mass<T>> for AreaDensity<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2 / rhs.kg.clone()}
+		}
+	}
+	/// Dividing a AreaDensity by a Mass returns a value of type Area
+	impl<T> std::ops::Div<&Mass<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Area{m2: self.kgm2.clone() / rhs.kg.clone()}
+		}
+	}
 
 	// AreaDensity * AngularVelocity -> AngularMomentum
-	// TODO: docstring
+	/// Multiplying a AreaDensity by a AngularVelocity returns a value of type AngularMomentum
 	impl<T> std::ops::Mul<AngularVelocity<T>> for AreaDensity<T> where T: NumLike {
 		type Output = AngularMomentum<T>;
 		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
 			AngularMomentum{kgm2radps: self.kgm2 * rhs.radps}
 		}
 	}
+	/// Multiplying a AreaDensity by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<AngularVelocity<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2.clone() * rhs.radps}
+		}
+	}
+	/// Multiplying a AreaDensity by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for AreaDensity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2 * rhs.radps.clone()}
+		}
+	}
+	/// Multiplying a AreaDensity by a AngularVelocity returns a value of type AngularMomentum
+	impl<T> std::ops::Mul<&AngularVelocity<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = AngularMomentum<T>;
+		fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+			AngularMomentum{kgm2radps: self.kgm2.clone() * rhs.radps.clone()}
+		}
+	}
 
 	// AreaDensity / Area -> Mass
-	// TODO: docstring
+	/// Dividing a AreaDensity by a Area returns a value of type Mass
 	impl<T> std::ops::Div<Area<T>> for AreaDensity<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: Area<T>) -> Self::Output {
 			Mass{kg: self.kgm2 / rhs.m2}
 		}
 	}
+	/// Dividing a AreaDensity by a Area returns a value of type Mass
+	impl<T> std::ops::Div<Area<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2.clone() / rhs.m2}
+		}
+	}
+	/// Dividing a AreaDensity by a Area returns a value of type Mass
+	impl<T> std::ops::Div<&Area<T>> for AreaDensity<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2 / rhs.m2.clone()}
+		}
+	}
+	/// Dividing a AreaDensity by a Area returns a value of type Mass
+	impl<T> std::ops::Div<&Area<T>> for &AreaDensity<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Mass{kg: self.kgm2.clone() / rhs.m2.clone()}
+		}
+	}
 
 }
 
 /// The density unit type, defined as kilograms per liter in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Density<T: NumLike>{
 	pub kgpL: T
 }
 
 impl<T> Density<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of density: "kilograms per liter"
 	pub fn unit_name() -> &'static str {
 		return "kilograms per liter";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of density: "kgpL" for kilograms per liter
 	pub fn unit_symbol() -> &'static str {
 		return "kgpL";
 	}
@@ -761,19 +1698,19 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 }
 
 /// The velocity unit type, defined as meters per second in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Velocity<T: NumLike>{
 	pub mps: T
 }
 
 impl<T> Velocity<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of velocity: "meters per second"
 	pub fn unit_name() -> &'static str {
 		return "meters per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of velocity: "mps" for meters per second
 	pub fn unit_symbol() -> &'static str {
 		return "mps";
 	}
@@ -801,111 +1738,291 @@ impl<T> fmt::Display for Velocity<T> where T: NumLike {
 impl<T> Velocity<T> where T: NumLike+From<f64> {
 	
 	// Velocity / Distance -> Frequency
-	// TODO: docstring
+	/// Dividing a Velocity by a Distance returns a value of type Frequency
 	impl<T> std::ops::Div<Distance<T>> for Velocity<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Distance<T>) -> Self::Output {
 			Frequency{Hz: self.mps / rhs.m}
 		}
 	}
+	/// Dividing a Velocity by a Distance returns a value of type Frequency
+	impl<T> std::ops::Div<Distance<T>> for &Velocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Frequency{Hz: self.mps.clone() / rhs.m}
+		}
+	}
+	/// Dividing a Velocity by a Distance returns a value of type Frequency
+	impl<T> std::ops::Div<&Distance<T>> for Velocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Frequency{Hz: self.mps / rhs.m.clone()}
+		}
+	}
+	/// Dividing a Velocity by a Distance returns a value of type Frequency
+	impl<T> std::ops::Div<&Distance<T>> for &Velocity<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Frequency{Hz: self.mps.clone() / rhs.m.clone()}
+		}
+	}
 
 	// Velocity * Mass -> Momentum
-	// TODO: docstring
+	/// Multiplying a Velocity by a Mass returns a value of type Momentum
 	impl<T> std::ops::Mul<Mass<T>> for Velocity<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn mul(self, rhs: Mass<T>) -> Self::Output {
 			Momentum{kgmps: self.mps * rhs.kg}
 		}
 	}
+	/// Multiplying a Velocity by a Mass returns a value of type Momentum
+	impl<T> std::ops::Mul<Mass<T>> for &Velocity<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Momentum{kgmps: self.mps.clone() * rhs.kg}
+		}
+	}
+	/// Multiplying a Velocity by a Mass returns a value of type Momentum
+	impl<T> std::ops::Mul<&Mass<T>> for Velocity<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Momentum{kgmps: self.mps * rhs.kg.clone()}
+		}
+	}
+	/// Multiplying a Velocity by a Mass returns a value of type Momentum
+	impl<T> std::ops::Mul<&Mass<T>> for &Velocity<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Momentum{kgmps: self.mps.clone() * rhs.kg.clone()}
+		}
+	}
 
 	// Velocity * Time -> Distance
-	// TODO: docstring
+	/// Multiplying a Velocity by a Time returns a value of type Distance
 	impl<T> std::ops::Mul<Time<T>> for Velocity<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			Distance{m: self.mps * rhs.s}
 		}
 	}
+	/// Multiplying a Velocity by a Time returns a value of type Distance
+	impl<T> std::ops::Mul<Time<T>> for &Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Distance{m: self.mps.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a Velocity by a Time returns a value of type Distance
+	impl<T> std::ops::Mul<&Time<T>> for Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Distance{m: self.mps * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a Velocity by a Time returns a value of type Distance
+	impl<T> std::ops::Mul<&Time<T>> for &Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Distance{m: self.mps.clone() * rhs.s.clone()}
+		}
+	}
 
 	// Velocity / Time -> Acceleration
-	// TODO: docstring
+	/// Dividing a Velocity by a Time returns a value of type Acceleration
 	impl<T> std::ops::Div<Time<T>> for Velocity<T> where T: NumLike {
 		type Output = Acceleration<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			Acceleration{mps2: self.mps / rhs.s}
 		}
 	}
+	/// Dividing a Velocity by a Time returns a value of type Acceleration
+	impl<T> std::ops::Div<Time<T>> for &Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Acceleration{mps2: self.mps.clone() / rhs.s}
+		}
+	}
+	/// Dividing a Velocity by a Time returns a value of type Acceleration
+	impl<T> std::ops::Div<&Time<T>> for Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Acceleration{mps2: self.mps / rhs.s.clone()}
+		}
+	}
+	/// Dividing a Velocity by a Time returns a value of type Acceleration
+	impl<T> std::ops::Div<&Time<T>> for &Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Acceleration{mps2: self.mps.clone() / rhs.s.clone()}
+		}
+	}
 
 	// Velocity * Frequency -> Acceleration
-	// TODO: docstring
+	/// Multiplying a Velocity by a Frequency returns a value of type Acceleration
 	impl<T> std::ops::Mul<Frequency<T>> for Velocity<T> where T: NumLike {
 		type Output = Acceleration<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			Acceleration{mps2: self.mps * rhs.Hz}
 		}
 	}
+	/// Multiplying a Velocity by a Frequency returns a value of type Acceleration
+	impl<T> std::ops::Mul<Frequency<T>> for &Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Acceleration{mps2: self.mps.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a Velocity by a Frequency returns a value of type Acceleration
+	impl<T> std::ops::Mul<&Frequency<T>> for Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Acceleration{mps2: self.mps * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a Velocity by a Frequency returns a value of type Acceleration
+	impl<T> std::ops::Mul<&Frequency<T>> for &Velocity<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Acceleration{mps2: self.mps.clone() * rhs.Hz.clone()}
+		}
+	}
 
 	// Velocity / Frequency -> Distance
-	// TODO: docstring
+	/// Dividing a Velocity by a Frequency returns a value of type Distance
 	impl<T> std::ops::Div<Frequency<T>> for Velocity<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			Distance{m: self.mps / rhs.Hz}
 		}
 	}
-
-	// Velocity * Velocity -> DoseEquivalent
-	// TODO: docstring
-	impl<T> std::ops::Mul<Velocity<T>> for Velocity<T> where T: NumLike {
-		type Output = DoseEquivalent<T>;
-		fn mul(self, rhs: Velocity<T>) -> Self::Output {
-			DoseEquivalent{Sv: self.mps * rhs.mps}
+	/// Dividing a Velocity by a Frequency returns a value of type Distance
+	impl<T> std::ops::Div<Frequency<T>> for &Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Distance{m: self.mps.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a Velocity by a Frequency returns a value of type Distance
+	impl<T> std::ops::Div<&Frequency<T>> for Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Distance{m: self.mps / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a Velocity by a Frequency returns a value of type Distance
+	impl<T> std::ops::Div<&Frequency<T>> for &Velocity<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Distance{m: self.mps.clone() / rhs.Hz.clone()}
 		}
 	}
 
 	// Velocity / Acceleration -> Time
-	// TODO: docstring
+	/// Dividing a Velocity by a Acceleration returns a value of type Time
 	impl<T> std::ops::Div<Acceleration<T>> for Velocity<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: Acceleration<T>) -> Self::Output {
 			Time{s: self.mps / rhs.mps2}
 		}
 	}
+	/// Dividing a Velocity by a Acceleration returns a value of type Time
+	impl<T> std::ops::Div<Acceleration<T>> for &Velocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Time{s: self.mps.clone() / rhs.mps2}
+		}
+	}
+	/// Dividing a Velocity by a Acceleration returns a value of type Time
+	impl<T> std::ops::Div<&Acceleration<T>> for Velocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Time{s: self.mps / rhs.mps2.clone()}
+		}
+	}
+	/// Dividing a Velocity by a Acceleration returns a value of type Time
+	impl<T> std::ops::Div<&Acceleration<T>> for &Velocity<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Time{s: self.mps.clone() / rhs.mps2.clone()}
+		}
+	}
 
 	// Velocity * Momentum -> Energy
-	// TODO: docstring
+	/// Multiplying a Velocity by a Momentum returns a value of type Energy
 	impl<T> std::ops::Mul<Momentum<T>> for Velocity<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Momentum<T>) -> Self::Output {
 			Energy{J: self.mps * rhs.kgmps}
 		}
 	}
+	/// Multiplying a Velocity by a Momentum returns a value of type Energy
+	impl<T> std::ops::Mul<Momentum<T>> for &Velocity<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Energy{J: self.mps.clone() * rhs.kgmps}
+		}
+	}
+	/// Multiplying a Velocity by a Momentum returns a value of type Energy
+	impl<T> std::ops::Mul<&Momentum<T>> for Velocity<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Energy{J: self.mps * rhs.kgmps.clone()}
+		}
+	}
+	/// Multiplying a Velocity by a Momentum returns a value of type Energy
+	impl<T> std::ops::Mul<&Momentum<T>> for &Velocity<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Energy{J: self.mps.clone() * rhs.kgmps.clone()}
+		}
+	}
 
 	// Velocity * Force -> Power
-	// TODO: docstring
+	/// Multiplying a Velocity by a Force returns a value of type Power
 	impl<T> std::ops::Mul<Force<T>> for Velocity<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Force<T>) -> Self::Output {
 			Power{W: self.mps * rhs.N}
 		}
 	}
+	/// Multiplying a Velocity by a Force returns a value of type Power
+	impl<T> std::ops::Mul<Force<T>> for &Velocity<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Force<T>) -> Self::Output {
+			Power{W: self.mps.clone() * rhs.N}
+		}
+	}
+	/// Multiplying a Velocity by a Force returns a value of type Power
+	impl<T> std::ops::Mul<&Force<T>> for Velocity<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Force<T>) -> Self::Output {
+			Power{W: self.mps * rhs.N.clone()}
+		}
+	}
+	/// Multiplying a Velocity by a Force returns a value of type Power
+	impl<T> std::ops::Mul<&Force<T>> for &Velocity<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Force<T>) -> Self::Output {
+			Power{W: self.mps.clone() * rhs.N.clone()}
+		}
+	}
 
 }
 
 /// The acceleration unit type, defined as meters per second squared in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Acceleration<T: NumLike>{
 	pub mps2: T
 }
 
 impl<T> Acceleration<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of acceleration: "meters per second squared"
 	pub fn unit_name() -> &'static str {
 		return "meters per second squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of acceleration: "mps2" for meters per second squared
 	pub fn unit_symbol() -> &'static str {
 		return "mps2";
 	}
@@ -932,76 +2049,172 @@ impl<T> fmt::Display for Acceleration<T> where T: NumLike {
 
 impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	
-	// Acceleration * Distance -> DoseEquivalent
-	// TODO: docstring
-	impl<T> std::ops::Mul<Distance<T>> for Acceleration<T> where T: NumLike {
-		type Output = DoseEquivalent<T>;
-		fn mul(self, rhs: Distance<T>) -> Self::Output {
-			DoseEquivalent{Sv: self.mps2 * rhs.m}
-		}
-	}
-
 	// Acceleration * Mass -> Force
-	// TODO: docstring
+	/// Multiplying a Acceleration by a Mass returns a value of type Force
 	impl<T> std::ops::Mul<Mass<T>> for Acceleration<T> where T: NumLike {
 		type Output = Force<T>;
 		fn mul(self, rhs: Mass<T>) -> Self::Output {
 			Force{N: self.mps2 * rhs.kg}
 		}
 	}
+	/// Multiplying a Acceleration by a Mass returns a value of type Force
+	impl<T> std::ops::Mul<Mass<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Force{N: self.mps2.clone() * rhs.kg}
+		}
+	}
+	/// Multiplying a Acceleration by a Mass returns a value of type Force
+	impl<T> std::ops::Mul<&Mass<T>> for Acceleration<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Force{N: self.mps2 * rhs.kg.clone()}
+		}
+	}
+	/// Multiplying a Acceleration by a Mass returns a value of type Force
+	impl<T> std::ops::Mul<&Mass<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Mass<T>) -> Self::Output {
+			Force{N: self.mps2.clone() * rhs.kg.clone()}
+		}
+	}
 
 	// Acceleration * Time -> Velocity
-	// TODO: docstring
+	/// Multiplying a Acceleration by a Time returns a value of type Velocity
 	impl<T> std::ops::Mul<Time<T>> for Acceleration<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			Velocity{mps: self.mps2 * rhs.s}
 		}
 	}
+	/// Multiplying a Acceleration by a Time returns a value of type Velocity
+	impl<T> std::ops::Mul<Time<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Velocity{mps: self.mps2.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a Acceleration by a Time returns a value of type Velocity
+	impl<T> std::ops::Mul<&Time<T>> for Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Velocity{mps: self.mps2 * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a Acceleration by a Time returns a value of type Velocity
+	impl<T> std::ops::Mul<&Time<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Velocity{mps: self.mps2.clone() * rhs.s.clone()}
+		}
+	}
 
 	// Acceleration / Frequency -> Velocity
-	// TODO: docstring
+	/// Dividing a Acceleration by a Frequency returns a value of type Velocity
 	impl<T> std::ops::Div<Frequency<T>> for Acceleration<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			Velocity{mps: self.mps2 / rhs.Hz}
 		}
 	}
+	/// Dividing a Acceleration by a Frequency returns a value of type Velocity
+	impl<T> std::ops::Div<Frequency<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Velocity{mps: self.mps2.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a Acceleration by a Frequency returns a value of type Velocity
+	impl<T> std::ops::Div<&Frequency<T>> for Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Velocity{mps: self.mps2 / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a Acceleration by a Frequency returns a value of type Velocity
+	impl<T> std::ops::Div<&Frequency<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Velocity{mps: self.mps2.clone() / rhs.Hz.clone()}
+		}
+	}
 
 	// Acceleration / Velocity -> Frequency
-	// TODO: docstring
+	/// Dividing a Acceleration by a Velocity returns a value of type Frequency
 	impl<T> std::ops::Div<Velocity<T>> for Acceleration<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Velocity<T>) -> Self::Output {
 			Frequency{Hz: self.mps2 / rhs.mps}
 		}
 	}
+	/// Dividing a Acceleration by a Velocity returns a value of type Frequency
+	impl<T> std::ops::Div<Velocity<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Frequency{Hz: self.mps2.clone() / rhs.mps}
+		}
+	}
+	/// Dividing a Acceleration by a Velocity returns a value of type Frequency
+	impl<T> std::ops::Div<&Velocity<T>> for Acceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Frequency{Hz: self.mps2 / rhs.mps.clone()}
+		}
+	}
+	/// Dividing a Acceleration by a Velocity returns a value of type Frequency
+	impl<T> std::ops::Div<&Velocity<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Frequency{Hz: self.mps2.clone() / rhs.mps.clone()}
+		}
+	}
 
 	// Acceleration * Momentum -> Power
-	// TODO: docstring
+	/// Multiplying a Acceleration by a Momentum returns a value of type Power
 	impl<T> std::ops::Mul<Momentum<T>> for Acceleration<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Momentum<T>) -> Self::Output {
 			Power{W: self.mps2 * rhs.kgmps}
 		}
 	}
+	/// Multiplying a Acceleration by a Momentum returns a value of type Power
+	impl<T> std::ops::Mul<Momentum<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Power{W: self.mps2.clone() * rhs.kgmps}
+		}
+	}
+	/// Multiplying a Acceleration by a Momentum returns a value of type Power
+	impl<T> std::ops::Mul<&Momentum<T>> for Acceleration<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Power{W: self.mps2 * rhs.kgmps.clone()}
+		}
+	}
+	/// Multiplying a Acceleration by a Momentum returns a value of type Power
+	impl<T> std::ops::Mul<&Momentum<T>> for &Acceleration<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Momentum<T>) -> Self::Output {
+			Power{W: self.mps2.clone() * rhs.kgmps.clone()}
+		}
+	}
 
 }
 
 /// The momentum unit type, defined as kilogram meters per second in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Momentum<T: NumLike>{
 	pub kgmps: T
 }
 
 impl<T> Momentum<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of momentum: "kilogram meters per second"
 	pub fn unit_name() -> &'static str {
 		return "kilogram meters per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of momentum: "kgmps" for kilogram meters per second
 	pub fn unit_symbol() -> &'static str {
 		return "kgmps";
 	}
@@ -1029,84 +2242,231 @@ impl<T> fmt::Display for Momentum<T> where T: NumLike {
 impl<T> Momentum<T> where T: NumLike+From<f64> {
 	
 	// Momentum / Mass -> Velocity
-	// TODO: docstring
+	/// Dividing a Momentum by a Mass returns a value of type Velocity
 	impl<T> std::ops::Div<Mass<T>> for Momentum<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn div(self, rhs: Mass<T>) -> Self::Output {
 			Velocity{mps: self.kgmps / rhs.kg}
 		}
 	}
+	/// Dividing a Momentum by a Mass returns a value of type Velocity
+	impl<T> std::ops::Div<Mass<T>> for &Momentum<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Velocity{mps: self.kgmps.clone() / rhs.kg}
+		}
+	}
+	/// Dividing a Momentum by a Mass returns a value of type Velocity
+	impl<T> std::ops::Div<&Mass<T>> for Momentum<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Velocity{mps: self.kgmps / rhs.kg.clone()}
+		}
+	}
+	/// Dividing a Momentum by a Mass returns a value of type Velocity
+	impl<T> std::ops::Div<&Mass<T>> for &Momentum<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Velocity{mps: self.kgmps.clone() / rhs.kg.clone()}
+		}
+	}
 
 	// Momentum / Time -> Force
-	// TODO: docstring
+	/// Dividing a Momentum by a Time returns a value of type Force
 	impl<T> std::ops::Div<Time<T>> for Momentum<T> where T: NumLike {
 		type Output = Force<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			Force{N: self.kgmps / rhs.s}
 		}
 	}
+	/// Dividing a Momentum by a Time returns a value of type Force
+	impl<T> std::ops::Div<Time<T>> for &Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Force{N: self.kgmps.clone() / rhs.s}
+		}
+	}
+	/// Dividing a Momentum by a Time returns a value of type Force
+	impl<T> std::ops::Div<&Time<T>> for Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Force{N: self.kgmps / rhs.s.clone()}
+		}
+	}
+	/// Dividing a Momentum by a Time returns a value of type Force
+	impl<T> std::ops::Div<&Time<T>> for &Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Force{N: self.kgmps.clone() / rhs.s.clone()}
+		}
+	}
 
 	// Momentum * Frequency -> Force
-	// TODO: docstring
+	/// Multiplying a Momentum by a Frequency returns a value of type Force
 	impl<T> std::ops::Mul<Frequency<T>> for Momentum<T> where T: NumLike {
 		type Output = Force<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			Force{N: self.kgmps * rhs.Hz}
 		}
 	}
+	/// Multiplying a Momentum by a Frequency returns a value of type Force
+	impl<T> std::ops::Mul<Frequency<T>> for &Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Force{N: self.kgmps.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a Momentum by a Frequency returns a value of type Force
+	impl<T> std::ops::Mul<&Frequency<T>> for Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Force{N: self.kgmps * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a Momentum by a Frequency returns a value of type Force
+	impl<T> std::ops::Mul<&Frequency<T>> for &Momentum<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Force{N: self.kgmps.clone() * rhs.Hz.clone()}
+		}
+	}
 
 	// Momentum * Velocity -> Energy
-	// TODO: docstring
+	/// Multiplying a Momentum by a Velocity returns a value of type Energy
 	impl<T> std::ops::Mul<Velocity<T>> for Momentum<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Velocity<T>) -> Self::Output {
 			Energy{J: self.kgmps * rhs.mps}
 		}
 	}
+	/// Multiplying a Momentum by a Velocity returns a value of type Energy
+	impl<T> std::ops::Mul<Velocity<T>> for &Momentum<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Energy{J: self.kgmps.clone() * rhs.mps}
+		}
+	}
+	/// Multiplying a Momentum by a Velocity returns a value of type Energy
+	impl<T> std::ops::Mul<&Velocity<T>> for Momentum<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Energy{J: self.kgmps * rhs.mps.clone()}
+		}
+	}
+	/// Multiplying a Momentum by a Velocity returns a value of type Energy
+	impl<T> std::ops::Mul<&Velocity<T>> for &Momentum<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Energy{J: self.kgmps.clone() * rhs.mps.clone()}
+		}
+	}
 
 	// Momentum / Velocity -> Mass
-	// TODO: docstring
+	/// Dividing a Momentum by a Velocity returns a value of type Mass
 	impl<T> std::ops::Div<Velocity<T>> for Momentum<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: Velocity<T>) -> Self::Output {
 			Mass{kg: self.kgmps / rhs.mps}
 		}
 	}
+	/// Dividing a Momentum by a Velocity returns a value of type Mass
+	impl<T> std::ops::Div<Velocity<T>> for &Momentum<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Mass{kg: self.kgmps.clone() / rhs.mps}
+		}
+	}
+	/// Dividing a Momentum by a Velocity returns a value of type Mass
+	impl<T> std::ops::Div<&Velocity<T>> for Momentum<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Mass{kg: self.kgmps / rhs.mps.clone()}
+		}
+	}
+	/// Dividing a Momentum by a Velocity returns a value of type Mass
+	impl<T> std::ops::Div<&Velocity<T>> for &Momentum<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Mass{kg: self.kgmps.clone() / rhs.mps.clone()}
+		}
+	}
 
 	// Momentum * Acceleration -> Power
-	// TODO: docstring
+	/// Multiplying a Momentum by a Acceleration returns a value of type Power
 	impl<T> std::ops::Mul<Acceleration<T>> for Momentum<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Acceleration<T>) -> Self::Output {
 			Power{W: self.kgmps * rhs.mps2}
 		}
 	}
+	/// Multiplying a Momentum by a Acceleration returns a value of type Power
+	impl<T> std::ops::Mul<Acceleration<T>> for &Momentum<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+			Power{W: self.kgmps.clone() * rhs.mps2}
+		}
+	}
+	/// Multiplying a Momentum by a Acceleration returns a value of type Power
+	impl<T> std::ops::Mul<&Acceleration<T>> for Momentum<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+			Power{W: self.kgmps * rhs.mps2.clone()}
+		}
+	}
+	/// Multiplying a Momentum by a Acceleration returns a value of type Power
+	impl<T> std::ops::Mul<&Acceleration<T>> for &Momentum<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+			Power{W: self.kgmps.clone() * rhs.mps2.clone()}
+		}
+	}
 
 	// Momentum / Force -> Time
-	// TODO: docstring
+	/// Dividing a Momentum by a Force returns a value of type Time
 	impl<T> std::ops::Div<Force<T>> for Momentum<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: Force<T>) -> Self::Output {
 			Time{s: self.kgmps / rhs.N}
 		}
 	}
+	/// Dividing a Momentum by a Force returns a value of type Time
+	impl<T> std::ops::Div<Force<T>> for &Momentum<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Time{s: self.kgmps.clone() / rhs.N}
+		}
+	}
+	/// Dividing a Momentum by a Force returns a value of type Time
+	impl<T> std::ops::Div<&Force<T>> for Momentum<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Time{s: self.kgmps / rhs.N.clone()}
+		}
+	}
+	/// Dividing a Momentum by a Force returns a value of type Time
+	impl<T> std::ops::Div<&Force<T>> for &Momentum<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Time{s: self.kgmps.clone() / rhs.N.clone()}
+		}
+	}
 
 }
 
 /// The force unit type, defined as newtons in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Force<T: NumLike>{
 	pub N: T
 }
 
 impl<T> Force<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of force: "newtons"
 	pub fn unit_name() -> &'static str {
 		return "newtons";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of force: "N" for newtons
 	pub fn unit_symbol() -> &'static str {
 		return "N";
 	}
@@ -1134,102 +2494,291 @@ impl<T> fmt::Display for Force<T> where T: NumLike {
 impl<T> Force<T> where T: NumLike+From<f64> {
 	
 	// Force * Distance -> Energy
-	// TODO: docstring
+	/// Multiplying a Force by a Distance returns a value of type Energy
 	impl<T> std::ops::Mul<Distance<T>> for Force<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Distance<T>) -> Self::Output {
 			Energy{J: self.N * rhs.m}
 		}
 	}
+	/// Multiplying a Force by a Distance returns a value of type Energy
+	impl<T> std::ops::Mul<Distance<T>> for &Force<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Energy{J: self.N.clone() * rhs.m}
+		}
+	}
+	/// Multiplying a Force by a Distance returns a value of type Energy
+	impl<T> std::ops::Mul<&Distance<T>> for Force<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Energy{J: self.N * rhs.m.clone()}
+		}
+	}
+	/// Multiplying a Force by a Distance returns a value of type Energy
+	impl<T> std::ops::Mul<&Distance<T>> for &Force<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Distance<T>) -> Self::Output {
+			Energy{J: self.N.clone() * rhs.m.clone()}
+		}
+	}
 
 	// Force / Mass -> Acceleration
-	// TODO: docstring
+	/// Dividing a Force by a Mass returns a value of type Acceleration
 	impl<T> std::ops::Div<Mass<T>> for Force<T> where T: NumLike {
 		type Output = Acceleration<T>;
 		fn div(self, rhs: Mass<T>) -> Self::Output {
 			Acceleration{mps2: self.N / rhs.kg}
 		}
 	}
+	/// Dividing a Force by a Mass returns a value of type Acceleration
+	impl<T> std::ops::Div<Mass<T>> for &Force<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Acceleration{mps2: self.N.clone() / rhs.kg}
+		}
+	}
+	/// Dividing a Force by a Mass returns a value of type Acceleration
+	impl<T> std::ops::Div<&Mass<T>> for Force<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Acceleration{mps2: self.N / rhs.kg.clone()}
+		}
+	}
+	/// Dividing a Force by a Mass returns a value of type Acceleration
+	impl<T> std::ops::Div<&Mass<T>> for &Force<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Mass<T>) -> Self::Output {
+			Acceleration{mps2: self.N.clone() / rhs.kg.clone()}
+		}
+	}
 
 	// Force * Time -> Momentum
-	// TODO: docstring
+	/// Multiplying a Force by a Time returns a value of type Momentum
 	impl<T> std::ops::Mul<Time<T>> for Force<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			Momentum{kgmps: self.N * rhs.s}
 		}
 	}
+	/// Multiplying a Force by a Time returns a value of type Momentum
+	impl<T> std::ops::Mul<Time<T>> for &Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Momentum{kgmps: self.N.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a Force by a Time returns a value of type Momentum
+	impl<T> std::ops::Mul<&Time<T>> for Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Momentum{kgmps: self.N * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a Force by a Time returns a value of type Momentum
+	impl<T> std::ops::Mul<&Time<T>> for &Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Momentum{kgmps: self.N.clone() * rhs.s.clone()}
+		}
+	}
 
 	// Force / Frequency -> Momentum
-	// TODO: docstring
+	/// Dividing a Force by a Frequency returns a value of type Momentum
 	impl<T> std::ops::Div<Frequency<T>> for Force<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			Momentum{kgmps: self.N / rhs.Hz}
 		}
 	}
+	/// Dividing a Force by a Frequency returns a value of type Momentum
+	impl<T> std::ops::Div<Frequency<T>> for &Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Momentum{kgmps: self.N.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a Force by a Frequency returns a value of type Momentum
+	impl<T> std::ops::Div<&Frequency<T>> for Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Momentum{kgmps: self.N / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a Force by a Frequency returns a value of type Momentum
+	impl<T> std::ops::Div<&Frequency<T>> for &Force<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Momentum{kgmps: self.N.clone() / rhs.Hz.clone()}
+		}
+	}
 
 	// Force / Area -> Pressure
-	// TODO: docstring
+	/// Dividing a Force by a Area returns a value of type Pressure
 	impl<T> std::ops::Div<Area<T>> for Force<T> where T: NumLike {
 		type Output = Pressure<T>;
 		fn div(self, rhs: Area<T>) -> Self::Output {
 			Pressure{Pa: self.N / rhs.m2}
 		}
 	}
+	/// Dividing a Force by a Area returns a value of type Pressure
+	impl<T> std::ops::Div<Area<T>> for &Force<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Pressure{Pa: self.N.clone() / rhs.m2}
+		}
+	}
+	/// Dividing a Force by a Area returns a value of type Pressure
+	impl<T> std::ops::Div<&Area<T>> for Force<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Pressure{Pa: self.N / rhs.m2.clone()}
+		}
+	}
+	/// Dividing a Force by a Area returns a value of type Pressure
+	impl<T> std::ops::Div<&Area<T>> for &Force<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Area<T>) -> Self::Output {
+			Pressure{Pa: self.N.clone() / rhs.m2.clone()}
+		}
+	}
 
 	// Force * Velocity -> Power
-	// TODO: docstring
+	/// Multiplying a Force by a Velocity returns a value of type Power
 	impl<T> std::ops::Mul<Velocity<T>> for Force<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Velocity<T>) -> Self::Output {
 			Power{W: self.N * rhs.mps}
 		}
 	}
+	/// Multiplying a Force by a Velocity returns a value of type Power
+	impl<T> std::ops::Mul<Velocity<T>> for &Force<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Power{W: self.N.clone() * rhs.mps}
+		}
+	}
+	/// Multiplying a Force by a Velocity returns a value of type Power
+	impl<T> std::ops::Mul<&Velocity<T>> for Force<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Power{W: self.N * rhs.mps.clone()}
+		}
+	}
+	/// Multiplying a Force by a Velocity returns a value of type Power
+	impl<T> std::ops::Mul<&Velocity<T>> for &Force<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Velocity<T>) -> Self::Output {
+			Power{W: self.N.clone() * rhs.mps.clone()}
+		}
+	}
 
 	// Force / Acceleration -> Mass
-	// TODO: docstring
+	/// Dividing a Force by a Acceleration returns a value of type Mass
 	impl<T> std::ops::Div<Acceleration<T>> for Force<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: Acceleration<T>) -> Self::Output {
 			Mass{kg: self.N / rhs.mps2}
 		}
 	}
+	/// Dividing a Force by a Acceleration returns a value of type Mass
+	impl<T> std::ops::Div<Acceleration<T>> for &Force<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Mass{kg: self.N.clone() / rhs.mps2}
+		}
+	}
+	/// Dividing a Force by a Acceleration returns a value of type Mass
+	impl<T> std::ops::Div<&Acceleration<T>> for Force<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Mass{kg: self.N / rhs.mps2.clone()}
+		}
+	}
+	/// Dividing a Force by a Acceleration returns a value of type Mass
+	impl<T> std::ops::Div<&Acceleration<T>> for &Force<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Mass{kg: self.N.clone() / rhs.mps2.clone()}
+		}
+	}
 
 	// Force / Momentum -> Frequency
-	// TODO: docstring
+	/// Dividing a Force by a Momentum returns a value of type Frequency
 	impl<T> std::ops::Div<Momentum<T>> for Force<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Momentum<T>) -> Self::Output {
 			Frequency{Hz: self.N / rhs.kgmps}
 		}
 	}
+	/// Dividing a Force by a Momentum returns a value of type Frequency
+	impl<T> std::ops::Div<Momentum<T>> for &Force<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Frequency{Hz: self.N.clone() / rhs.kgmps}
+		}
+	}
+	/// Dividing a Force by a Momentum returns a value of type Frequency
+	impl<T> std::ops::Div<&Momentum<T>> for Force<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Frequency{Hz: self.N / rhs.kgmps.clone()}
+		}
+	}
+	/// Dividing a Force by a Momentum returns a value of type Frequency
+	impl<T> std::ops::Div<&Momentum<T>> for &Force<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Frequency{Hz: self.N.clone() / rhs.kgmps.clone()}
+		}
+	}
 
 	// Force / Pressure -> Area
-	// TODO: docstring
+	/// Dividing a Force by a Pressure returns a value of type Area
 	impl<T> std::ops::Div<Pressure<T>> for Force<T> where T: NumLike {
 		type Output = Area<T>;
 		fn div(self, rhs: Pressure<T>) -> Self::Output {
 			Area{m2: self.N / rhs.Pa}
 		}
 	}
+	/// Dividing a Force by a Pressure returns a value of type Area
+	impl<T> std::ops::Div<Pressure<T>> for &Force<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Area{m2: self.N.clone() / rhs.Pa}
+		}
+	}
+	/// Dividing a Force by a Pressure returns a value of type Area
+	impl<T> std::ops::Div<&Pressure<T>> for Force<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Area{m2: self.N / rhs.Pa.clone()}
+		}
+	}
+	/// Dividing a Force by a Pressure returns a value of type Area
+	impl<T> std::ops::Div<&Pressure<T>> for &Force<T> where T: NumLike {
+		type Output = Area<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Area{m2: self.N.clone() / rhs.Pa.clone()}
+		}
+	}
 
 }
 
 /// The pressure unit type, defined as pascals in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Pressure<T: NumLike>{
 	pub Pa: T
 }
 
 impl<T> Pressure<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of pressure: "pascals"
 	pub fn unit_name() -> &'static str {
 		return "pascals";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of pressure: "Pa" for pascals
 	pub fn unit_symbol() -> &'static str {
 		return "Pa";
 	}
@@ -1257,39 +2806,81 @@ impl<T> fmt::Display for Pressure<T> where T: NumLike {
 impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
 	// Pressure * Area -> Force
-	// TODO: docstring
+	/// Multiplying a Pressure by a Area returns a value of type Force
 	impl<T> std::ops::Mul<Area<T>> for Pressure<T> where T: NumLike {
 		type Output = Force<T>;
 		fn mul(self, rhs: Area<T>) -> Self::Output {
 			Force{N: self.Pa * rhs.m2}
 		}
 	}
+	/// Multiplying a Pressure by a Area returns a value of type Force
+	impl<T> std::ops::Mul<Area<T>> for &Pressure<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Area<T>) -> Self::Output {
+			Force{N: self.Pa.clone() * rhs.m2}
+		}
+	}
+	/// Multiplying a Pressure by a Area returns a value of type Force
+	impl<T> std::ops::Mul<&Area<T>> for Pressure<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Area<T>) -> Self::Output {
+			Force{N: self.Pa * rhs.m2.clone()}
+		}
+	}
+	/// Multiplying a Pressure by a Area returns a value of type Force
+	impl<T> std::ops::Mul<&Area<T>> for &Pressure<T> where T: NumLike {
+		type Output = Force<T>;
+		fn mul(self, rhs: Area<T>) -> Self::Output {
+			Force{N: self.Pa.clone() * rhs.m2.clone()}
+		}
+	}
 
 	// Pressure * Volume -> Energy
-	// TODO: docstring
+	/// Multiplying a Pressure by a Volume returns a value of type Energy
 	impl<T> std::ops::Mul<Volume<T>> for Pressure<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Volume<T>) -> Self::Output {
 			Energy{J: self.Pa * rhs.m3}
 		}
 	}
+	/// Multiplying a Pressure by a Volume returns a value of type Energy
+	impl<T> std::ops::Mul<Volume<T>> for &Pressure<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Volume<T>) -> Self::Output {
+			Energy{J: self.Pa.clone() * rhs.m3}
+		}
+	}
+	/// Multiplying a Pressure by a Volume returns a value of type Energy
+	impl<T> std::ops::Mul<&Volume<T>> for Pressure<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Volume<T>) -> Self::Output {
+			Energy{J: self.Pa * rhs.m3.clone()}
+		}
+	}
+	/// Multiplying a Pressure by a Volume returns a value of type Energy
+	impl<T> std::ops::Mul<&Volume<T>> for &Pressure<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Volume<T>) -> Self::Output {
+			Energy{J: self.Pa.clone() * rhs.m3.clone()}
+		}
+	}
 
 }
 
 /// The energy unit type, defined as joules in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Energy<T: NumLike>{
 	pub J: T
 }
 
 impl<T> Energy<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of energy: "joules"
 	pub fn unit_name() -> &'static str {
 		return "joules";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of energy: "J" for joules
 	pub fn unit_symbol() -> &'static str {
 		return "J";
 	}
@@ -1317,165 +2908,471 @@ impl<T> fmt::Display for Energy<T> where T: NumLike {
 impl<T> Energy<T> where T: NumLike+From<f64> {
 	
 	// Energy / Distance -> Force
-	// TODO: docstring
+	/// Dividing a Energy by a Distance returns a value of type Force
 	impl<T> std::ops::Div<Distance<T>> for Energy<T> where T: NumLike {
 		type Output = Force<T>;
 		fn div(self, rhs: Distance<T>) -> Self::Output {
 			Force{N: self.J / rhs.m}
 		}
 	}
-
-	// Energy / Mass -> DoseEquivalent
-	// TODO: docstring
-	impl<T> std::ops::Div<Mass<T>> for Energy<T> where T: NumLike {
-		type Output = DoseEquivalent<T>;
-		fn div(self, rhs: Mass<T>) -> Self::Output {
-			DoseEquivalent{Sv: self.J / rhs.kg}
+	/// Dividing a Energy by a Distance returns a value of type Force
+	impl<T> std::ops::Div<Distance<T>> for &Energy<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.J.clone() / rhs.m}
+		}
+	}
+	/// Dividing a Energy by a Distance returns a value of type Force
+	impl<T> std::ops::Div<&Distance<T>> for Energy<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.J / rhs.m.clone()}
+		}
+	}
+	/// Dividing a Energy by a Distance returns a value of type Force
+	impl<T> std::ops::Div<&Distance<T>> for &Energy<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Distance<T>) -> Self::Output {
+			Force{N: self.J.clone() / rhs.m.clone()}
 		}
 	}
 
 	// Energy / Time -> Power
-	// TODO: docstring
+	/// Dividing a Energy by a Time returns a value of type Power
 	impl<T> std::ops::Div<Time<T>> for Energy<T> where T: NumLike {
 		type Output = Power<T>;
 		fn div(self, rhs: Time<T>) -> Self::Output {
 			Power{W: self.J / rhs.s}
 		}
 	}
+	/// Dividing a Energy by a Time returns a value of type Power
+	impl<T> std::ops::Div<Time<T>> for &Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.J.clone() / rhs.s}
+		}
+	}
+	/// Dividing a Energy by a Time returns a value of type Power
+	impl<T> std::ops::Div<&Time<T>> for Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.J / rhs.s.clone()}
+		}
+	}
+	/// Dividing a Energy by a Time returns a value of type Power
+	impl<T> std::ops::Div<&Time<T>> for &Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn div(self, rhs: Time<T>) -> Self::Output {
+			Power{W: self.J.clone() / rhs.s.clone()}
+		}
+	}
 
 	// Energy / Current -> MagneticFlux
-	// TODO: docstring
+	/// Dividing a Energy by a Current returns a value of type MagneticFlux
 	impl<T> std::ops::Div<Current<T>> for Energy<T> where T: NumLike {
 		type Output = MagneticFlux<T>;
 		fn div(self, rhs: Current<T>) -> Self::Output {
 			MagneticFlux{Wb: self.J / rhs.A}
 		}
 	}
+	/// Dividing a Energy by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<Current<T>> for &Energy<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.J.clone() / rhs.A}
+		}
+	}
+	/// Dividing a Energy by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<&Current<T>> for Energy<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.J / rhs.A.clone()}
+		}
+	}
+	/// Dividing a Energy by a Current returns a value of type MagneticFlux
+	impl<T> std::ops::Div<&Current<T>> for &Energy<T> where T: NumLike {
+		type Output = MagneticFlux<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			MagneticFlux{Wb: self.J.clone() / rhs.A.clone()}
+		}
+	}
 
 	// Energy * Frequency -> Power
-	// TODO: docstring
+	/// Multiplying a Energy by a Frequency returns a value of type Power
 	impl<T> std::ops::Mul<Frequency<T>> for Energy<T> where T: NumLike {
 		type Output = Power<T>;
 		fn mul(self, rhs: Frequency<T>) -> Self::Output {
 			Power{W: self.J * rhs.Hz}
 		}
 	}
+	/// Multiplying a Energy by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<Frequency<T>> for &Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.J.clone() * rhs.Hz}
+		}
+	}
+	/// Multiplying a Energy by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<&Frequency<T>> for Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.J * rhs.Hz.clone()}
+		}
+	}
+	/// Multiplying a Energy by a Frequency returns a value of type Power
+	impl<T> std::ops::Mul<&Frequency<T>> for &Energy<T> where T: NumLike {
+		type Output = Power<T>;
+		fn mul(self, rhs: Frequency<T>) -> Self::Output {
+			Power{W: self.J.clone() * rhs.Hz.clone()}
+		}
+	}
 
 	// Energy / Volume -> Pressure
-	// TODO: docstring
+	/// Dividing a Energy by a Volume returns a value of type Pressure
 	impl<T> std::ops::Div<Volume<T>> for Energy<T> where T: NumLike {
 		type Output = Pressure<T>;
 		fn div(self, rhs: Volume<T>) -> Self::Output {
 			Pressure{Pa: self.J / rhs.m3}
 		}
 	}
+	/// Dividing a Energy by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<Volume<T>> for &Energy<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.J.clone() / rhs.m3}
+		}
+	}
+	/// Dividing a Energy by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<&Volume<T>> for Energy<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.J / rhs.m3.clone()}
+		}
+	}
+	/// Dividing a Energy by a Volume returns a value of type Pressure
+	impl<T> std::ops::Div<&Volume<T>> for &Energy<T> where T: NumLike {
+		type Output = Pressure<T>;
+		fn div(self, rhs: Volume<T>) -> Self::Output {
+			Pressure{Pa: self.J.clone() / rhs.m3.clone()}
+		}
+	}
 
 	// Energy / Velocity -> Momentum
-	// TODO: docstring
+	/// Dividing a Energy by a Velocity returns a value of type Momentum
 	impl<T> std::ops::Div<Velocity<T>> for Energy<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn div(self, rhs: Velocity<T>) -> Self::Output {
 			Momentum{kgmps: self.J / rhs.mps}
 		}
 	}
+	/// Dividing a Energy by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<Velocity<T>> for &Energy<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.J.clone() / rhs.mps}
+		}
+	}
+	/// Dividing a Energy by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<&Velocity<T>> for Energy<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.J / rhs.mps.clone()}
+		}
+	}
+	/// Dividing a Energy by a Velocity returns a value of type Momentum
+	impl<T> std::ops::Div<&Velocity<T>> for &Energy<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Momentum{kgmps: self.J.clone() / rhs.mps.clone()}
+		}
+	}
 
 	// Energy / Momentum -> Velocity
-	// TODO: docstring
+	/// Dividing a Energy by a Momentum returns a value of type Velocity
 	impl<T> std::ops::Div<Momentum<T>> for Energy<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn div(self, rhs: Momentum<T>) -> Self::Output {
 			Velocity{mps: self.J / rhs.kgmps}
 		}
 	}
+	/// Dividing a Energy by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<Momentum<T>> for &Energy<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.J.clone() / rhs.kgmps}
+		}
+	}
+	/// Dividing a Energy by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<&Momentum<T>> for Energy<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.J / rhs.kgmps.clone()}
+		}
+	}
+	/// Dividing a Energy by a Momentum returns a value of type Velocity
+	impl<T> std::ops::Div<&Momentum<T>> for &Energy<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Velocity{mps: self.J.clone() / rhs.kgmps.clone()}
+		}
+	}
 
 	// Energy / Force -> Distance
-	// TODO: docstring
+	/// Dividing a Energy by a Force returns a value of type Distance
 	impl<T> std::ops::Div<Force<T>> for Energy<T> where T: NumLike {
 		type Output = Distance<T>;
 		fn div(self, rhs: Force<T>) -> Self::Output {
 			Distance{m: self.J / rhs.N}
 		}
 	}
+	/// Dividing a Energy by a Force returns a value of type Distance
+	impl<T> std::ops::Div<Force<T>> for &Energy<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.J.clone() / rhs.N}
+		}
+	}
+	/// Dividing a Energy by a Force returns a value of type Distance
+	impl<T> std::ops::Div<&Force<T>> for Energy<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.J / rhs.N.clone()}
+		}
+	}
+	/// Dividing a Energy by a Force returns a value of type Distance
+	impl<T> std::ops::Div<&Force<T>> for &Energy<T> where T: NumLike {
+		type Output = Distance<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Distance{m: self.J.clone() / rhs.N.clone()}
+		}
+	}
 
 	// Energy / Pressure -> Volume
-	// TODO: docstring
+	/// Dividing a Energy by a Pressure returns a value of type Volume
 	impl<T> std::ops::Div<Pressure<T>> for Energy<T> where T: NumLike {
 		type Output = Volume<T>;
 		fn div(self, rhs: Pressure<T>) -> Self::Output {
 			Volume{m3: self.J / rhs.Pa}
 		}
 	}
+	/// Dividing a Energy by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<Pressure<T>> for &Energy<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.J.clone() / rhs.Pa}
+		}
+	}
+	/// Dividing a Energy by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<&Pressure<T>> for Energy<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.J / rhs.Pa.clone()}
+		}
+	}
+	/// Dividing a Energy by a Pressure returns a value of type Volume
+	impl<T> std::ops::Div<&Pressure<T>> for &Energy<T> where T: NumLike {
+		type Output = Volume<T>;
+		fn div(self, rhs: Pressure<T>) -> Self::Output {
+			Volume{m3: self.J.clone() / rhs.Pa.clone()}
+		}
+	}
 
 	// Energy / Charge -> Voltage
-	// TODO: docstring
+	/// Dividing a Energy by a Charge returns a value of type Voltage
 	impl<T> std::ops::Div<Charge<T>> for Energy<T> where T: NumLike {
 		type Output = Voltage<T>;
 		fn div(self, rhs: Charge<T>) -> Self::Output {
 			Voltage{V: self.J / rhs.C}
 		}
 	}
+	/// Dividing a Energy by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<Charge<T>> for &Energy<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.J.clone() / rhs.C}
+		}
+	}
+	/// Dividing a Energy by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<&Charge<T>> for Energy<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.J / rhs.C.clone()}
+		}
+	}
+	/// Dividing a Energy by a Charge returns a value of type Voltage
+	impl<T> std::ops::Div<&Charge<T>> for &Energy<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Charge<T>) -> Self::Output {
+			Voltage{V: self.J.clone() / rhs.C.clone()}
+		}
+	}
 
 	// Energy / Power -> Time
-	// TODO: docstring
+	/// Dividing a Energy by a Power returns a value of type Time
 	impl<T> std::ops::Div<Power<T>> for Energy<T> where T: NumLike {
 		type Output = Time<T>;
 		fn div(self, rhs: Power<T>) -> Self::Output {
 			Time{s: self.J / rhs.W}
 		}
 	}
+	/// Dividing a Energy by a Power returns a value of type Time
+	impl<T> std::ops::Div<Power<T>> for &Energy<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.J.clone() / rhs.W}
+		}
+	}
+	/// Dividing a Energy by a Power returns a value of type Time
+	impl<T> std::ops::Div<&Power<T>> for Energy<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.J / rhs.W.clone()}
+		}
+	}
+	/// Dividing a Energy by a Power returns a value of type Time
+	impl<T> std::ops::Div<&Power<T>> for &Energy<T> where T: NumLike {
+		type Output = Time<T>;
+		fn div(self, rhs: Power<T>) -> Self::Output {
+			Time{s: self.J.clone() / rhs.W.clone()}
+		}
+	}
 
 	// Energy / Voltage -> Charge
-	// TODO: docstring
+	/// Dividing a Energy by a Voltage returns a value of type Charge
 	impl<T> std::ops::Div<Voltage<T>> for Energy<T> where T: NumLike {
 		type Output = Charge<T>;
 		fn div(self, rhs: Voltage<T>) -> Self::Output {
 			Charge{C: self.J / rhs.V}
 		}
 	}
+	/// Dividing a Energy by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<Voltage<T>> for &Energy<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.J.clone() / rhs.V}
+		}
+	}
+	/// Dividing a Energy by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<&Voltage<T>> for Energy<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.J / rhs.V.clone()}
+		}
+	}
+	/// Dividing a Energy by a Voltage returns a value of type Charge
+	impl<T> std::ops::Div<&Voltage<T>> for &Energy<T> where T: NumLike {
+		type Output = Charge<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Charge{C: self.J.clone() / rhs.V.clone()}
+		}
+	}
 
 	// Energy / MagneticFlux -> Current
-	// TODO: docstring
+	/// Dividing a Energy by a MagneticFlux returns a value of type Current
 	impl<T> std::ops::Div<MagneticFlux<T>> for Energy<T> where T: NumLike {
 		type Output = Current<T>;
 		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 			Current{A: self.J / rhs.Wb}
 		}
 	}
+	/// Dividing a Energy by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<MagneticFlux<T>> for &Energy<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.J.clone() / rhs.Wb}
+		}
+	}
+	/// Dividing a Energy by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<&MagneticFlux<T>> for Energy<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.J / rhs.Wb.clone()}
+		}
+	}
+	/// Dividing a Energy by a MagneticFlux returns a value of type Current
+	impl<T> std::ops::Div<&MagneticFlux<T>> for &Energy<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
+			Current{A: self.J.clone() / rhs.Wb.clone()}
+		}
+	}
 
 	// Energy / AbsorbedDose -> Mass
-	// TODO: docstring
+	/// Dividing a Energy by a AbsorbedDose returns a value of type Mass
 	impl<T> std::ops::Div<AbsorbedDose<T>> for Energy<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: AbsorbedDose<T>) -> Self::Output {
 			Mass{kg: self.J / rhs.Gy}
 		}
 	}
+	/// Dividing a Energy by a AbsorbedDose returns a value of type Mass
+	impl<T> std::ops::Div<AbsorbedDose<T>> for &Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: AbsorbedDose<T>) -> Self::Output {
+			Mass{kg: self.J.clone() / rhs.Gy}
+		}
+	}
+	/// Dividing a Energy by a AbsorbedDose returns a value of type Mass
+	impl<T> std::ops::Div<&AbsorbedDose<T>> for Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: AbsorbedDose<T>) -> Self::Output {
+			Mass{kg: self.J / rhs.Gy.clone()}
+		}
+	}
+	/// Dividing a Energy by a AbsorbedDose returns a value of type Mass
+	impl<T> std::ops::Div<&AbsorbedDose<T>> for &Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: AbsorbedDose<T>) -> Self::Output {
+			Mass{kg: self.J.clone() / rhs.Gy.clone()}
+		}
+	}
 
 	// Energy / DoseEquivalent -> Mass
-	// TODO: docstring
+	/// Dividing a Energy by a DoseEquivalent returns a value of type Mass
 	impl<T> std::ops::Div<DoseEquivalent<T>> for Energy<T> where T: NumLike {
 		type Output = Mass<T>;
 		fn div(self, rhs: DoseEquivalent<T>) -> Self::Output {
 			Mass{kg: self.J / rhs.Sv}
 		}
 	}
+	/// Dividing a Energy by a DoseEquivalent returns a value of type Mass
+	impl<T> std::ops::Div<DoseEquivalent<T>> for &Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: DoseEquivalent<T>) -> Self::Output {
+			Mass{kg: self.J.clone() / rhs.Sv}
+		}
+	}
+	/// Dividing a Energy by a DoseEquivalent returns a value of type Mass
+	impl<T> std::ops::Div<&DoseEquivalent<T>> for Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: DoseEquivalent<T>) -> Self::Output {
+			Mass{kg: self.J / rhs.Sv.clone()}
+		}
+	}
+	/// Dividing a Energy by a DoseEquivalent returns a value of type Mass
+	impl<T> std::ops::Div<&DoseEquivalent<T>> for &Energy<T> where T: NumLike {
+		type Output = Mass<T>;
+		fn div(self, rhs: DoseEquivalent<T>) -> Self::Output {
+			Mass{kg: self.J.clone() / rhs.Sv.clone()}
+		}
+	}
 
 }
 
 /// The power (aka watts) unit type, defined as watts in SI units
-#[derive(UnitStruct, Debug, Clone)]
+#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
 pub struct Power<T: NumLike>{
 	pub W: T
 }
 
 impl<T> Power<T> where T: NumLike {
 
-	/// Returns the standard unit name of this unit, eg "meters" or "hertz"
+	/// Returns the standard unit name of power: "watts"
 	pub fn unit_name() -> &'static str {
 		return "watts";
 	}
 	
-	/// Returns the abbreviated name or symbol of this unit, eg "m" for meters or "Hz" for hertz
+	/// Returns the abbreviated name or symbol of power: "W" for watts
 	pub fn unit_symbol() -> &'static str {
 		return "W";
 	}
@@ -1503,92 +3400,302 @@ impl<T> fmt::Display for Power<T> where T: NumLike {
 impl<T> Power<T> where T: NumLike+From<f64> {
 	
 	// Power * Time -> Energy
-	// TODO: docstring
+	/// Multiplying a Power by a Time returns a value of type Energy
 	impl<T> std::ops::Mul<Time<T>> for Power<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn mul(self, rhs: Time<T>) -> Self::Output {
 			Energy{J: self.W * rhs.s}
 		}
 	}
+	/// Multiplying a Power by a Time returns a value of type Energy
+	impl<T> std::ops::Mul<Time<T>> for &Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Energy{J: self.W.clone() * rhs.s}
+		}
+	}
+	/// Multiplying a Power by a Time returns a value of type Energy
+	impl<T> std::ops::Mul<&Time<T>> for Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Energy{J: self.W * rhs.s.clone()}
+		}
+	}
+	/// Multiplying a Power by a Time returns a value of type Energy
+	impl<T> std::ops::Mul<&Time<T>> for &Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn mul(self, rhs: Time<T>) -> Self::Output {
+			Energy{J: self.W.clone() * rhs.s.clone()}
+		}
+	}
 
 	// Power / Current -> Voltage
-	// TODO: docstring
+	/// Dividing a Power by a Current returns a value of type Voltage
 	impl<T> std::ops::Div<Current<T>> for Power<T> where T: NumLike {
 		type Output = Voltage<T>;
 		fn div(self, rhs: Current<T>) -> Self::Output {
 			Voltage{V: self.W / rhs.A}
 		}
 	}
+	/// Dividing a Power by a Current returns a value of type Voltage
+	impl<T> std::ops::Div<Current<T>> for &Power<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Voltage{V: self.W.clone() / rhs.A}
+		}
+	}
+	/// Dividing a Power by a Current returns a value of type Voltage
+	impl<T> std::ops::Div<&Current<T>> for Power<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Voltage{V: self.W / rhs.A.clone()}
+		}
+	}
+	/// Dividing a Power by a Current returns a value of type Voltage
+	impl<T> std::ops::Div<&Current<T>> for &Power<T> where T: NumLike {
+		type Output = Voltage<T>;
+		fn div(self, rhs: Current<T>) -> Self::Output {
+			Voltage{V: self.W.clone() / rhs.A.clone()}
+		}
+	}
 
 	// Power / Torque -> Frequency
-	// TODO: docstring
+	/// Dividing a Power by a Torque returns a value of type Frequency
 	impl<T> std::ops::Div<Torque<T>> for Power<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Torque<T>) -> Self::Output {
 			Frequency{Hz: self.W / rhs.Nm}
 		}
 	}
+	/// Dividing a Power by a Torque returns a value of type Frequency
+	impl<T> std::ops::Div<Torque<T>> for &Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Torque<T>) -> Self::Output {
+			Frequency{Hz: self.W.clone() / rhs.Nm}
+		}
+	}
+	/// Dividing a Power by a Torque returns a value of type Frequency
+	impl<T> std::ops::Div<&Torque<T>> for Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Torque<T>) -> Self::Output {
+			Frequency{Hz: self.W / rhs.Nm.clone()}
+		}
+	}
+	/// Dividing a Power by a Torque returns a value of type Frequency
+	impl<T> std::ops::Div<&Torque<T>> for &Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Torque<T>) -> Self::Output {
+			Frequency{Hz: self.W.clone() / rhs.Nm.clone()}
+		}
+	}
 
 	// Power / Energy -> Frequency
-	// TODO: docstring
+	/// Dividing a Power by a Energy returns a value of type Frequency
 	impl<T> std::ops::Div<Energy<T>> for Power<T> where T: NumLike {
 		type Output = Frequency<T>;
 		fn div(self, rhs: Energy<T>) -> Self::Output {
 			Frequency{Hz: self.W / rhs.J}
 		}
 	}
+	/// Dividing a Power by a Energy returns a value of type Frequency
+	impl<T> std::ops::Div<Energy<T>> for &Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Energy<T>) -> Self::Output {
+			Frequency{Hz: self.W.clone() / rhs.J}
+		}
+	}
+	/// Dividing a Power by a Energy returns a value of type Frequency
+	impl<T> std::ops::Div<&Energy<T>> for Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Energy<T>) -> Self::Output {
+			Frequency{Hz: self.W / rhs.J.clone()}
+		}
+	}
+	/// Dividing a Power by a Energy returns a value of type Frequency
+	impl<T> std::ops::Div<&Energy<T>> for &Power<T> where T: NumLike {
+		type Output = Frequency<T>;
+		fn div(self, rhs: Energy<T>) -> Self::Output {
+			Frequency{Hz: self.W.clone() / rhs.J.clone()}
+		}
+	}
 
 	// Power / Frequency -> Energy
-	// TODO: docstring
+	/// Dividing a Power by a Frequency returns a value of type Energy
 	impl<T> std::ops::Div<Frequency<T>> for Power<T> where T: NumLike {
 		type Output = Energy<T>;
 		fn div(self, rhs: Frequency<T>) -> Self::Output {
 			Energy{J: self.W / rhs.Hz}
 		}
 	}
+	/// Dividing a Power by a Frequency returns a value of type Energy
+	impl<T> std::ops::Div<Frequency<T>> for &Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Energy{J: self.W.clone() / rhs.Hz}
+		}
+	}
+	/// Dividing a Power by a Frequency returns a value of type Energy
+	impl<T> std::ops::Div<&Frequency<T>> for Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Energy{J: self.W / rhs.Hz.clone()}
+		}
+	}
+	/// Dividing a Power by a Frequency returns a value of type Energy
+	impl<T> std::ops::Div<&Frequency<T>> for &Power<T> where T: NumLike {
+		type Output = Energy<T>;
+		fn div(self, rhs: Frequency<T>) -> Self::Output {
+			Energy{J: self.W.clone() / rhs.Hz.clone()}
+		}
+	}
 
 	// Power / Velocity -> Force
-	// TODO: docstring
+	/// Dividing a Power by a Velocity returns a value of type Force
 	impl<T> std::ops::Div<Velocity<T>> for Power<T> where T: NumLike {
 		type Output = Force<T>;
 		fn div(self, rhs: Velocity<T>) -> Self::Output {
 			Force{N: self.W / rhs.mps}
 		}
 	}
+	/// Dividing a Power by a Velocity returns a value of type Force
+	impl<T> std::ops::Div<Velocity<T>> for &Power<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Force{N: self.W.clone() / rhs.mps}
+		}
+	}
+	/// Dividing a Power by a Velocity returns a value of type Force
+	impl<T> std::ops::Div<&Velocity<T>> for Power<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Force{N: self.W / rhs.mps.clone()}
+		}
+	}
+	/// Dividing a Power by a Velocity returns a value of type Force
+	impl<T> std::ops::Div<&Velocity<T>> for &Power<T> where T: NumLike {
+		type Output = Force<T>;
+		fn div(self, rhs: Velocity<T>) -> Self::Output {
+			Force{N: self.W.clone() / rhs.mps.clone()}
+		}
+	}
 
 	// Power / Acceleration -> Momentum
-	// TODO: docstring
+	/// Dividing a Power by a Acceleration returns a value of type Momentum
 	impl<T> std::ops::Div<Acceleration<T>> for Power<T> where T: NumLike {
 		type Output = Momentum<T>;
 		fn div(self, rhs: Acceleration<T>) -> Self::Output {
 			Momentum{kgmps: self.W / rhs.mps2}
 		}
 	}
+	/// Dividing a Power by a Acceleration returns a value of type Momentum
+	impl<T> std::ops::Div<Acceleration<T>> for &Power<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Momentum{kgmps: self.W.clone() / rhs.mps2}
+		}
+	}
+	/// Dividing a Power by a Acceleration returns a value of type Momentum
+	impl<T> std::ops::Div<&Acceleration<T>> for Power<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Momentum{kgmps: self.W / rhs.mps2.clone()}
+		}
+	}
+	/// Dividing a Power by a Acceleration returns a value of type Momentum
+	impl<T> std::ops::Div<&Acceleration<T>> for &Power<T> where T: NumLike {
+		type Output = Momentum<T>;
+		fn div(self, rhs: Acceleration<T>) -> Self::Output {
+			Momentum{kgmps: self.W.clone() / rhs.mps2.clone()}
+		}
+	}
 
 	// Power / Momentum -> Acceleration
-	// TODO: docstring
+	/// Dividing a Power by a Momentum returns a value of type Acceleration
 	impl<T> std::ops::Div<Momentum<T>> for Power<T> where T: NumLike {
 		type Output = Acceleration<T>;
 		fn div(self, rhs: Momentum<T>) -> Self::Output {
 			Acceleration{mps2: self.W / rhs.kgmps}
 		}
 	}
+	/// Dividing a Power by a Momentum returns a value of type Acceleration
+	impl<T> std::ops::Div<Momentum<T>> for &Power<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Acceleration{mps2: self.W.clone() / rhs.kgmps}
+		}
+	}
+	/// Dividing a Power by a Momentum returns a value of type Acceleration
+	impl<T> std::ops::Div<&Momentum<T>> for Power<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Acceleration{mps2: self.W / rhs.kgmps.clone()}
+		}
+	}
+	/// Dividing a Power by a Momentum returns a value of type Acceleration
+	impl<T> std::ops::Div<&Momentum<T>> for &Power<T> where T: NumLike {
+		type Output = Acceleration<T>;
+		fn div(self, rhs: Momentum<T>) -> Self::Output {
+			Acceleration{mps2: self.W.clone() / rhs.kgmps.clone()}
+		}
+	}
 
 	// Power / Force -> Velocity
-	// TODO: docstring
+	/// Dividing a Power by a Force returns a value of type Velocity
 	impl<T> std::ops::Div<Force<T>> for Power<T> where T: NumLike {
 		type Output = Velocity<T>;
 		fn div(self, rhs: Force<T>) -> Self::Output {
 			Velocity{mps: self.W / rhs.N}
 		}
 	}
+	/// Dividing a Power by a Force returns a value of type Velocity
+	impl<T> std::ops::Div<Force<T>> for &Power<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Velocity{mps: self.W.clone() / rhs.N}
+		}
+	}
+	/// Dividing a Power by a Force returns a value of type Velocity
+	impl<T> std::ops::Div<&Force<T>> for Power<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Velocity{mps: self.W / rhs.N.clone()}
+		}
+	}
+	/// Dividing a Power by a Force returns a value of type Velocity
+	impl<T> std::ops::Div<&Force<T>> for &Power<T> where T: NumLike {
+		type Output = Velocity<T>;
+		fn div(self, rhs: Force<T>) -> Self::Output {
+			Velocity{mps: self.W.clone() / rhs.N.clone()}
+		}
+	}
 
 	// Power / Voltage -> Current
-	// TODO: docstring
+	/// Dividing a Power by a Voltage returns a value of type Current
 	impl<T> std::ops::Div<Voltage<T>> for Power<T> where T: NumLike {
 		type Output = Current<T>;
 		fn div(self, rhs: Voltage<T>) -> Self::Output {
 			Current{A: self.W / rhs.V}
+		}
+	}
+	/// Dividing a Power by a Voltage returns a value of type Current
+	impl<T> std::ops::Div<Voltage<T>> for &Power<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Current{A: self.W.clone() / rhs.V}
+		}
+	}
+	/// Dividing a Power by a Voltage returns a value of type Current
+	impl<T> std::ops::Div<&Voltage<T>> for Power<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Current{A: self.W / rhs.V.clone()}
+		}
+	}
+	/// Dividing a Power by a Voltage returns a value of type Current
+	impl<T> std::ops::Div<&Voltage<T>> for &Power<T> where T: NumLike {
+		type Output = Current<T>;
+		fn div(self, rhs: Voltage<T>) -> Self::Output {
+			Current{A: self.W.clone() / rhs.V.clone()}
 		}
 	}
 

@@ -17,6 +17,7 @@ def main(*args):
 	project_root_dir= path.dirname(this_dir)
 	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-conversions.csv'))
+	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data)
 	#
@@ -28,13 +29,13 @@ def main(*args):
 	modules = data['category'].unique()
 	for module_name in modules:
 		module_file = path.join(main_proj_dir, 'src', '%s.rs' % module_name)
-		generated_code = generate_modules(module_name, data, conversions)
+		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions)
 		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
 		with open(module_file, 'w', newline='\n') as fout:
 			fout.write(generated_code)
 	raise Exception('Work in Progress (WIP)')
 
-def generate_modules(module: str, data: DataFrame, conversions: DataFrame) -> str:
+def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''
 	mod_units = data[data['category'] == module]
 	print(mod_units)
@@ -42,19 +43,42 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame) -> st
 		'category': module,
 		'example1': mod_units['desc first name'].iloc[0],
 		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
-		'content': generate_unit_structs(mod_units, conversions)
+		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions)
 	}
 	return out_buf
 
-def generate_unit_structs(data: DataFrame, conversions: DataFrame) -> str:
+def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''
 	for i, row in data.iterrows():
 		out_buf += UNIT_STRUCT_DEFINITION_TEMPLATE % {
 			**row.to_dict(),
-			'to-and-from': generate_unit_conversions(row, conversions),
+			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions) + generate_unit_conversions(row, conversions),
 
 		}
-		# TODO: WIP
+	return out_buf
+
+
+def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
+	unit_name = data_row['name']
+	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
+	out_buf = ''
+	for i, row in local_to_from.iterrows():
+		if row['unit symbol'] == data_row['unit symbol']:
+			# already accounted for
+			continue
+		if row['offset'] is not None and numpy.isfinite(row['offset']) and row['offset'] != 0:
+			# 2-factor conversion (ie temperature)
+			out_buf += TO_FROM_SLOPE_OFFSET_TEMPLATE % {
+				'si unit symbol': data_row['unit symbol'],
+				**data_row,
+				**row
+			}
+		else:
+			out_buf += TO_FROM_SLOPE_TEMPLATE % {
+				'si unit symbol': data_row['unit symbol'],
+				**data_row,
+				**row
+			}
 	return out_buf
 
 
@@ -79,7 +103,7 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 		if len(kv[1]) > 1:
 			print('WARNING: dimensionally equivalent measures (%s): %s' % kv)
 	siunit_symbol_lut: Dict[str, str] = {row['name']: row['unit symbol'] for _, row in data.iterrows()}
-		# blacklist a few illogical combinations:
+	# blacklist a few illogical combinations:
 	input_blacklist: Set[str] = set([
 		'radioactivity', 'absorbed dose', 'dose equivalent',
 	])
@@ -99,7 +123,7 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 		('torque', 'moment of inertia', 'angular acceleration'),
 	])
 	output_blacklist: Set[str] = set([
-		'torque', 'moment of inertia', 'radioactivity', 'absorbed dose'
+		'torque', 'moment of inertia', 'radioactivity', 'absorbed dose', 'dose equivalent'
 	])
 	unit_conversions = []
 	# now check every non-blacklisted  A * B and A / B combination for possible unit conversions
