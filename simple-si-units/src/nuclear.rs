@@ -4,8 +4,8 @@
 use std::fmt;
 use super::UnitStruct;
 use super::NumLike;
-use super::mechanical::*;
 use super::base::*;
+use super::mechanical::*;
 
 // optional supports
 #[cfg(feature="serde")]
