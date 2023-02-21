@@ -58,7 +58,9 @@ def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame)
 			other_modules.add(unit_module_lut[row['right-side']])
 			other_modules.add(unit_module_lut[row['result']])
 	if module in other_modules: other_modules.discard(module)
-	return '\n'.join(['use super::%s::*;' % m for m in other_modules])
+	ilist = list(['use super::%s::*;' % m for m in other_modules])
+	ilist.sort()
+	return '\n'.join(ilist)
 
 def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''

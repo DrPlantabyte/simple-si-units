@@ -5,10 +5,10 @@ use std::fmt;
 use super::UnitStruct;
 use super::NumLike;
 use super::chemical::*;
-use super::nuclear::*;
-use super::mechanical::*;
-use super::geometry::*;
 use super::electromagnetic::*;
+use super::geometry::*;
+use super::mechanical::*;
+use super::nuclear::*;
 
 // optional supports
 #[cfg(feature="serde")]
@@ -1469,6 +1469,84 @@ impl<T> fmt::Display for Amount<T> where T: NumLike {
 
 impl<T> Amount<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this amount value in count
+	pub fn to_count(self) -> T {
+		return self.mol.clone() / T::from(1.0_f64);
+	}
+
+	/// Returns a new amount value from the given number of count
+	///
+	/// # Arguments
+	/// * `count` - Any number-like type, representing a quantity of count
+	pub fn from_count(count: T) -> Self {
+		Amount{mol: count * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this amount value in moles
+	pub fn to_moles(self) -> T {
+		return self.mol.clone() / T::from(6.02214076e+23_f64);
+	}
+
+	/// Returns a new amount value from the given number of moles
+	///
+	/// # Arguments
+	/// * `moles` - Any number-like type, representing a quantity of moles
+	pub fn from_moles(moles: T) -> Self {
+		Amount{mol: moles * T::from(6.02214076e+23_f64)}
+	}
+
+	/// Returns a copy of this amount value in millimoles
+	pub fn to_mmol(self) -> T {
+		return self.mol.clone() / T::from(6.02214076e+20_f64);
+	}
+
+	/// Returns a new amount value from the given number of millimoles
+	///
+	/// # Arguments
+	/// * `mmol` - Any number-like type, representing a quantity of millimoles
+	pub fn from_mmol(mmol: T) -> Self {
+		Amount{mol: mmol * T::from(6.02214076e+20_f64)}
+	}
+
+	/// Returns a copy of this amount value in micromoles
+	pub fn to_umol(self) -> T {
+		return self.mol.clone() / T::from(6.02214076e+17_f64);
+	}
+
+	/// Returns a new amount value from the given number of micromoles
+	///
+	/// # Arguments
+	/// * `umol` - Any number-like type, representing a quantity of micromoles
+	pub fn from_umol(umol: T) -> Self {
+		Amount{mol: umol * T::from(6.02214076e+17_f64)}
+	}
+
+	/// Returns a copy of this amount value in nanomoles
+	pub fn to_nmol(self) -> T {
+		return self.mol.clone() / T::from(602214076000000.0_f64);
+	}
+
+	/// Returns a new amount value from the given number of nanomoles
+	///
+	/// # Arguments
+	/// * `nmol` - Any number-like type, representing a quantity of nanomoles
+	pub fn from_nmol(nmol: T) -> Self {
+		Amount{mol: nmol * T::from(602214076000000.0_f64)}
+	}
+
+	/// Returns a copy of this amount value in picomoles
+	pub fn to_pmol(self) -> T {
+		return self.mol.clone() / T::from(602214076000.0_f64);
+	}
+
+	/// Returns a new amount value from the given number of picomoles
+	///
+	/// # Arguments
+	/// * `pmol` - Any number-like type, representing a quantity of picomoles
+	pub fn from_pmol(pmol: T) -> Self {
+		Amount{mol: pmol * T::from(602214076000.0_f64)}
+	}
+
 }
 
 // Amount / Time -> CatalyticActivity

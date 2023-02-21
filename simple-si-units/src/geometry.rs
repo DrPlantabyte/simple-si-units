@@ -4,10 +4,10 @@
 use std::fmt;
 use super::UnitStruct;
 use super::NumLike;
-use super::chemical::*;
-use super::mechanical::*;
 use super::base::*;
+use super::chemical::*;
 use super::electromagnetic::*;
+use super::mechanical::*;
 
 // optional supports
 #[cfg(feature="serde")]
