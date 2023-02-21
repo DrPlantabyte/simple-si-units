@@ -33,7 +33,7 @@ def main(*args):
 		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
 		with open(module_file, 'w', newline='\n') as fout:
 			fout.write(generated_code)
-	raise Exception('Work in Progress (WIP)')
+	# done!
 
 def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''
@@ -41,20 +41,33 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_
 	print(mod_units)
 	out_buf += MODULE_TEMPLATE % {
 		'category': module,
+		'crate imports': generate_local_imports(module, data, conversions),
 		'example1': mod_units['desc first name'].iloc[0],
 		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
 		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions)
 	}
 	return out_buf
 
+
+def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame) -> str:
+	other_modules = set()
+	these_units = set(data[data['category'] == module]['name'].values)
+	unit_module_lut = {row['name']: row['category'] for i, row in data.iterrows()}
+	for i, row in conversions.iterrows():
+		if row['left-side'] in these_units:
+			other_modules.add(unit_module_lut[row['right-side']])
+			other_modules.add(unit_module_lut[row['result']])
+	if module in other_modules: other_modules.discard(module)
+	return '\n'.join(['use super::%s::*;' % m for m in other_modules])
+
 def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''
 	for i, row in data.iterrows():
 		out_buf += UNIT_STRUCT_DEFINITION_TEMPLATE % {
 			**row.to_dict(),
-			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions) + generate_unit_conversions(row, conversions),
-
+			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
 		}
+		out_buf += generate_unit_conversions(row, conversions)
 	return out_buf
 
 

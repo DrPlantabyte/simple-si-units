@@ -2,18 +2,22 @@
 //! This module provides nuclear SI units, such as radioactivity 
 //! and radiation dose equivalent.
 use std::fmt;
-use super::base::*;
-use super::chemical::*;
-use super::electromagnetic::*;
-use super::geometry::*;
+use super::UnitStruct;
+use super::NumLike;
 use super::mechanical::*;
-use super::nuclear::*;
-use serde::{Serialize, Deserialize};
+use super::base::*;
+
+// optional supports
+#[cfg(feature="serde")]
+#[macro_use]
+extern crate serde;
 
 
 /// The radioactivity unit type, defined as becquerels in SI units
-#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct Radioactivity<T: NumLike>{
+	/// The value of this Radioactivity in becquerels
 	pub Bq: T
 }
 
@@ -54,8 +58,10 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 }
 
 /// The absorbed radiation dose unit type, defined as grays in SI units
-#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct AbsorbedDose<T: NumLike>{
+	/// The value of this Absorbed dose in grays
 	pub Gy: T
 }
 
@@ -93,41 +99,43 @@ impl<T> fmt::Display for AbsorbedDose<T> where T: NumLike {
 
 impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	
-	// AbsorbedDose * Mass -> Energy
-	/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Gy * rhs.kg}
-		}
-	}
-	/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<Mass<T>> for &AbsorbedDose<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Gy.clone() * rhs.kg}
-		}
-	}
-	/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<&Mass<T>> for AbsorbedDose<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Gy * rhs.kg.clone()}
-		}
-	}
-	/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<&Mass<T>> for &AbsorbedDose<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Gy.clone() * rhs.kg.clone()}
-		}
-	}
+}
 
+// AbsorbedDose * Mass -> Energy
+/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Energy{J: self.Gy * rhs.kg}
+	}
+}
+/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<Mass<T>> for &AbsorbedDose<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Energy{J: self.Gy.clone() * rhs.kg}
+	}
+}
+/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<&Mass<T>> for AbsorbedDose<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Energy{J: self.Gy * rhs.kg.clone()}
+	}
+}
+/// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<&Mass<T>> for &AbsorbedDose<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Energy{J: self.Gy.clone() * rhs.kg.clone()}
+	}
 }
 
 /// The radiation dose equivalent unit type, defined as sieverts in SI units
-#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct DoseEquivalent<T: NumLike>{
+	/// The value of this Dose equivalent in sieverts
 	pub Sv: T
 }
 
@@ -165,36 +173,36 @@ impl<T> fmt::Display for DoseEquivalent<T> where T: NumLike {
 
 impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	
-	// DoseEquivalent * Mass -> Energy
-	/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<Mass<T>> for DoseEquivalent<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Sv * rhs.kg}
-		}
-	}
-	/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<Mass<T>> for &DoseEquivalent<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Sv.clone() * rhs.kg}
-		}
-	}
-	/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<&Mass<T>> for DoseEquivalent<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Sv * rhs.kg.clone()}
-		}
-	}
-	/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-	impl<T> std::ops::Mul<&Mass<T>> for &DoseEquivalent<T> where T: NumLike {
-		type Output = Energy<T>;
-		fn mul(self, rhs: Mass<T>) -> Self::Output {
-			Energy{J: self.Sv.clone() * rhs.kg.clone()}
-		}
-	}
+}
 
+// DoseEquivalent * Mass -> Energy
+/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<Mass<T>> for DoseEquivalent<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Energy{J: self.Sv * rhs.kg}
+	}
+}
+/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<Mass<T>> for &DoseEquivalent<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Energy{J: self.Sv.clone() * rhs.kg}
+	}
+}
+/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<&Mass<T>> for DoseEquivalent<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Energy{J: self.Sv * rhs.kg.clone()}
+	}
+}
+/// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
+impl<T> std::ops::Mul<&Mass<T>> for &DoseEquivalent<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Energy{J: self.Sv.clone() * rhs.kg.clone()}
+	}
 }
 
 

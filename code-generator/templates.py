@@ -2,13 +2,14 @@ MODULE_TEMPLATE='''
 //! This module provides %(category)s SI units, such as %(example1)s 
 //! and %(example2)s.
 use std::fmt;
-use super::base::*;
-use super::chemical::*;
-use super::electromagnetic::*;
-use super::geometry::*;
-use super::mechanical::*;
-use super::nuclear::*;
-use serde::{Serialize, Deserialize};
+use super::UnitStruct;
+use super::NumLike;
+%(crate imports)s
+
+// optional supports
+#[cfg(feature="serde")]
+#[macro_use]
+extern crate serde;
 
 %(content)s
 
@@ -16,8 +17,10 @@ use serde::{Serialize, Deserialize};
 
 UNIT_STRUCT_DEFINITION_TEMPLATE='''
 /// The %(desc first name)s unit type, defined as %(unit name)s in SI units
-#[derive(UnitStruct, Debug, Clone, Serialize, Deserialize)]
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct %(code name)s<T: NumLike>{
+	/// The value of this %(capital desc name)s in %(unit name)s
 	pub %(unit symbol)s: T
 }
 
@@ -61,7 +64,7 @@ impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return (self.%(unit symbol)s.clone() - T::from(%(offset)s_f64)) / T::from(%(slope)s_f64);
+		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) / T::from(%(slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -76,7 +79,7 @@ TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 TO_FROM_SLOPE_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(unit symbol)s.clone() / T::from(%(slope)s_f64);
+		return self.%(si unit symbol)s.clone() / T::from(%(slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -89,33 +92,33 @@ TO_FROM_SLOPE_TEMPLATE = '''
 '''
 
 UNIT_CONVERSION_TEMPLATE='''
-	// %(code left-side)s %(operator)s %(code right-side)s -> %(code result)s
-	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
-	impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
-		type Output = %(code result)s<T>;
-		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
-			%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s}
-		}
+// %(code left-side)s %(operator)s %(code right-side)s -> %(code result)s
+/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s}
 	}
-	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
-	impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
-		type Output = %(code result)s<T>;
-		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
-			%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s}
-		}
+}
+/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::%(capital op-function)s<%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s}
 	}
-	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
-	impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
-		type Output = %(code result)s<T>;
-		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
-			%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s.clone()}
-		}
+}
+/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for %(code left-side)s<T> where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn %(op-function)s(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.%(left-side symbol)s %(operator)s rhs.%(right-side symbol)s.clone()}
 	}
-	/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
-	impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
-		type Output = %(code result)s<T>;
-		fn %(op-function)s(self, rhs: %(code right-side)s<T>) -> Self::Output {
-			%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s.clone()}
-		}
+}
+/// %(capital verbing)s a %(code left-side)s by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code left-side)s<T> where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn %(op-function)s(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s.clone()}
 	}
+}
 '''
