@@ -284,30 +284,30 @@ mod unit_tests {
 	#[test]
 	fn quantity_units() {
 		assert_approx_equal(
-			Quantity::from_count(6.0221415e23_f64).to_count(),
-			Quantity::from_mol(1.0_f64).to_count(), 7
+			Amount::from_count(6.0221415e23_f64).to_count(),
+			Amount::from_mol(1.0_f64).to_count(), 7
 		);
 		assert_approx_equal(
-			Quantity::from_mol(1.0_f64).to_count(),
-			Quantity::from_mmol(1000.0_f64).to_count(), 9
+			Amount::from_mol(1.0_f64).to_count(),
+			Amount::from_mmol(1000.0_f64).to_count(), 9
 		);
 		assert_approx_equal(
-			Quantity::from_mmol(1.0_f64).to_count(),
-			Quantity::from_umol(1000.0_f64).to_count(), 9
+			Amount::from_mmol(1.0_f64).to_count(),
+			Amount::from_umol(1000.0_f64).to_count(), 9
 		);
 		assert_approx_equal(
-			Quantity::from_umol(1.0_f64).to_count(),
-			Quantity::from_nmol(1000.0_f64).to_count(), 9
+			Amount::from_umol(1.0_f64).to_count(),
+			Amount::from_nmol(1000.0_f64).to_count(), 9
 		);
 		assert_approx_equal(
-			Quantity::from_nmol(1.0_f64).to_count(),
-			Quantity::from_pmol(1000.0_f64).to_count(), 9
+			Amount::from_nmol(1.0_f64).to_count(),
+			Amount::from_pmol(1000.0_f64).to_count(), 9
 		);
-		let _ = Quantity::from_mol(1.0_f64).to_mol();
-		let _ = Quantity::from_mol(1.0_f64).to_mmol();
-		let _ = Quantity::from_mol(1.0_f64).to_umol();
-		let _ = Quantity::from_mol(1.0_f64).to_nmol();
-		let _ = Quantity::from_mol(1.0_f64).to_pmol();
+		let _ = Amount::from_mol(1.0_f64).to_mol();
+		let _ = Amount::from_mol(1.0_f64).to_mmol();
+		let _ = Amount::from_mol(1.0_f64).to_umol();
+		let _ = Amount::from_mol(1.0_f64).to_nmol();
+		let _ = Amount::from_mol(1.0_f64).to_pmol();
 	}
 	#[test]
 	fn current_units() {
@@ -1383,9 +1383,9 @@ mod unit_tests {
 	fn unit_conversion_test(){
 		let av: AngularVelocity<f64> = Angle::from_rad(1.0) / Time::from_s(1.0);
 		let aa: AngularAcceleration<f64> = av / Time::from_s(1.0);
-		let mi: MomentOfInertia<f64> = Mass::from_kg(1.0) * (Distance::from_m(1.0) * Distance::from_m(1.0));
+		// let mi: MomentOfInertia<f64> = Mass::from_kg(1.0) * (Distance::from_m(1.0) * Distance::from_m(1.0));
 		let am: AngularMomentum<f64> = mi * av;
-		let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
+		// let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
 		let f:  Frequency<f64> = 1.0 / Time::from_s(1.0);
 		let a:  Area<f64> = Distance::from_m(1.0) * Distance::from_m(1.0);
 		let ad: AreaDensity<f64> = a * Mass::from_kg(1.0);
