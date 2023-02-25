@@ -35,19 +35,33 @@ impl<T> Distance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "m";
 	}
-
+	
 	/// Returns a new distance value from the given number of meters
 	///
 	/// # Arguments
 	/// * `m` - Any number-like type, representing a quantity of meters
 	pub fn from_m(m: T) -> Self {
-		Distance{m}
+		Distance{m: m}
 	}
 	
 	/// Returns a copy of this distance value in meters
 	pub fn to_m(self) -> T {
 		return self.m.clone();
 	}
+
+	/// Returns a new distance value from the given number of meters
+	///
+	/// # Arguments
+	/// * `meters` - Any number-like type, representing a quantity of meters
+	pub fn from_meters(meters: T) -> Self {
+		Distance{m: meters}
+	}
+	
+	/// Returns a copy of this distance value in meters
+	pub fn to_meters(self) -> T {
+		return self.m.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Distance<T> where T: NumLike {
@@ -59,8 +73,21 @@ impl<T> fmt::Display for Distance<T> where T: NumLike {
 impl<T> Distance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this distance value in meters
+	pub fn to_m(self) -> T {
+		return self.m.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new distance value from the given number of meters
+	///
+	/// # Arguments
+	/// * `m` - Any number-like type, representing a quantity of meters
+	pub fn from_m(m: T) -> Self {
+		Distance{m: m * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this distance value in meters
 	pub fn to_meters(self) -> T {
-		return self.m.clone() / T::from(1.0_f64);
+		return self.m.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of meters
@@ -73,7 +100,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in millimeters
 	pub fn to_cm(self) -> T {
-		return self.m.clone() / T::from(0.01_f64);
+		return self.m.clone() * T::from(100.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of millimeters
@@ -86,7 +113,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in millimeters
 	pub fn to_mm(self) -> T {
-		return self.m.clone() / T::from(0.001_f64);
+		return self.m.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of millimeters
@@ -99,7 +126,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in micrometers
 	pub fn to_um(self) -> T {
-		return self.m.clone() / T::from(1e-06_f64);
+		return self.m.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of micrometers
@@ -112,7 +139,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in nanometers
 	pub fn to_nm(self) -> T {
-		return self.m.clone() / T::from(1e-09_f64);
+		return self.m.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of nanometers
@@ -125,7 +152,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in picometers
 	pub fn to_pm(self) -> T {
-		return self.m.clone() / T::from(1e-12_f64);
+		return self.m.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of picometers
@@ -138,7 +165,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in kilometers
 	pub fn to_km(self) -> T {
-		return self.m.clone() / T::from(1000.0_f64);
+		return self.m.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new distance value from the given number of kilometers
@@ -151,7 +178,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in astronomical units
 	pub fn to_au(self) -> T {
-		return self.m.clone() / T::from(149597870700.0_f64);
+		return self.m.clone() * T::from(6.68458712226845e-12_f64);
 	}
 
 	/// Returns a new distance value from the given number of astronomical units
@@ -164,7 +191,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in parsecs
 	pub fn to_parsec(self) -> T {
-		return self.m.clone() / T::from(3.08568047999355e+16_f64);
+		return self.m.clone() * T::from(3.24077624525171e-17_f64);
 	}
 
 	/// Returns a new distance value from the given number of parsecs
@@ -177,7 +204,7 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this distance value in light-years
 	pub fn to_lyr(self) -> T {
-		return self.m.clone() / T::from(9460528169656200.0_f64);
+		return self.m.clone() * T::from(1.05702343681763e-16_f64);
 	}
 
 	/// Returns a new distance value from the given number of light-years
@@ -389,19 +416,33 @@ impl<T> Mass<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "kg";
 	}
-
+	
 	/// Returns a new mass value from the given number of kilograms
 	///
 	/// # Arguments
 	/// * `kg` - Any number-like type, representing a quantity of kilograms
 	pub fn from_kg(kg: T) -> Self {
-		Mass{kg}
+		Mass{kg: kg}
 	}
 	
 	/// Returns a copy of this mass value in kilograms
 	pub fn to_kg(self) -> T {
 		return self.kg.clone();
 	}
+
+	/// Returns a new mass value from the given number of kilograms
+	///
+	/// # Arguments
+	/// * `kilograms` - Any number-like type, representing a quantity of kilograms
+	pub fn from_kilograms(kilograms: T) -> Self {
+		Mass{kg: kilograms}
+	}
+	
+	/// Returns a copy of this mass value in kilograms
+	pub fn to_kilograms(self) -> T {
+		return self.kg.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Mass<T> where T: NumLike {
@@ -413,8 +454,21 @@ impl<T> fmt::Display for Mass<T> where T: NumLike {
 impl<T> Mass<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this mass value in kilograms
+	pub fn to_kg(self) -> T {
+		return self.kg.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new mass value from the given number of kilograms
+	///
+	/// # Arguments
+	/// * `kg` - Any number-like type, representing a quantity of kilograms
+	pub fn from_kg(kg: T) -> Self {
+		Mass{kg: kg * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this mass value in kilograms
 	pub fn to_kilograms(self) -> T {
-		return self.kg.clone() / T::from(1.0_f64);
+		return self.kg.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of kilograms
@@ -427,7 +481,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in grams
 	pub fn to_g(self) -> T {
-		return self.kg.clone() / T::from(0.001_f64);
+		return self.kg.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of grams
@@ -440,7 +494,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in milligrams
 	pub fn to_mg(self) -> T {
-		return self.kg.clone() / T::from(1e-06_f64);
+		return self.kg.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of milligrams
@@ -453,7 +507,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in micrograms
 	pub fn to_ug(self) -> T {
-		return self.kg.clone() / T::from(1e-09_f64);
+		return self.kg.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of micrograms
@@ -466,7 +520,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in nanograms
 	pub fn to_ng(self) -> T {
-		return self.kg.clone() / T::from(1e-12_f64);
+		return self.kg.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of nanograms
@@ -479,7 +533,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in picograms
 	pub fn to_pg(self) -> T {
-		return self.kg.clone() / T::from(1e-15_f64);
+		return self.kg.clone() * T::from(1000000000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of picograms
@@ -492,7 +546,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in tons
 	pub fn to_ton(self) -> T {
-		return self.kg.clone() / T::from(1000.0_f64);
+		return self.kg.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new mass value from the given number of tons
@@ -505,7 +559,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in earth masses
 	pub fn to_earth_mass(self) -> T {
-		return self.kg.clone() / T::from(5.9722e+24_f64);
+		return self.kg.clone() * T::from(1.67442483506915e-25_f64);
 	}
 
 	/// Returns a new mass value from the given number of earth masses
@@ -518,7 +572,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in jupiter masses
 	pub fn to_jupiter_mass(self) -> T {
-		return self.kg.clone() / T::from(1.8986e+27_f64);
+		return self.kg.clone() * T::from(5.26703887074687e-28_f64);
 	}
 
 	/// Returns a new mass value from the given number of jupiter masses
@@ -531,7 +585,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in solar masses
 	pub fn to_solar_mass(self) -> T {
-		return self.kg.clone() / T::from(1.9885500000000002e+30_f64);
+		return self.kg.clone() * T::from(5.0287898217294e-31_f64);
 	}
 
 	/// Returns a new mass value from the given number of solar masses
@@ -713,19 +767,33 @@ impl<T> Time<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "s";
 	}
-
+	
 	/// Returns a new time value from the given number of seconds
 	///
 	/// # Arguments
 	/// * `s` - Any number-like type, representing a quantity of seconds
 	pub fn from_s(s: T) -> Self {
-		Time{s}
+		Time{s: s}
 	}
 	
 	/// Returns a copy of this time value in seconds
 	pub fn to_s(self) -> T {
 		return self.s.clone();
 	}
+
+	/// Returns a new time value from the given number of seconds
+	///
+	/// # Arguments
+	/// * `seconds` - Any number-like type, representing a quantity of seconds
+	pub fn from_seconds(seconds: T) -> Self {
+		Time{s: seconds}
+	}
+	
+	/// Returns a copy of this time value in seconds
+	pub fn to_seconds(self) -> T {
+		return self.s.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Time<T> where T: NumLike {
@@ -737,8 +805,21 @@ impl<T> fmt::Display for Time<T> where T: NumLike {
 impl<T> Time<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this time value in seconds
+	pub fn to_s(self) -> T {
+		return self.s.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new time value from the given number of seconds
+	///
+	/// # Arguments
+	/// * `s` - Any number-like type, representing a quantity of seconds
+	pub fn from_s(s: T) -> Self {
+		Time{s: s * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this time value in seconds
 	pub fn to_seconds(self) -> T {
-		return self.s.clone() / T::from(1.0_f64);
+		return self.s.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new time value from the given number of seconds
@@ -751,7 +832,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in milliseconds
 	pub fn to_ms(self) -> T {
-		return self.s.clone() / T::from(0.001_f64);
+		return self.s.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of milliseconds
@@ -764,7 +845,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in microseconds
 	pub fn to_us(self) -> T {
-		return self.s.clone() / T::from(1e-06_f64);
+		return self.s.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of microseconds
@@ -777,7 +858,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in nanoseconds
 	pub fn to_ns(self) -> T {
-		return self.s.clone() / T::from(1e-09_f64);
+		return self.s.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of nanoseconds
@@ -790,7 +871,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in picoseconds
 	pub fn to_ps(self) -> T {
-		return self.s.clone() / T::from(1e-12_f64);
+		return self.s.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of picoseconds
@@ -803,7 +884,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in minutes
 	pub fn to_min(self) -> T {
-		return self.s.clone() / T::from(60.0_f64);
+		return self.s.clone() * T::from(0.0166666666666667_f64);
 	}
 
 	/// Returns a new time value from the given number of minutes
@@ -816,7 +897,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in hours
 	pub fn to_hr(self) -> T {
-		return self.s.clone() / T::from(3600.0_f64);
+		return self.s.clone() * T::from(0.000277777777777778_f64);
 	}
 
 	/// Returns a new time value from the given number of hours
@@ -829,7 +910,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in days
 	pub fn to_d(self) -> T {
-		return self.s.clone() / T::from(86400.0_f64);
+		return self.s.clone() * T::from(1.15740740740741e-05_f64);
 	}
 
 	/// Returns a new time value from the given number of days
@@ -842,7 +923,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in years
 	pub fn to_yr(self) -> T {
-		return self.s.clone() / T::from(31556925.19008_f64);
+		return self.s.clone() * T::from(3.16887654287165e-08_f64);
 	}
 
 	/// Returns a new time value from the given number of years
@@ -855,7 +936,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in millennia
 	pub fn to_kyr(self) -> T {
-		return self.s.clone() / T::from(31556925190.08_f64);
+		return self.s.clone() * T::from(3.16887654287165e-11_f64);
 	}
 
 	/// Returns a new time value from the given number of millennia
@@ -868,7 +949,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in million years
 	pub fn to_Myr(self) -> T {
-		return self.s.clone() / T::from(31556925190080.0_f64);
+		return self.s.clone() * T::from(3.1688765428716497e-14_f64);
 	}
 
 	/// Returns a new time value from the given number of million years
@@ -881,7 +962,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in billion years
 	pub fn to_Gyr(self) -> T {
-		return self.s.clone() / T::from(3.155692519008e+16_f64);
+		return self.s.clone() * T::from(3.16887654287165e-17_f64);
 	}
 
 	/// Returns a new time value from the given number of billion years
@@ -1363,19 +1444,20 @@ impl<T> Temperature<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "K";
 	}
-
+	
 	/// Returns a new temperature value from the given number of degrees kelvin
 	///
 	/// # Arguments
 	/// * `K` - Any number-like type, representing a quantity of degrees kelvin
 	pub fn from_K(K: T) -> Self {
-		Temperature{K}
+		Temperature{K: K}
 	}
 	
 	/// Returns a copy of this temperature value in degrees kelvin
 	pub fn to_K(self) -> T {
 		return self.K.clone();
 	}
+
 }
 
 impl<T> fmt::Display for Temperature<T> where T: NumLike {
@@ -1386,9 +1468,22 @@ impl<T> fmt::Display for Temperature<T> where T: NumLike {
 
 impl<T> Temperature<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this temperature value in degrees kelvin
+	pub fn to_K(self) -> T {
+		return self.K.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new temperature value from the given number of degrees kelvin
+	///
+	/// # Arguments
+	/// * `K` - Any number-like type, representing a quantity of degrees kelvin
+	pub fn from_K(K: T) -> Self {
+		Temperature{K: K * T::from(1.0_f64)}
+	}
+
 	/// Returns a copy of this temperature value in degrees celsius
 	pub fn to_C(self) -> T {
-		return (self.K.clone() - T::from(273.15_f64)) / T::from(1.0_f64);
+		return (self.K.clone() - T::from(273.15_f64)) * T::from(1.0_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees celsius
@@ -1401,7 +1496,7 @@ impl<T> Temperature<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this temperature value in degrees celsius
 	pub fn to_celsius(self) -> T {
-		return (self.K.clone() - T::from(273.15_f64)) / T::from(1.0_f64);
+		return (self.K.clone() - T::from(273.15_f64)) * T::from(1.0_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees celsius
@@ -1414,7 +1509,7 @@ impl<T> Temperature<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this temperature value in degrees fahrenheit
 	pub fn to_F(self) -> T {
-		return (self.K.clone() - T::from(459.67_f64)) / T::from(0.555555555555556_f64);
+		return (self.K.clone() - T::from(459.67_f64)) * T::from(1.8_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees fahrenheit
@@ -1446,19 +1541,33 @@ impl<T> Amount<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "mol";
 	}
+	
+	/// Returns a new amount value from the given number of moles
+	///
+	/// # Arguments
+	/// * `moles` - Any number-like type, representing a quantity of moles
+	pub fn from_moles(moles: T) -> Self {
+		Amount{mol: moles}
+	}
+	
+	/// Returns a copy of this amount value in moles
+	pub fn to_moles(self) -> T {
+		return self.mol.clone();
+	}
 
 	/// Returns a new amount value from the given number of moles
 	///
 	/// # Arguments
 	/// * `mol` - Any number-like type, representing a quantity of moles
 	pub fn from_mol(mol: T) -> Self {
-		Amount{mol}
+		Amount{mol: mol}
 	}
 	
 	/// Returns a copy of this amount value in moles
 	pub fn to_mol(self) -> T {
 		return self.mol.clone();
 	}
+
 }
 
 impl<T> fmt::Display for Amount<T> where T: NumLike {
@@ -1471,7 +1580,7 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this amount value in count
 	pub fn to_count(self) -> T {
-		return self.mol.clone() / T::from(1.0_f64);
+		return self.mol.clone() * T::from(6.02214076e+23_f64);
 	}
 
 	/// Returns a new amount value from the given number of count
@@ -1479,12 +1588,12 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `count` - Any number-like type, representing a quantity of count
 	pub fn from_count(count: T) -> Self {
-		Amount{mol: count * T::from(1.0_f64)}
+		Amount{mol: count * T::from(1.6605390671738466e-24_f64)}
 	}
 
 	/// Returns a copy of this amount value in moles
 	pub fn to_moles(self) -> T {
-		return self.mol.clone() / T::from(6.02214076e+23_f64);
+		return self.mol.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of moles
@@ -1492,12 +1601,25 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `moles` - Any number-like type, representing a quantity of moles
 	pub fn from_moles(moles: T) -> Self {
-		Amount{mol: moles * T::from(6.02214076e+23_f64)}
+		Amount{mol: moles * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this amount value in moles
+	pub fn to_mol(self) -> T {
+		return self.mol.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new amount value from the given number of moles
+	///
+	/// # Arguments
+	/// * `mol` - Any number-like type, representing a quantity of moles
+	pub fn from_mol(mol: T) -> Self {
+		Amount{mol: mol * T::from(1.0_f64)}
 	}
 
 	/// Returns a copy of this amount value in millimoles
 	pub fn to_mmol(self) -> T {
-		return self.mol.clone() / T::from(6.02214076e+20_f64);
+		return self.mol.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of millimoles
@@ -1505,12 +1627,12 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `mmol` - Any number-like type, representing a quantity of millimoles
 	pub fn from_mmol(mmol: T) -> Self {
-		Amount{mol: mmol * T::from(6.02214076e+20_f64)}
+		Amount{mol: mmol * T::from(0.001_f64)}
 	}
 
 	/// Returns a copy of this amount value in micromoles
 	pub fn to_umol(self) -> T {
-		return self.mol.clone() / T::from(6.02214076e+17_f64);
+		return self.mol.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of micromoles
@@ -1518,12 +1640,12 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `umol` - Any number-like type, representing a quantity of micromoles
 	pub fn from_umol(umol: T) -> Self {
-		Amount{mol: umol * T::from(6.02214076e+17_f64)}
+		Amount{mol: umol * T::from(1e-06_f64)}
 	}
 
 	/// Returns a copy of this amount value in nanomoles
 	pub fn to_nmol(self) -> T {
-		return self.mol.clone() / T::from(602214076000000.0_f64);
+		return self.mol.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of nanomoles
@@ -1531,12 +1653,12 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `nmol` - Any number-like type, representing a quantity of nanomoles
 	pub fn from_nmol(nmol: T) -> Self {
-		Amount{mol: nmol * T::from(602214076000000.0_f64)}
+		Amount{mol: nmol * T::from(1e-09_f64)}
 	}
 
 	/// Returns a copy of this amount value in picomoles
 	pub fn to_pmol(self) -> T {
-		return self.mol.clone() / T::from(602214076000.0_f64);
+		return self.mol.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of picomoles
@@ -1544,7 +1666,7 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `pmol` - Any number-like type, representing a quantity of picomoles
 	pub fn from_pmol(pmol: T) -> Self {
-		Amount{mol: pmol * T::from(602214076000.0_f64)}
+		Amount{mol: pmol * T::from(1e-12_f64)}
 	}
 
 }
@@ -1718,19 +1840,33 @@ impl<T> Current<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "A";
 	}
-
+	
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
 	/// * `A` - Any number-like type, representing a quantity of amperes
 	pub fn from_A(A: T) -> Self {
-		Current{A}
+		Current{A: A}
 	}
 	
 	/// Returns a copy of this electrical current value in amperes
 	pub fn to_A(self) -> T {
 		return self.A.clone();
 	}
+
+	/// Returns a new electrical current value from the given number of amperes
+	///
+	/// # Arguments
+	/// * `amperes` - Any number-like type, representing a quantity of amperes
+	pub fn from_amperes(amperes: T) -> Self {
+		Current{A: amperes}
+	}
+	
+	/// Returns a copy of this electrical current value in amperes
+	pub fn to_amperes(self) -> T {
+		return self.A.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Current<T> where T: NumLike {
@@ -1742,92 +1878,105 @@ impl<T> fmt::Display for Current<T> where T: NumLike {
 impl<T> Current<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical current value in amperes
-	pub fn to_amps(self) -> T {
-		return self.A.clone() / T::from(1.0_f64);
+	pub fn to_A(self) -> T {
+		return self.A.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
-	/// * `amps` - Any number-like type, representing a quantity of amperes
-	pub fn from_amps(amps: T) -> Self {
-		Current{A: amps * T::from(1.0_f64)}
+	/// * `A` - Any number-like type, representing a quantity of amperes
+	pub fn from_A(A: T) -> Self {
+		Current{A: A * T::from(1.0_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in milliamps
-	pub fn to_mA(self) -> T {
-		return self.A.clone() / T::from(0.001_f64);
+	/// Returns a copy of this electrical current value in amperes
+	pub fn to_amperes(self) -> T {
+		return self.A.clone() * T::from(1.0_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of milliamps
+	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
-	/// * `mA` - Any number-like type, representing a quantity of milliamps
+	/// * `amperes` - Any number-like type, representing a quantity of amperes
+	pub fn from_amperes(amperes: T) -> Self {
+		Current{A: amperes * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this electrical current value in milliamperes
+	pub fn to_mA(self) -> T {
+		return self.A.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new electrical current value from the given number of milliamperes
+	///
+	/// # Arguments
+	/// * `mA` - Any number-like type, representing a quantity of milliamperes
 	pub fn from_mA(mA: T) -> Self {
 		Current{A: mA * T::from(0.001_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in microamps
+	/// Returns a copy of this electrical current value in microamperes
 	pub fn to_uA(self) -> T {
-		return self.A.clone() / T::from(1e-06_f64);
+		return self.A.clone() * T::from(1000000.0_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of microamps
+	/// Returns a new electrical current value from the given number of microamperes
 	///
 	/// # Arguments
-	/// * `uA` - Any number-like type, representing a quantity of microamps
+	/// * `uA` - Any number-like type, representing a quantity of microamperes
 	pub fn from_uA(uA: T) -> Self {
 		Current{A: uA * T::from(1e-06_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in nanoamps
+	/// Returns a copy of this electrical current value in nanoamperes
 	pub fn to_nA(self) -> T {
-		return self.A.clone() / T::from(1e-09_f64);
+		return self.A.clone() * T::from(1000000000.0_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of nanoamps
+	/// Returns a new electrical current value from the given number of nanoamperes
 	///
 	/// # Arguments
-	/// * `nA` - Any number-like type, representing a quantity of nanoamps
+	/// * `nA` - Any number-like type, representing a quantity of nanoamperes
 	pub fn from_nA(nA: T) -> Self {
 		Current{A: nA * T::from(1e-09_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in kiloamps
+	/// Returns a copy of this electrical current value in kiloamperes
 	pub fn to_kA(self) -> T {
-		return self.A.clone() / T::from(1000.0_f64);
+		return self.A.clone() * T::from(0.001_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of kiloamps
+	/// Returns a new electrical current value from the given number of kiloamperes
 	///
 	/// # Arguments
-	/// * `kA` - Any number-like type, representing a quantity of kiloamps
+	/// * `kA` - Any number-like type, representing a quantity of kiloamperes
 	pub fn from_kA(kA: T) -> Self {
 		Current{A: kA * T::from(1000.0_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in mega-amps
+	/// Returns a copy of this electrical current value in megaamperes
 	pub fn to_MA(self) -> T {
-		return self.A.clone() / T::from(1000000.0_f64);
+		return self.A.clone() * T::from(1e-06_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of mega-amps
+	/// Returns a new electrical current value from the given number of megaamperes
 	///
 	/// # Arguments
-	/// * `MA` - Any number-like type, representing a quantity of mega-amps
+	/// * `MA` - Any number-like type, representing a quantity of megaamperes
 	pub fn from_MA(MA: T) -> Self {
 		Current{A: MA * T::from(1000000.0_f64)}
 	}
 
-	/// Returns a copy of this electrical current value in giga-amps
+	/// Returns a copy of this electrical current value in gigaamperes
 	pub fn to_GA(self) -> T {
-		return self.A.clone() / T::from(1000000000.0_f64);
+		return self.A.clone() * T::from(9.999999999999999e-10_f64);
 	}
 
-	/// Returns a new electrical current value from the given number of giga-amps
+	/// Returns a new electrical current value from the given number of gigaamperes
 	///
 	/// # Arguments
-	/// * `GA` - Any number-like type, representing a quantity of giga-amps
+	/// * `GA` - Any number-like type, representing a quantity of gigaamperes
 	pub fn from_GA(GA: T) -> Self {
 		Current{A: GA * T::from(1000000000.0_f64)}
 	}
@@ -2123,19 +2272,33 @@ impl<T> Luminosity<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "cd";
 	}
-
+	
 	/// Returns a new luminosity value from the given number of candela
 	///
 	/// # Arguments
 	/// * `cd` - Any number-like type, representing a quantity of candela
 	pub fn from_cd(cd: T) -> Self {
-		Luminosity{cd}
+		Luminosity{cd: cd}
 	}
 	
 	/// Returns a copy of this luminosity value in candela
 	pub fn to_cd(self) -> T {
 		return self.cd.clone();
 	}
+
+	/// Returns a new luminosity value from the given number of candela
+	///
+	/// # Arguments
+	/// * `candela` - Any number-like type, representing a quantity of candela
+	pub fn from_candela(candela: T) -> Self {
+		Luminosity{cd: candela}
+	}
+	
+	/// Returns a copy of this luminosity value in candela
+	pub fn to_candela(self) -> T {
+		return self.cd.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Luminosity<T> where T: NumLike {
@@ -2147,8 +2310,21 @@ impl<T> fmt::Display for Luminosity<T> where T: NumLike {
 impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this luminosity value in candela
+	pub fn to_cd(self) -> T {
+		return self.cd.clone() * T::from(1.0_f64);
+	}
+
+	/// Returns a new luminosity value from the given number of candela
+	///
+	/// # Arguments
+	/// * `cd` - Any number-like type, representing a quantity of candela
+	pub fn from_cd(cd: T) -> Self {
+		Luminosity{cd: cd * T::from(1.0_f64)}
+	}
+
+	/// Returns a copy of this luminosity value in candela
 	pub fn to_candela(self) -> T {
-		return self.cd.clone() / T::from(1.0_f64);
+		return self.cd.clone() * T::from(1.0_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of candela
@@ -2159,48 +2335,48 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 		Luminosity{cd: candela * T::from(1.0_f64)}
 	}
 
-	/// Returns a copy of this luminosity value in millicondela
+	/// Returns a copy of this luminosity value in millicandela
 	pub fn to_mcd(self) -> T {
-		return self.cd.clone() / T::from(0.001_f64);
+		return self.cd.clone() * T::from(1000.0_f64);
 	}
 
-	/// Returns a new luminosity value from the given number of millicondela
+	/// Returns a new luminosity value from the given number of millicandela
 	///
 	/// # Arguments
-	/// * `mcd` - Any number-like type, representing a quantity of millicondela
+	/// * `mcd` - Any number-like type, representing a quantity of millicandela
 	pub fn from_mcd(mcd: T) -> Self {
 		Luminosity{cd: mcd * T::from(0.001_f64)}
 	}
 
-	/// Returns a copy of this luminosity value in microcondela
+	/// Returns a copy of this luminosity value in microcandela
 	pub fn to_ucd(self) -> T {
-		return self.cd.clone() / T::from(1e-06_f64);
+		return self.cd.clone() * T::from(1000000.0_f64);
 	}
 
-	/// Returns a new luminosity value from the given number of microcondela
+	/// Returns a new luminosity value from the given number of microcandela
 	///
 	/// # Arguments
-	/// * `ucd` - Any number-like type, representing a quantity of microcondela
+	/// * `ucd` - Any number-like type, representing a quantity of microcandela
 	pub fn from_ucd(ucd: T) -> Self {
 		Luminosity{cd: ucd * T::from(1e-06_f64)}
 	}
 
-	/// Returns a copy of this luminosity value in nanocondela
+	/// Returns a copy of this luminosity value in nanocandela
 	pub fn to_ncd(self) -> T {
-		return self.cd.clone() / T::from(1e-09_f64);
+		return self.cd.clone() * T::from(1000000000.0_f64);
 	}
 
-	/// Returns a new luminosity value from the given number of nanocondela
+	/// Returns a new luminosity value from the given number of nanocandela
 	///
 	/// # Arguments
-	/// * `ncd` - Any number-like type, representing a quantity of nanocondela
+	/// * `ncd` - Any number-like type, representing a quantity of nanocandela
 	pub fn from_ncd(ncd: T) -> Self {
 		Luminosity{cd: ncd * T::from(1e-09_f64)}
 	}
 
 	/// Returns a copy of this luminosity value in kilocandela
 	pub fn to_kcd(self) -> T {
-		return self.cd.clone() / T::from(1000.0_f64);
+		return self.cd.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of kilocandela
@@ -2213,7 +2389,7 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this luminosity value in megacandela
 	pub fn to_Mcd(self) -> T {
-		return self.cd.clone() / T::from(1000000.0_f64);
+		return self.cd.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of megacandela
@@ -2226,7 +2402,7 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this luminosity value in gigacandela
 	pub fn to_Gcd(self) -> T {
-		return self.cd.clone() / T::from(1000000000.0_f64);
+		return self.cd.clone() * T::from(9.999999999999999e-10_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of gigacandela

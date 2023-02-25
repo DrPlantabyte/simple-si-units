@@ -67,18 +67,33 @@ def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_
 	for i, row in data.iterrows():
 		out_buf += UNIT_STRUCT_DEFINITION_TEMPLATE % {
 			**row.to_dict(),
+			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions),
 			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
 		}
 		out_buf += generate_unit_conversions(row, conversions)
 	return out_buf
 
+def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
+	unit_name = data_row['name']
+	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
+	local_to_from = local_to_from[numpy.logical_or(local_to_from['offset'] == 0, numpy.isnan(local_to_from['offset']))]
+	local_to_from = local_to_from[local_to_from['slope'] == 1]
+	out_buf = ''
+	for i, row in local_to_from.iterrows():
+		out_buf += NON_COEFFICIENT_TO_FROM_TEMPLATE % {
+			'si unit symbol': data_row['unit symbol'],
+			**data_row,
+			'user unit symbol': row['unit symbol'],
+			'user unit name': row['unit name']
+		}
+	return out_buf
 
 def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
 	unit_name = data_row['name']
 	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
 	out_buf = ''
 	for i, row in local_to_from.iterrows():
-		if row['unit symbol'] == data_row['unit symbol']:
+		if float(row['slope']) == 1 and (row['offset'] is None or float(row['offset']) == 0):
 			# already accounted for
 			continue
 		if row['offset'] is not None and numpy.isfinite(row['offset']) and row['offset'] != 0:

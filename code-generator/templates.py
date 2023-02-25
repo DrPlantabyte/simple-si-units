@@ -35,19 +35,7 @@ impl<T> %(code name)s<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "%(unit symbol)s";
 	}
-
-	/// Returns a new %(desc name)s value from the given number of %(unit name)s
-	///
-	/// # Arguments
-	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
-	pub fn from_%(unit symbol)s(%(unit symbol)s: T) -> Self {
-		%(code name)s{%(unit symbol)s}
-	}
-	
-	/// Returns a copy of this %(desc name)s value in %(unit name)s
-	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(unit symbol)s.clone();
-	}
+	%(non-converting methods)s
 }
 
 impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
@@ -61,10 +49,25 @@ impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 }
 '''
 
+NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
+	/// Returns a new %(desc name)s value from the given number of %(user unit name)s
+	///
+	/// # Arguments
+	/// * `%(user unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
+	pub fn from_%(user unit symbol)s(%(user unit symbol)s: T) -> Self {
+		%(code name)s{%(unit symbol)s: %(user unit symbol)s}
+	}
+	
+	/// Returns a copy of this %(desc name)s value in %(user unit name)s
+	pub fn to_%(user unit symbol)s(self) -> T {
+		return self.%(unit symbol)s.clone();
+	}
+'''
+
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) / T::from(%(slope)s_f64);
+		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) * T::from(%(inverse slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -79,7 +82,7 @@ TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 TO_FROM_SLOPE_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(si unit symbol)s.clone() / T::from(%(slope)s_f64);
+		return self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
