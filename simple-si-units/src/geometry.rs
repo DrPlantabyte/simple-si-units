@@ -71,32 +71,6 @@ impl<T> fmt::Display for Angle<T> where T: NumLike {
 
 impl<T> Angle<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this angle value in radians
-	pub fn to_rad(self) -> T {
-		return self.rad.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angle value from the given number of radians
-	///
-	/// # Arguments
-	/// * `rad` - Any number-like type, representing a quantity of radians
-	pub fn from_rad(rad: T) -> Self {
-		Angle{rad: rad * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this angle value in radians
-	pub fn to_radians(self) -> T {
-		return self.rad.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angle value from the given number of radians
-	///
-	/// # Arguments
-	/// * `radians` - Any number-like type, representing a quantity of radians
-	pub fn from_radians(radians: T) -> Self {
-		Angle{rad: radians * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this angle value in degrees
 	pub fn to_degrees(self) -> T {
 		return self.rad.clone() * T::from(57.2957795130823_f64);
@@ -333,32 +307,6 @@ impl<T> fmt::Display for Area<T> where T: NumLike {
 
 impl<T> Area<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this area value in square meters
-	pub fn to_m2(self) -> T {
-		return self.m2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new area value from the given number of square meters
-	///
-	/// # Arguments
-	/// * `m2` - Any number-like type, representing a quantity of square meters
-	pub fn from_m2(m2: T) -> Self {
-		Area{m2: m2 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this area value in square meters
-	pub fn to_square_meters(self) -> T {
-		return self.m2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new area value from the given number of square meters
-	///
-	/// # Arguments
-	/// * `square_meters` - Any number-like type, representing a quantity of square meters
-	pub fn from_square_meters(square_meters: T) -> Self {
-		Area{m2: square_meters * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this area value in square cm
 	pub fn to_cm2(self) -> T {
 		return self.m2.clone() * T::from(10000.0_f64);
@@ -593,32 +541,6 @@ impl<T> fmt::Display for Volume<T> where T: NumLike {
 
 impl<T> Volume<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this volume value in cubic meters
-	pub fn to_m3(self) -> T {
-		return self.m3.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new volume value from the given number of cubic meters
-	///
-	/// # Arguments
-	/// * `m3` - Any number-like type, representing a quantity of cubic meters
-	pub fn from_m3(m3: T) -> Self {
-		Volume{m3: m3 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this volume value in cubic meters
-	pub fn to_cubic_meters(self) -> T {
-		return self.m3.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new volume value from the given number of cubic meters
-	///
-	/// # Arguments
-	/// * `cubic_meters` - Any number-like type, representing a quantity of cubic meters
-	pub fn from_cubic_meters(cubic_meters: T) -> Self {
-		Volume{m3: cubic_meters * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this volume value in cubic cm
 	pub fn to_cc(self) -> T {
 		return self.m3.clone() * T::from(1000000.0_f64);

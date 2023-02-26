@@ -324,10 +324,6 @@ mod unit_tests {
 			Current::from_nA(1000.0_f64).to_A(), 9
 		);
 		assert_approx_equal(
-			Current::from_nA(1.0_f64).to_A(),
-			Current::from_pA(1000.0_f64).to_A(), 9
-		);
-		assert_approx_equal(
 			Current::from_A(1000.0_f64).to_A(),
 			Current::from_kA(1.0_f64).to_A(), 9
 		);
@@ -360,10 +356,6 @@ mod unit_tests {
 		assert_approx_equal(
 			Luminosity::from_ucd(1.0_f64).to_cd(),
 			Luminosity::from_ncd(1000.0_f64).to_cd(), 9
-		);
-		assert_approx_equal(
-			Luminosity::from_ncd(1.0_f64).to_cd(),
-			Luminosity::from_pcd(1000.0_f64).to_cd(), 9
 		);
 		assert_approx_equal(
 			Luminosity::from_cd(1000.0_f64).to_cd(),
@@ -402,25 +394,25 @@ mod unit_tests {
 	#[test]
 	fn angular_velocity_units() {
 		assert_approx_equal(
-			AnglularVelocity::from_radps(6.283185307179586_f64 / 60.0_f64).to_radps(),
-			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+			AngularVelocity::from_radps(6.283185307179586_f64 / 60.0_f64).to_radps(),
+			AngularVelocity::from_rpm(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_radps(6.283185307179586_f64).to_radps(),
-			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+			AngularVelocity::from_radps(6.283185307179586_f64).to_radps(),
+			AngularVelocity::from_rps(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_degps(360.0_f64 / 60.0_f64).to_radps(),
-			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+			AngularVelocity::from_degps(360.0_f64 / 60.0_f64).to_radps(),
+			AngularVelocity::from_rpm(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_degps(360.0_f64).to_radps(),
-			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+			AngularVelocity::from_degps(360.0_f64).to_radps(),
+			AngularVelocity::from_rps(1.0_f64).to_radps(), 9
 		);
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_radps();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_degps();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_rpm();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_rps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_radps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_degps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_rpm();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_rps();
 	}
 	#[test]
 	fn angular_acceleration_units() {
@@ -604,7 +596,7 @@ mod unit_tests {
 	}
 
 	#[test]
-	fn volume_units() {
+	fn density_units() {
 		assert_approx_equal(
 			Density::from_kgpL(1.0_f64).to_kgpL(),
 			Density::from_kgpm3(1000.0_f64).to_kgpL(), 9

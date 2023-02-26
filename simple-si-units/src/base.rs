@@ -72,32 +72,6 @@ impl<T> fmt::Display for Distance<T> where T: NumLike {
 
 impl<T> Distance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this distance value in meters
-	pub fn to_m(self) -> T {
-		return self.m.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new distance value from the given number of meters
-	///
-	/// # Arguments
-	/// * `m` - Any number-like type, representing a quantity of meters
-	pub fn from_m(m: T) -> Self {
-		Distance{m: m * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this distance value in meters
-	pub fn to_meters(self) -> T {
-		return self.m.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new distance value from the given number of meters
-	///
-	/// # Arguments
-	/// * `meters` - Any number-like type, representing a quantity of meters
-	pub fn from_meters(meters: T) -> Self {
-		Distance{m: meters * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this distance value in millimeters
 	pub fn to_cm(self) -> T {
 		return self.m.clone() * T::from(100.0_f64);
@@ -453,32 +427,6 @@ impl<T> fmt::Display for Mass<T> where T: NumLike {
 
 impl<T> Mass<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this mass value in kilograms
-	pub fn to_kg(self) -> T {
-		return self.kg.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new mass value from the given number of kilograms
-	///
-	/// # Arguments
-	/// * `kg` - Any number-like type, representing a quantity of kilograms
-	pub fn from_kg(kg: T) -> Self {
-		Mass{kg: kg * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this mass value in kilograms
-	pub fn to_kilograms(self) -> T {
-		return self.kg.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new mass value from the given number of kilograms
-	///
-	/// # Arguments
-	/// * `kilograms` - Any number-like type, representing a quantity of kilograms
-	pub fn from_kilograms(kilograms: T) -> Self {
-		Mass{kg: kilograms * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this mass value in grams
 	pub fn to_g(self) -> T {
 		return self.kg.clone() * T::from(1000.0_f64);
@@ -804,32 +752,6 @@ impl<T> fmt::Display for Time<T> where T: NumLike {
 
 impl<T> Time<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this time value in seconds
-	pub fn to_s(self) -> T {
-		return self.s.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new time value from the given number of seconds
-	///
-	/// # Arguments
-	/// * `s` - Any number-like type, representing a quantity of seconds
-	pub fn from_s(s: T) -> Self {
-		Time{s: s * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this time value in seconds
-	pub fn to_seconds(self) -> T {
-		return self.s.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new time value from the given number of seconds
-	///
-	/// # Arguments
-	/// * `seconds` - Any number-like type, representing a quantity of seconds
-	pub fn from_seconds(seconds: T) -> Self {
-		Time{s: seconds * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this time value in milliseconds
 	pub fn to_ms(self) -> T {
 		return self.s.clone() * T::from(1000.0_f64);
@@ -1468,19 +1390,6 @@ impl<T> fmt::Display for Temperature<T> where T: NumLike {
 
 impl<T> Temperature<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this temperature value in degrees kelvin
-	pub fn to_K(self) -> T {
-		return self.K.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new temperature value from the given number of degrees kelvin
-	///
-	/// # Arguments
-	/// * `K` - Any number-like type, representing a quantity of degrees kelvin
-	pub fn from_K(K: T) -> Self {
-		Temperature{K: K * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this temperature value in degrees celsius
 	pub fn to_C(self) -> T {
 		return (self.K.clone() - T::from(273.15_f64)) * T::from(1.0_f64);
@@ -1589,32 +1498,6 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// * `count` - Any number-like type, representing a quantity of count
 	pub fn from_count(count: T) -> Self {
 		Amount{mol: count * T::from(1.6605390671738466e-24_f64)}
-	}
-
-	/// Returns a copy of this amount value in moles
-	pub fn to_moles(self) -> T {
-		return self.mol.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new amount value from the given number of moles
-	///
-	/// # Arguments
-	/// * `moles` - Any number-like type, representing a quantity of moles
-	pub fn from_moles(moles: T) -> Self {
-		Amount{mol: moles * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this amount value in moles
-	pub fn to_mol(self) -> T {
-		return self.mol.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new amount value from the given number of moles
-	///
-	/// # Arguments
-	/// * `mol` - Any number-like type, representing a quantity of moles
-	pub fn from_mol(mol: T) -> Self {
-		Amount{mol: mol * T::from(1.0_f64)}
 	}
 
 	/// Returns a copy of this amount value in millimoles
@@ -1877,32 +1760,6 @@ impl<T> fmt::Display for Current<T> where T: NumLike {
 
 impl<T> Current<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this electrical current value in amperes
-	pub fn to_A(self) -> T {
-		return self.A.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical current value from the given number of amperes
-	///
-	/// # Arguments
-	/// * `A` - Any number-like type, representing a quantity of amperes
-	pub fn from_A(A: T) -> Self {
-		Current{A: A * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this electrical current value in amperes
-	pub fn to_amperes(self) -> T {
-		return self.A.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical current value from the given number of amperes
-	///
-	/// # Arguments
-	/// * `amperes` - Any number-like type, representing a quantity of amperes
-	pub fn from_amperes(amperes: T) -> Self {
-		Current{A: amperes * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this electrical current value in milliamperes
 	pub fn to_mA(self) -> T {
 		return self.A.clone() * T::from(1000.0_f64);
@@ -2309,32 +2166,6 @@ impl<T> fmt::Display for Luminosity<T> where T: NumLike {
 
 impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this luminosity value in candela
-	pub fn to_cd(self) -> T {
-		return self.cd.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new luminosity value from the given number of candela
-	///
-	/// # Arguments
-	/// * `cd` - Any number-like type, representing a quantity of candela
-	pub fn from_cd(cd: T) -> Self {
-		Luminosity{cd: cd * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this luminosity value in candela
-	pub fn to_candela(self) -> T {
-		return self.cd.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new luminosity value from the given number of candela
-	///
-	/// # Arguments
-	/// * `candela` - Any number-like type, representing a quantity of candela
-	pub fn from_candela(candela: T) -> Self {
-		Luminosity{cd: candela * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this luminosity value in millicandela
 	pub fn to_mcd(self) -> T {
 		return self.cd.clone() * T::from(1000.0_f64);

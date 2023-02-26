@@ -69,32 +69,6 @@ impl<T> fmt::Display for Radioactivity<T> where T: NumLike {
 
 impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_Bq(self) -> T {
-		return self.Bq.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new radioactivity value from the given number of becquerels
-	///
-	/// # Arguments
-	/// * `Bq` - Any number-like type, representing a quantity of becquerels
-	pub fn from_Bq(Bq: T) -> Self {
-		Radioactivity{Bq: Bq * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_becquerels(self) -> T {
-		return self.Bq.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new radioactivity value from the given number of becquerels
-	///
-	/// # Arguments
-	/// * `becquerels` - Any number-like type, representing a quantity of becquerels
-	pub fn from_becquerels(becquerels: T) -> Self {
-		Radioactivity{Bq: becquerels * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this radioactivity value in millibecquerels
 	pub fn to_mBq(self) -> T {
 		return self.Bq.clone() * T::from(1000.0_f64);
@@ -231,32 +205,6 @@ impl<T> fmt::Display for AbsorbedDose<T> where T: NumLike {
 
 impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_Gy(self) -> T {
-		return self.Gy.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new absorbed dose value from the given number of grays
-	///
-	/// # Arguments
-	/// * `Gy` - Any number-like type, representing a quantity of grays
-	pub fn from_Gy(Gy: T) -> Self {
-		AbsorbedDose{Gy: Gy * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_grays(self) -> T {
-		return self.Gy.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new absorbed dose value from the given number of grays
-	///
-	/// # Arguments
-	/// * `grays` - Any number-like type, representing a quantity of grays
-	pub fn from_grays(grays: T) -> Self {
-		AbsorbedDose{Gy: grays * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this absorbed dose value in milligrays
 	pub fn to_mGy(self) -> T {
 		return self.Gy.clone() * T::from(1000.0_f64);
@@ -423,32 +371,6 @@ impl<T> fmt::Display for DoseEquivalent<T> where T: NumLike {
 
 impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_Sv(self) -> T {
-		return self.Sv.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new dose equivalent value from the given number of sieverts
-	///
-	/// # Arguments
-	/// * `Sv` - Any number-like type, representing a quantity of sieverts
-	pub fn from_Sv(Sv: T) -> Self {
-		DoseEquivalent{Sv: Sv * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_sieverts(self) -> T {
-		return self.Sv.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new dose equivalent value from the given number of sieverts
-	///
-	/// # Arguments
-	/// * `sieverts` - Any number-like type, representing a quantity of sieverts
-	pub fn from_sieverts(sieverts: T) -> Self {
-		DoseEquivalent{Sv: sieverts * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this dose equivalent value in millisieverts
 	pub fn to_mSv(self) -> T {
 		return self.Sv.clone() * T::from(1000.0_f64);

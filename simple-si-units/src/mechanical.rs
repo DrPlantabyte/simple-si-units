@@ -72,32 +72,6 @@ impl<T> fmt::Display for AngularVelocity<T> where T: NumLike {
 
 impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radps(self) -> T {
-		return self.radps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular velocity value from the given number of radians per second
-	///
-	/// # Arguments
-	/// * `radps` - Any number-like type, representing a quantity of radians per second
-	pub fn from_radps(radps: T) -> Self {
-		AngularVelocity{radps: radps * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radians_per_second(self) -> T {
-		return self.radps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular velocity value from the given number of radians per second
-	///
-	/// # Arguments
-	/// * `radians_per_second` - Any number-like type, representing a quantity of radians per second
-	pub fn from_radians_per_second(radians_per_second: T) -> Self {
-		AngularVelocity{radps: radians_per_second * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this angular velocity value in degrees per second
 	pub fn to_degrees_per_second(self) -> T {
 		return self.radps.clone() * T::from(57.2957795130823_f64);
@@ -409,32 +383,6 @@ impl<T> fmt::Display for AngularAcceleration<T> where T: NumLike {
 
 impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radps2(self) -> T {
-		return self.radps2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular acceleration value from the given number of radians per second squared
-	///
-	/// # Arguments
-	/// * `radps2` - Any number-like type, representing a quantity of radians per second squared
-	pub fn from_radps2(radps2: T) -> Self {
-		AngularAcceleration{radps2: radps2 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radians_per_second_squared(self) -> T {
-		return self.radps2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular acceleration value from the given number of radians per second squared
-	///
-	/// # Arguments
-	/// * `radians_per_second_squared` - Any number-like type, representing a quantity of radians per second squared
-	pub fn from_radians_per_second_squared(radians_per_second_squared: T) -> Self {
-		AngularAcceleration{radps2: radians_per_second_squared * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this angular acceleration value in degrees per second squared
 	pub fn to_degrees_per_second_squared(self) -> T {
 		return self.radps2.clone() * T::from(57.2957795130823_f64);
@@ -596,32 +544,6 @@ impl<T> fmt::Display for MomentOfInertia<T> where T: NumLike {
 
 impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kgm2(self) -> T {
-		return self.kgm2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new moment of inertia value from the given number of kilogram meters squared
-	///
-	/// # Arguments
-	/// * `kgm2` - Any number-like type, representing a quantity of kilogram meters squared
-	pub fn from_kgm2(kgm2: T) -> Self {
-		MomentOfInertia{kgm2: kgm2 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kilogram_meters_squared(self) -> T {
-		return self.kgm2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new moment of inertia value from the given number of kilogram meters squared
-	///
-	/// # Arguments
-	/// * `kilogram_meters_squared` - Any number-like type, representing a quantity of kilogram meters squared
-	pub fn from_kilogram_meters_squared(kilogram_meters_squared: T) -> Self {
-		MomentOfInertia{kgm2: kilogram_meters_squared * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this moment of inertia value in gram cm squared
 	pub fn to_gcm2(self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
@@ -783,32 +705,6 @@ impl<T> fmt::Display for AngularMomentum<T> where T: NumLike {
 
 impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kgm2radps(self) -> T {
-		return self.kgm2radps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
-	///
-	/// # Arguments
-	/// * `kgm2radps` - Any number-like type, representing a quantity of kilogram meters squared radians per second
-	pub fn from_kgm2radps(kgm2radps: T) -> Self {
-		AngularMomentum{kgm2radps: kgm2radps * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kilogram_meters_squared_radians_per_second(self) -> T {
-		return self.kgm2radps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
-	///
-	/// # Arguments
-	/// * `kilogram_meters_squared_radians_per_second` - Any number-like type, representing a quantity of kilogram meters squared radians per second
-	pub fn from_kilogram_meters_squared_radians_per_second(kilogram_meters_squared_radians_per_second: T) -> Self {
-		AngularMomentum{kgm2radps: kilogram_meters_squared_radians_per_second * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this angular momentum value in gram cm squared radians per second
 	pub fn to_gcm2radps(self) -> T {
 		return self.kgm2radps.clone() * T::from(0.1_f64);
@@ -970,32 +866,6 @@ impl<T> fmt::Display for Torque<T> where T: NumLike {
 
 impl<T> Torque<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this torque value in newton meters
-	pub fn to_Nm(self) -> T {
-		return self.Nm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new torque value from the given number of newton meters
-	///
-	/// # Arguments
-	/// * `Nm` - Any number-like type, representing a quantity of newton meters
-	pub fn from_Nm(Nm: T) -> Self {
-		Torque{Nm: Nm * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this torque value in newton meters
-	pub fn to_newton_meters(self) -> T {
-		return self.Nm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new torque value from the given number of newton meters
-	///
-	/// # Arguments
-	/// * `newton_meters` - Any number-like type, representing a quantity of newton meters
-	pub fn from_newton_meters(newton_meters: T) -> Self {
-		Torque{Nm: newton_meters * T::from(1.0_f64)}
-	}
-
 }
 
 // Torque / Distance -> Force
@@ -1444,32 +1314,6 @@ impl<T> fmt::Display for Frequency<T> where T: NumLike {
 
 impl<T> Frequency<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this frequency value in hertz
-	pub fn to_Hz(self) -> T {
-		return self.Hz.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new frequency value from the given number of hertz
-	///
-	/// # Arguments
-	/// * `Hz` - Any number-like type, representing a quantity of hertz
-	pub fn from_Hz(Hz: T) -> Self {
-		Frequency{Hz: Hz * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this frequency value in hertz
-	pub fn to_hertz(self) -> T {
-		return self.Hz.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new frequency value from the given number of hertz
-	///
-	/// # Arguments
-	/// * `hertz` - Any number-like type, representing a quantity of hertz
-	pub fn from_hertz(hertz: T) -> Self {
-		Frequency{Hz: hertz * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this frequency value in kilohertz
 	pub fn to_kHz(self) -> T {
 		return self.Hz.clone() * T::from(0.001_f64);
@@ -1927,32 +1771,6 @@ impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
 
 impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kgm2(self) -> T {
-		return self.kgm2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new area density value from the given number of kilograms per square meter
-	///
-	/// # Arguments
-	/// * `kgm2` - Any number-like type, representing a quantity of kilograms per square meter
-	pub fn from_kgm2(kgm2: T) -> Self {
-		AreaDensity{kgm2: kgm2 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kilograms_per_square_meter(self) -> T {
-		return self.kgm2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new area density value from the given number of kilograms per square meter
-	///
-	/// # Arguments
-	/// * `kilograms_per_square_meter` - Any number-like type, representing a quantity of kilograms per square meter
-	pub fn from_kilograms_per_square_meter(kilograms_per_square_meter: T) -> Self {
-		AreaDensity{kgm2: kilograms_per_square_meter * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this area density value in grams per square cm
 	pub fn to_gpcm2(self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
@@ -2153,58 +1971,6 @@ impl<T> fmt::Display for Density<T> where T: NumLike {
 
 impl<T> Density<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kgpL(self) -> T {
-		return self.kgpL.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new density value from the given number of kilograms per liter
-	///
-	/// # Arguments
-	/// * `kgpL` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_kgpL(kgpL: T) -> Self {
-		Density{kgpL: kgpL * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kilograms_per_liter(self) -> T {
-		return self.kgpL.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new density value from the given number of kilograms per liter
-	///
-	/// # Arguments
-	/// * `kilograms_per_liter` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_kilograms_per_liter(kilograms_per_liter: T) -> Self {
-		Density{kgpL: kilograms_per_liter * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this density value in grams per cc
-	pub fn to_gpcc(self) -> T {
-		return self.kgpL.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new density value from the given number of grams per cc
-	///
-	/// # Arguments
-	/// * `gpcc` - Any number-like type, representing a quantity of grams per cc
-	pub fn from_gpcc(gpcc: T) -> Self {
-		Density{kgpL: gpcc * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this density value in grams per cc
-	pub fn to_grams_per_cubic_centimeter(self) -> T {
-		return self.kgpL.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new density value from the given number of grams per cc
-	///
-	/// # Arguments
-	/// * `grams_per_cubic_centimeter` - Any number-like type, representing a quantity of grams per cc
-	pub fn from_grams_per_cubic_centimeter(grams_per_cubic_centimeter: T) -> Self {
-		Density{kgpL: grams_per_cubic_centimeter * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this density value in kilograms per cubic meter
 	pub fn to_kgpm3(self) -> T {
 		return self.kgpL.clone() * T::from(1000.0_f64);
@@ -2289,32 +2055,6 @@ impl<T> fmt::Display for Velocity<T> where T: NumLike {
 
 impl<T> Velocity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this velocity value in meters per second
-	pub fn to_mps(self) -> T {
-		return self.mps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new velocity value from the given number of meters per second
-	///
-	/// # Arguments
-	/// * `mps` - Any number-like type, representing a quantity of meters per second
-	pub fn from_mps(mps: T) -> Self {
-		Velocity{mps: mps * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this velocity value in meters per second
-	pub fn to_meters_per_second(self) -> T {
-		return self.mps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new velocity value from the given number of meters per second
-	///
-	/// # Arguments
-	/// * `meters_per_second` - Any number-like type, representing a quantity of meters per second
-	pub fn from_meters_per_second(meters_per_second: T) -> Self {
-		Velocity{mps: meters_per_second * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this velocity value in centimeters per second
 	pub fn to_cmps(self) -> T {
 		return self.mps.clone() * T::from(100.0_f64);
@@ -2708,32 +2448,6 @@ impl<T> fmt::Display for Acceleration<T> where T: NumLike {
 
 impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_mps2(self) -> T {
-		return self.mps2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new acceleration value from the given number of meters per second squared
-	///
-	/// # Arguments
-	/// * `mps2` - Any number-like type, representing a quantity of meters per second squared
-	pub fn from_mps2(mps2: T) -> Self {
-		Acceleration{mps2: mps2 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_meters_per_second_squared(self) -> T {
-		return self.mps2.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new acceleration value from the given number of meters per second squared
-	///
-	/// # Arguments
-	/// * `meters_per_second_squared` - Any number-like type, representing a quantity of meters per second squared
-	pub fn from_meters_per_second_squared(meters_per_second_squared: T) -> Self {
-		Acceleration{mps2: meters_per_second_squared * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this acceleration value in millimeters per second squared
 	pub fn to_mmps2(self) -> T {
 		return self.mps2.clone() * T::from(1000.0_f64);
@@ -2981,32 +2695,6 @@ impl<T> fmt::Display for Momentum<T> where T: NumLike {
 
 impl<T> Momentum<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kgmps(self) -> T {
-		return self.kgmps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new momentum value from the given number of kilogram meters per second
-	///
-	/// # Arguments
-	/// * `kgmps` - Any number-like type, representing a quantity of kilogram meters per second
-	pub fn from_kgmps(kgmps: T) -> Self {
-		Momentum{kgmps: kgmps * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kilogram_meters_per_second(self) -> T {
-		return self.kgmps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new momentum value from the given number of kilogram meters per second
-	///
-	/// # Arguments
-	/// * `kilogram_meters_per_second` - Any number-like type, representing a quantity of kilogram meters per second
-	pub fn from_kilogram_meters_per_second(kilogram_meters_per_second: T) -> Self {
-		Momentum{kgmps: kilogram_meters_per_second * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this momentum value in gram centimeters per second
 	pub fn to_gram_centimeters_per_second(self) -> T {
 		return self.kgmps.clone() * T::from(100000.0_f64);
@@ -3301,32 +2989,6 @@ impl<T> fmt::Display for Force<T> where T: NumLike {
 
 impl<T> Force<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this force value in newtons
-	pub fn to_N(self) -> T {
-		return self.N.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new force value from the given number of newtons
-	///
-	/// # Arguments
-	/// * `N` - Any number-like type, representing a quantity of newtons
-	pub fn from_N(N: T) -> Self {
-		Force{N: N * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this force value in newtons
-	pub fn to_newtons(self) -> T {
-		return self.N.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new force value from the given number of newtons
-	///
-	/// # Arguments
-	/// * `newtons` - Any number-like type, representing a quantity of newtons
-	pub fn from_newtons(newtons: T) -> Self {
-		Force{N: newtons * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this force value in millinewtons
 	pub fn to_mN(self) -> T {
 		return self.N.clone() * T::from(1000.0_f64);
@@ -3733,32 +3395,6 @@ impl<T> fmt::Display for Pressure<T> where T: NumLike {
 
 impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this pressure value in pascals
-	pub fn to_Pa(self) -> T {
-		return self.Pa.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new pressure value from the given number of pascals
-	///
-	/// # Arguments
-	/// * `Pa` - Any number-like type, representing a quantity of pascals
-	pub fn from_Pa(Pa: T) -> Self {
-		Pressure{Pa: Pa * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this pressure value in pascals
-	pub fn to_pascals(self) -> T {
-		return self.Pa.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new pressure value from the given number of pascals
-	///
-	/// # Arguments
-	/// * `pascals` - Any number-like type, representing a quantity of pascals
-	pub fn from_pascals(pascals: T) -> Self {
-		Pressure{Pa: pascals * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this pressure value in millipascals
 	pub fn to_mPa(self) -> T {
 		return self.Pa.clone() * T::from(1000.0_f64);
@@ -4033,32 +3669,6 @@ impl<T> fmt::Display for Energy<T> where T: NumLike {
 
 impl<T> Energy<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this energy value in joules
-	pub fn to_J(self) -> T {
-		return self.J.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new energy value from the given number of joules
-	///
-	/// # Arguments
-	/// * `J` - Any number-like type, representing a quantity of joules
-	pub fn from_J(J: T) -> Self {
-		Energy{J: J * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this energy value in joules
-	pub fn to_joules(self) -> T {
-		return self.J.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new energy value from the given number of joules
-	///
-	/// # Arguments
-	/// * `joules` - Any number-like type, representing a quantity of joules
-	pub fn from_joules(joules: T) -> Self {
-		Energy{J: joules * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this energy value in millijoules
 	pub fn to_mJ(self) -> T {
 		return self.J.clone() * T::from(1000.0_f64);
@@ -4645,32 +4255,6 @@ impl<T> fmt::Display for Power<T> where T: NumLike {
 
 impl<T> Power<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this power value in watts
-	pub fn to_W(self) -> T {
-		return self.W.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new power value from the given number of watts
-	///
-	/// # Arguments
-	/// * `W` - Any number-like type, representing a quantity of watts
-	pub fn from_W(W: T) -> Self {
-		Power{W: W * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this power value in watts
-	pub fn to_watts(self) -> T {
-		return self.W.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new power value from the given number of watts
-	///
-	/// # Arguments
-	/// * `watts` - Any number-like type, representing a quantity of watts
-	pub fn from_watts(watts: T) -> Self {
-		Power{W: watts * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this power value in milliwatts
 	pub fn to_mW(self) -> T {
 		return self.W.clone() * T::from(1000.0_f64);

@@ -93,7 +93,7 @@ def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: Dat
 	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
 	out_buf = ''
 	for i, row in local_to_from.iterrows():
-		if float(row['slope']) == 1 and (row['offset'] is None or float(row['offset']) == 0):
+		if float(row['slope']) == 1 and (row['offset'] is None or numpy.isnan(row['offset']) or float(row['offset']) == 0):
 			# already accounted for
 			continue
 		if row['offset'] is not None and numpy.isfinite(row['offset']) and row['offset'] != 0:

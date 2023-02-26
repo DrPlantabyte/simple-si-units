@@ -70,32 +70,6 @@ impl<T> fmt::Display for Charge<T> where T: NumLike {
 
 impl<T> Charge<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_C(self) -> T {
-		return self.C.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electric charge value from the given number of coulombs
-	///
-	/// # Arguments
-	/// * `C` - Any number-like type, representing a quantity of coulombs
-	pub fn from_C(C: T) -> Self {
-		Charge{C: C * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_coulombs(self) -> T {
-		return self.C.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electric charge value from the given number of coulombs
-	///
-	/// # Arguments
-	/// * `coulombs` - Any number-like type, representing a quantity of coulombs
-	pub fn from_coulombs(coulombs: T) -> Self {
-		Charge{C: coulombs * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this electric charge value in millicoulombs
 	pub fn to_mC(self) -> T {
 		return self.C.clone() * T::from(1000.0_f64);
@@ -502,32 +476,6 @@ impl<T> fmt::Display for Voltage<T> where T: NumLike {
 
 impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this voltage value in volts
-	pub fn to_V(self) -> T {
-		return self.V.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new voltage value from the given number of volts
-	///
-	/// # Arguments
-	/// * `V` - Any number-like type, representing a quantity of volts
-	pub fn from_V(V: T) -> Self {
-		Voltage{V: V * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this voltage value in volts
-	pub fn to_volts(self) -> T {
-		return self.V.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new voltage value from the given number of volts
-	///
-	/// # Arguments
-	/// * `volts` - Any number-like type, representing a quantity of volts
-	pub fn from_volts(volts: T) -> Self {
-		Voltage{V: volts * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this voltage value in millivolts
 	pub fn to_mV(self) -> T {
 		return self.V.clone() * T::from(1000.0_f64);
@@ -934,32 +882,6 @@ impl<T> fmt::Display for Resistance<T> where T: NumLike {
 
 impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_Ohm(self) -> T {
-		return self.Ohm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical resistance value from the given number of ohms
-	///
-	/// # Arguments
-	/// * `Ohm` - Any number-like type, representing a quantity of ohms
-	pub fn from_Ohm(Ohm: T) -> Self {
-		Resistance{Ohm: Ohm * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_ohms(self) -> T {
-		return self.Ohm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical resistance value from the given number of ohms
-	///
-	/// # Arguments
-	/// * `ohms` - Any number-like type, representing a quantity of ohms
-	pub fn from_ohms(ohms: T) -> Self {
-		Resistance{Ohm: ohms * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this electrical resistance value in milliohms
 	pub fn to_mOhm(self) -> T {
 		return self.Ohm.clone() * T::from(1000.0_f64);
@@ -1276,32 +1198,6 @@ impl<T> fmt::Display for Conductance<T> where T: NumLike {
 
 impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_S(self) -> T {
-		return self.S.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical conductance value from the given number of siemens
-	///
-	/// # Arguments
-	/// * `S` - Any number-like type, representing a quantity of siemens
-	pub fn from_S(S: T) -> Self {
-		Conductance{S: S * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_siemens(self) -> T {
-		return self.S.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical conductance value from the given number of siemens
-	///
-	/// # Arguments
-	/// * `siemens` - Any number-like type, representing a quantity of siemens
-	pub fn from_siemens(siemens: T) -> Self {
-		Conductance{S: siemens * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this electrical conductance value in millisiemens
 	pub fn to_mS(self) -> T {
 		return self.S.clone() * T::from(1000.0_f64);
@@ -1618,32 +1514,6 @@ impl<T> fmt::Display for Capacitance<T> where T: NumLike {
 
 impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_F(self) -> T {
-		return self.F.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical capacitance value from the given number of farads
-	///
-	/// # Arguments
-	/// * `F` - Any number-like type, representing a quantity of farads
-	pub fn from_F(F: T) -> Self {
-		Capacitance{F: F * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_farads(self) -> T {
-		return self.F.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new electrical capacitance value from the given number of farads
-	///
-	/// # Arguments
-	/// * `farads` - Any number-like type, representing a quantity of farads
-	pub fn from_farads(farads: T) -> Self {
-		Capacitance{F: farads * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this electrical capacitance value in millifarads
 	pub fn to_mF(self) -> T {
 		return self.F.clone() * T::from(1000.0_f64);
@@ -1943,32 +1813,6 @@ impl<T> fmt::Display for Inductance<T> where T: NumLike {
 
 impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this inductance value in henries
-	pub fn to_H(self) -> T {
-		return self.H.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new inductance value from the given number of henries
-	///
-	/// # Arguments
-	/// * `H` - Any number-like type, representing a quantity of henries
-	pub fn from_H(H: T) -> Self {
-		Inductance{H: H * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this inductance value in henries
-	pub fn to_henries(self) -> T {
-		return self.H.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new inductance value from the given number of henries
-	///
-	/// # Arguments
-	/// * `henries` - Any number-like type, representing a quantity of henries
-	pub fn from_henries(henries: T) -> Self {
-		Inductance{H: henries * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this inductance value in millihenries
 	pub fn to_mH(self) -> T {
 		return self.H.clone() * T::from(1000.0_f64);
@@ -2255,32 +2099,6 @@ impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
 
 impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_Wb(self) -> T {
-		return self.Wb.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new magnetic flux value from the given number of webers
-	///
-	/// # Arguments
-	/// * `Wb` - Any number-like type, representing a quantity of webers
-	pub fn from_Wb(Wb: T) -> Self {
-		MagneticFlux{Wb: Wb * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_webers(self) -> T {
-		return self.Wb.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new magnetic flux value from the given number of webers
-	///
-	/// # Arguments
-	/// * `webers` - Any number-like type, representing a quantity of webers
-	pub fn from_webers(webers: T) -> Self {
-		MagneticFlux{Wb: webers * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this magnetic flux value in milliwebers
 	pub fn to_mWb(self) -> T {
 		return self.Wb.clone() * T::from(1000.0_f64);
@@ -2747,32 +2565,6 @@ impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
 
 impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_T(self) -> T {
-		return self.T.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new magnetic flux density value from the given number of teslas
-	///
-	/// # Arguments
-	/// * `T` - Any number-like type, representing a quantity of teslas
-	pub fn from_T(T: T) -> Self {
-		MagneticFluxDensity{T: T * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_teslas(self) -> T {
-		return self.T.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new magnetic flux density value from the given number of teslas
-	///
-	/// # Arguments
-	/// * `teslas` - Any number-like type, representing a quantity of teslas
-	pub fn from_teslas(teslas: T) -> Self {
-		MagneticFluxDensity{T: teslas * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this magnetic flux density value in milliteslas
 	pub fn to_mT(self) -> T {
 		return self.T.clone() * T::from(1000.0_f64);
@@ -2939,32 +2731,6 @@ impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
 
 impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lm(self) -> T {
-		return self.lm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new luminous flux value from the given number of lumens
-	///
-	/// # Arguments
-	/// * `lm` - Any number-like type, representing a quantity of lumens
-	pub fn from_lm(lm: T) -> Self {
-		LuminousFlux{lm: lm * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lumens(self) -> T {
-		return self.lm.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new luminous flux value from the given number of lumens
-	///
-	/// # Arguments
-	/// * `lumens` - Any number-like type, representing a quantity of lumens
-	pub fn from_lumens(lumens: T) -> Self {
-		LuminousFlux{lm: lumens * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this luminous flux value in millilumens
 	pub fn to_mlm(self) -> T {
 		return self.lm.clone() * T::from(1000.0_f64);
@@ -3148,19 +2914,6 @@ impl<T> fmt::Display for Illuminance<T> where T: NumLike {
 
 impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this illuminance value in lux
-	pub fn to_lux(self) -> T {
-		return self.lux.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new illuminance value from the given number of lux
-	///
-	/// # Arguments
-	/// * `lux` - Any number-like type, representing a quantity of lux
-	pub fn from_lux(lux: T) -> Self {
-		Illuminance{lux: lux * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this illuminance value in millilux
 	pub fn to_mlux(self) -> T {
 		return self.lux.clone() * T::from(1000.0_f64);

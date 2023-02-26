@@ -2,7 +2,8 @@ use std::io::Write;
 use std::time::Duration;
 use simple_si_units::{UnitStruct, NumLike};
 use simple_si_units::base::{Distance, Mass, Time};
-use simple_si_units::mechanical::{Velocity, Acceleration, Area};
+use simple_si_units::geometry::{Area};
+use simple_si_units::mechanical::{Velocity, Acceleration};
 
 #[test]
 pub fn placeholder_test() {

@@ -70,32 +70,6 @@ impl<T> fmt::Display for CatalyticActivity<T> where T: NumLike {
 
 impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this catalytic activity value in moles per second
-	pub fn to_molps(self) -> T {
-		return self.molps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new catalytic activity value from the given number of moles per second
-	///
-	/// # Arguments
-	/// * `molps` - Any number-like type, representing a quantity of moles per second
-	pub fn from_molps(molps: T) -> Self {
-		CatalyticActivity{molps: molps * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this catalytic activity value in moles per second
-	pub fn to_moles_per_second(self) -> T {
-		return self.molps.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new catalytic activity value from the given number of moles per second
-	///
-	/// # Arguments
-	/// * `moles_per_second` - Any number-like type, representing a quantity of moles per second
-	pub fn from_moles_per_second(moles_per_second: T) -> Self {
-		CatalyticActivity{molps: moles_per_second * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this catalytic activity value in millimoles per second
 	pub fn to_mmolps(self) -> T {
 		return self.molps.clone() * T::from(1000.0_f64);
@@ -296,32 +270,6 @@ impl<T> fmt::Display for Concentration<T> where T: NumLike {
 
 impl<T> Concentration<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this chemical concentration value in moles per cubic meter
-	pub fn to_molpm3(self) -> T {
-		return self.molpm3.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new chemical concentration value from the given number of moles per cubic meter
-	///
-	/// # Arguments
-	/// * `molpm3` - Any number-like type, representing a quantity of moles per cubic meter
-	pub fn from_molpm3(molpm3: T) -> Self {
-		Concentration{molpm3: molpm3 * T::from(1.0_f64)}
-	}
-
-	/// Returns a copy of this chemical concentration value in moles per cubic meter
-	pub fn to_moles_per_cubic_meter(self) -> T {
-		return self.molpm3.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new chemical concentration value from the given number of moles per cubic meter
-	///
-	/// # Arguments
-	/// * `moles_per_cubic_meter` - Any number-like type, representing a quantity of moles per cubic meter
-	pub fn from_moles_per_cubic_meter(moles_per_cubic_meter: T) -> Self {
-		Concentration{molpm3: moles_per_cubic_meter * T::from(1.0_f64)}
-	}
-
 	/// Returns a copy of this chemical concentration value in count per cubic meter
 	pub fn to_Npm3(self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+23_f64);
@@ -424,19 +372,6 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// * `molarity` - Any number-like type, representing a quantity of moles per liter
 	pub fn from_molarity(molarity: T) -> Self {
 		Concentration{molpm3: molarity * T::from(1000.0_f64)}
-	}
-
-	/// Returns a copy of this chemical concentration value in millimolar
-	pub fn to_mM(self) -> T {
-		return self.molpm3.clone() * T::from(1.0_f64);
-	}
-
-	/// Returns a new chemical concentration value from the given number of millimolar
-	///
-	/// # Arguments
-	/// * `mM` - Any number-like type, representing a quantity of millimolar
-	pub fn from_mM(mM: T) -> Self {
-		Concentration{molpm3: mM * T::from(1.0_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in micromolar
