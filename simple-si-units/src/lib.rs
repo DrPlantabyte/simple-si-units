@@ -48,7 +48,7 @@
 //! * Power, aka Watt (J/s, aka W)
 //! * Voltage (W/A, aka V)
 //! * Resistance (V/A, aka Ohm)
-//! * Conductance (1/ohm, aka S)
+//! * Conductance (1/Ohm, aka S)
 //! * Capacitance (C/V)
 //! * Inductance (Wb/A, aka H)
 //! * Magnetic Flux (V.s, aka Wb)
@@ -563,10 +563,6 @@ mod unit_tests {
 			Volume::from_cc(1000.0_f64).to_L(), 9
 		);
 		assert_approx_equal(
-			Volume::from_L(1.0_f64).to_L(),
-			Volume::from_cm3(1000.0_f64).to_L(), 9
-		);
-		assert_approx_equal(
 			Volume::from_m3(1.0_f64).to_L(),
 			Volume::from_L(1000.0_f64).to_L(), 9
 		);
@@ -588,7 +584,6 @@ mod unit_tests {
 		let _ = Volume::from_L(1.0_f64).to_nL();
 		let _ = Volume::from_L(1.0_f64).to_pL();
 		let _ = Volume::from_L(1.0_f64).to_cc();
-		let _ = Volume::from_L(1.0_f64).to_cm3();
 		let _ = Volume::from_L(1.0_f64).to_m3();
 		let _ = Volume::from_L(1.0_f64).to_kL();
 		let _ = Volume::from_L(1.0_f64).to_ML();
@@ -881,36 +876,36 @@ mod unit_tests {
 	#[test]
 	fn resistance_units() {
 		assert_approx_equal(
-			Resistance::from_ohm(1.0_f64).to_ohm(),
-			Resistance::from_mohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_Ohm(1.0_f64).to_Ohm(),
+			Resistance::from_mOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_mohm(1.0_f64).to_ohm(),
-			Resistance::from_uohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_mOhm(1.0_f64).to_Ohm(),
+			Resistance::from_uOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_uohm(1.0_f64).to_ohm(),
-			Resistance::from_nohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_uOhm(1.0_f64).to_Ohm(),
+			Resistance::from_nOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_kohm(1.0_f64).to_ohm(),
-			Resistance::from_ohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_kOhm(1.0_f64).to_Ohm(),
+			Resistance::from_Ohm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_Mohm(1.0_f64).to_ohm(),
-			Resistance::from_kohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_MOhm(1.0_f64).to_Ohm(),
+			Resistance::from_kOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_Gohm(1.0_f64).to_ohm(),
-			Resistance::from_Mohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_GOhm(1.0_f64).to_Ohm(),
+			Resistance::from_MOhm(1000.0_f64).to_Ohm(), 9
 		);
-		let _ = Resistance::from_ohm(1.0_f64).to_ohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_mohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_uohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_nohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_kohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_Mohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_Gohm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_Ohm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_mOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_uOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_nOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_kOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_MOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_GOhm();
 	}
 	#[test]
 	fn conductance_units() {
@@ -1100,26 +1095,11 @@ mod unit_tests {
 			CatalyticActivity::from_umolps(1.0_f64).to_molps(),
 			CatalyticActivity::from_nmolps(1000.0_f64).to_molps(), 9
 		);
-		assert_approx_equal(
-			CatalyticActivity::from_kmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_molps(1000.0_f64).to_molps(), 9
-		);
-		assert_approx_equal(
-			CatalyticActivity::from_Mmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_kmolps(1000.0_f64).to_molps(), 9
-		);
-		assert_approx_equal(
-			CatalyticActivity::from_Gmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_Mmolps(1000.0_f64).to_molps(), 9
-		);
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_Nps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_molps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_mmolps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_umolps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_nmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_kmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_Mmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_Gmolps();
 	}
 	#[test]
 	fn concentration_units() {
@@ -1140,7 +1120,7 @@ mod unit_tests {
 			Concentration::from_M(1.0_f64).to_M(), 5
 		);
 		assert_approx_equal(
-			Concentration::from_count_per_m3(6.02214e23_f64).to_M(),
+			Concentration::from_Npm3(6.02214e23_f64).to_M(),
 			Concentration::from_mM(1.0_f64).to_M(), 5
 		);
 		assert_approx_equal(
@@ -1152,7 +1132,7 @@ mod unit_tests {
 		let _ = Concentration::from_M(1.0_f64).to_uM();
 		let _ = Concentration::from_M(1.0_f64).to_nM();
 		let _ = Concentration::from_M(1.0_f64).to_count_per_cc();
-		let _ = Concentration::from_M(1.0_f64).to_count_per_m3();
+		let _ = Concentration::from_M(1.0_f64).to_count_Npm3();
 	}
 	#[test]
 	fn luminous_flux_units() {
