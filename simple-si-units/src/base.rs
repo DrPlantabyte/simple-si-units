@@ -507,7 +507,7 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this mass value in earth masses
 	pub fn to_earth_mass(self) -> T {
-		return self.kg.clone() * T::from(1.67442483506915e-25_f64);
+		return self.kg.clone() * T::from(1.6744248350691502e-25_f64);
 	}
 
 	/// Returns a new mass value from the given number of earth masses
@@ -573,6 +573,66 @@ impl<T> std::ops::Mul<&Area<T>> for &Mass<T> where T: NumLike {
 	type Output = AreaDensity<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		AreaDensity{kgm2: self.kg.clone() * rhs.m2.clone()}
+	}
+}
+
+// Mass / Volume -> Density
+/// Dividing a Mass by a Volume returns a value of type Density
+impl<T> std::ops::Div<Volume<T>> for Mass<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		Density{kgpm3: self.kg / rhs.m3}
+	}
+}
+/// Dividing a Mass by a Volume returns a value of type Density
+impl<T> std::ops::Div<Volume<T>> for &Mass<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		Density{kgpm3: self.kg.clone() / rhs.m3}
+	}
+}
+/// Dividing a Mass by a Volume returns a value of type Density
+impl<T> std::ops::Div<&Volume<T>> for Mass<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		Density{kgpm3: self.kg / rhs.m3.clone()}
+	}
+}
+/// Dividing a Mass by a Volume returns a value of type Density
+impl<T> std::ops::Div<&Volume<T>> for &Mass<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		Density{kgpm3: self.kg.clone() / rhs.m3.clone()}
+	}
+}
+
+// Mass / Density -> Volume
+/// Dividing a Mass by a Density returns a value of type Volume
+impl<T> std::ops::Div<Density<T>> for Mass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		Volume{m3: self.kg / rhs.kgpm3}
+	}
+}
+/// Dividing a Mass by a Density returns a value of type Volume
+impl<T> std::ops::Div<Density<T>> for &Mass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		Volume{m3: self.kg.clone() / rhs.kgpm3}
+	}
+}
+/// Dividing a Mass by a Density returns a value of type Volume
+impl<T> std::ops::Div<&Density<T>> for Mass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		Volume{m3: self.kg / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a Mass by a Density returns a value of type Volume
+impl<T> std::ops::Div<&Density<T>> for &Mass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		Volume{m3: self.kg.clone() / rhs.kgpm3.clone()}
 	}
 }
 
@@ -819,7 +879,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in hours
 	pub fn to_hr(self) -> T {
-		return self.s.clone() * T::from(0.000277777777777778_f64);
+		return self.s.clone() * T::from(0.0002777777777777_f64);
 	}
 
 	/// Returns a new time value from the given number of hours
@@ -831,16 +891,29 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in days
-	pub fn to_d(self) -> T {
+	pub fn to_days(self) -> T {
 		return self.s.clone() * T::from(1.15740740740741e-05_f64);
 	}
 
 	/// Returns a new time value from the given number of days
 	///
 	/// # Arguments
-	/// * `d` - Any number-like type, representing a quantity of days
-	pub fn from_d(d: T) -> Self {
-		Time{s: d * T::from(86400.0_f64)}
+	/// * `days` - Any number-like type, representing a quantity of days
+	pub fn from_days(days: T) -> Self {
+		Time{s: days * T::from(86400.0_f64)}
+	}
+
+	/// Returns a copy of this time value in weeks
+	pub fn to_weeks(self) -> T {
+		return self.s.clone() * T::from(1.65343915343915e-06_f64);
+	}
+
+	/// Returns a new time value from the given number of weeks
+	///
+	/// # Arguments
+	/// * `weeks` - Any number-like type, representing a quantity of weeks
+	pub fn from_weeks(weeks: T) -> Self {
+		Time{s: weeks * T::from(604800.0_f64)}
 	}
 
 	/// Returns a copy of this time value in years
@@ -871,7 +944,7 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this time value in million years
 	pub fn to_Myr(self) -> T {
-		return self.s.clone() * T::from(3.1688765428716497e-14_f64);
+		return self.s.clone() * T::from(3.16887654287165e-14_f64);
 	}
 
 	/// Returns a new time value from the given number of million years
@@ -1347,6 +1420,36 @@ impl<T> std::ops::Mul<&CatalyticActivity<T>> for &Time<T> where T: NumLike {
 	}
 }
 
+// 1/Time -> Frequency
+/// Dividing a scalar value by a Time returns a value of type Frequency
+impl<T> std::ops::Div<Time<T>> for T where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		Frequency{Hz: self / rhs.s}
+	}
+}
+/// Dividing a scalar value by a Time returns a value of type Frequency
+impl<T> std::ops::Div<Time<T>> for &T where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		Frequency{Hz: self.clone() / rhs.s}
+	}
+}
+/// Dividing a scalar value by a Time returns a value of type Frequency
+impl<T> std::ops::Div<&Time<T>> for T where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		Frequency{Hz: self / rhs.s.clone()}
+	}
+}
+/// Dividing a scalar value by a Time returns a value of type Frequency
+impl<T> std::ops::Div<&Time<T>> for &T where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		Frequency{Hz: self.clone() / rhs.s.clone()}
+	}
+}
+
 /// The temperature unit type, defined as degrees kelvin in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1497,7 +1600,7 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `count` - Any number-like type, representing a quantity of count
 	pub fn from_count(count: T) -> Self {
-		Amount{mol: count * T::from(1.6605390671738466e-24_f64)}
+		Amount{mol: count * T::from(1.66053906717385e-24_f64)}
 	}
 
 	/// Returns a copy of this amount value in millimoles
@@ -1827,7 +1930,7 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this electrical current value in gigaamperes
 	pub fn to_GA(self) -> T {
-		return self.A.clone() * T::from(9.999999999999999e-10_f64);
+		return self.A.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of gigaamperes
@@ -2233,7 +2336,7 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this luminosity value in gigacandela
 	pub fn to_Gcd(self) -> T {
-		return self.cd.clone() * T::from(9.999999999999999e-10_f64);
+		return self.cd.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of gigacandela

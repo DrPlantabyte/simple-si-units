@@ -557,6 +557,19 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 		MomentOfInertia{kgm2: gcm2 * T::from(10.0_f64)}
 	}
 
+	/// Returns a copy of this moment of inertia value in gram meters squared
+	pub fn to_gm2(self) -> T {
+		return self.kgm2.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new moment of inertia value from the given number of gram meters squared
+	///
+	/// # Arguments
+	/// * `gm2` - Any number-like type, representing a quantity of gram meters squared
+	pub fn from_gm2(gm2: T) -> Self {
+		MomentOfInertia{kgm2: gm2 * T::from(1000.0_f64)}
+	}
+
 }
 
 // MomentOfInertia / Mass -> Area
@@ -866,6 +879,19 @@ impl<T> fmt::Display for Torque<T> where T: NumLike {
 
 impl<T> Torque<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this torque value in Foot-pounds
+	pub fn to_ftlb(self) -> T {
+		return self.Nm.clone() * T::from(1.35581794833139_f64);
+	}
+
+	/// Returns a new torque value from the given number of Foot-pounds
+	///
+	/// # Arguments
+	/// * `ftlb` - Any number-like type, representing a quantity of Foot-pounds
+	pub fn from_ftlb(ftlb: T) -> Self {
+		Torque{Nm: ftlb * T::from(0.73756214927727_f64)}
+	}
+
 }
 
 // Torque / Distance -> Force
@@ -1342,7 +1368,7 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this frequency value in gigahertz
 	pub fn to_GHz(self) -> T {
-		return self.Hz.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Hz.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new frequency value from the given number of gigahertz
@@ -1351,6 +1377,19 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	/// * `GHz` - Any number-like type, representing a quantity of gigahertz
 	pub fn from_GHz(GHz: T) -> Self {
 		Frequency{Hz: GHz * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this frequency value in terahertz
+	pub fn to_THz(self) -> T {
+		return self.Hz.clone() * T::from(1e-12_f64);
+	}
+
+	/// Returns a new frequency value from the given number of terahertz
+	///
+	/// # Arguments
+	/// * `THz` - Any number-like type, representing a quantity of terahertz
+	pub fn from_THz(THz: T) -> Self {
+		Frequency{Hz: THz * T::from(1000000000000.0_f64)}
 	}
 
 }
@@ -1715,6 +1754,36 @@ impl<T> std::ops::Mul<&MagneticFlux<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: self / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for &T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: self.clone() / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: self / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for &T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: self.clone() / rhs.Hz.clone()}
+	}
+}
+
 /// The area density unit type, defined as kilograms per square meter in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1771,6 +1840,32 @@ impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
 
 impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this area density value in grams per square meter
+	pub fn to_gpm2(self) -> T {
+		return self.kgm2.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new area density value from the given number of grams per square meter
+	///
+	/// # Arguments
+	/// * `gpm2` - Any number-like type, representing a quantity of grams per square meter
+	pub fn from_gpm2(gpm2: T) -> Self {
+		AreaDensity{kgm2: gpm2 * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this area density value in grams per square meter
+	pub fn to_grams_per_square_meter(self) -> T {
+		return self.kgm2.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new area density value from the given number of grams per square meter
+	///
+	/// # Arguments
+	/// * `grams_per_square_meter` - Any number-like type, representing a quantity of grams per square meter
+	pub fn from_grams_per_square_meter(grams_per_square_meter: T) -> Self {
+		AreaDensity{kgm2: grams_per_square_meter * T::from(1000.0_f64)}
+	}
+
 	/// Returns a copy of this area density value in grams per square cm
 	pub fn to_gpcm2(self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
@@ -1889,104 +1984,37 @@ impl<T> std::ops::Div<&Area<T>> for &AreaDensity<T> where T: NumLike {
 	}
 }
 
-/// The density unit type, defined as kilograms per liter in SI units
+/// The density unit type, defined as kilograms per cubic meter in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct Density<T: NumLike>{
-	/// The value of this Density in kilograms per liter
-	pub kgpL: T
+	/// The value of this Density in kilograms per cubic meter
+	pub kgpm3: T
 }
 
 impl<T> Density<T> where T: NumLike {
 
-	/// Returns the standard unit name of density: "kilograms per liter"
+	/// Returns the standard unit name of density: "kilograms per cubic meter"
 	pub fn unit_name() -> &'static str {
-		return "kilograms per liter";
+		return "kilograms per cubic meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of density: "kgpL" for kilograms per liter
+	/// Returns the abbreviated name or symbol of density: "kgpm3" for kilograms per cubic meter
 	pub fn unit_symbol() -> &'static str {
-		return "kgpL";
+		return "kgpm3";
 	}
 	
-	/// Returns a new density value from the given number of kilograms per liter
-	///
-	/// # Arguments
-	/// * `kgpL` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_kgpL(kgpL: T) -> Self {
-		Density{kgpL: kgpL}
-	}
-	
-	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kgpL(self) -> T {
-		return self.kgpL.clone();
-	}
-
-	/// Returns a new density value from the given number of kilograms per liter
-	///
-	/// # Arguments
-	/// * `kilograms_per_liter` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_kilograms_per_liter(kilograms_per_liter: T) -> Self {
-		Density{kgpL: kilograms_per_liter}
-	}
-	
-	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kilograms_per_liter(self) -> T {
-		return self.kgpL.clone();
-	}
-
-	/// Returns a new density value from the given number of grams per cc
-	///
-	/// # Arguments
-	/// * `gpcc` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_gpcc(gpcc: T) -> Self {
-		Density{kgpL: gpcc}
-	}
-	
-	/// Returns a copy of this density value in grams per cc
-	pub fn to_gpcc(self) -> T {
-		return self.kgpL.clone();
-	}
-
-	/// Returns a new density value from the given number of grams per cc
-	///
-	/// # Arguments
-	/// * `grams_per_cubic_centimeter` - Any number-like type, representing a quantity of kilograms per liter
-	pub fn from_grams_per_cubic_centimeter(grams_per_cubic_centimeter: T) -> Self {
-		Density{kgpL: grams_per_cubic_centimeter}
-	}
-	
-	/// Returns a copy of this density value in grams per cc
-	pub fn to_grams_per_cubic_centimeter(self) -> T {
-		return self.kgpL.clone();
-	}
-
-}
-
-impl<T> fmt::Display for Density<T> where T: NumLike {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", &self.kgpL, Self::unit_symbol())
-	}
-}
-
-impl<T> Density<T> where T: NumLike+From<f64> {
-	
-	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kgpm3(self) -> T {
-		return self.kgpL.clone() * T::from(1000.0_f64);
-	}
-
 	/// Returns a new density value from the given number of kilograms per cubic meter
 	///
 	/// # Arguments
 	/// * `kgpm3` - Any number-like type, representing a quantity of kilograms per cubic meter
 	pub fn from_kgpm3(kgpm3: T) -> Self {
-		Density{kgpL: kgpm3 * T::from(0.001_f64)}
+		Density{kgpm3: kgpm3}
 	}
-
+	
 	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kilograms_per_cubic_meter(self) -> T {
-		return self.kgpL.clone() * T::from(1000.0_f64);
+	pub fn to_kgpm3(self) -> T {
+		return self.kgpm3.clone();
 	}
 
 	/// Returns a new density value from the given number of kilograms per cubic meter
@@ -1994,9 +2022,119 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `kilograms_per_cubic_meter` - Any number-like type, representing a quantity of kilograms per cubic meter
 	pub fn from_kilograms_per_cubic_meter(kilograms_per_cubic_meter: T) -> Self {
-		Density{kgpL: kilograms_per_cubic_meter * T::from(0.001_f64)}
+		Density{kgpm3: kilograms_per_cubic_meter}
+	}
+	
+	/// Returns a copy of this density value in kilograms per cubic meter
+	pub fn to_kilograms_per_cubic_meter(self) -> T {
+		return self.kgpm3.clone();
 	}
 
+}
+
+impl<T> fmt::Display for Density<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.kgpm3, Self::unit_symbol())
+	}
+}
+
+impl<T> Density<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this density value in kilograms per liter
+	pub fn to_kgpL(self) -> T {
+		return self.kgpm3.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new density value from the given number of kilograms per liter
+	///
+	/// # Arguments
+	/// * `kgpL` - Any number-like type, representing a quantity of kilograms per liter
+	pub fn from_kgpL(kgpL: T) -> Self {
+		Density{kgpm3: kgpL * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this density value in kilograms per liter
+	pub fn to_kilograms_per_liter(self) -> T {
+		return self.kgpm3.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new density value from the given number of kilograms per liter
+	///
+	/// # Arguments
+	/// * `kilograms_per_liter` - Any number-like type, representing a quantity of kilograms per liter
+	pub fn from_kilograms_per_liter(kilograms_per_liter: T) -> Self {
+		Density{kgpm3: kilograms_per_liter * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this density value in grams per cc
+	pub fn to_gpcc(self) -> T {
+		return self.kgpm3.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new density value from the given number of grams per cc
+	///
+	/// # Arguments
+	/// * `gpcc` - Any number-like type, representing a quantity of grams per cc
+	pub fn from_gpcc(gpcc: T) -> Self {
+		Density{kgpm3: gpcc * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this density value in grams per cc
+	pub fn to_grams_per_cubic_centimeter(self) -> T {
+		return self.kgpm3.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new density value from the given number of grams per cc
+	///
+	/// # Arguments
+	/// * `grams_per_cubic_centimeter` - Any number-like type, representing a quantity of grams per cc
+	pub fn from_grams_per_cubic_centimeter(grams_per_cubic_centimeter: T) -> Self {
+		Density{kgpm3: grams_per_cubic_centimeter * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this density value in grams per cubic meter
+	pub fn to_gpm3(self) -> T {
+		return self.kgpm3.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new density value from the given number of grams per cubic meter
+	///
+	/// # Arguments
+	/// * `gpm3` - Any number-like type, representing a quantity of grams per cubic meter
+	pub fn from_gpm3(gpm3: T) -> Self {
+		Density{kgpm3: gpm3 * T::from(0.001_f64)}
+	}
+
+}
+
+// Density * Volume -> Mass
+/// Multiplying a Density by a Volume returns a value of type Mass
+impl<T> std::ops::Mul<Volume<T>> for Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3 * rhs.m3}
+	}
+}
+/// Multiplying a Density by a Volume returns a value of type Mass
+impl<T> std::ops::Mul<Volume<T>> for &Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3.clone() * rhs.m3}
+	}
+}
+/// Multiplying a Density by a Volume returns a value of type Mass
+impl<T> std::ops::Mul<&Volume<T>> for Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3 * rhs.m3.clone()}
+	}
+}
+/// Multiplying a Density by a Volume returns a value of type Mass
+impl<T> std::ops::Mul<&Volume<T>> for &Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3.clone() * rhs.m3.clone()}
+	}
 }
 
 /// The velocity unit type, defined as meters per second in SI units
@@ -2081,6 +2219,19 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 		Velocity{mps: mmps * T::from(0.001_f64)}
 	}
 
+	/// Returns a copy of this velocity value in millimeters per hour
+	pub fn to_mmph(self) -> T {
+		return self.mps.clone() * T::from(3600000.0_f64);
+	}
+
+	/// Returns a new velocity value from the given number of millimeters per hour
+	///
+	/// # Arguments
+	/// * `mmph` - Any number-like type, representing a quantity of millimeters per hour
+	pub fn from_mmph(mmph: T) -> Self {
+		Velocity{mps: mmph * T::from(2.77777777777778e-07_f64)}
+	}
+
 	/// Returns a copy of this velocity value in kilometers per hour
 	pub fn to_kph(self) -> T {
 		return self.mps.clone() * T::from(3.6_f64);
@@ -2092,6 +2243,19 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	/// * `kph` - Any number-like type, representing a quantity of kilometers per hour
 	pub fn from_kph(kph: T) -> Self {
 		Velocity{mps: kph * T::from(0.277777777777778_f64)}
+	}
+
+	/// Returns a copy of this velocity value in miles per hour
+	pub fn to_mph(self) -> T {
+		return self.mps.clone() * T::from(5.79363839999999_f64);
+	}
+
+	/// Returns a new velocity value from the given number of miles per hour
+	///
+	/// # Arguments
+	/// * `mph` - Any number-like type, representing a quantity of miles per hour
+	pub fn from_mph(mph: T) -> Self {
+		Velocity{mps: mph * T::from(0.172603108954815_f64)}
 	}
 
 	/// Returns a copy of this velocity value in kilometers per second
@@ -2109,7 +2273,7 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this velocity value in light speed
 	pub fn to_c(self) -> T {
-		return self.mps.clone() * T::from(3.3356409519815196e-09_f64);
+		return self.mps.clone() * T::from(3.3356409519815204e-09_f64);
 	}
 
 	/// Returns a new velocity value from the given number of light speed
@@ -2989,6 +3153,32 @@ impl<T> fmt::Display for Force<T> where T: NumLike {
 
 impl<T> Force<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this force value in pounds
+	pub fn to_lb(self) -> T {
+		return self.N.clone() * T::from(0.224337566199999_f64);
+	}
+
+	/// Returns a new force value from the given number of pounds
+	///
+	/// # Arguments
+	/// * `lb` - Any number-like type, representing a quantity of pounds
+	pub fn from_lb(lb: T) -> Self {
+		Force{N: lb * T::from(4.45756819483586_f64)}
+	}
+
+	/// Returns a copy of this force value in kilogram-force
+	pub fn to_kgG(self) -> T {
+		return self.N.clone() * T::from(0.101971620999999_f64);
+	}
+
+	/// Returns a new force value from the given number of kilogram-force
+	///
+	/// # Arguments
+	/// * `kgG` - Any number-like type, representing a quantity of kilogram-force
+	pub fn from_kgG(kgG: T) -> Self {
+		Force{N: kgG * T::from(9.8066500286389_f64)}
+	}
+
 	/// Returns a copy of this force value in millinewtons
 	pub fn to_mN(self) -> T {
 		return self.N.clone() * T::from(1000.0_f64);
@@ -3056,7 +3246,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this force value in giganewtons
 	pub fn to_GN(self) -> T {
-		return self.N.clone() * T::from(9.999999999999999e-10_f64);
+		return self.N.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new force value from the given number of giganewtons
@@ -3395,6 +3585,19 @@ impl<T> fmt::Display for Pressure<T> where T: NumLike {
 
 impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this pressure value in pounds per square inch
+	pub fn to_psi(self) -> T {
+		return self.Pa.clone() * T::from(0.00014503773773_f64);
+	}
+
+	/// Returns a new pressure value from the given number of pounds per square inch
+	///
+	/// # Arguments
+	/// * `psi` - Any number-like type, representing a quantity of pounds per square inch
+	pub fn from_psi(psi: T) -> Self {
+		Pressure{Pa: psi * T::from(6894.7572931783_f64)}
+	}
+
 	/// Returns a copy of this pressure value in millipascals
 	pub fn to_mPa(self) -> T {
 		return self.Pa.clone() * T::from(1000.0_f64);
@@ -3462,7 +3665,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this pressure value in gigapascals
 	pub fn to_GPa(self) -> T {
-		return self.Pa.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Pa.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new pressure value from the given number of gigapascals
@@ -3527,7 +3730,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this pressure value in torr
 	pub fn to_torr(self) -> T {
-		return self.Pa.clone() * T::from(0.00750061682703903_f64);
+		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
 	/// Returns a new pressure value from the given number of torr
@@ -3540,7 +3743,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this pressure value in mm Hg
 	pub fn to_mmHg(self) -> T {
-		return self.Pa.clone() * T::from(0.00750061682703903_f64);
+		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
 	/// Returns a new pressure value from the given number of mm Hg
@@ -3736,7 +3939,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this energy value in gigajoules
 	pub fn to_GJ(self) -> T {
-		return self.J.clone() * T::from(9.999999999999999e-10_f64);
+		return self.J.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new energy value from the given number of gigajoules
@@ -3745,6 +3948,84 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	/// * `GJ` - Any number-like type, representing a quantity of gigajoules
 	pub fn from_GJ(GJ: T) -> Self {
 		Energy{J: GJ * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this energy value in calories
+	pub fn to_cal(self) -> T {
+		return self.J.clone() * T::from(0.239005736137667_f64);
+	}
+
+	/// Returns a new energy value from the given number of calories
+	///
+	/// # Arguments
+	/// * `cal` - Any number-like type, representing a quantity of calories
+	pub fn from_cal(cal: T) -> Self {
+		Energy{J: cal * T::from(4.184_f64)}
+	}
+
+	/// Returns a copy of this energy value in kilocalories
+	pub fn to_kcal(self) -> T {
+		return self.J.clone() * T::from(0.000239005736137667_f64);
+	}
+
+	/// Returns a new energy value from the given number of kilocalories
+	///
+	/// # Arguments
+	/// * `kcal` - Any number-like type, representing a quantity of kilocalories
+	pub fn from_kcal(kcal: T) -> Self {
+		Energy{J: kcal * T::from(4184.0_f64)}
+	}
+
+	/// Returns a copy of this energy value in watt-hours
+	pub fn to_Whr(self) -> T {
+		return self.J.clone() * T::from(0.000277777777777778_f64);
+	}
+
+	/// Returns a new energy value from the given number of watt-hours
+	///
+	/// # Arguments
+	/// * `Whr` - Any number-like type, representing a quantity of watt-hours
+	pub fn from_Whr(Whr: T) -> Self {
+		Energy{J: Whr * T::from(3600.0_f64)}
+	}
+
+	/// Returns a copy of this energy value in kilowatt-hours
+	pub fn to_kWhr(self) -> T {
+		return self.J.clone() * T::from(2.77777777777778e-07_f64);
+	}
+
+	/// Returns a new energy value from the given number of kilowatt-hours
+	///
+	/// # Arguments
+	/// * `kWhr` - Any number-like type, representing a quantity of kilowatt-hours
+	pub fn from_kWhr(kWhr: T) -> Self {
+		Energy{J: kWhr * T::from(3600000.0_f64)}
+	}
+
+	/// Returns a copy of this energy value in electron-volts
+	pub fn to_eV(self) -> T {
+		return self.J.clone() * T::from(6.24150907446076e+18_f64);
+	}
+
+	/// Returns a new energy value from the given number of electron-volts
+	///
+	/// # Arguments
+	/// * `eV` - Any number-like type, representing a quantity of electron-volts
+	pub fn from_eV(eV: T) -> Self {
+		Energy{J: eV * T::from(1.6021766340000001e-19_f64)}
+	}
+
+	/// Returns a copy of this energy value in british thermal units
+	pub fn to_BTU(self) -> T {
+		return self.J.clone() * T::from(0.000947867298578199_f64);
+	}
+
+	/// Returns a new energy value from the given number of british thermal units
+	///
+	/// # Arguments
+	/// * `BTU` - Any number-like type, representing a quantity of british thermal units
+	pub fn from_BTU(BTU: T) -> Self {
+		Energy{J: BTU * T::from(1055.0_f64)}
 	}
 
 }
@@ -4322,7 +4603,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this power value in gigawatts
 	pub fn to_GW(self) -> T {
-		return self.W.clone() * T::from(9.999999999999999e-10_f64);
+		return self.W.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new power value from the given number of gigawatts
@@ -4331,6 +4612,19 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	/// * `GW` - Any number-like type, representing a quantity of gigawatts
 	pub fn from_GW(GW: T) -> Self {
 		Power{W: GW * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this power value in horse power
+	pub fn to_horsepower(self) -> T {
+		return self.W.clone() * T::from(0.0013410218586563_f64);
+	}
+
+	/// Returns a new power value from the given number of horse power
+	///
+	/// # Arguments
+	/// * `horsepower` - Any number-like type, representing a quantity of horse power
+	pub fn from_horsepower(horsepower: T) -> Self {
+		Power{W: horsepower * T::from(745.7_f64)}
 	}
 
 }

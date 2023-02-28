@@ -137,7 +137,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this electric charge value in gigacoulombs
 	pub fn to_GC(self) -> T {
-		return self.C.clone() * T::from(9.999999999999999e-10_f64);
+		return self.C.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of gigacoulombs
@@ -146,6 +146,32 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	/// * `GC` - Any number-like type, representing a quantity of gigacoulombs
 	pub fn from_GC(GC: T) -> Self {
 		Charge{C: GC * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in proton
+	pub fn to_p(self) -> T {
+		return self.C.clone() * T::from(6.24150907446076e+18_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of proton
+	///
+	/// # Arguments
+	/// * `p` - Any number-like type, representing a quantity of proton
+	pub fn from_p(p: T) -> Self {
+		Charge{C: p * T::from(1.6021766340000001e-19_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in electron
+	pub fn to_e(self) -> T {
+		return self.C.clone() * T::from(-6.24150907446076e+18_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of electron
+	///
+	/// # Arguments
+	/// * `e` - Any number-like type, representing a quantity of electron
+	pub fn from_e(e: T) -> Self {
+		Charge{C: e * T::from(-1.6021766340000001e-19_f64)}
 	}
 
 }
@@ -543,7 +569,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this voltage value in gigavolts
 	pub fn to_GV(self) -> T {
-		return self.V.clone() * T::from(9.999999999999999e-10_f64);
+		return self.V.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new voltage value from the given number of gigavolts
@@ -949,7 +975,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this electrical resistance value in gigaohms
 	pub fn to_GOhm(self) -> T {
-		return self.Ohm.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Ohm.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of gigaohms
@@ -1142,6 +1168,36 @@ impl<T> std::ops::Div<&Inductance<T>> for &Resistance<T> where T: NumLike {
 	}
 }
 
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for T where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: self / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for &T where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: self.clone() / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for T where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: self / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for &T where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: self.clone() / rhs.Ohm.clone()}
+	}
+}
+
 /// The electrical conductance unit type, defined as siemens in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1265,7 +1321,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this electrical conductance value in gigasiemens
 	pub fn to_GS(self) -> T {
-		return self.S.clone() * T::from(9.999999999999999e-10_f64);
+		return self.S.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of gigasiemens
@@ -1458,6 +1514,36 @@ impl<T> std::ops::Mul<&MagneticFlux<T>> for &Conductance<T> where T: NumLike {
 	}
 }
 
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for T where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: self / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for &T where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: self.clone() / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for T where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: self / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for &T where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: self.clone() / rhs.S.clone()}
+	}
+}
+
 /// The electrical capacitance unit type, defined as farads in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1594,7 +1680,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this electrical capacitance value in gigafarads
 	pub fn to_GF(self) -> T {
-		return self.F.clone() * T::from(9.999999999999999e-10_f64);
+		return self.F.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of gigafarads
@@ -1880,7 +1966,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this inductance value in gigahenries
 	pub fn to_GH(self) -> T {
-		return self.H.clone() * T::from(9.999999999999999e-10_f64);
+		return self.H.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new inductance value from the given number of gigahenries
@@ -2166,7 +2252,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this magnetic flux value in gigawebers
 	pub fn to_GWb(self) -> T {
-		return self.Wb.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Wb.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of gigawebers
@@ -2632,7 +2718,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this magnetic flux density value in gigateslas
 	pub fn to_GT(self) -> T {
-		return self.T.clone() * T::from(9.999999999999999e-10_f64);
+		return self.T.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of gigateslas
@@ -2798,7 +2884,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this luminous flux value in gigalumens
 	pub fn to_Glm(self) -> T {
-		return self.lm.clone() * T::from(9.999999999999999e-10_f64);
+		return self.lm.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of gigalumens
@@ -2981,7 +3067,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this illuminance value in gigalux
 	pub fn to_Glux(self) -> T {
-		return self.lux.clone() * T::from(9.999999999999999e-10_f64);
+		return self.lux.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of gigalux

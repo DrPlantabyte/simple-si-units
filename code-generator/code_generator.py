@@ -7,6 +7,31 @@ from pandas import DataFrame, Series
 from numpy import ndarray
 from templates import *
 
+# blacklist a few illogical combinations:
+input_blacklist: Set[str] = set([
+	'radioactivity', 'absorbed dose', 'dose equivalent',
+])
+combo_whitelist: Set[Tuple[str, str, str]] = set([
+	('mass', 'absorbed dose', 'energy'),
+	('absorbed dose', 'mass', 'energy'),
+	('energy', 'absorbed dose', 'mass'),
+	('absorbed dose', 'energy', 'mass'),
+	('mass', 'dose equivalent', 'energy'),
+	('dose equivalent', 'mass', 'energy'),
+	('energy', 'dose equivalent', 'mass'),
+	('dose equivalent', 'energy', 'mass'),
+	('moment of inertia', 'angular acceleration', 'torque'),
+	('angular acceleration', 'moment of inertia', 'torque'),
+	('angular acceleration', 'torque', 'moment of inertia'),
+	('torque', 'angular acceleration', 'moment of inertia'),
+	('torque', 'moment of inertia', 'angular acceleration'),
+])
+## the following are blacklisted as outputs because they are dimensionally equivalent to other more commonly used units
+output_blacklist: Set[str] = set([
+	'torque', 'moment of inertia', 'radioactivity', 'absorbed dose', 'dose equivalent'
+])
+
+
 def main(*args):
 	'''
 	Generate code for units and operator conversions (eg distance / time -> velocity)
@@ -16,7 +41,7 @@ def main(*args):
 	this_dir = path.dirname(path.abspath(__file__))
 	project_root_dir= path.dirname(this_dir)
 	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
-	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-conversions.csv'))
+	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data)
@@ -44,7 +69,7 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_
 		'crate imports': generate_local_imports(module, data, conversions),
 		'example1': mod_units['desc first name'].iloc[0],
 		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
-		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions)
+		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy())
 	}
 	return out_buf
 
@@ -57,20 +82,25 @@ def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame)
 		if row['left-side'] in these_units:
 			other_modules.add(unit_module_lut[row['right-side']])
 			other_modules.add(unit_module_lut[row['result']])
+	for i, row in data[data['category'] == module].iterrows():
+		_, inversion_mods = generate_inverse_unit_conversions(row, data)
+		other_modules = other_modules.union(inversion_mods)
 	if module in other_modules: other_modules.discard(module)
 	ilist = list(['use super::%s::*;' % m for m in other_modules])
 	ilist.sort()
 	return '\n'.join(ilist)
 
-def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
+def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame, all_units: DataFrame) -> str:
 	out_buf = ''
 	for i, row in data.iterrows():
+		inversions, _ = generate_inverse_unit_conversions(row, all_units)
 		out_buf += UNIT_STRUCT_DEFINITION_TEMPLATE % {
 			**row.to_dict(),
 			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions),
 			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
 		}
 		out_buf += generate_unit_conversions(row, conversions)
+		out_buf += inversions
 	return out_buf
 
 def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
@@ -123,6 +153,30 @@ def generate_unit_conversions(data_row: Series, conversions: DataFrame) -> str:
 			**row
 		}
 	return out_buf
+
+def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tuple[str, Set[str]]:
+	out_buf = ''
+	used_mods = set()
+	src_unit_name = data_row['name']
+	src_units = SIUnits.from_str(data_row['si units'])
+	inverse_units = src_units.inverse()
+	for i, row in data.iterrows():
+		# print('\t%s (%s)' % (row['name'], SIUnits.from_str(row['si units'])))
+		if row['name'] not in output_blacklist and inverse_units == SIUnits.from_str(row['si units']):
+			# print('1/%s = %s' % (src_unit_name, row['name']))
+			# found a match
+			out_buf += INVERSE_CONVERSION_TEMPLATE % {
+				**data_row,
+				'code right-side': to_code_name(src_unit_name),
+				'code result': to_code_name(row['name']),
+				'right-side symbol': data_row['unit symbol'],
+				'result symbol': row['unit symbol']
+			}
+			used_mods.add(row['category'])
+			# only use first found unit
+			break
+	return out_buf, used_mods
+
 def find_unit_conversions(data: DataFrame) -> DataFrame:
 	# make a look-up table of SI units and the measures with those units (there can be more than one measure with same units)
 	siunit_measure_lut: Dict[SIUnits, List[str]] = defaultdict(lambda: [])
@@ -133,28 +187,6 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 		if len(kv[1]) > 1:
 			print('WARNING: dimensionally equivalent measures (%s): %s' % kv)
 	siunit_symbol_lut: Dict[str, str] = {row['name']: row['unit symbol'] for _, row in data.iterrows()}
-	# blacklist a few illogical combinations:
-	input_blacklist: Set[str] = set([
-		'radioactivity', 'absorbed dose', 'dose equivalent',
-	])
-	combo_whitelist: Set[Tuple[str, str, str]] = set([
-		('mass', 'absorbed dose', 'energy'),
-		('absorbed dose', 'mass', 'energy'),
-		('energy', 'absorbed dose', 'mass'),
-		('absorbed dose', 'energy', 'mass'),
-		('mass', 'dose equivalent', 'energy'),
-		('dose equivalent', 'mass', 'energy'),
-		('energy', 'dose equivalent', 'mass'),
-		('dose equivalent', 'energy', 'mass'),
-		('moment of inertia', 'angular acceleration', 'torque'),
-		('angular acceleration', 'moment of inertia', 'torque'),
-		('angular acceleration', 'torque', 'moment of inertia'),
-		('torque', 'angular acceleration', 'moment of inertia'),
-		('torque', 'moment of inertia', 'angular acceleration'),
-	])
-	output_blacklist: Set[str] = set([
-		'torque', 'moment of inertia', 'radioactivity', 'absorbed dose', 'dose equivalent'
-	])
 	unit_conversions = []
 	# now check every non-blacklisted  A * B and A / B combination for possible unit conversions
 	for i, row in data.iterrows():
@@ -236,6 +268,9 @@ class SIUnits:
 			return '%s/%s' % (condense_units(self.numerator), condense_units(self.denominator))
 		else:
 			return condense_units(self.numerator)
+
+	def inverse(self) -> Self:
+		return SIUnits(numerator=self.denominator, denominator=self.numerator)
 
 	def from_str(s: str):
 		if '/' in s:

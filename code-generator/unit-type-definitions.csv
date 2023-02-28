@@ -17,7 +17,7 @@ mechanical,frequency,frequency,frequency,hertz,Hz,1/s
 geometry,area,area,area,square meters,m2,m^2
 mechanical,area density,area density,area density,kilograms per square meter,kgm2,kg.m^2
 geometry,volume,volume,volume,cubic meters,m3,m^3
-mechanical,density,density,density,kilograms per liter,kgpL,kg/L
+mechanical,density,density,density,kilograms per cubic meter,kgpm3,kg/m^3
 mechanical,velocity,velocity,velocity,meters per second,mps,m/s
 mechanical,acceleration,acceleration,acceleration,meters per second squared,mps2,m/s^2
 mechanical,momentum,momentum,momentum,kilogram meters per second,kgmps,kg.m/s

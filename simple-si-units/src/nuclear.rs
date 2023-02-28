@@ -136,7 +136,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this radioactivity value in gigabecquerels
 	pub fn to_GBq(self) -> T {
-		return self.Bq.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Bq.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of gigabecquerels
@@ -147,6 +147,114 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 		Radioactivity{Bq: GBq * T::from(1000000000.0_f64)}
 	}
 
+	/// Returns a copy of this radioactivity value in curies
+	pub fn to_Ci(self) -> T {
+		return self.Bq.clone() * T::from(2.7027027027026998e-11_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of curies
+	///
+	/// # Arguments
+	/// * `Ci` - Any number-like type, representing a quantity of curies
+	pub fn from_Ci(Ci: T) -> Self {
+		Radioactivity{Bq: Ci * T::from(37000000000.0_f64)}
+	}
+
+	/// Returns a copy of this radioactivity value in millicuries
+	pub fn to_mCi(self) -> T {
+		return self.Bq.clone() * T::from(2.7027027027027e-08_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of millicuries
+	///
+	/// # Arguments
+	/// * `mCi` - Any number-like type, representing a quantity of millicuries
+	pub fn from_mCi(mCi: T) -> Self {
+		Radioactivity{Bq: mCi * T::from(37000000.0_f64)}
+	}
+
+	/// Returns a copy of this radioactivity value in microcuries
+	pub fn to_uCi(self) -> T {
+		return self.Bq.clone() * T::from(2.7027027027027e-05_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of microcuries
+	///
+	/// # Arguments
+	/// * `uCi` - Any number-like type, representing a quantity of microcuries
+	pub fn from_uCi(uCi: T) -> Self {
+		Radioactivity{Bq: uCi * T::from(37000.0_f64)}
+	}
+
+	/// Returns a copy of this radioactivity value in nanocuries
+	pub fn to_nCi(self) -> T {
+		return self.Bq.clone() * T::from(0.027027027027027_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of nanocuries
+	///
+	/// # Arguments
+	/// * `nCi` - Any number-like type, representing a quantity of nanocuries
+	pub fn from_nCi(nCi: T) -> Self {
+		Radioactivity{Bq: nCi * T::from(37.0_f64)}
+	}
+
+	/// Returns a copy of this radioactivity value in picocuries
+	pub fn to_pCi(self) -> T {
+		return self.Bq.clone() * T::from(27.027027027027_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of picocuries
+	///
+	/// # Arguments
+	/// * `pCi` - Any number-like type, representing a quantity of picocuries
+	pub fn from_pCi(pCi: T) -> Self {
+		Radioactivity{Bq: pCi * T::from(0.037_f64)}
+	}
+
+	/// Returns a copy of this radioactivity value in rutherfords
+	pub fn to_rd(self) -> T {
+		return self.Bq.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new radioactivity value from the given number of rutherfords
+	///
+	/// # Arguments
+	/// * `rd` - Any number-like type, representing a quantity of rutherfords
+	pub fn from_rd(rd: T) -> Self {
+		Radioactivity{Bq: rd * T::from(1000000.0_f64)}
+	}
+
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: self / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for &T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: self.clone() / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: self / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for &T where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: self.clone() / rhs.Bq.clone()}
+	}
 }
 
 /// The absorbed radiation dose unit type, defined as grays in SI units
@@ -272,7 +380,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this absorbed dose value in gigagrays
 	pub fn to_GGy(self) -> T {
-		return self.Gy.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Gy.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of gigagrays
@@ -281,6 +389,71 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	/// * `GGy` - Any number-like type, representing a quantity of gigagrays
 	pub fn from_GGy(GGy: T) -> Self {
 		AbsorbedDose{Gy: GGy * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this absorbed dose value in rads
+	pub fn to_rad(self) -> T {
+		return self.Gy.clone() * T::from(100.0_f64);
+	}
+
+	/// Returns a new absorbed dose value from the given number of rads
+	///
+	/// # Arguments
+	/// * `rad` - Any number-like type, representing a quantity of rads
+	pub fn from_rad(rad: T) -> Self {
+		AbsorbedDose{Gy: rad * T::from(0.01_f64)}
+	}
+
+	/// Returns a copy of this absorbed dose value in kilorads
+	pub fn to_krad(self) -> T {
+		return self.Gy.clone() * T::from(0.1_f64);
+	}
+
+	/// Returns a new absorbed dose value from the given number of kilorads
+	///
+	/// # Arguments
+	/// * `krad` - Any number-like type, representing a quantity of kilorads
+	pub fn from_krad(krad: T) -> Self {
+		AbsorbedDose{Gy: krad * T::from(10.0_f64)}
+	}
+
+	/// Returns a copy of this absorbed dose value in millirads
+	pub fn to_mrad(self) -> T {
+		return self.Gy.clone() * T::from(100000.0_f64);
+	}
+
+	/// Returns a new absorbed dose value from the given number of millirads
+	///
+	/// # Arguments
+	/// * `mrad` - Any number-like type, representing a quantity of millirads
+	pub fn from_mrad(mrad: T) -> Self {
+		AbsorbedDose{Gy: mrad * T::from(1e-05_f64)}
+	}
+
+	/// Returns a copy of this absorbed dose value in microrads
+	pub fn to_urad(self) -> T {
+		return self.Gy.clone() * T::from(100000000.0_f64);
+	}
+
+	/// Returns a new absorbed dose value from the given number of microrads
+	///
+	/// # Arguments
+	/// * `urad` - Any number-like type, representing a quantity of microrads
+	pub fn from_urad(urad: T) -> Self {
+		AbsorbedDose{Gy: urad * T::from(1e-08_f64)}
+	}
+
+	/// Returns a copy of this absorbed dose value in ergs per gram
+	pub fn to_erg(self) -> T {
+		return self.Gy.clone() * T::from(10000.0_f64);
+	}
+
+	/// Returns a new absorbed dose value from the given number of ergs per gram
+	///
+	/// # Arguments
+	/// * `erg` - Any number-like type, representing a quantity of ergs per gram
+	pub fn from_erg(erg: T) -> Self {
+		AbsorbedDose{Gy: erg * T::from(0.0001_f64)}
 	}
 
 }
@@ -438,7 +611,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this dose equivalent value in gigasieverts
 	pub fn to_GSv(self) -> T {
-		return self.Sv.clone() * T::from(9.999999999999999e-10_f64);
+		return self.Sv.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of gigasieverts
@@ -447,6 +620,45 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	/// * `GSv` - Any number-like type, representing a quantity of gigasieverts
 	pub fn from_GSv(GSv: T) -> Self {
 		DoseEquivalent{Sv: GSv * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this dose equivalent value in roentgen equivalent man
+	pub fn to_rem(self) -> T {
+		return self.Sv.clone() * T::from(100.0_f64);
+	}
+
+	/// Returns a new dose equivalent value from the given number of roentgen equivalent man
+	///
+	/// # Arguments
+	/// * `rem` - Any number-like type, representing a quantity of roentgen equivalent man
+	pub fn from_rem(rem: T) -> Self {
+		DoseEquivalent{Sv: rem * T::from(0.01_f64)}
+	}
+
+	/// Returns a copy of this dose equivalent value in milli-roentgen equivalents
+	pub fn to_mrem(self) -> T {
+		return self.Sv.clone() * T::from(100000.0_f64);
+	}
+
+	/// Returns a new dose equivalent value from the given number of milli-roentgen equivalents
+	///
+	/// # Arguments
+	/// * `mrem` - Any number-like type, representing a quantity of milli-roentgen equivalents
+	pub fn from_mrem(mrem: T) -> Self {
+		DoseEquivalent{Sv: mrem * T::from(1e-05_f64)}
+	}
+
+	/// Returns a copy of this dose equivalent value in kilo-roentgen equivalents
+	pub fn to_krem(self) -> T {
+		return self.Sv.clone() * T::from(0.1_f64);
+	}
+
+	/// Returns a new dose equivalent value from the given number of kilo-roentgen equivalents
+	///
+	/// # Arguments
+	/// * `krem` - Any number-like type, representing a quantity of kilo-roentgen equivalents
+	pub fn from_krem(krem: T) -> Self {
+		DoseEquivalent{Sv: krem * T::from(10.0_f64)}
 	}
 
 }

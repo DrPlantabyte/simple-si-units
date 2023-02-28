@@ -417,25 +417,25 @@ mod unit_tests {
 	#[test]
 	fn angular_acceleration_units() {
 		assert_approx_equal(
-			AnglularAcceleration::from_radps2(6.283185307179586_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
-			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_radps2(6.283185307179586_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AngularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_radps2(6.283185307179586_f64).to_radps2(),
-			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_radps2(6.283185307179586_f64).to_radps2(),
+			AngularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_degps2(360.0_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
-			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_degps2(360.0_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AngularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_degps2(360.0_f64).to_radps2(),
-			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_degps2(360.0_f64).to_radps2(),
+			AngularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
 		);
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_radps2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_degps2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rpm2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rps2();}
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_radps2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_degps2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_rpm2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_rps2();}
 	#[test]
 	fn moment_of_inertia_units() {
 		assert_approx_equal(

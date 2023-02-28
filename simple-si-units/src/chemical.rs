@@ -70,6 +70,19 @@ impl<T> fmt::Display for CatalyticActivity<T> where T: NumLike {
 
 impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this catalytic activity value in count per second
+	pub fn to_Nps(self) -> T {
+		return self.molps.clone() * T::from(6.02214076e+23_f64);
+	}
+
+	/// Returns a new catalytic activity value from the given number of count per second
+	///
+	/// # Arguments
+	/// * `Nps` - Any number-like type, representing a quantity of count per second
+	pub fn from_Nps(Nps: T) -> Self {
+		CatalyticActivity{molps: Nps * T::from(1.6605390671738503e-24_f64)}
+	}
+
 	/// Returns a copy of this catalytic activity value in millimoles per second
 	pub fn to_mmolps(self) -> T {
 		return self.molps.clone() * T::from(1000.0_f64);
@@ -280,7 +293,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `Npm3` - Any number-like type, representing a quantity of count per cubic meter
 	pub fn from_Npm3(Npm3: T) -> Self {
-		Concentration{molpm3: Npm3 * T::from(1.6605390671738466e-24_f64)}
+		Concentration{molpm3: Npm3 * T::from(1.66053906717385e-24_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic meter
@@ -293,7 +306,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `count_per_cubic_meter` - Any number-like type, representing a quantity of count per cubic meter
 	pub fn from_count_per_cubic_meter(count_per_cubic_meter: T) -> Self {
-		Concentration{molpm3: count_per_cubic_meter * T::from(1.6605390671738466e-24_f64)}
+		Concentration{molpm3: count_per_cubic_meter * T::from(1.66053906717385e-24_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per liter
@@ -310,16 +323,16 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per liter
-	pub fn to_count_per_liter(self) -> T {
+	pub fn to_count_per_L(self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+26_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per liter
 	///
 	/// # Arguments
-	/// * `count_per_liter` - Any number-like type, representing a quantity of count per liter
-	pub fn from_count_per_liter(count_per_liter: T) -> Self {
-		Concentration{molpm3: count_per_liter * T::from(1.66053906717385e-27_f64)}
+	/// * `count_per_L` - Any number-like type, representing a quantity of count per liter
+	pub fn from_count_per_L(count_per_L: T) -> Self {
+		Concentration{molpm3: count_per_L * T::from(1.66053906717385e-27_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic centimeter

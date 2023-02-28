@@ -125,3 +125,35 @@ impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code l
 	}
 }
 '''
+
+INVERSE_CONVERSION_TEMPLATE='''
+// 1/%(code right-side)s -> %(code result)s
+/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::Div<%(code right-side)s<T>> for T where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self / rhs.%(right-side symbol)s}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::Div<%(code right-side)s<T>> for &T where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.clone() / rhs.%(right-side symbol)s}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::Div<&%(code right-side)s<T>> for T where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self / rhs.%(right-side symbol)s.clone()}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
+impl<T> std::ops::Div<&%(code right-side)s<T>> for &T where T: NumLike {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: self.clone() / rhs.%(right-side symbol)s.clone()}
+	}
+}
+'''

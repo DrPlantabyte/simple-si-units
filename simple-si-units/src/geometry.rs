@@ -209,6 +209,32 @@ impl<T> SolidAngle<T> where T: NumLike {
 		return "sr";
 	}
 	
+	/// Returns a new solid angle value from the given number of steradians
+	///
+	/// # Arguments
+	/// * `sr` - Any number-like type, representing a quantity of steradian
+	pub fn from_sr(sr: T) -> Self {
+		SolidAngle{sr: sr}
+	}
+	
+	/// Returns a copy of this solid angle value in steradians
+	pub fn to_sr(self) -> T {
+		return self.sr.clone();
+	}
+
+	/// Returns a new solid angle value from the given number of steradians
+	///
+	/// # Arguments
+	/// * `steradians` - Any number-like type, representing a quantity of steradian
+	pub fn from_steradians(steradians: T) -> Self {
+		SolidAngle{sr: steradians}
+	}
+	
+	/// Returns a copy of this solid angle value in steradians
+	pub fn to_steradians(self) -> T {
+		return self.sr.clone();
+	}
+
 }
 
 impl<T> fmt::Display for SolidAngle<T> where T: NumLike {
@@ -331,6 +357,58 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	/// * `square_cm` - Any number-like type, representing a quantity of square cm
 	pub fn from_square_cm(square_cm: T) -> Self {
 		Area{m2: square_cm * T::from(0.0001_f64)}
+	}
+
+	/// Returns a copy of this area value in square mm
+	pub fn to_mm2(self) -> T {
+		return self.m2.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new area value from the given number of square mm
+	///
+	/// # Arguments
+	/// * `mm2` - Any number-like type, representing a quantity of square mm
+	pub fn from_mm2(mm2: T) -> Self {
+		Area{m2: mm2 * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this area value in square um
+	pub fn to_um2(self) -> T {
+		return self.m2.clone() * T::from(1000000000000.0_f64);
+	}
+
+	/// Returns a new area value from the given number of square um
+	///
+	/// # Arguments
+	/// * `um2` - Any number-like type, representing a quantity of square um
+	pub fn from_um2(um2: T) -> Self {
+		Area{m2: um2 * T::from(1e-12_f64)}
+	}
+
+	/// Returns a copy of this area value in square nm
+	pub fn to_nm2(self) -> T {
+		return self.m2.clone() * T::from(1e+18_f64);
+	}
+
+	/// Returns a new area value from the given number of square nm
+	///
+	/// # Arguments
+	/// * `nm2` - Any number-like type, representing a quantity of square nm
+	pub fn from_nm2(nm2: T) -> Self {
+		Area{m2: nm2 * T::from(1e-18_f64)}
+	}
+
+	/// Returns a copy of this area value in square km
+	pub fn to_km2(self) -> T {
+		return self.m2.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new area value from the given number of square km
+	///
+	/// # Arguments
+	/// * `km2` - Any number-like type, representing a quantity of square km
+	pub fn from_km2(km2: T) -> Self {
+		Area{m2: km2 * T::from(1000000.0_f64)}
 	}
 
 }
@@ -531,6 +609,19 @@ impl<T> Volume<T> where T: NumLike {
 		return self.m3.clone();
 	}
 
+	/// Returns a new volume value from the given number of kiloliters
+	///
+	/// # Arguments
+	/// * `kL` - Any number-like type, representing a quantity of cubic meters
+	pub fn from_kL(kL: T) -> Self {
+		Volume{m3: kL}
+	}
+	
+	/// Returns a copy of this volume value in kiloliters
+	pub fn to_kL(self) -> T {
+		return self.m3.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Volume<T> where T: NumLike {
@@ -619,6 +710,19 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 		Volume{m3: nL * T::from(1e-12_f64)}
 	}
 
+	/// Returns a copy of this volume value in picoliters
+	pub fn to_pL(self) -> T {
+		return self.m3.clone() * T::from(1000000000000000.0_f64);
+	}
+
+	/// Returns a new volume value from the given number of picoliters
+	///
+	/// # Arguments
+	/// * `pL` - Any number-like type, representing a quantity of picoliters
+	pub fn from_pL(pL: T) -> Self {
+		Volume{m3: pL * T::from(1e-15_f64)}
+	}
+
 	/// Returns a copy of this volume value in megaliters
 	pub fn to_ML(self) -> T {
 		return self.m3.clone() * T::from(0.001_f64);
@@ -704,6 +808,36 @@ impl<T> std::ops::Div<&Area<T>> for &Volume<T> where T: NumLike {
 	type Output = Distance<T>;
 	fn div(self, rhs: &Area<T>) -> Self::Output {
 		Distance{m: self.m3.clone() / rhs.m2.clone()}
+	}
+}
+
+// Volume * Density -> Mass
+/// Multiplying a Volume by a Density returns a value of type Mass
+impl<T> std::ops::Mul<Density<T>> for Volume<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Density<T>) -> Self::Output {
+		Mass{kg: self.m3 * rhs.kgpm3}
+	}
+}
+/// Multiplying a Volume by a Density returns a value of type Mass
+impl<T> std::ops::Mul<Density<T>> for &Volume<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Density<T>) -> Self::Output {
+		Mass{kg: self.m3.clone() * rhs.kgpm3}
+	}
+}
+/// Multiplying a Volume by a Density returns a value of type Mass
+impl<T> std::ops::Mul<&Density<T>> for Volume<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Density<T>) -> Self::Output {
+		Mass{kg: self.m3 * rhs.kgpm3.clone()}
+	}
+}
+/// Multiplying a Volume by a Density returns a value of type Mass
+impl<T> std::ops::Mul<&Density<T>> for &Volume<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Density<T>) -> Self::Output {
+		Mass{kg: self.m3.clone() * rhs.kgpm3.clone()}
 	}
 }
 
