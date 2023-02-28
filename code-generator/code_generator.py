@@ -167,6 +167,7 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 			# found a match
 			out_buf += INVERSE_CONVERSION_TEMPLATE % {
 				**data_row,
+				'scalar type': stype, # TODO
 				'code right-side': to_code_name(src_unit_name),
 				'code result': to_code_name(row['name']),
 				'right-side symbol': data_row['unit symbol'],
