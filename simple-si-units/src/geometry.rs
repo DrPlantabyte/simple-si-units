@@ -13,6 +13,18 @@ use super::mechanical::*;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 
 /// The angle unit type, defined as radians in SI units

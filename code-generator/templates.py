@@ -10,6 +10,18 @@ use super::NumLike;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 %(content)s
 
@@ -128,29 +140,29 @@ impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code l
 
 INVERSE_CONVERSION_TEMPLATE='''
 // 1/%(code right-side)s -> %(code result)s
-/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
-impl<T> std::ops::Div<%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
 	type Output = %(code result)s<T>;
 	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: T::from(self) / rhs.%(right-side symbol)s}
 	}
 }
-/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
-impl<T> std::ops::Div<%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
 	type Output = %(code result)s<T>;
 	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: T::from(self.clone()) / rhs.%(right-side symbol)s}
 	}
 }
-/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
-impl<T> std::ops::Div<&%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<&%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
 	type Output = %(code result)s<T>;
 	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: T::from(self) / rhs.%(right-side symbol)s.clone()}
 	}
 }
-/// Dividing a scalar value by a %(code right-side)s returns a value of type %(code result)s
-impl<T> std::ops::Div<&%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<&%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
 	type Output = %(code result)s<T>;
 	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: T::from(self.clone()) / rhs.%(right-side symbol)s.clone()}

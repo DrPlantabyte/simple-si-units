@@ -11,6 +11,18 @@ use super::mechanical::*;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 
 /// The radioactivity unit type, defined as becquerels in SI units
@@ -228,32 +240,258 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 }
 
 // 1/Radioactivity -> Time
-/// Dividing a scalar value by a Radioactivity returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for T where T: NumLike {
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
-		Time{s: self / rhs.Bq}
+		Time{s: T::from(self) / rhs.Bq}
 	}
 }
-/// Dividing a scalar value by a Radioactivity returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for &T where T: NumLike {
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
-		Time{s: self.clone() / rhs.Bq}
+		Time{s: T::from(self.clone()) / rhs.Bq}
 	}
 }
-/// Dividing a scalar value by a Radioactivity returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for T where T: NumLike {
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
-		Time{s: self / rhs.Bq.clone()}
+		Time{s: T::from(self) / rhs.Bq.clone()}
 	}
 }
-/// Dividing a scalar value by a Radioactivity returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for &T where T: NumLike {
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
-		Time{s: self.clone() / rhs.Bq.clone()}
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+impl<T> std::ops::Div<&Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Radioactivity<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Radioactivity<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Radioactivity<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Radioactivity<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
+	}
+}
+
+// 1/Radioactivity -> Time
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Bq.clone()}
+	}
+}
+/// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
 	}
 }
 

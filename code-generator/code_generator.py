@@ -160,19 +160,33 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 	src_unit_name = data_row['name']
 	src_units = SIUnits.from_str(data_row['si units'])
 	inverse_units = src_units.inverse()
+	concrete_types = [
+		'f64', 'f32', 'i64', 'i32',
+		'num_bigfloat::BigFloat', 'astro_float::BigFloat',
+		'num_complex::Complex32', 'num_complex::Complex64'
+	]
+	cfg_attrs = [
+		'', '', '', '',
+		'#[cfg(feature="num_bigfloat")]\n', '#[cfg(feature="astro_float")]\n',
+		'#[cfg(feature="num_complex")]\n', '#[cfg(feature="num_complex")]\n'
+	]
 	for i, row in data.iterrows():
 		# print('\t%s (%s)' % (row['name'], SIUnits.from_str(row['si units'])))
 		if row['name'] not in output_blacklist and inverse_units == SIUnits.from_str(row['si units']):
 			# print('1/%s = %s' % (src_unit_name, row['name']))
 			# found a match
-			out_buf += INVERSE_CONVERSION_TEMPLATE % {
-				**data_row,
-				'scalar type': stype, # TODO
-				'code right-side': to_code_name(src_unit_name),
-				'code result': to_code_name(row['name']),
-				'right-side symbol': data_row['unit symbol'],
-				'result symbol': row['unit symbol']
-			}
+			for n in range(0, len(concrete_types)):
+				stype = concrete_types[n]
+				cfg_stmnt = cfg_attrs[n]
+				out_buf += INVERSE_CONVERSION_TEMPLATE % {
+					**data_row,
+					'config attr prefix': cfg_stmnt,
+					'scalar type': stype,
+					'code right-side': to_code_name(src_unit_name),
+					'code result': to_code_name(row['name']),
+					'right-side symbol': data_row['unit symbol'],
+					'result symbol': row['unit symbol']
+				}
 			used_mods.add(row['category'])
 			# only use first found unit
 			break

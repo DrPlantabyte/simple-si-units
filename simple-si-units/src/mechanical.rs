@@ -14,6 +14,18 @@ use super::nuclear::*;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 
 /// The angular velocity unit type, defined as radians per second in SI units
@@ -1755,32 +1767,258 @@ impl<T> std::ops::Mul<&MagneticFlux<T>> for &Frequency<T> where T: NumLike {
 }
 
 // 1/Frequency -> Time
-/// Dividing a scalar value by a Frequency returns a value of type Time
-impl<T> std::ops::Div<Frequency<T>> for T where T: NumLike {
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
-		Time{s: self / rhs.Hz}
+		Time{s: T::from(self) / rhs.Hz}
 	}
 }
-/// Dividing a scalar value by a Frequency returns a value of type Time
-impl<T> std::ops::Div<Frequency<T>> for &T where T: NumLike {
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
-		Time{s: self.clone() / rhs.Hz}
+		Time{s: T::from(self.clone()) / rhs.Hz}
 	}
 }
-/// Dividing a scalar value by a Frequency returns a value of type Time
-impl<T> std::ops::Div<&Frequency<T>> for T where T: NumLike {
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
-		Time{s: self / rhs.Hz.clone()}
+		Time{s: T::from(self) / rhs.Hz.clone()}
 	}
 }
-/// Dividing a scalar value by a Frequency returns a value of type Time
-impl<T> std::ops::Div<&Frequency<T>> for &T where T: NumLike {
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
-		Time{s: self.clone() / rhs.Hz.clone()}
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<Frequency<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+impl<T> std::ops::Div<&Frequency<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Frequency<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Frequency<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Frequency<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Frequency<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Frequency<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Frequency<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Frequency<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Frequency<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Frequency<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Frequency<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Frequency<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Frequency<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
+	}
+}
+
+// 1/Frequency -> Time
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Frequency<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Frequency<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Frequency<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self) / rhs.Hz.clone()}
+	}
+}
+/// Dividing a scalar value by a Frequency unit value returns a value of type Time
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Frequency<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Time<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		Time{s: T::from(self.clone()) / rhs.Hz.clone()}
 	}
 }
 
