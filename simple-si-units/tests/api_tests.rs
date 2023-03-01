@@ -1,8 +1,7 @@
-use std::io::Write;
-use std::time::Duration;
-use simple_si_units::{UnitStruct, NumLike};
+use num_complex::ComplexFloat;
 use simple_si_units::base::{Distance, Mass, Time};
-use simple_si_units::mechanical::{Velocity, Acceleration, Area};
+use simple_si_units::geometry::{Area};
+use simple_si_units::mechanical::{Velocity, Acceleration};
 
 #[test]
 pub fn placeholder_test() {
@@ -65,7 +64,7 @@ fn calc_gravity_at(mass: &MassPoint, masses: &[MassPoint]) -> [Acceleration<f64>
 			let di = pos[i] - mp.pos[i];
 			dsqr += di * di;
 		}
-		let d = dsqr.sqrt();
+		let d = Distance::from_m(dsqr.to_m2().sqrt());
 		let nvec = [(mp.pos[0] - pos[0]).m / d.m, (mp.pos[1] - pos[1]).m / d.m];
 		let A = Acceleration{mps2: G * mp.mass.kg / dsqr.m2};
 		for i in 0..2 {

@@ -17,7 +17,7 @@ mechanical,frequency,frequency,frequency,hertz,Hz,1/s
 geometry,area,area,area,square meters,m2,m^2
 mechanical,area density,area density,area density,kilograms per square meter,kgm2,kg.m^2
 geometry,volume,volume,volume,cubic meters,m3,m^3
-mechanical,density,density,density,kilograms per liter,kgpL,kg/L
+mechanical,density,density,density,kilograms per cubic meter,kgpm3,kg/m^3
 mechanical,velocity,velocity,velocity,meters per second,mps,m/s
 mechanical,acceleration,acceleration,acceleration,meters per second squared,mps2,m/s^2
 mechanical,momentum,momentum,momentum,kilogram meters per second,kgmps,kg.m/s
@@ -36,7 +36,7 @@ electromagnetic,magnetic flux density,magnetic flux density,magnetic flux densit
 chemical,catalytic activity,catalytic activity,catalytic activity,moles per second,molps,mol/s
 chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3
 electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.sr
-electromagnetic,illuminance,illuminance,illuminance,lux,lux,lm/m^2
+electromagnetic,illuminance,illuminance,illuminance,lux,lux,cd.sr/m^2
 nuclear,radioactivity,radioactivity,radioactivity,becquerels,Bq,1/s
 nuclear,absorbed dose,absorbed radiation dose,absorbed dose,grays,Gy,m^2/s^2
 nuclear,dose equivalent,radiation dose equivalent,dose equivalent,sieverts,Sv,m^2/s^2

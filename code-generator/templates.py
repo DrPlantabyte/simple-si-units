@@ -10,9 +10,22 @@ use super::NumLike;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 %(content)s
 
+%(appendix)s
 '''
 
 UNIT_STRUCT_DEFINITION_TEMPLATE='''
@@ -35,19 +48,7 @@ impl<T> %(code name)s<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "%(unit symbol)s";
 	}
-
-	/// Returns a new %(desc name)s value from the given number of %(unit name)s
-	///
-	/// # Arguments
-	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
-	pub fn from_%(unit symbol)s(%(unit symbol)s: T) -> Self {
-		%(code name)s{%(unit symbol)s}
-	}
-	
-	/// Returns a copy of this %(desc name)s value in %(unit name)s
-	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(unit symbol)s.clone();
-	}
+	%(non-converting methods)s
 }
 
 impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
@@ -61,10 +62,25 @@ impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 }
 '''
 
+NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
+	/// Returns a new %(desc name)s value from the given number of %(user unit name)s
+	///
+	/// # Arguments
+	/// * `%(user unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
+	pub fn from_%(user unit symbol)s(%(user unit symbol)s: T) -> Self {
+		%(code name)s{%(unit symbol)s: %(user unit symbol)s}
+	}
+	
+	/// Returns a copy of this %(desc name)s value in %(user unit name)s
+	pub fn to_%(user unit symbol)s(self) -> T {
+		return self.%(unit symbol)s.clone();
+	}
+'''
+
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) / T::from(%(slope)s_f64);
+		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) * T::from(%(inverse slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -79,7 +95,7 @@ TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 TO_FROM_SLOPE_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
 	pub fn to_%(unit symbol)s(self) -> T {
-		return self.%(si unit symbol)s.clone() / T::from(%(slope)s_f64);
+		return self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -119,6 +135,38 @@ impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code l
 	type Output = %(code result)s<T>;
 	fn %(op-function)s(self, rhs: &%(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s.clone()}
+	}
+}
+'''
+
+INVERSE_CONVERSION_TEMPLATE='''
+// 1/%(code right-side)s -> %(code result)s
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: T::from(self) / rhs.%(right-side symbol)s}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: %(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: T::from(self.clone()) / rhs.%(right-side symbol)s}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<&%(code right-side)s<T>> for %(scalar type)s where T: NumLike+From<%(scalar type)s> {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: T::from(self) / rhs.%(right-side symbol)s.clone()}
+	}
+}
+/// Dividing a scalar value by a %(code right-side)s unit value returns a value of type %(code result)s
+%(config attr prefix)simpl<T> std::ops::Div<&%(code right-side)s<T>> for &%(scalar type)s where T: NumLike+From<%(scalar type)s> {
+	type Output = %(code result)s<T>;
+	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
+		%(code result)s{%(result symbol)s: T::from(self.clone()) / rhs.%(right-side symbol)s.clone()}
 	}
 }
 '''

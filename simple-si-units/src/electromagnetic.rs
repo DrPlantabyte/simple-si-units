@@ -12,6 +12,18 @@ use super::mechanical::*;
 #[cfg(feature="serde")]
 #[macro_use]
 extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_bigfloat")]
+use num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="num_complex")]
+use num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
+#[cfg(feature="astro_float")]
+use astro_float;
 
 
 /// The electric charge (aka coulombs) unit type, defined as coulombs in SI units
@@ -33,19 +45,33 @@ impl<T> Charge<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "C";
 	}
-
+	
 	/// Returns a new electric charge value from the given number of coulombs
 	///
 	/// # Arguments
 	/// * `C` - Any number-like type, representing a quantity of coulombs
 	pub fn from_C(C: T) -> Self {
-		Charge{C}
+		Charge{C: C}
 	}
 	
 	/// Returns a copy of this electric charge value in coulombs
 	pub fn to_C(self) -> T {
 		return self.C.clone();
 	}
+
+	/// Returns a new electric charge value from the given number of coulombs
+	///
+	/// # Arguments
+	/// * `coulombs` - Any number-like type, representing a quantity of coulombs
+	pub fn from_coulombs(coulombs: T) -> Self {
+		Charge{C: coulombs}
+	}
+	
+	/// Returns a copy of this electric charge value in coulombs
+	pub fn to_coulombs(self) -> T {
+		return self.C.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Charge<T> where T: NumLike {
@@ -56,6 +82,110 @@ impl<T> fmt::Display for Charge<T> where T: NumLike {
 
 impl<T> Charge<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this electric charge value in millicoulombs
+	pub fn to_mC(self) -> T {
+		return self.C.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of millicoulombs
+	///
+	/// # Arguments
+	/// * `mC` - Any number-like type, representing a quantity of millicoulombs
+	pub fn from_mC(mC: T) -> Self {
+		Charge{C: mC * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in microcoulombs
+	pub fn to_uC(self) -> T {
+		return self.C.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of microcoulombs
+	///
+	/// # Arguments
+	/// * `uC` - Any number-like type, representing a quantity of microcoulombs
+	pub fn from_uC(uC: T) -> Self {
+		Charge{C: uC * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in nanocoulombs
+	pub fn to_nC(self) -> T {
+		return self.C.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of nanocoulombs
+	///
+	/// # Arguments
+	/// * `nC` - Any number-like type, representing a quantity of nanocoulombs
+	pub fn from_nC(nC: T) -> Self {
+		Charge{C: nC * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in kilocoulombs
+	pub fn to_kC(self) -> T {
+		return self.C.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of kilocoulombs
+	///
+	/// # Arguments
+	/// * `kC` - Any number-like type, representing a quantity of kilocoulombs
+	pub fn from_kC(kC: T) -> Self {
+		Charge{C: kC * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in megacoulombs
+	pub fn to_MC(self) -> T {
+		return self.C.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of megacoulombs
+	///
+	/// # Arguments
+	/// * `MC` - Any number-like type, representing a quantity of megacoulombs
+	pub fn from_MC(MC: T) -> Self {
+		Charge{C: MC * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in gigacoulombs
+	pub fn to_GC(self) -> T {
+		return self.C.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of gigacoulombs
+	///
+	/// # Arguments
+	/// * `GC` - Any number-like type, representing a quantity of gigacoulombs
+	pub fn from_GC(GC: T) -> Self {
+		Charge{C: GC * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in proton
+	pub fn to_p(self) -> T {
+		return self.C.clone() * T::from(6.24150907446076e+18_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of proton
+	///
+	/// # Arguments
+	/// * `p` - Any number-like type, representing a quantity of proton
+	pub fn from_p(p: T) -> Self {
+		Charge{C: p * T::from(1.6021766340000001e-19_f64)}
+	}
+
+	/// Returns a copy of this electric charge value in electron
+	pub fn to_e(self) -> T {
+		return self.C.clone() * T::from(-6.24150907446076e+18_f64);
+	}
+
+	/// Returns a new electric charge value from the given number of electron
+	///
+	/// # Arguments
+	/// * `e` - Any number-like type, representing a quantity of electron
+	pub fn from_e(e: T) -> Self {
+		Charge{C: e * T::from(-1.6021766340000001e-19_f64)}
+	}
+
 }
 
 // Charge / Time -> Current
@@ -347,19 +477,33 @@ impl<T> Voltage<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "V";
 	}
-
+	
 	/// Returns a new voltage value from the given number of volts
 	///
 	/// # Arguments
 	/// * `V` - Any number-like type, representing a quantity of volts
 	pub fn from_V(V: T) -> Self {
-		Voltage{V}
+		Voltage{V: V}
 	}
 	
 	/// Returns a copy of this voltage value in volts
 	pub fn to_V(self) -> T {
 		return self.V.clone();
 	}
+
+	/// Returns a new voltage value from the given number of volts
+	///
+	/// # Arguments
+	/// * `volts` - Any number-like type, representing a quantity of volts
+	pub fn from_volts(volts: T) -> Self {
+		Voltage{V: volts}
+	}
+	
+	/// Returns a copy of this voltage value in volts
+	pub fn to_volts(self) -> T {
+		return self.V.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Voltage<T> where T: NumLike {
@@ -370,6 +514,84 @@ impl<T> fmt::Display for Voltage<T> where T: NumLike {
 
 impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this voltage value in millivolts
+	pub fn to_mV(self) -> T {
+		return self.V.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new voltage value from the given number of millivolts
+	///
+	/// # Arguments
+	/// * `mV` - Any number-like type, representing a quantity of millivolts
+	pub fn from_mV(mV: T) -> Self {
+		Voltage{V: mV * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this voltage value in microvolts
+	pub fn to_uV(self) -> T {
+		return self.V.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new voltage value from the given number of microvolts
+	///
+	/// # Arguments
+	/// * `uV` - Any number-like type, representing a quantity of microvolts
+	pub fn from_uV(uV: T) -> Self {
+		Voltage{V: uV * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this voltage value in nanovolts
+	pub fn to_nV(self) -> T {
+		return self.V.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new voltage value from the given number of nanovolts
+	///
+	/// # Arguments
+	/// * `nV` - Any number-like type, representing a quantity of nanovolts
+	pub fn from_nV(nV: T) -> Self {
+		Voltage{V: nV * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this voltage value in kilovolts
+	pub fn to_kV(self) -> T {
+		return self.V.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new voltage value from the given number of kilovolts
+	///
+	/// # Arguments
+	/// * `kV` - Any number-like type, representing a quantity of kilovolts
+	pub fn from_kV(kV: T) -> Self {
+		Voltage{V: kV * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this voltage value in megavolts
+	pub fn to_MV(self) -> T {
+		return self.V.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new voltage value from the given number of megavolts
+	///
+	/// # Arguments
+	/// * `MV` - Any number-like type, representing a quantity of megavolts
+	pub fn from_MV(MV: T) -> Self {
+		Voltage{V: MV * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this voltage value in gigavolts
+	pub fn to_GV(self) -> T {
+		return self.V.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new voltage value from the given number of gigavolts
+	///
+	/// # Arguments
+	/// * `GV` - Any number-like type, representing a quantity of gigavolts
+	pub fn from_GV(GV: T) -> Self {
+		Voltage{V: GV * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // Voltage * Time -> MagneticFlux
@@ -661,19 +883,33 @@ impl<T> Resistance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "Ohm";
 	}
-
+	
 	/// Returns a new electrical resistance value from the given number of ohms
 	///
 	/// # Arguments
 	/// * `Ohm` - Any number-like type, representing a quantity of ohms
 	pub fn from_Ohm(Ohm: T) -> Self {
-		Resistance{Ohm}
+		Resistance{Ohm: Ohm}
 	}
 	
 	/// Returns a copy of this electrical resistance value in ohms
 	pub fn to_Ohm(self) -> T {
 		return self.Ohm.clone();
 	}
+
+	/// Returns a new electrical resistance value from the given number of ohms
+	///
+	/// # Arguments
+	/// * `ohms` - Any number-like type, representing a quantity of ohms
+	pub fn from_ohms(ohms: T) -> Self {
+		Resistance{Ohm: ohms}
+	}
+	
+	/// Returns a copy of this electrical resistance value in ohms
+	pub fn to_ohms(self) -> T {
+		return self.Ohm.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Resistance<T> where T: NumLike {
@@ -684,6 +920,84 @@ impl<T> fmt::Display for Resistance<T> where T: NumLike {
 
 impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this electrical resistance value in milliohms
+	pub fn to_mOhm(self) -> T {
+		return self.Ohm.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of milliohms
+	///
+	/// # Arguments
+	/// * `mOhm` - Any number-like type, representing a quantity of milliohms
+	pub fn from_mOhm(mOhm: T) -> Self {
+		Resistance{Ohm: mOhm * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this electrical resistance value in microohms
+	pub fn to_uOhm(self) -> T {
+		return self.Ohm.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of microohms
+	///
+	/// # Arguments
+	/// * `uOhm` - Any number-like type, representing a quantity of microohms
+	pub fn from_uOhm(uOhm: T) -> Self {
+		Resistance{Ohm: uOhm * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this electrical resistance value in nanoohms
+	pub fn to_nOhm(self) -> T {
+		return self.Ohm.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of nanoohms
+	///
+	/// # Arguments
+	/// * `nOhm` - Any number-like type, representing a quantity of nanoohms
+	pub fn from_nOhm(nOhm: T) -> Self {
+		Resistance{Ohm: nOhm * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this electrical resistance value in kiloohms
+	pub fn to_kOhm(self) -> T {
+		return self.Ohm.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of kiloohms
+	///
+	/// # Arguments
+	/// * `kOhm` - Any number-like type, representing a quantity of kiloohms
+	pub fn from_kOhm(kOhm: T) -> Self {
+		Resistance{Ohm: kOhm * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical resistance value in megaohms
+	pub fn to_MOhm(self) -> T {
+		return self.Ohm.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of megaohms
+	///
+	/// # Arguments
+	/// * `MOhm` - Any number-like type, representing a quantity of megaohms
+	pub fn from_MOhm(MOhm: T) -> Self {
+		Resistance{Ohm: MOhm * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical resistance value in gigaohms
+	pub fn to_GOhm(self) -> T {
+		return self.Ohm.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new electrical resistance value from the given number of gigaohms
+	///
+	/// # Arguments
+	/// * `GOhm` - Any number-like type, representing a quantity of gigaohms
+	pub fn from_GOhm(GOhm: T) -> Self {
+		Resistance{Ohm: GOhm * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // Resistance * Time -> Inductance
@@ -866,6 +1180,262 @@ impl<T> std::ops::Div<&Inductance<T>> for &Resistance<T> where T: NumLike {
 	}
 }
 
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<Resistance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+impl<T> std::ops::Div<&Resistance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Resistance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Resistance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Resistance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Resistance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
+// 1/Resistance -> Conductance
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self) / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
+	}
+}
+
 /// The electrical conductance unit type, defined as siemens in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -885,19 +1455,33 @@ impl<T> Conductance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "S";
 	}
-
+	
 	/// Returns a new electrical conductance value from the given number of siemens
 	///
 	/// # Arguments
 	/// * `S` - Any number-like type, representing a quantity of siemens
 	pub fn from_S(S: T) -> Self {
-		Conductance{S}
+		Conductance{S: S}
 	}
 	
 	/// Returns a copy of this electrical conductance value in siemens
 	pub fn to_S(self) -> T {
 		return self.S.clone();
 	}
+
+	/// Returns a new electrical conductance value from the given number of siemens
+	///
+	/// # Arguments
+	/// * `siemens` - Any number-like type, representing a quantity of siemens
+	pub fn from_siemens(siemens: T) -> Self {
+		Conductance{S: siemens}
+	}
+	
+	/// Returns a copy of this electrical conductance value in siemens
+	pub fn to_siemens(self) -> T {
+		return self.S.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Conductance<T> where T: NumLike {
@@ -908,6 +1492,84 @@ impl<T> fmt::Display for Conductance<T> where T: NumLike {
 
 impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this electrical conductance value in millisiemens
+	pub fn to_mS(self) -> T {
+		return self.S.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of millisiemens
+	///
+	/// # Arguments
+	/// * `mS` - Any number-like type, representing a quantity of millisiemens
+	pub fn from_mS(mS: T) -> Self {
+		Conductance{S: mS * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this electrical conductance value in microsiemens
+	pub fn to_uS(self) -> T {
+		return self.S.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of microsiemens
+	///
+	/// # Arguments
+	/// * `uS` - Any number-like type, representing a quantity of microsiemens
+	pub fn from_uS(uS: T) -> Self {
+		Conductance{S: uS * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this electrical conductance value in nanosiemens
+	pub fn to_nS(self) -> T {
+		return self.S.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of nanosiemens
+	///
+	/// # Arguments
+	/// * `nS` - Any number-like type, representing a quantity of nanosiemens
+	pub fn from_nS(nS: T) -> Self {
+		Conductance{S: nS * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this electrical conductance value in kilosiemens
+	pub fn to_kS(self) -> T {
+		return self.S.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of kilosiemens
+	///
+	/// # Arguments
+	/// * `kS` - Any number-like type, representing a quantity of kilosiemens
+	pub fn from_kS(kS: T) -> Self {
+		Conductance{S: kS * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical conductance value in megasiemens
+	pub fn to_MS(self) -> T {
+		return self.S.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of megasiemens
+	///
+	/// # Arguments
+	/// * `MS` - Any number-like type, representing a quantity of megasiemens
+	pub fn from_MS(MS: T) -> Self {
+		Conductance{S: MS * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical conductance value in gigasiemens
+	pub fn to_GS(self) -> T {
+		return self.S.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new electrical conductance value from the given number of gigasiemens
+	///
+	/// # Arguments
+	/// * `GS` - Any number-like type, representing a quantity of gigasiemens
+	pub fn from_GS(GS: T) -> Self {
+		Conductance{S: GS * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // Conductance * Time -> Capacitance
@@ -1090,6 +1752,262 @@ impl<T> std::ops::Mul<&MagneticFlux<T>> for &Conductance<T> where T: NumLike {
 	}
 }
 
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<Conductance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+impl<T> std::ops::Div<&Conductance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_bigfloat")]
+impl<T> std::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Conductance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<Conductance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Conductance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="astro_float")]
+impl<T> std::ops::Div<&Conductance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
+// 1/Conductance -> Resistance
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self) / rhs.S.clone()}
+	}
+}
+/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
+#[cfg(feature="num_complex")]
+impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
+	}
+}
+
 /// The electrical capacitance unit type, defined as farads in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1109,19 +2027,33 @@ impl<T> Capacitance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "F";
 	}
-
+	
 	/// Returns a new electrical capacitance value from the given number of farads
 	///
 	/// # Arguments
 	/// * `F` - Any number-like type, representing a quantity of farads
 	pub fn from_F(F: T) -> Self {
-		Capacitance{F}
+		Capacitance{F: F}
 	}
 	
 	/// Returns a copy of this electrical capacitance value in farads
 	pub fn to_F(self) -> T {
 		return self.F.clone();
 	}
+
+	/// Returns a new electrical capacitance value from the given number of farads
+	///
+	/// # Arguments
+	/// * `farads` - Any number-like type, representing a quantity of farads
+	pub fn from_farads(farads: T) -> Self {
+		Capacitance{F: farads}
+	}
+	
+	/// Returns a copy of this electrical capacitance value in farads
+	pub fn to_farads(self) -> T {
+		return self.F.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Capacitance<T> where T: NumLike {
@@ -1132,6 +2064,97 @@ impl<T> fmt::Display for Capacitance<T> where T: NumLike {
 
 impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this electrical capacitance value in millifarads
+	pub fn to_mF(self) -> T {
+		return self.F.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of millifarads
+	///
+	/// # Arguments
+	/// * `mF` - Any number-like type, representing a quantity of millifarads
+	pub fn from_mF(mF: T) -> Self {
+		Capacitance{F: mF * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in microfarads
+	pub fn to_uF(self) -> T {
+		return self.F.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of microfarads
+	///
+	/// # Arguments
+	/// * `uF` - Any number-like type, representing a quantity of microfarads
+	pub fn from_uF(uF: T) -> Self {
+		Capacitance{F: uF * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in nanofarads
+	pub fn to_nF(self) -> T {
+		return self.F.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of nanofarads
+	///
+	/// # Arguments
+	/// * `nF` - Any number-like type, representing a quantity of nanofarads
+	pub fn from_nF(nF: T) -> Self {
+		Capacitance{F: nF * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in picofarads
+	pub fn to_pF(self) -> T {
+		return self.F.clone() * T::from(1000000000000.0_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of picofarads
+	///
+	/// # Arguments
+	/// * `pF` - Any number-like type, representing a quantity of picofarads
+	pub fn from_pF(pF: T) -> Self {
+		Capacitance{F: pF * T::from(1e-12_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in kilofarads
+	pub fn to_kF(self) -> T {
+		return self.F.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of kilofarads
+	///
+	/// # Arguments
+	/// * `kF` - Any number-like type, representing a quantity of kilofarads
+	pub fn from_kF(kF: T) -> Self {
+		Capacitance{F: kF * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in megafarads
+	pub fn to_MF(self) -> T {
+		return self.F.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of megafarads
+	///
+	/// # Arguments
+	/// * `MF` - Any number-like type, representing a quantity of megafarads
+	pub fn from_MF(MF: T) -> Self {
+		Capacitance{F: MF * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this electrical capacitance value in gigafarads
+	pub fn to_GF(self) -> T {
+		return self.F.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new electrical capacitance value from the given number of gigafarads
+	///
+	/// # Arguments
+	/// * `GF` - Any number-like type, representing a quantity of gigafarads
+	pub fn from_GF(GF: T) -> Self {
+		Capacitance{F: GF * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // Capacitance / Time -> Conductance
@@ -1303,19 +2326,33 @@ impl<T> Inductance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "H";
 	}
-
+	
 	/// Returns a new inductance value from the given number of henries
 	///
 	/// # Arguments
 	/// * `H` - Any number-like type, representing a quantity of henries
 	pub fn from_H(H: T) -> Self {
-		Inductance{H}
+		Inductance{H: H}
 	}
 	
 	/// Returns a copy of this inductance value in henries
 	pub fn to_H(self) -> T {
 		return self.H.clone();
 	}
+
+	/// Returns a new inductance value from the given number of henries
+	///
+	/// # Arguments
+	/// * `henries` - Any number-like type, representing a quantity of henries
+	pub fn from_henries(henries: T) -> Self {
+		Inductance{H: henries}
+	}
+	
+	/// Returns a copy of this inductance value in henries
+	pub fn to_henries(self) -> T {
+		return self.H.clone();
+	}
+
 }
 
 impl<T> fmt::Display for Inductance<T> where T: NumLike {
@@ -1326,6 +2363,84 @@ impl<T> fmt::Display for Inductance<T> where T: NumLike {
 
 impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this inductance value in millihenries
+	pub fn to_mH(self) -> T {
+		return self.H.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inductance value from the given number of millihenries
+	///
+	/// # Arguments
+	/// * `mH` - Any number-like type, representing a quantity of millihenries
+	pub fn from_mH(mH: T) -> Self {
+		Inductance{H: mH * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inductance value in microhenries
+	pub fn to_uH(self) -> T {
+		return self.H.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inductance value from the given number of microhenries
+	///
+	/// # Arguments
+	/// * `uH` - Any number-like type, representing a quantity of microhenries
+	pub fn from_uH(uH: T) -> Self {
+		Inductance{H: uH * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inductance value in nanohenries
+	pub fn to_nH(self) -> T {
+		return self.H.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inductance value from the given number of nanohenries
+	///
+	/// # Arguments
+	/// * `nH` - Any number-like type, representing a quantity of nanohenries
+	pub fn from_nH(nH: T) -> Self {
+		Inductance{H: nH * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inductance value in kilohenries
+	pub fn to_kH(self) -> T {
+		return self.H.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inductance value from the given number of kilohenries
+	///
+	/// # Arguments
+	/// * `kH` - Any number-like type, representing a quantity of kilohenries
+	pub fn from_kH(kH: T) -> Self {
+		Inductance{H: kH * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inductance value in megahenries
+	pub fn to_MH(self) -> T {
+		return self.H.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inductance value from the given number of megahenries
+	///
+	/// # Arguments
+	/// * `MH` - Any number-like type, representing a quantity of megahenries
+	pub fn from_MH(MH: T) -> Self {
+		Inductance{H: MH * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inductance value in gigahenries
+	pub fn to_GH(self) -> T {
+		return self.H.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inductance value from the given number of gigahenries
+	///
+	/// # Arguments
+	/// * `GH` - Any number-like type, representing a quantity of gigahenries
+	pub fn from_GH(GH: T) -> Self {
+		Inductance{H: GH * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // Inductance / Time -> Resistance
@@ -1497,19 +2612,33 @@ impl<T> MagneticFlux<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "Wb";
 	}
-
+	
 	/// Returns a new magnetic flux value from the given number of webers
 	///
 	/// # Arguments
 	/// * `Wb` - Any number-like type, representing a quantity of webers
 	pub fn from_Wb(Wb: T) -> Self {
-		MagneticFlux{Wb}
+		MagneticFlux{Wb: Wb}
 	}
 	
 	/// Returns a copy of this magnetic flux value in webers
 	pub fn to_Wb(self) -> T {
 		return self.Wb.clone();
 	}
+
+	/// Returns a new magnetic flux value from the given number of webers
+	///
+	/// # Arguments
+	/// * `webers` - Any number-like type, representing a quantity of webers
+	pub fn from_webers(webers: T) -> Self {
+		MagneticFlux{Wb: webers}
+	}
+	
+	/// Returns a copy of this magnetic flux value in webers
+	pub fn to_webers(self) -> T {
+		return self.Wb.clone();
+	}
+
 }
 
 impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
@@ -1520,6 +2649,84 @@ impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
 
 impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this magnetic flux value in milliwebers
+	pub fn to_mWb(self) -> T {
+		return self.Wb.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of milliwebers
+	///
+	/// # Arguments
+	/// * `mWb` - Any number-like type, representing a quantity of milliwebers
+	pub fn from_mWb(mWb: T) -> Self {
+		MagneticFlux{Wb: mWb * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux value in microwebers
+	pub fn to_uWb(self) -> T {
+		return self.Wb.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of microwebers
+	///
+	/// # Arguments
+	/// * `uWb` - Any number-like type, representing a quantity of microwebers
+	pub fn from_uWb(uWb: T) -> Self {
+		MagneticFlux{Wb: uWb * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux value in nanowebers
+	pub fn to_nWb(self) -> T {
+		return self.Wb.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of nanowebers
+	///
+	/// # Arguments
+	/// * `nWb` - Any number-like type, representing a quantity of nanowebers
+	pub fn from_nWb(nWb: T) -> Self {
+		MagneticFlux{Wb: nWb * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux value in kilowebers
+	pub fn to_kWb(self) -> T {
+		return self.Wb.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of kilowebers
+	///
+	/// # Arguments
+	/// * `kWb` - Any number-like type, representing a quantity of kilowebers
+	pub fn from_kWb(kWb: T) -> Self {
+		MagneticFlux{Wb: kWb * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux value in megawebers
+	pub fn to_MWb(self) -> T {
+		return self.Wb.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of megawebers
+	///
+	/// # Arguments
+	/// * `MWb` - Any number-like type, representing a quantity of megawebers
+	pub fn from_MWb(MWb: T) -> Self {
+		MagneticFlux{Wb: MWb * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux value in gigawebers
+	pub fn to_GWb(self) -> T {
+		return self.Wb.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new magnetic flux value from the given number of gigawebers
+	///
+	/// # Arguments
+	/// * `GWb` - Any number-like type, representing a quantity of gigawebers
+	pub fn from_GWb(GWb: T) -> Self {
+		MagneticFlux{Wb: GWb * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // MagneticFlux / Time -> Voltage
@@ -1871,19 +3078,33 @@ impl<T> MagneticFluxDensity<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "T";
 	}
-
+	
 	/// Returns a new magnetic flux density value from the given number of teslas
 	///
 	/// # Arguments
 	/// * `T` - Any number-like type, representing a quantity of teslas
 	pub fn from_T(T: T) -> Self {
-		MagneticFluxDensity{T}
+		MagneticFluxDensity{T: T}
 	}
 	
 	/// Returns a copy of this magnetic flux density value in teslas
 	pub fn to_T(self) -> T {
 		return self.T.clone();
 	}
+
+	/// Returns a new magnetic flux density value from the given number of teslas
+	///
+	/// # Arguments
+	/// * `teslas` - Any number-like type, representing a quantity of teslas
+	pub fn from_teslas(teslas: T) -> Self {
+		MagneticFluxDensity{T: teslas}
+	}
+	
+	/// Returns a copy of this magnetic flux density value in teslas
+	pub fn to_teslas(self) -> T {
+		return self.T.clone();
+	}
+
 }
 
 impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
@@ -1894,6 +3115,84 @@ impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
 
 impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this magnetic flux density value in milliteslas
+	pub fn to_mT(self) -> T {
+		return self.T.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of milliteslas
+	///
+	/// # Arguments
+	/// * `mT` - Any number-like type, representing a quantity of milliteslas
+	pub fn from_mT(mT: T) -> Self {
+		MagneticFluxDensity{T: mT * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux density value in microteslas
+	pub fn to_uT(self) -> T {
+		return self.T.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of microteslas
+	///
+	/// # Arguments
+	/// * `uT` - Any number-like type, representing a quantity of microteslas
+	pub fn from_uT(uT: T) -> Self {
+		MagneticFluxDensity{T: uT * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux density value in nanoteslas
+	pub fn to_nT(self) -> T {
+		return self.T.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of nanoteslas
+	///
+	/// # Arguments
+	/// * `nT` - Any number-like type, representing a quantity of nanoteslas
+	pub fn from_nT(nT: T) -> Self {
+		MagneticFluxDensity{T: nT * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux density value in kiloteslas
+	pub fn to_kT(self) -> T {
+		return self.T.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of kiloteslas
+	///
+	/// # Arguments
+	/// * `kT` - Any number-like type, representing a quantity of kiloteslas
+	pub fn from_kT(kT: T) -> Self {
+		MagneticFluxDensity{T: kT * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux density value in megateslas
+	pub fn to_MT(self) -> T {
+		return self.T.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of megateslas
+	///
+	/// # Arguments
+	/// * `MT` - Any number-like type, representing a quantity of megateslas
+	pub fn from_MT(MT: T) -> Self {
+		MagneticFluxDensity{T: MT * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this magnetic flux density value in gigateslas
+	pub fn to_GT(self) -> T {
+		return self.T.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new magnetic flux density value from the given number of gigateslas
+	///
+	/// # Arguments
+	/// * `GT` - Any number-like type, representing a quantity of gigateslas
+	pub fn from_GT(GT: T) -> Self {
+		MagneticFluxDensity{T: GT * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // MagneticFluxDensity * Area -> MagneticFlux
@@ -1945,19 +3244,33 @@ impl<T> LuminousFlux<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "lm";
 	}
-
+	
 	/// Returns a new luminous flux value from the given number of lumens
 	///
 	/// # Arguments
 	/// * `lm` - Any number-like type, representing a quantity of lumens
 	pub fn from_lm(lm: T) -> Self {
-		LuminousFlux{lm}
+		LuminousFlux{lm: lm}
 	}
 	
 	/// Returns a copy of this luminous flux value in lumens
 	pub fn to_lm(self) -> T {
 		return self.lm.clone();
 	}
+
+	/// Returns a new luminous flux value from the given number of lumens
+	///
+	/// # Arguments
+	/// * `lumens` - Any number-like type, representing a quantity of lumens
+	pub fn from_lumens(lumens: T) -> Self {
+		LuminousFlux{lm: lumens}
+	}
+	
+	/// Returns a copy of this luminous flux value in lumens
+	pub fn to_lumens(self) -> T {
+		return self.lm.clone();
+	}
+
 }
 
 impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
@@ -1968,6 +3281,84 @@ impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
 
 impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this luminous flux value in millilumens
+	pub fn to_mlm(self) -> T {
+		return self.lm.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of millilumens
+	///
+	/// # Arguments
+	/// * `mlm` - Any number-like type, representing a quantity of millilumens
+	pub fn from_mlm(mlm: T) -> Self {
+		LuminousFlux{lm: mlm * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this luminous flux value in microlumens
+	pub fn to_ulm(self) -> T {
+		return self.lm.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of microlumens
+	///
+	/// # Arguments
+	/// * `ulm` - Any number-like type, representing a quantity of microlumens
+	pub fn from_ulm(ulm: T) -> Self {
+		LuminousFlux{lm: ulm * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this luminous flux value in nanolumens
+	pub fn to_nlm(self) -> T {
+		return self.lm.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of nanolumens
+	///
+	/// # Arguments
+	/// * `nlm` - Any number-like type, representing a quantity of nanolumens
+	pub fn from_nlm(nlm: T) -> Self {
+		LuminousFlux{lm: nlm * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this luminous flux value in kilolumens
+	pub fn to_klm(self) -> T {
+		return self.lm.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of kilolumens
+	///
+	/// # Arguments
+	/// * `klm` - Any number-like type, representing a quantity of kilolumens
+	pub fn from_klm(klm: T) -> Self {
+		LuminousFlux{lm: klm * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this luminous flux value in megalumens
+	pub fn to_Mlm(self) -> T {
+		return self.lm.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of megalumens
+	///
+	/// # Arguments
+	/// * `Mlm` - Any number-like type, representing a quantity of megalumens
+	pub fn from_Mlm(Mlm: T) -> Self {
+		LuminousFlux{lm: Mlm * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this luminous flux value in gigalumens
+	pub fn to_Glm(self) -> T {
+		return self.lm.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new luminous flux value from the given number of gigalumens
+	///
+	/// # Arguments
+	/// * `Glm` - Any number-like type, representing a quantity of gigalumens
+	pub fn from_Glm(Glm: T) -> Self {
+		LuminousFlux{lm: Glm * T::from(1000000000.0_f64)}
+	}
+
 }
 
 // LuminousFlux / Luminosity -> SolidAngle
@@ -2030,6 +3421,66 @@ impl<T> std::ops::Div<&SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
 	}
 }
 
+// LuminousFlux / Area -> Illuminance
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<Area<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm / rhs.m2}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<Area<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm.clone() / rhs.m2}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<&Area<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm / rhs.m2.clone()}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<&Area<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm.clone() / rhs.m2.clone()}
+	}
+}
+
+// LuminousFlux / Illuminance -> Area
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm / rhs.lux}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm.clone() / rhs.lux}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<&Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm / rhs.lux.clone()}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<&Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm.clone() / rhs.lux.clone()}
+	}
+}
+
 /// The illuminance unit type, defined as lux in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -2049,19 +3500,20 @@ impl<T> Illuminance<T> where T: NumLike {
 	pub fn unit_symbol() -> &'static str {
 		return "lux";
 	}
-
+	
 	/// Returns a new illuminance value from the given number of lux
 	///
 	/// # Arguments
 	/// * `lux` - Any number-like type, representing a quantity of lux
 	pub fn from_lux(lux: T) -> Self {
-		Illuminance{lux}
+		Illuminance{lux: lux}
 	}
 	
 	/// Returns a copy of this illuminance value in lux
 	pub fn to_lux(self) -> T {
 		return self.lux.clone();
 	}
+
 }
 
 impl<T> fmt::Display for Illuminance<T> where T: NumLike {
@@ -2072,6 +3524,115 @@ impl<T> fmt::Display for Illuminance<T> where T: NumLike {
 
 impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	
+	/// Returns a copy of this illuminance value in millilux
+	pub fn to_mlux(self) -> T {
+		return self.lux.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of millilux
+	///
+	/// # Arguments
+	/// * `mlux` - Any number-like type, representing a quantity of millilux
+	pub fn from_mlux(mlux: T) -> Self {
+		Illuminance{lux: mlux * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this illuminance value in microlux
+	pub fn to_ulux(self) -> T {
+		return self.lux.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of microlux
+	///
+	/// # Arguments
+	/// * `ulux` - Any number-like type, representing a quantity of microlux
+	pub fn from_ulux(ulux: T) -> Self {
+		Illuminance{lux: ulux * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this illuminance value in nanolux
+	pub fn to_nlux(self) -> T {
+		return self.lux.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of nanolux
+	///
+	/// # Arguments
+	/// * `nlux` - Any number-like type, representing a quantity of nanolux
+	pub fn from_nlux(nlux: T) -> Self {
+		Illuminance{lux: nlux * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this illuminance value in kilolux
+	pub fn to_klux(self) -> T {
+		return self.lux.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of kilolux
+	///
+	/// # Arguments
+	/// * `klux` - Any number-like type, representing a quantity of kilolux
+	pub fn from_klux(klux: T) -> Self {
+		Illuminance{lux: klux * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this illuminance value in megalux
+	pub fn to_Mlux(self) -> T {
+		return self.lux.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of megalux
+	///
+	/// # Arguments
+	/// * `Mlux` - Any number-like type, representing a quantity of megalux
+	pub fn from_Mlux(Mlux: T) -> Self {
+		Illuminance{lux: Mlux * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this illuminance value in gigalux
+	pub fn to_Glux(self) -> T {
+		return self.lux.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new illuminance value from the given number of gigalux
+	///
+	/// # Arguments
+	/// * `Glux` - Any number-like type, representing a quantity of gigalux
+	pub fn from_Glux(Glux: T) -> Self {
+		Illuminance{lux: Glux * T::from(1000000000.0_f64)}
+	}
+
 }
+
+// Illuminance * Area -> LuminousFlux
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Area<T>> for Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux * rhs.m2}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Area<T>> for &Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux.clone() * rhs.m2}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Area<T>> for Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux * rhs.m2.clone()}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Area<T>> for &Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux.clone() * rhs.m2.clone()}
+	}
+}
+
 
 

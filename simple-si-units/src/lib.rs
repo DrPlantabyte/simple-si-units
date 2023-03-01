@@ -48,7 +48,7 @@
 //! * Power, aka Watt (J/s, aka W)
 //! * Voltage (W/A, aka V)
 //! * Resistance (V/A, aka Ohm)
-//! * Conductance (1/ohm, aka S)
+//! * Conductance (1/Ohm, aka S)
 //! * Capacitance (C/V)
 //! * Inductance (Wb/A, aka H)
 //! * Magnetic Flux (V.s, aka Wb)
@@ -177,7 +177,7 @@ mod unit_tests {
 			Mass::from_pg(1000.0_f64).to_kg(), 9
 		);
 		assert_approx_equal(
-			Mass::from_ton(1.0_f64).to_kg(),
+			Mass::from_tons(1.0_f64).to_kg(),
 			Mass::from_kg(1000.0_f64).to_kg(), 9
 		);
 		assert_approx_equal(
@@ -198,7 +198,7 @@ mod unit_tests {
 		let _ = Mass::from_kg(1.0_f64).to_ug();
 		let _ = Mass::from_kg(1.0_f64).to_ng();
 		let _ = Mass::from_kg(1.0_f64).to_pg();
-		let _ = Mass::from_kg(1.0_f64).to_ton();
+		let _ = Mass::from_kg(1.0_f64).to_tons();
 		let _ = Mass::from_kg(1.0_f64).to_earth_mass();
 		let _ = Mass::from_kg(1.0_f64).to_jupiter_mass();
 		let _ = Mass::from_kg(1.0_f64).to_solar_mass();
@@ -324,10 +324,6 @@ mod unit_tests {
 			Current::from_nA(1000.0_f64).to_A(), 9
 		);
 		assert_approx_equal(
-			Current::from_nA(1.0_f64).to_A(),
-			Current::from_pA(1000.0_f64).to_A(), 9
-		);
-		assert_approx_equal(
 			Current::from_A(1000.0_f64).to_A(),
 			Current::from_kA(1.0_f64).to_A(), 9
 		);
@@ -360,10 +356,6 @@ mod unit_tests {
 		assert_approx_equal(
 			Luminosity::from_ucd(1.0_f64).to_cd(),
 			Luminosity::from_ncd(1000.0_f64).to_cd(), 9
-		);
-		assert_approx_equal(
-			Luminosity::from_ncd(1.0_f64).to_cd(),
-			Luminosity::from_pcd(1000.0_f64).to_cd(), 9
 		);
 		assert_approx_equal(
 			Luminosity::from_cd(1000.0_f64).to_cd(),
@@ -402,48 +394,48 @@ mod unit_tests {
 	#[test]
 	fn angular_velocity_units() {
 		assert_approx_equal(
-			AnglularVelocity::from_radps(6.283185307179586_f64 / 60.0_f64).to_radps(),
-			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+			AngularVelocity::from_radps(6.283185307179586_f64 / 60.0_f64).to_radps(),
+			AngularVelocity::from_rpm(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_radps(6.283185307179586_f64).to_radps(),
-			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+			AngularVelocity::from_radps(6.283185307179586_f64).to_radps(),
+			AngularVelocity::from_rps(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_degps(360.0_f64 / 60.0_f64).to_radps(),
-			AnglularVelocity::from_rpm(1.0_f64).to_radps(), 9
+			AngularVelocity::from_degps(360.0_f64 / 60.0_f64).to_radps(),
+			AngularVelocity::from_rpm(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
-			AnglularVelocity::from_degps(360.0_f64).to_radps(),
-			AnglularVelocity::from_rps(1.0_f64).to_radps(), 9
+			AngularVelocity::from_degps(360.0_f64).to_radps(),
+			AngularVelocity::from_rps(1.0_f64).to_radps(), 9
 		);
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_radps();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_degps();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_rpm();
-		let _ = AnglularVelocity::from_radps(1.0_f64).to_rps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_radps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_degps();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_rpm();
+		let _ = AngularVelocity::from_radps(1.0_f64).to_rps();
 	}
 	#[test]
 	fn angular_acceleration_units() {
 		assert_approx_equal(
-			AnglularAcceleration::from_radps2(6.283185307179586_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
-			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_radps2(6.283185307179586_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AngularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_radps2(6.283185307179586_f64).to_radps2(),
-			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_radps2(6.283185307179586_f64).to_radps2(),
+			AngularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_degps2(360.0_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
-			AnglularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_degps2(360.0_f64 / 60.0_f64 / 60.0_f64).to_radps2(),
+			AngularAcceleration::from_rpm2(1.0_f64).to_radps2(), 9
 		);
 		assert_approx_equal(
-			AnglularAcceleration::from_degps2(360.0_f64).to_radps2(),
-			AnglularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+			AngularAcceleration::from_degps2(360.0_f64).to_radps2(),
+			AngularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
 		);
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_radps2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_degps2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rpm2();
-		let _ = AnglularAcceleration::from_radps2(1.0_f64).to_rps2();}
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_radps2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_degps2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_rpm2();
+		let _ = AngularAcceleration::from_radps2(1.0_f64).to_rps2();}
 	#[test]
 	fn moment_of_inertia_units() {
 		assert_approx_equal(
@@ -493,7 +485,7 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			Frequency::from_GHz(1.0_f64).to_Hz(),
-			Frequency::from_mHz(1000.0_f64).to_Hz(), 9
+			Frequency::from_MHz(1000.0_f64).to_Hz(), 9
 		);
 		assert_approx_equal(
 			Frequency::from_THz(1.0_f64).to_Hz(),
@@ -537,16 +529,16 @@ mod unit_tests {
 	#[test]
 	fn area_density_units() {
 		assert_approx_equal(
-			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
-			AreaDensity::from_gm2(1000.0_f64).to_kgm2(), 9
+			AreaDensity::from_kgpm2(1.0_f64).to_kgpm2(),
+			AreaDensity::from_gpm2(1000.0_f64).to_kgpm2(), 9
 		);
 		assert_approx_equal(
-			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
-			AreaDensity::from_gcm2(0.1_f64).to_kgm2(), 9
+			AreaDensity::from_kgpm2(1.0_f64).to_kgpm2(),
+			AreaDensity::from_gpcm2(0.1_f64).to_kgpm2(), 9
 		);
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_kgm2();
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_gm2();
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_gcm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_kgpm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpcm2();
 	}
 	#[test]
 	fn volume_units() {
@@ -571,10 +563,6 @@ mod unit_tests {
 			Volume::from_cc(1000.0_f64).to_L(), 9
 		);
 		assert_approx_equal(
-			Volume::from_L(1.0_f64).to_L(),
-			Volume::from_cm3(1000.0_f64).to_L(), 9
-		);
-		assert_approx_equal(
 			Volume::from_m3(1.0_f64).to_L(),
 			Volume::from_L(1000.0_f64).to_L(), 9
 		);
@@ -596,7 +584,6 @@ mod unit_tests {
 		let _ = Volume::from_L(1.0_f64).to_nL();
 		let _ = Volume::from_L(1.0_f64).to_pL();
 		let _ = Volume::from_L(1.0_f64).to_cc();
-		let _ = Volume::from_L(1.0_f64).to_cm3();
 		let _ = Volume::from_L(1.0_f64).to_m3();
 		let _ = Volume::from_L(1.0_f64).to_kL();
 		let _ = Volume::from_L(1.0_f64).to_ML();
@@ -604,7 +591,7 @@ mod unit_tests {
 	}
 
 	#[test]
-	fn volume_units() {
+	fn density_units() {
 		assert_approx_equal(
 			Density::from_kgpL(1.0_f64).to_kgpL(),
 			Density::from_kgpm3(1000.0_f64).to_kgpL(), 9
@@ -889,36 +876,36 @@ mod unit_tests {
 	#[test]
 	fn resistance_units() {
 		assert_approx_equal(
-			Resistance::from_ohm(1.0_f64).to_ohm(),
-			Resistance::from_mohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_Ohm(1.0_f64).to_Ohm(),
+			Resistance::from_mOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_mohm(1.0_f64).to_ohm(),
-			Resistance::from_uohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_mOhm(1.0_f64).to_Ohm(),
+			Resistance::from_uOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_uohm(1.0_f64).to_ohm(),
-			Resistance::from_nohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_uOhm(1.0_f64).to_Ohm(),
+			Resistance::from_nOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_kohm(1.0_f64).to_ohm(),
-			Resistance::from_ohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_kOhm(1.0_f64).to_Ohm(),
+			Resistance::from_Ohm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_Mohm(1.0_f64).to_ohm(),
-			Resistance::from_kohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_MOhm(1.0_f64).to_Ohm(),
+			Resistance::from_kOhm(1000.0_f64).to_Ohm(), 9
 		);
 		assert_approx_equal(
-			Resistance::from_Gohm(1.0_f64).to_ohm(),
-			Resistance::from_Mohm(1000.0_f64).to_ohm(), 9
+			Resistance::from_GOhm(1.0_f64).to_Ohm(),
+			Resistance::from_MOhm(1000.0_f64).to_Ohm(), 9
 		);
-		let _ = Resistance::from_ohm(1.0_f64).to_ohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_mohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_uohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_nohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_kohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_Mohm();
-		let _ = Resistance::from_ohm(1.0_f64).to_Gohm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_Ohm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_mOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_uOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_nOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_kOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_MOhm();
+		let _ = Resistance::from_Ohm(1.0_f64).to_GOhm();
 	}
 	#[test]
 	fn conductance_units() {
@@ -1108,26 +1095,11 @@ mod unit_tests {
 			CatalyticActivity::from_umolps(1.0_f64).to_molps(),
 			CatalyticActivity::from_nmolps(1000.0_f64).to_molps(), 9
 		);
-		assert_approx_equal(
-			CatalyticActivity::from_kmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_molps(1000.0_f64).to_molps(), 9
-		);
-		assert_approx_equal(
-			CatalyticActivity::from_Mmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_kmolps(1000.0_f64).to_molps(), 9
-		);
-		assert_approx_equal(
-			CatalyticActivity::from_Gmolps(1.0_f64).to_molps(),
-			CatalyticActivity::from_Mmolps(1000.0_f64).to_molps(), 9
-		);
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_Nps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_molps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_mmolps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_umolps();
 		let _ = CatalyticActivity::from_molps(1.0_f64).to_nmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_kmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_Mmolps();
-		let _ = CatalyticActivity::from_molps(1.0_f64).to_Gmolps();
 	}
 	#[test]
 	fn concentration_units() {
@@ -1148,7 +1120,7 @@ mod unit_tests {
 			Concentration::from_M(1.0_f64).to_M(), 5
 		);
 		assert_approx_equal(
-			Concentration::from_count_per_m3(6.02214e23_f64).to_M(),
+			Concentration::from_Npm3(6.02214e23_f64).to_M(),
 			Concentration::from_mM(1.0_f64).to_M(), 5
 		);
 		assert_approx_equal(
@@ -1160,7 +1132,7 @@ mod unit_tests {
 		let _ = Concentration::from_M(1.0_f64).to_uM();
 		let _ = Concentration::from_M(1.0_f64).to_nM();
 		let _ = Concentration::from_M(1.0_f64).to_count_per_cc();
-		let _ = Concentration::from_M(1.0_f64).to_count_per_m3();
+		let _ = Concentration::from_M(1.0_f64).to_Npm3();
 	}
 	#[test]
 	fn luminous_flux_units() {
@@ -1383,7 +1355,7 @@ mod unit_tests {
 	fn unit_conversion_test(){
 		let av: AngularVelocity<f64> = Angle::from_rad(1.0) / Time::from_s(1.0);
 		let aa: AngularAcceleration<f64> = av / Time::from_s(1.0);
-		// let mi: MomentOfInertia<f64> = Mass::from_kg(1.0) * (Distance::from_m(1.0) * Distance::from_m(1.0));
+		let mi: MomentOfInertia<f64> = MomentOfInertia::from_gcm2(4.0);
 		let am: AngularMomentum<f64> = mi * av;
 		// let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
 		let f:  Frequency<f64> = 1.0 / Time::from_s(1.0);
@@ -1405,8 +1377,9 @@ mod unit_tests {
 		let mf: MagneticFlux<f64> = v3 * Time::from_s(1.0);
 		let i:  Inductance<f64> = mf / Current::from_A(1.0);
 		let md: MagneticFluxDensity<f64> = mf / a;
-		let c4: Concentration<f64> = Concentration::from_mol(1.0);
-		let ca: CatalyticActivity<f64> = c4 / Time::from_s(1.0);
+		let c4: Concentration<f64> = Concentration::from_M(1.0);
+		let ca: Amount<f64> = c4 * v;
+		let ca: CatalyticActivity<f64> = ca / Time::from_s(1.0);
 		let lm: LuminousFlux<f64> = Luminosity::from_cd(1.0) * SolidAngle::from_sr(1.0);
 		let lx: Illuminance<f64> = lm / a;
 		// note: nuclear radiation units are not uniquely identifiable
@@ -1414,7 +1387,7 @@ mod unit_tests {
 		let md: Energy<f64> = AbsorbedDose::from_Gy(1.0) * Mass::from_kg(1.0);
 		let me: Energy<f64> = DoseEquivalent::from_Sv(1.0) * Mass::from_kg(1.0);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn add_subtract_test() {
 		// Note: math operators are implemented by the proc macro, so all units behave identically
@@ -1427,7 +1400,7 @@ mod unit_tests {
 		assert_approx_equal((d2-d1).to_m(), -1.5, 9);
 		assert_approx_equal((d1-d1).to_m(), 0.0, 9);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn mul_div_test() {
 		let d1 = Distance::from_m(2.5);
@@ -1437,7 +1410,7 @@ mod unit_tests {
 		assert_approx_equal((d1*d2).to_m2(), 5.0, 9);
 		assert_approx_equal((d2*d1).to_m2(), 5.0, 9);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn op_assign_test() {
 		// +=, -=, *=, /=

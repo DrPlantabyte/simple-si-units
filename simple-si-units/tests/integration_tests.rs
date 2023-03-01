@@ -1,7 +1,9 @@
 use std::fmt::{Debug, Display, Formatter};
 use num_complex::ComplexFloat;
 use num_traits::Num;
-use simple_si_units::*;
+use simple_si_units::base::*;
+use simple_si_units::geometry::*;
+use simple_si_units::{NumLike, UnitStruct};
 
 /*
 How it will work:
@@ -113,11 +115,12 @@ pub fn num_bigfloat_test() {
 	use num_bigfloat::BigFloat;
 	let _ = templated_op_test::<BigFloat>();
 }
-#[test]
-pub fn num_astrofloat_test() {
-	use astro_float::BigFloat;
-	let _ = templated_op_test::<BigFloat>();
-}
+// unfortunately, astro_float does not support by-value std ops, and therefore cannot be used
+// #[test]
+// pub fn num_astrofloat_test() {
+// 	use astro_float::BigFloat;
+// 	let _ = templated_op_test::<BigFloat>();
+// }
 #[test]
 pub fn num_complex_test() {
 	use num_complex::Complex;

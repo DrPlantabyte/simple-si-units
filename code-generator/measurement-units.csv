@@ -1,63 +1,338 @@
-name,unit name,unit symbol,slope,offset
-distance,meters,m,1,
-distance,meters,meters,1,
-distance,millimeters,cm,0.01,
-distance,millimeters,mm,0.001,
-distance,micrometers,um,0.000001,
-distance,nanometers,nm,0.000000001,
-distance,picometers,pm,1E-12,
-distance,kilometers,km,1000,
-distance,astronomical units,au,149597870700,
-distance,parsecs,parsec,3.08568047999355E+016,
-distance,light-years,lyr,9.4605281696562E+015,
-mass,kilograms,kg,1,
-mass,kilograms,kilograms,1,
-mass,grams,g,0.001,
-mass,milligrams,mg,0.000001,
-mass,micrograms,ug,0.000000001,
-mass,nanograms,ng,1E-12,
-mass,picograms,pg,1E-15,
-mass,tons,ton,1000,
-mass,earth masses,earth_mass,5.9722E+024,
-mass,jupiter masses,jupiter_mass,1.8986E+027,
-mass,solar masses,solar_mass,1.98855E+030,
-time,seconds,s,1,
-time,seconds,seconds,1,
-time,milliseconds,ms,0.001,
-time,microseconds,us,0.000001,
-time,nanoseconds,ns,0.000000001,
-time,picoseconds,ps,1E-12,
-time,minutes,min,60,
-time,hours,hr,3600,
-time,days,d,86400,
-time,years,yr,31556925.19008,
-time,millennia,kyr,31556925190.08,
-time,million years,Myr,31556925190080,
-time,billion years,Gyr,3.155692519008E+016,
-temperature,degrees kelvin,K,1,
-temperature,degrees celsius,C,1,273.15
-temperature,degrees celsius,celsius,1,273.15
-temperature,degrees fahrenheit,F,0.555555555555556,459.67
-amount,count,count,1,
-amount,moles,moles,6.02214076E+023,
-amount,moles,mol,6.02214076E+023,
-amount,millimoles,mmol,6.02214076E+020,
-amount,micromoles,umol,6.02214076E+017,
-amount,nanomoles,nmol,602214076000000,
-amount,picomoles,pmol,602214076000,
-current,amperes,A,1,
-current,amperes,amps,1,
-current,milliamps,mA,0.001,
-current,microamps,uA,0.000001,
-current,nanoamps,nA,0.000000001,
-current,kiloamps,kA,1000,
-current,mega-amps,MA,1000000,
-current,giga-amps,GA,1000000000,
-luminosity,candela,cd,1,
-luminosity,candela,candela,1,
-luminosity,millicondela,mcd,0.001,
-luminosity,microcondela,ucd,0.000001,
-luminosity,nanocondela,ncd,0.000000001,
-luminosity,kilocandela,kcd,1000,
-luminosity,megacandela,Mcd,1000000,
-luminosity,gigacandela,Gcd,1000000000,
+name,unit name,unit symbol,slope,offset,inverse slope
+distance,meters,m,1,,1
+distance,meters,meters,1,,1
+distance,millimeters,cm,0.01,,100
+distance,millimeters,mm,0.001,,1000
+distance,micrometers,um,0.000001,,1000000
+distance,nanometers,nm,0.000000001,,1000000000
+distance,picometers,pm,1E-12,,1000000000000
+distance,kilometers,km,1000,,0.001
+distance,astronomical units,au,149597870700,,6.68458712226845E-12
+distance,parsecs,parsec,3.08568047999355E+016,,3.24077624525171E-17
+distance,light-years,lyr,9.4605281696562E+015,,1.05702343681763E-16
+mass,kilograms,kg,1,,1
+mass,kilograms,kilograms,1,,1
+mass,grams,g,0.001,,1000
+mass,milligrams,mg,0.000001,,1000000
+mass,micrograms,ug,0.000000001,,1000000000
+mass,nanograms,ng,1E-12,,1000000000000
+mass,picograms,pg,1E-15,,1000000000000000
+mass,tons,tons,1000,,0.001
+mass,earth masses,earth_mass,5.9722E+024,,1.67442483506915E-25
+mass,jupiter masses,jupiter_mass,1.8986E+027,,5.26703887074687E-28
+mass,solar masses,solar_mass,1.98855E+030,,5.0287898217294E-31
+time,seconds,s,1,,1
+time,seconds,seconds,1,,1
+time,milliseconds,ms,0.001,,1000
+time,microseconds,us,0.000001,,1000000
+time,nanoseconds,ns,0.000000001,,1000000000
+time,picoseconds,ps,1E-12,,1000000000000
+time,minutes,min,60,,0.0166666666666667
+time,hours,hr,3600,,0.000277777777777778
+time,days,days,86400,,1.15740740740741E-05
+time,weeks,weeks,604800,,1.65343915343915E-06
+time,years,yr,31556925.19008,,3.16887654287165E-08
+time,millennia,kyr,31556925190.08,,3.16887654287165E-11
+time,million years,Myr,31556925190080,,3.16887654287165E-14
+time,billion years,Gyr,3.155692519008E+016,,3.16887654287165E-17
+temperature,degrees kelvin,K,1,,1
+temperature,degrees celsius,C,1,273.15,1
+temperature,degrees celsius,celsius,1,273.15,1
+temperature,degrees fahrenheit,F,0.555555555555556,459.67,1.8
+amount,count,count,1.66053906717385E-24,,6.02214076E+023
+amount,moles,moles,1,,1
+amount,moles,mol,1,,1
+amount,millimoles,mmol,0.001,,1000
+amount,micromoles,umol,0.000001,,1000000
+amount,nanomoles,nmol,0.000000001,,1000000000
+amount,picomoles,pmol,1E-12,,1000000000000
+current,amperes,A,1,,1
+current,amperes,amps,1,,1
+current,milliamperes,mA,0.001,,1000
+current,microamperes,uA,0.000001,,1000000
+current,nanoamperes,nA,0.000000001,,1000000000
+current,kiloamperes,kA,1000,,0.001
+current,megaamperes,MA,1000000,,0.000001
+current,gigaamperes,GA,1000000000,,0.000000001
+luminosity,candela,cd,1,,1
+luminosity,candela,candela,1,,1
+luminosity,millicandela,mcd,0.001,,1000
+luminosity,microcandela,ucd,0.000001,,1000000
+luminosity,nanocandela,ncd,0.000000001,,1000000000
+luminosity,kilocandela,kcd,1000,,0.001
+luminosity,megacandela,Mcd,1000000,,0.000001
+luminosity,gigacandela,Gcd,1000000000,,0.000000001
+angle,radians,rad,1,,1
+angle,radians,radians,1,,1
+angle,degrees,degrees,0.0174532925199433,,57.2957795130823
+angle,degrees,deg,0.0174532925199433,,57.2957795130823
+solid angle,steradians,sr,1,,1
+solid angle,steradians,steradians,1,,1
+angular velocity,radians per second,radps,1,,1
+angular velocity,radians per second,radians_per_second,1,,1
+angular velocity,degrees per second,degrees_per_second,0.0174532925199433,,57.2957795130823
+angular velocity,degrees per second,degps,0.0174532925199433,,57.2957795130823
+angular velocity,revolutions per second,rps,6.283185307179590,,1.591549430918950E-01
+angular velocity,revolutions per minute,rpm,1.047197551196600E-01,,9.549296585513720E+00
+angular velocity,revolutions per hour,rph,1.745329251994330E-03,,5.729577951308230E+02
+angular acceleration,radians per second squared,radps2,1,,1
+angular acceleration,radians per second squared,radians_per_second_squared,1,,1
+angular acceleration,degrees per second squared,degrees_per_second_squared,0.0174532925199433,,57.2957795130823
+angular acceleration,revolutions per second squared,rps2,6.283185307179590,,1.591549430918950E-01
+angular acceleration,revolutions per minute squared,rpm2,1.745329251994330E-03,,5.729577951308230E+02
+angular acceleration,degrees per second squared,degps2,0.0174532925199433,,57.2957795130823
+angular acceleration,revolutions per hour squared,rph2,4.848136811095360E-07,,2.062648062470960E+06
+moment of inertia,kilogram meters squared,kgm2,1,,1
+moment of inertia,kilogram meters squared,kilogram_meters_squared,1,,1
+moment of inertia,gram cm squared,gcm2,10,,0.1
+moment of inertia,gram meters squared,gm2,1000,,0.001
+angular momentum,kilogram meters squared radians per second,kgm2radps,1,,1
+angular momentum,kilogram meters squared radians per second,kilogram_meters_squared_radians_per_second,1,,1
+angular momentum,gram cm squared radians per second,gcm2radps,10,,0.1
+torque,newton meters,Nm,1,,1
+torque,newton meters,newton_meters,1,,1
+torque,Foot-pounds,ftlb,0.73756214927727,,1.35581794833139
+frequency,hertz,Hz,1,,1
+frequency,hertz,hertz,1,,1
+frequency,kilohertz,kHz,1000,,0.001
+frequency,megahertz,MHz,1000000,,0.000001
+frequency,gigahertz,GHz,1000000000,,0.000000001
+frequency,terahertz,THz,1000000000000,,1E-12
+area,square meters,m2,1,,1
+area,square meters,square_meters,1,,1
+area,square cm,cm2,0.0001,,10000
+area,square cm,square_cm,0.0001,,10000
+area,square mm,mm2,0.000001,,1000000
+area,square um,um2,1E-12,,1000000000000
+area,square nm,nm2,1E-18,,1E+018
+area,square km,km2,1000000,,0.000001
+area density,kilograms per square meter,kgpm2,1,,1
+area density,kilograms per square meter,kilograms_per_square_meter,1,,1
+area density,grams per square meter,gpm2,1000,,0.001
+area density,grams per square meter,grams_per_square_meter,1000,,0.001
+area density,grams per square cm,gpcm2,10,,0.1
+area density,grams per square cm,grams_per_square_cm,10,,0.1
+volume,cubic meters,m3,1,,1
+volume,cubic meters,cubic_meters,1,,1
+volume,cubic cm,cc,0.000001,,1000000
+volume,liters,L,0.001,,1000
+volume,liters,liters,0.001,,1000
+volume,milliliters,mL,0.000001,,1000000
+volume,microliters,uL,0.000000001,,1000000000
+volume,nanoliters,nL,1E-12,,1000000000000
+volume,picoliters,pL,1E-15,,1000000000000000
+volume,kiloliters,kL,1,,1
+volume,megaliters,ML,1000,,0.001
+volume,gigaliters,GL,1000000,,0.000001
+density,kilograms per liter,kgpL,1000,,0.001
+density,kilograms per liter,kilograms_per_liter,1000,,0.001
+density,grams per cc,gpcc,1000,,0.001
+density,grams per cc,grams_per_cubic_centimeter,1000,,0.001
+density,kilograms per cubic meter,kgpm3,1,,1
+density,kilograms per cubic meter,kilograms_per_cubic_meter,1,,1
+density,grams per cubic meter,gpm3,0.001,,1000
+velocity,meters per second,mps,1,,1
+velocity,meters per second,meters_per_second,1,,1
+velocity,centimeters per second,cmps,0.01,,100
+velocity,millimeters per second,mmps,0.001,,1000
+velocity,millimeters per hour,mmph,2.77777777777778E-07,,3600000
+velocity,kilometers per hour,kph,0.277777777777778,,3.6
+velocity,miles per hour,mph,0.172603108954815,,5.79363839999999
+velocity,kilometers per second,kmps,1000,,0.001
+velocity,light speed,c,299792458,,3.33564095198152E-09
+acceleration,meters per second squared,mps2,1,,1
+acceleration,meters per second squared,meters_per_second_squared,1,,1
+acceleration,millimeters per second squared,mmps2,0.001,,1000
+acceleration,kilometers per hour squared,kilometers_per_hour_squared,0.000001,,1000000
+acceleration,kilometers per hour squared,kph2,7.71604938271605E-05,,12960
+momentum,kilogram meters per second,kgmps,1,,1
+momentum,kilogram meters per second,kilogram_meters_per_second,1,,1
+momentum,gram centimeters per second,gram_centimeters_per_second,0.00001,,100000
+momentum,gram centimeters per second,gcmps,0.00001,,100000
+force,newtons,N,1,,1
+force,newtons,newtons,1,,1
+force,pounds,lb,4.45756819483586,,0.224337566199999
+force,kilogram-force,kgG,9.8066500286389,,0.101971620999999
+force,millinewtons,mN,0.001,,1000
+force,micronewtons,uN,0.000001,,1000000
+force,nanonewtons,nN,0.000000001,,1000000000
+force,kilonewtons,kN,1000,,0.001
+force,meganewtons,MN,1000000,,0.000001
+force,giganewtons,GN,1000000000,,0.000000001
+pressure,pascals,Pa,1,,1
+pressure,pascals,pascals,1,,1
+pressure,pounds per square inch,psi,6894.7572931783,,0.00014503773773
+pressure,millipascals,mPa,0.001,,1000
+pressure,micropascals,uPa,0.000001,,1000000
+pressure,nanopascals,nPa,0.000000001,,1000000000
+pressure,kilopascals,kPa,1000,,0.001
+pressure,megapascals,MPa,1000000,,0.000001
+pressure,gigapascals,GPa,1000000000,,0.000000001
+pressure,hectopascals,hPa,100,,0.01
+pressure,bar,bar,100000,,0.00001
+pressure,millibar,mbar,100,,0.01
+pressure,atmospheres,atm,101325,,9.86923266716013E-06
+pressure,torr,torr,133.3223684211,,0.00750061682703903
+pressure,mm Hg,mmHg,133.3223684211,,0.00750061682703903
+energy,joules,J,1,,1
+energy,joules,joules,1,,1
+energy,millijoules,mJ,0.001,,1000
+energy,microjoules,uJ,0.000001,,1000000
+energy,nanojoules,nJ,0.000000001,,1000000000
+energy,kilojoules,kJ,1000,,0.001
+energy,megajoules,MJ,1000000,,0.000001
+energy,gigajoules,GJ,1000000000,,0.000000001
+energy,calories,cal,4.184,,0.239005736137667
+energy,kilocalories,kcal,4184,,0.000239005736137667
+energy,watt-hours,Whr,3600,,0.000277777777777778
+energy,kilowatt-hours,kWhr,3600000,,2.77777777777778E-07
+energy,electron-volts,eV,1.602176634E-19,,6.24150907446076E+018
+energy,british thermal units,BTU,1055,,0.000947867298578199
+charge,coulombs,C,1,,1
+charge,coulombs,coulombs,1,,1
+charge,millicoulombs,mC,0.001,,1000
+charge,microcoulombs,uC,0.000001,,1000000
+charge,nanocoulombs,nC,0.000000001,,1000000000
+charge,kilocoulombs,kC,1000,,0.001
+charge,megacoulombs,MC,1000000,,0.000001
+charge,gigacoulombs,GC,1000000000,,0.000000001
+charge,proton,p,1.602176634E-19,,6.24150907446076E+018
+charge,electron,e,-1.602176634E-19,,-6.24150907446076E+018
+power,watts,W,1,,1
+power,watts,watts,1,,1
+power,milliwatts,mW,0.001,,1000
+power,microwatts,uW,0.000001,,1000000
+power,nanowatts,nW,0.000000001,,1000000000
+power,kilowatts,kW,1000,,0.001
+power,megawatts,MW,1000000,,0.000001
+power,gigawatts,GW,1000000000,,0.000000001
+power,horse power,horsepower,745.7,,0.0013410218586563
+voltage,volts,V,1,,1
+voltage,volts,volts,1,,1
+voltage,millivolts,mV,0.001,,1000
+voltage,microvolts,uV,0.000001,,1000000
+voltage,nanovolts,nV,0.000000001,,1000000000
+voltage,kilovolts,kV,1000,,0.001
+voltage,megavolts,MV,1000000,,0.000001
+voltage,gigavolts,GV,1000000000,,0.000000001
+resistance,ohms,Ohm,1,,1
+resistance,ohms,ohms,1,,1
+resistance,milliohms,mOhm,0.001,,1000
+resistance,microohms,uOhm,0.000001,,1000000
+resistance,nanoohms,nOhm,0.000000001,,1000000000
+resistance,kiloohms,kOhm,1000,,0.001
+resistance,megaohms,MOhm,1000000,,0.000001
+resistance,gigaohms,GOhm,1000000000,,0.000000001
+conductance,siemens,S,1,,1
+conductance,siemens,siemens,1,,1
+conductance,millisiemens,mS,0.001,,1000
+conductance,microsiemens,uS,0.000001,,1000000
+conductance,nanosiemens,nS,0.000000001,,1000000000
+conductance,kilosiemens,kS,1000,,0.001
+conductance,megasiemens,MS,1000000,,0.000001
+conductance,gigasiemens,GS,1000000000,,0.000000001
+capacitance,farads,F,1,,1
+capacitance,farads,farads,1,,1
+capacitance,millifarads,mF,0.001,,1000
+capacitance,microfarads,uF,0.000001,,1000000
+capacitance,nanofarads,nF,0.000000001,,1000000000
+capacitance,picofarads,pF,1E-12,,1000000000000
+capacitance,kilofarads,kF,1000,,0.001
+capacitance,megafarads,MF,1000000,,0.000001
+capacitance,gigafarads,GF,1000000000,,0.000000001
+inductance,henries,H,1,,1
+inductance,henries,henries,1,,1
+inductance,millihenries,mH,0.001,,1000
+inductance,microhenries,uH,0.000001,,1000000
+inductance,nanohenries,nH,0.000000001,,1000000000
+inductance,kilohenries,kH,1000,,0.001
+inductance,megahenries,MH,1000000,,0.000001
+inductance,gigahenries,GH,1000000000,,0.000000001
+magnetic flux,webers,Wb,1,,1
+magnetic flux,webers,webers,1,,1
+magnetic flux,milliwebers,mWb,0.001,,1000
+magnetic flux,microwebers,uWb,0.000001,,1000000
+magnetic flux,nanowebers,nWb,0.000000001,,1000000000
+magnetic flux,kilowebers,kWb,1000,,0.001
+magnetic flux,megawebers,MWb,1000000,,0.000001
+magnetic flux,gigawebers,GWb,1000000000,,0.000000001
+magnetic flux density,teslas,T,1,,1
+magnetic flux density,teslas,teslas,1,,1
+magnetic flux density,milliteslas,mT,0.001,,1000
+magnetic flux density,microteslas,uT,0.000001,,1000000
+magnetic flux density,nanoteslas,nT,0.000000001,,1000000000
+magnetic flux density,kiloteslas,kT,1000,,0.001
+magnetic flux density,megateslas,MT,1000000,,0.000001
+magnetic flux density,gigateslas,GT,1000000000,,0.000000001
+catalytic activity,moles per second,molps,1,,1
+catalytic activity,moles per second,moles_per_second,1,,1
+catalytic activity,count per second,Nps,1.66053906717385E-24,,6.02214076E+023
+catalytic activity,millimoles per second,mmolps,0.001,,1000
+catalytic activity,micromoles per second,umolps,0.000001,,1000000
+catalytic activity,nanomoles per second,nmolps,0.000000001,,1000000000
+concentration,moles per cubic meter,molpm3,1,,1
+concentration,moles per cubic meter,moles_per_cubic_meter,1,,1
+concentration,count per cubic meter,Npm3,1.66053906717385E-24,,6.02214076E+023
+concentration,count per cubic meter,count_per_cubic_meter,1.66053906717385E-24,,6.02214076E+023
+concentration,count per liter,NpL,1.66053906717385E-27,,6.02214076E+026
+concentration,count per liter,count_per_L,1.66053906717385E-27,,6.02214076E+026
+concentration,count per cubic centimeter,Npcc,1.66053906717385E-30,,6.02214076E+029
+concentration,count per cubic centimeter,count_per_cc,1.66053906717385E-30,,6.02214076E+029
+concentration,moles per L,M,1000,,0.001
+concentration,moles per liter,molarity,1000,,0.001
+concentration,millimolar,mM,1,,1
+concentration,micromolar,uM,0.001,,1000
+concentration,nanomolar,nM,0.000001,,1000000
+luminous flux,lumens,lm,1,,1
+luminous flux,lumens,lumens,1,,1
+luminous flux,millilumens,mlm,0.001,,1000
+luminous flux,microlumens,ulm,0.000001,,1000000
+luminous flux,nanolumens,nlm,0.000000001,,1000000000
+luminous flux,kilolumens,klm,1000,,0.001
+luminous flux,megalumens,Mlm,1000000,,0.000001
+luminous flux,gigalumens,Glm,1000000000,,0.000000001
+illuminance,lux,lux,1,,1
+illuminance,millilux,mlux,0.001,,1000
+illuminance,microlux,ulux,0.000001,,1000000
+illuminance,nanolux,nlux,0.000000001,,1000000000
+illuminance,kilolux,klux,1000,,0.001
+illuminance,megalux,Mlux,1000000,,0.000001
+illuminance,gigalux,Glux,1000000000,,0.000000001
+radioactivity,becquerels,Bq,1,,1
+radioactivity,becquerels,becquerels,1,,1
+radioactivity,millibecquerels,mBq,0.001,,1000
+radioactivity,microbecquerels,uBq,0.000001,,1000000
+radioactivity,nanobecquerels,nBq,0.000000001,,1000000000
+radioactivity,kilobecquerels,kBq,1000,,0.001
+radioactivity,megabecquerels,MBq,1000000,,0.000001
+radioactivity,gigabecquerels,GBq,1000000000,,0.000000001
+radioactivity,curies,Ci,37000000000,,2.7027027027027E-11
+radioactivity,millicuries,mCi,37000000,,2.7027027027027E-08
+radioactivity,microcuries,uCi,37000,,2.7027027027027E-05
+radioactivity,nanocuries,nCi,37,,0.027027027027027
+radioactivity,picocuries,pCi,0.037,,27.027027027027
+radioactivity,rutherfords,Rd,1000000,,0.000001
+absorbed dose,grays,Gy,1,,1
+absorbed dose,grays,grays,1,,1
+absorbed dose,milligrays,mGy,0.001,,1000
+absorbed dose,micrograys,uGy,0.000001,,1000000
+absorbed dose,nanograys,nGy,0.000000001,,1000000000
+absorbed dose,kilograys,kGy,1000,,0.001
+absorbed dose,megagrays,MGy,1000000,,0.000001
+absorbed dose,gigagrays,GGy,1000000000,,0.000000001
+absorbed dose,rads,rad,0.01,,100
+absorbed dose,kilorads,krad,10,,0.1
+absorbed dose,millirads,mrad,0.00001,,100000
+absorbed dose,microrads,urad,0.00000001,,100000000
+absorbed dose,ergs per gram,erg,0.0001,,10000
+dose equivalent,sieverts,Sv,1,,1
+dose equivalent,sieverts,sieverts,1,,1
+dose equivalent,millisieverts,mSv,0.001,,1000
+dose equivalent,microsieverts,uSv,0.000001,,1000000
+dose equivalent,nanosieverts,nSv,0.000000001,,1000000000
+dose equivalent,kilosieverts,kSv,1000,,0.001
+dose equivalent,megasieverts,MSv,1000000,,0.000001
+dose equivalent,gigasieverts,GSv,1000000000,,0.000000001
+dose equivalent,roentgen equivalent man,rem,0.01,,100
+dose equivalent,milli-roentgen equivalents,mrem,0.00001,,100000
+dose equivalent,kilo-roentgen equivalents,krem,10,,0.1
