@@ -81,8 +81,8 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.4.0 (Done!)** - Unit and API tests
 * **V0.5.0 (Done!)** - Base SI units (distance, mass, time, temperature, amount, 
   electric current, luminosity)
-* **V0.6.0 (In progress...)** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0** - Full test coverage of all types of units
+* **V0.6.0 (Done!)** - Common secondary units (velocity, acceleration, energy, etc.)
+* **V0.7.0 (In progress...)** - Full test coverage of all types of units
 * **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0** - Full documentation coverage
 * **V1.0.0** - Done
@@ -94,7 +94,18 @@ For each type of unit (eg Distance), Simple SI Units provides a generic struct
 to represent the unit and which implements common type conversion. For example, 
 dividing a Distance by a Time results in a Velocity:
 ```rust
-todo!();
+use simple_si_units::base::{Distance, Mass};
+use simple_si_units::mechanical::{Acceleration};
+pub fn calc_gravity(mass: Mass<f64>, dist: Distance<f64>) -> Acceleration<f64>{
+	const G: f64 = 6.67408e-11; // m3 kg-1 s-2
+	let d_squared = dist * dist;
+	return Acceleration::from_mps2(G * mass.to_kg() / d_squared.to_m2())
+}
+
+fn main(){
+	let a = calc_gravity(Mass::from_solar_mass(1.0), Distance::from_au(1.0));
+	println!("Solar gravity at Earth orbital distance: {}", a);
+}
 ```
 
 Since these structs use generic type templates for the internal data type, you 

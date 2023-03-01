@@ -25,6 +25,7 @@ use astro_float;
 
 %(content)s
 
+%(appendix)s
 '''
 
 UNIT_STRUCT_DEFINITION_TEMPLATE='''

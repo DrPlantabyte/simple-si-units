@@ -505,16 +505,16 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in tons
-	pub fn to_ton(self) -> T {
+	pub fn to_tons(self) -> T {
 		return self.kg.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new mass value from the given number of tons
 	///
 	/// # Arguments
-	/// * `ton` - Any number-like type, representing a quantity of tons
-	pub fn from_ton(ton: T) -> Self {
-		Mass{kg: ton * T::from(1000.0_f64)}
+	/// * `tons` - Any number-like type, representing a quantity of tons
+	pub fn from_tons(tons: T) -> Self {
+		Mass{kg: tons * T::from(1000.0_f64)}
 	}
 
 	/// Returns a copy of this mass value in earth masses
@@ -2081,13 +2081,13 @@ impl<T> Current<T> where T: NumLike {
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
-	/// * `amperes` - Any number-like type, representing a quantity of amperes
-	pub fn from_amperes(amperes: T) -> Self {
-		Current{A: amperes}
+	/// * `amps` - Any number-like type, representing a quantity of amperes
+	pub fn from_amps(amps: T) -> Self {
+		Current{A: amps}
 	}
 	
 	/// Returns a copy of this electrical current value in amperes
-	pub fn to_amperes(self) -> T {
+	pub fn to_amps(self) -> T {
 		return self.A.clone();
 	}
 
@@ -2616,5 +2616,6 @@ impl<T> std::ops::Mul<&SolidAngle<T>> for &Luminosity<T> where T: NumLike {
 		LuminousFlux{lm: self.cd.clone() * rhs.sr.clone()}
 	}
 }
+
 
 

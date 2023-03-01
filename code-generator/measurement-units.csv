@@ -17,7 +17,7 @@ mass,milligrams,mg,0.000001,,1000000
 mass,micrograms,ug,0.000000001,,1000000000
 mass,nanograms,ng,1E-12,,1000000000000
 mass,picograms,pg,1E-15,,1000000000000000
-mass,tons,ton,1000,,0.001
+mass,tons,tons,1000,,0.001
 mass,earth masses,earth_mass,5.9722E+024,,1.67442483506915E-25
 mass,jupiter masses,jupiter_mass,1.8986E+027,,5.26703887074687E-28
 mass,solar masses,solar_mass,1.98855E+030,,5.0287898217294E-31
@@ -47,7 +47,7 @@ amount,micromoles,umol,0.000001,,1000000
 amount,nanomoles,nmol,0.000000001,,1000000000
 amount,picomoles,pmol,1E-12,,1000000000000
 current,amperes,A,1,,1
-current,amperes,amperes,1,,1
+current,amperes,amps,1,,1
 current,milliamperes,mA,0.001,,1000
 current,microamperes,uA,0.000001,,1000000
 current,nanoamperes,nA,0.000000001,,1000000000

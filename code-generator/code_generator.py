@@ -69,10 +69,14 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_
 		'crate imports': generate_local_imports(module, data, conversions),
 		'example1': mod_units['desc first name'].iloc[0],
 		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
-		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy())
+		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy()),
+		'appendix': get_appendix_for_module(module)
 	}
 	return out_buf
 
+
+def get_appendix_for_module(module: str) -> str:
+	return ''
 
 def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame) -> str:
 	other_modules = set()

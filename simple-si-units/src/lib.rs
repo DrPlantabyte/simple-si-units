@@ -177,7 +177,7 @@ mod unit_tests {
 			Mass::from_pg(1000.0_f64).to_kg(), 9
 		);
 		assert_approx_equal(
-			Mass::from_ton(1.0_f64).to_kg(),
+			Mass::from_tons(1.0_f64).to_kg(),
 			Mass::from_kg(1000.0_f64).to_kg(), 9
 		);
 		assert_approx_equal(
@@ -198,7 +198,7 @@ mod unit_tests {
 		let _ = Mass::from_kg(1.0_f64).to_ug();
 		let _ = Mass::from_kg(1.0_f64).to_ng();
 		let _ = Mass::from_kg(1.0_f64).to_pg();
-		let _ = Mass::from_kg(1.0_f64).to_ton();
+		let _ = Mass::from_kg(1.0_f64).to_tons();
 		let _ = Mass::from_kg(1.0_f64).to_earth_mass();
 		let _ = Mass::from_kg(1.0_f64).to_jupiter_mass();
 		let _ = Mass::from_kg(1.0_f64).to_solar_mass();
