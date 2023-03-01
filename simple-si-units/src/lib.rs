@@ -485,7 +485,7 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			Frequency::from_GHz(1.0_f64).to_Hz(),
-			Frequency::from_mHz(1000.0_f64).to_Hz(), 9
+			Frequency::from_MHz(1000.0_f64).to_Hz(), 9
 		);
 		assert_approx_equal(
 			Frequency::from_THz(1.0_f64).to_Hz(),
@@ -529,16 +529,16 @@ mod unit_tests {
 	#[test]
 	fn area_density_units() {
 		assert_approx_equal(
-			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
-			AreaDensity::from_gm2(1000.0_f64).to_kgm2(), 9
+			AreaDensity::from_kgpm2(1.0_f64).to_kgpm2(),
+			AreaDensity::from_gpm2(1000.0_f64).to_kgpm2(), 9
 		);
 		assert_approx_equal(
-			AreaDensity::from_kgm2(1.0_f64).to_kgm2(),
-			AreaDensity::from_gcm2(0.1_f64).to_kgm2(), 9
+			AreaDensity::from_kgpm2(1.0_f64).to_kgpm2(),
+			AreaDensity::from_gpcm2(0.1_f64).to_kgpm2(), 9
 		);
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_kgm2();
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_gm2();
-		let _ = AreaDensity::from_kgm2(1.0_f64).to_gcm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_kgpm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpm2();
+		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpcm2();
 	}
 	#[test]
 	fn volume_units() {
@@ -1132,7 +1132,7 @@ mod unit_tests {
 		let _ = Concentration::from_M(1.0_f64).to_uM();
 		let _ = Concentration::from_M(1.0_f64).to_nM();
 		let _ = Concentration::from_M(1.0_f64).to_count_per_cc();
-		let _ = Concentration::from_M(1.0_f64).to_count_Npm3();
+		let _ = Concentration::from_M(1.0_f64).to_Npm3();
 	}
 	#[test]
 	fn luminous_flux_units() {
@@ -1355,7 +1355,7 @@ mod unit_tests {
 	fn unit_conversion_test(){
 		let av: AngularVelocity<f64> = Angle::from_rad(1.0) / Time::from_s(1.0);
 		let aa: AngularAcceleration<f64> = av / Time::from_s(1.0);
-		// let mi: MomentOfInertia<f64> = Mass::from_kg(1.0) * (Distance::from_m(1.0) * Distance::from_m(1.0));
+		let mi: MomentOfInertia<f64> = MomentOfInertia::from_gcm2(4.0);
 		let am: AngularMomentum<f64> = mi * av;
 		// let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
 		let f:  Frequency<f64> = 1.0 / Time::from_s(1.0);
@@ -1377,8 +1377,9 @@ mod unit_tests {
 		let mf: MagneticFlux<f64> = v3 * Time::from_s(1.0);
 		let i:  Inductance<f64> = mf / Current::from_A(1.0);
 		let md: MagneticFluxDensity<f64> = mf / a;
-		let c4: Concentration<f64> = Concentration::from_mol(1.0);
-		let ca: CatalyticActivity<f64> = c4 / Time::from_s(1.0);
+		let c4: Concentration<f64> = Concentration::from_M(1.0);
+		let ca: Amount<f64> = c4 * v;
+		let ca: CatalyticActivity<f64> = ca / Time::from_s(1.0);
 		let lm: LuminousFlux<f64> = Luminosity::from_cd(1.0) * SolidAngle::from_sr(1.0);
 		let lx: Illuminance<f64> = lm / a;
 		// note: nuclear radiation units are not uniquely identifiable
@@ -1386,7 +1387,7 @@ mod unit_tests {
 		let md: Energy<f64> = AbsorbedDose::from_Gy(1.0) * Mass::from_kg(1.0);
 		let me: Energy<f64> = DoseEquivalent::from_Sv(1.0) * Mass::from_kg(1.0);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn add_subtract_test() {
 		// Note: math operators are implemented by the proc macro, so all units behave identically
@@ -1399,7 +1400,7 @@ mod unit_tests {
 		assert_approx_equal((d2-d1).to_m(), -1.5, 9);
 		assert_approx_equal((d1-d1).to_m(), 0.0, 9);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn mul_div_test() {
 		let d1 = Distance::from_m(2.5);
@@ -1409,7 +1410,7 @@ mod unit_tests {
 		assert_approx_equal((d1*d2).to_m2(), 5.0, 9);
 		assert_approx_equal((d2*d1).to_m2(), 5.0, 9);
 	}
-	/// Placeholder: Work in progress
+	/// Unit test
 	#[test]
 	fn op_assign_test() {
 		// +=, -=, *=, /=

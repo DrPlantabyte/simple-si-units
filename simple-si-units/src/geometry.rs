@@ -575,6 +575,36 @@ impl<T> std::ops::Mul<&MagneticFluxDensity<T>> for &Area<T> where T: NumLike {
 	}
 }
 
+// Area * Illuminance -> LuminousFlux
+/// Multiplying a Area by a Illuminance returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Illuminance<T>> for Area<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Illuminance<T>) -> Self::Output {
+		LuminousFlux{lm: self.m2 * rhs.lux}
+	}
+}
+/// Multiplying a Area by a Illuminance returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Illuminance<T>> for &Area<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Illuminance<T>) -> Self::Output {
+		LuminousFlux{lm: self.m2.clone() * rhs.lux}
+	}
+}
+/// Multiplying a Area by a Illuminance returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Illuminance<T>> for Area<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Illuminance<T>) -> Self::Output {
+		LuminousFlux{lm: self.m2 * rhs.lux.clone()}
+	}
+}
+/// Multiplying a Area by a Illuminance returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Illuminance<T>> for &Area<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Illuminance<T>) -> Self::Output {
+		LuminousFlux{lm: self.m2.clone() * rhs.lux.clone()}
+	}
+}
+
 /// The volume unit type, defined as cubic meters in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]

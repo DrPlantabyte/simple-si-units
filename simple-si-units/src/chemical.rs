@@ -92,7 +92,7 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `Nps` - Any number-like type, representing a quantity of count per second
 	pub fn from_Nps(Nps: T) -> Self {
-		CatalyticActivity{molps: Nps * T::from(1.6605390671738503e-24_f64)}
+		CatalyticActivity{molps: Nps * T::from(1.66053906717385e-24_f64)}
 	}
 
 	/// Returns a copy of this catalytic activity value in millimoles per second

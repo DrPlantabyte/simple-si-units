@@ -161,7 +161,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this radioactivity value in curies
 	pub fn to_Ci(self) -> T {
-		return self.Bq.clone() * T::from(2.7027027027026998e-11_f64);
+		return self.Bq.clone() * T::from(2.7027027027027e-11_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of curies
@@ -225,16 +225,16 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in rutherfords
-	pub fn to_rd(self) -> T {
+	pub fn to_Rd(self) -> T {
 		return self.Bq.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of rutherfords
 	///
 	/// # Arguments
-	/// * `rd` - Any number-like type, representing a quantity of rutherfords
-	pub fn from_rd(rd: T) -> Self {
-		Radioactivity{Bq: rd * T::from(1000000.0_f64)}
+	/// * `Rd` - Any number-like type, representing a quantity of rutherfords
+	pub fn from_Rd(Rd: T) -> Self {
+		Radioactivity{Bq: Rd * T::from(1000000.0_f64)}
 	}
 
 }

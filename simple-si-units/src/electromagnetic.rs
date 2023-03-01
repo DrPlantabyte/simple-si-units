@@ -3421,6 +3421,66 @@ impl<T> std::ops::Div<&SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
 	}
 }
 
+// LuminousFlux / Area -> Illuminance
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<Area<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm / rhs.m2}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<Area<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm.clone() / rhs.m2}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<&Area<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm / rhs.m2.clone()}
+	}
+}
+/// Dividing a LuminousFlux by a Area returns a value of type Illuminance
+impl<T> std::ops::Div<&Area<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Illuminance<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		Illuminance{lux: self.lm.clone() / rhs.m2.clone()}
+	}
+}
+
+// LuminousFlux / Illuminance -> Area
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm / rhs.lux}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm.clone() / rhs.lux}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<&Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm / rhs.lux.clone()}
+	}
+}
+/// Dividing a LuminousFlux by a Illuminance returns a value of type Area
+impl<T> std::ops::Div<&Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
+		Area{m2: self.lm.clone() / rhs.lux.clone()}
+	}
+}
+
 /// The illuminance unit type, defined as lux in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -3542,6 +3602,36 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 		Illuminance{lux: Glux * T::from(1000000000.0_f64)}
 	}
 
+}
+
+// Illuminance * Area -> LuminousFlux
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Area<T>> for Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux * rhs.m2}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<Area<T>> for &Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux.clone() * rhs.m2}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Area<T>> for Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux * rhs.m2.clone()}
+	}
+}
+/// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
+impl<T> std::ops::Mul<&Area<T>> for &Illuminance<T> where T: NumLike {
+	type Output = LuminousFlux<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		LuminousFlux{lm: self.lux.clone() * rhs.m2.clone()}
+	}
 }
 
 

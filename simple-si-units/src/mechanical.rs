@@ -97,6 +97,58 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 		AngularVelocity{radps: degrees_per_second * T::from(0.0174532925199433_f64)}
 	}
 
+	/// Returns a copy of this angular velocity value in degrees per second
+	pub fn to_degps(self) -> T {
+		return self.radps.clone() * T::from(57.2957795130823_f64);
+	}
+
+	/// Returns a new angular velocity value from the given number of degrees per second
+	///
+	/// # Arguments
+	/// * `degps` - Any number-like type, representing a quantity of degrees per second
+	pub fn from_degps(degps: T) -> Self {
+		AngularVelocity{radps: degps * T::from(0.0174532925199433_f64)}
+	}
+
+	/// Returns a copy of this angular velocity value in revolutions per second
+	pub fn to_rps(self) -> T {
+		return self.radps.clone() * T::from(0.159154943091895_f64);
+	}
+
+	/// Returns a new angular velocity value from the given number of revolutions per second
+	///
+	/// # Arguments
+	/// * `rps` - Any number-like type, representing a quantity of revolutions per second
+	pub fn from_rps(rps: T) -> Self {
+		AngularVelocity{radps: rps * T::from(6.28318530717959_f64)}
+	}
+
+	/// Returns a copy of this angular velocity value in revolutions per minute
+	pub fn to_rpm(self) -> T {
+		return self.radps.clone() * T::from(9.54929658551372_f64);
+	}
+
+	/// Returns a new angular velocity value from the given number of revolutions per minute
+	///
+	/// # Arguments
+	/// * `rpm` - Any number-like type, representing a quantity of revolutions per minute
+	pub fn from_rpm(rpm: T) -> Self {
+		AngularVelocity{radps: rpm * T::from(0.10471975511966_f64)}
+	}
+
+	/// Returns a copy of this angular velocity value in revolutions per hour
+	pub fn to_rph(self) -> T {
+		return self.radps.clone() * T::from(572.957795130823_f64);
+	}
+
+	/// Returns a new angular velocity value from the given number of revolutions per hour
+	///
+	/// # Arguments
+	/// * `rph` - Any number-like type, representing a quantity of revolutions per hour
+	pub fn from_rph(rph: T) -> Self {
+		AngularVelocity{radps: rph * T::from(0.00174532925199433_f64)}
+	}
+
 }
 
 // AngularVelocity * Time -> Angle
@@ -406,6 +458,58 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	/// * `degrees_per_second_squared` - Any number-like type, representing a quantity of degrees per second squared
 	pub fn from_degrees_per_second_squared(degrees_per_second_squared: T) -> Self {
 		AngularAcceleration{radps2: degrees_per_second_squared * T::from(0.0174532925199433_f64)}
+	}
+
+	/// Returns a copy of this angular acceleration value in revolutions per second squared
+	pub fn to_rps2(self) -> T {
+		return self.radps2.clone() * T::from(0.159154943091895_f64);
+	}
+
+	/// Returns a new angular acceleration value from the given number of revolutions per second squared
+	///
+	/// # Arguments
+	/// * `rps2` - Any number-like type, representing a quantity of revolutions per second squared
+	pub fn from_rps2(rps2: T) -> Self {
+		AngularAcceleration{radps2: rps2 * T::from(6.28318530717959_f64)}
+	}
+
+	/// Returns a copy of this angular acceleration value in revolutions per minute squared
+	pub fn to_rpm2(self) -> T {
+		return self.radps2.clone() * T::from(572.957795130823_f64);
+	}
+
+	/// Returns a new angular acceleration value from the given number of revolutions per minute squared
+	///
+	/// # Arguments
+	/// * `rpm2` - Any number-like type, representing a quantity of revolutions per minute squared
+	pub fn from_rpm2(rpm2: T) -> Self {
+		AngularAcceleration{radps2: rpm2 * T::from(0.00174532925199433_f64)}
+	}
+
+	/// Returns a copy of this angular acceleration value in degrees per second squared
+	pub fn to_degps2(self) -> T {
+		return self.radps2.clone() * T::from(57.2957795130823_f64);
+	}
+
+	/// Returns a new angular acceleration value from the given number of degrees per second squared
+	///
+	/// # Arguments
+	/// * `degps2` - Any number-like type, representing a quantity of degrees per second squared
+	pub fn from_degps2(degps2: T) -> Self {
+		AngularAcceleration{radps2: degps2 * T::from(0.0174532925199433_f64)}
+	}
+
+	/// Returns a copy of this angular acceleration value in revolutions per hour squared
+	pub fn to_rph2(self) -> T {
+		return self.radps2.clone() * T::from(2062648.06247096_f64);
+	}
+
+	/// Returns a new angular acceleration value from the given number of revolutions per hour squared
+	///
+	/// # Arguments
+	/// * `rph2` - Any number-like type, representing a quantity of revolutions per hour squared
+	pub fn from_rph2(rph2: T) -> Self {
+		AngularAcceleration{radps2: rph2 * T::from(4.84813681109536e-07_f64)}
 	}
 
 }
@@ -2045,13 +2149,13 @@ impl<T> AreaDensity<T> where T: NumLike {
 	/// Returns a new area density value from the given number of kilograms per square meter
 	///
 	/// # Arguments
-	/// * `kgm2` - Any number-like type, representing a quantity of kilograms per square meter
-	pub fn from_kgm2(kgm2: T) -> Self {
-		AreaDensity{kgm2: kgm2}
+	/// * `kgpm2` - Any number-like type, representing a quantity of kilograms per square meter
+	pub fn from_kgpm2(kgpm2: T) -> Self {
+		AreaDensity{kgm2: kgpm2}
 	}
 	
 	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kgm2(self) -> T {
+	pub fn to_kgpm2(self) -> T {
 		return self.kgm2.clone();
 	}
 
@@ -4203,7 +4307,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this energy value in kilocalories
 	pub fn to_kcal(self) -> T {
-		return self.J.clone() * T::from(0.000239005736137667_f64);
+		return self.J.clone() * T::from(0.0002390057361376_f64);
 	}
 
 	/// Returns a new energy value from the given number of kilocalories
@@ -4216,7 +4320,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this energy value in watt-hours
 	pub fn to_Whr(self) -> T {
-		return self.J.clone() * T::from(0.000277777777777778_f64);
+		return self.J.clone() * T::from(0.0002777777777777_f64);
 	}
 
 	/// Returns a new energy value from the given number of watt-hours
@@ -4255,7 +4359,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this energy value in british thermal units
 	pub fn to_BTU(self) -> T {
-		return self.J.clone() * T::from(0.000947867298578199_f64);
+		return self.J.clone() * T::from(0.0009478672985781_f64);
 	}
 
 	/// Returns a new energy value from the given number of british thermal units
