@@ -10,3 +10,6 @@
 # IDE files
 /.idea/*
 /*.iml
+
+# rust/LLVM profiling and coverage analysis
+*.profraw
