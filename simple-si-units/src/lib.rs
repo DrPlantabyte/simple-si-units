@@ -71,6 +71,15 @@
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
+// optional supports
+#[cfg(feature="serde")]
+extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
 
 pub mod base;
 pub mod chemical;
