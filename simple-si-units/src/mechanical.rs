@@ -139,7 +139,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `rph` - Any number-like type, representing a quantity of revolutions per hour
 	pub fn from_rph(rph: T) -> Self {
-		AngularVelocity{radps: rph * T::from(0.00174532925199433_f64)}
+		AngularVelocity{radps: rph * T::from(0.0017453292519943_f64)}
 	}
 
 }
@@ -476,7 +476,7 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `rpm2` - Any number-like type, representing a quantity of revolutions per minute squared
 	pub fn from_rpm2(rpm2: T) -> Self {
-		AngularAcceleration{radps2: rpm2 * T::from(0.00174532925199433_f64)}
+		AngularAcceleration{radps2: rpm2 * T::from(0.0017453292519943_f64)}
 	}
 
 	/// Returns a copy of this angular acceleration value in degrees per second squared
@@ -668,7 +668,7 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 
 	/// Returns a copy of this moment of inertia value in gram meters squared
 	pub fn to_gm2(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new moment of inertia value from the given number of gram meters squared
@@ -676,7 +676,7 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `gm2` - Any number-like type, representing a quantity of gram meters squared
 	pub fn from_gm2(gm2: T) -> Self {
-		MomentOfInertia{kgm2: gm2 * T::from(1000.0_f64)}
+		MomentOfInertia{kgm2: gm2 * T::from(0.001_f64)}
 	}
 
 }
@@ -2177,7 +2177,7 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this area density value in grams per square meter
 	pub fn to_gpm2(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
@@ -2185,12 +2185,12 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `gpm2` - Any number-like type, representing a quantity of grams per square meter
 	pub fn from_gpm2(gpm2: T) -> Self {
-		AreaDensity{kgm2: gpm2 * T::from(1000.0_f64)}
+		AreaDensity{kgm2: gpm2 * T::from(0.001_f64)}
 	}
 
 	/// Returns a copy of this area density value in grams per square meter
 	pub fn to_grams_per_square_meter(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
@@ -2198,7 +2198,7 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `grams_per_square_meter` - Any number-like type, representing a quantity of grams per square meter
 	pub fn from_grams_per_square_meter(grams_per_square_meter: T) -> Self {
-		AreaDensity{kgm2: grams_per_square_meter * T::from(1000.0_f64)}
+		AreaDensity{kgm2: grams_per_square_meter * T::from(0.001_f64)}
 	}
 
 	/// Returns a copy of this area density value in grams per square cm

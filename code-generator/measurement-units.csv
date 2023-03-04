@@ -72,20 +72,20 @@ angular velocity,radians per second,radps,1,,1
 angular velocity,radians per second,radians_per_second,1,,1
 angular velocity,degrees per second,degrees_per_second,0.0174532925199433,,57.2957795130823
 angular velocity,degrees per second,degps,0.0174532925199433,,57.2957795130823
-angular velocity,revolutions per second,rps,6.283185307179590,,1.591549430918950E-01
-angular velocity,revolutions per minute,rpm,1.047197551196600E-01,,9.549296585513720E+00
-angular velocity,revolutions per hour,rph,1.745329251994330E-03,,5.729577951308230E+02
+angular velocity,revolutions per second,rps,6.28318530717959,,0.159154943091895
+angular velocity,revolutions per minute,rpm,0.10471975511966,,9.54929658551372
+angular velocity,revolutions per hour,rph,0.00174532925199433,,572.957795130823
 angular acceleration,radians per second squared,radps2,1,,1
 angular acceleration,radians per second squared,radians_per_second_squared,1,,1
 angular acceleration,degrees per second squared,degrees_per_second_squared,0.0174532925199433,,57.2957795130823
-angular acceleration,revolutions per second squared,rps2,6.283185307179590,,1.591549430918950E-01
-angular acceleration,revolutions per minute squared,rpm2,1.745329251994330E-03,,5.729577951308230E+02
+angular acceleration,revolutions per second squared,rps2,6.28318530717959,,0.159154943091895
+angular acceleration,revolutions per minute squared,rpm2,0.00174532925199433,,572.957795130823
 angular acceleration,degrees per second squared,degps2,0.0174532925199433,,57.2957795130823
-angular acceleration,revolutions per hour squared,rph2,4.848136811095360E-07,,2.062648062470960E+06
+angular acceleration,revolutions per hour squared,rph2,4.84813681109536E-07,,2062648.06247096
 moment of inertia,kilogram meters squared,kgm2,1,,1
 moment of inertia,kilogram meters squared,kilogram_meters_squared,1,,1
 moment of inertia,gram cm squared,gcm2,10,,0.1
-moment of inertia,gram meters squared,gm2,1000,,0.001
+moment of inertia,gram meters squared,gm2,0.001,,1000
 angular momentum,kilogram meters squared radians per second,kgm2radps,1,,1
 angular momentum,kilogram meters squared radians per second,kilogram_meters_squared_radians_per_second,1,,1
 angular momentum,gram cm squared radians per second,gcm2radps,10,,0.1
@@ -108,8 +108,8 @@ area,square nm,nm2,1E-18,,1E+018
 area,square km,km2,1000000,,0.000001
 area density,kilograms per square meter,kgpm2,1,,1
 area density,kilograms per square meter,kilograms_per_square_meter,1,,1
-area density,grams per square meter,gpm2,1000,,0.001
-area density,grams per square meter,grams_per_square_meter,1000,,0.001
+area density,grams per square meter,gpm2,0.001,,1000
+area density,grams per square meter,grams_per_square_meter,0.001,,1000
 area density,grams per square cm,gpcm2,10,,0.1
 area density,grams per square cm,grams_per_square_cm,10,,0.1
 volume,cubic meters,m3,1,,1
