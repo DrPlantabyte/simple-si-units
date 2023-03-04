@@ -14,10 +14,10 @@ jobs:
 
       - name:                   Generate code coverage
         run: |
-          cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml --lib --root .
+          echo "$(ls -lah .)" 1>&2 && cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml --manifest-path simple-si-units/Cargo.toml
 
       - name:                   Upload to codecov.io
         uses:                   codecov/codecov-action@v2
         with:
-          # token:                ${{secrets.CODECOV_TOKEN}} # not required for public repos
+          token:                ${{secrets.CODECOV_TOKEN}} # not required for public repos
           fail_ci_if_error:     true
