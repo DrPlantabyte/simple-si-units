@@ -10,18 +10,11 @@ use super::mechanical::*;
 
 // optional supports
 #[cfg(feature="serde")]
-#[macro_use]
-extern crate serde;
-#[cfg(feature="num_bigfloat")]
-extern crate num_bigfloat;
+use serde::{Serialize, Deserialize};
 #[cfg(feature="num_bigfloat")]
 use num_bigfloat;
 #[cfg(feature="num_complex")]
-extern crate num_complex;
-#[cfg(feature="num_complex")]
 use num_complex;
-#[cfg(feature="astro_float")]
-extern crate astro_float;
 #[cfg(feature="astro_float")]
 use astro_float;
 
@@ -55,7 +48,7 @@ impl<T> Charge<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_C(self) -> T {
+	pub fn to_C(&self) -> T {
 		return self.C.clone();
 	}
 
@@ -68,7 +61,7 @@ impl<T> Charge<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_coulombs(self) -> T {
+	pub fn to_coulombs(&self) -> T {
 		return self.C.clone();
 	}
 
@@ -83,7 +76,7 @@ impl<T> fmt::Display for Charge<T> where T: NumLike {
 impl<T> Charge<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electric charge value in millicoulombs
-	pub fn to_mC(self) -> T {
+	pub fn to_mC(&self) -> T {
 		return self.C.clone() * T::from(1000.0_f64);
 	}
 
@@ -96,7 +89,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in microcoulombs
-	pub fn to_uC(self) -> T {
+	pub fn to_uC(&self) -> T {
 		return self.C.clone() * T::from(1000000.0_f64);
 	}
 
@@ -109,7 +102,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in nanocoulombs
-	pub fn to_nC(self) -> T {
+	pub fn to_nC(&self) -> T {
 		return self.C.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -122,7 +115,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in kilocoulombs
-	pub fn to_kC(self) -> T {
+	pub fn to_kC(&self) -> T {
 		return self.C.clone() * T::from(0.001_f64);
 	}
 
@@ -135,7 +128,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in megacoulombs
-	pub fn to_MC(self) -> T {
+	pub fn to_MC(&self) -> T {
 		return self.C.clone() * T::from(1e-06_f64);
 	}
 
@@ -148,7 +141,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in gigacoulombs
-	pub fn to_GC(self) -> T {
+	pub fn to_GC(&self) -> T {
 		return self.C.clone() * T::from(1e-09_f64);
 	}
 
@@ -161,7 +154,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in proton
-	pub fn to_p(self) -> T {
+	pub fn to_p(&self) -> T {
 		return self.C.clone() * T::from(6.24150907446076e+18_f64);
 	}
 
@@ -174,7 +167,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in electron
-	pub fn to_e(self) -> T {
+	pub fn to_e(&self) -> T {
 		return self.C.clone() * T::from(-6.24150907446076e+18_f64);
 	}
 
@@ -487,7 +480,7 @@ impl<T> Voltage<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this voltage value in volts
-	pub fn to_V(self) -> T {
+	pub fn to_V(&self) -> T {
 		return self.V.clone();
 	}
 
@@ -500,7 +493,7 @@ impl<T> Voltage<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this voltage value in volts
-	pub fn to_volts(self) -> T {
+	pub fn to_volts(&self) -> T {
 		return self.V.clone();
 	}
 
@@ -515,7 +508,7 @@ impl<T> fmt::Display for Voltage<T> where T: NumLike {
 impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this voltage value in millivolts
-	pub fn to_mV(self) -> T {
+	pub fn to_mV(&self) -> T {
 		return self.V.clone() * T::from(1000.0_f64);
 	}
 
@@ -528,7 +521,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in microvolts
-	pub fn to_uV(self) -> T {
+	pub fn to_uV(&self) -> T {
 		return self.V.clone() * T::from(1000000.0_f64);
 	}
 
@@ -541,7 +534,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in nanovolts
-	pub fn to_nV(self) -> T {
+	pub fn to_nV(&self) -> T {
 		return self.V.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -554,7 +547,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in kilovolts
-	pub fn to_kV(self) -> T {
+	pub fn to_kV(&self) -> T {
 		return self.V.clone() * T::from(0.001_f64);
 	}
 
@@ -567,7 +560,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in megavolts
-	pub fn to_MV(self) -> T {
+	pub fn to_MV(&self) -> T {
 		return self.V.clone() * T::from(1e-06_f64);
 	}
 
@@ -580,7 +573,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in gigavolts
-	pub fn to_GV(self) -> T {
+	pub fn to_GV(&self) -> T {
 		return self.V.clone() * T::from(1e-09_f64);
 	}
 
@@ -893,7 +886,7 @@ impl<T> Resistance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_Ohm(self) -> T {
+	pub fn to_Ohm(&self) -> T {
 		return self.Ohm.clone();
 	}
 
@@ -906,7 +899,7 @@ impl<T> Resistance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_ohms(self) -> T {
+	pub fn to_ohms(&self) -> T {
 		return self.Ohm.clone();
 	}
 
@@ -921,7 +914,7 @@ impl<T> fmt::Display for Resistance<T> where T: NumLike {
 impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical resistance value in milliohms
-	pub fn to_mOhm(self) -> T {
+	pub fn to_mOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000.0_f64);
 	}
 
@@ -934,7 +927,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in microohms
-	pub fn to_uOhm(self) -> T {
+	pub fn to_uOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000000.0_f64);
 	}
 
@@ -947,7 +940,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in nanoohms
-	pub fn to_nOhm(self) -> T {
+	pub fn to_nOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -960,7 +953,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in kiloohms
-	pub fn to_kOhm(self) -> T {
+	pub fn to_kOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(0.001_f64);
 	}
 
@@ -973,7 +966,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in megaohms
-	pub fn to_MOhm(self) -> T {
+	pub fn to_MOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1e-06_f64);
 	}
 
@@ -986,7 +979,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in gigaohms
-	pub fn to_GOhm(self) -> T {
+	pub fn to_GOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1e-09_f64);
 	}
 
@@ -1465,7 +1458,7 @@ impl<T> Conductance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_S(self) -> T {
+	pub fn to_S(&self) -> T {
 		return self.S.clone();
 	}
 
@@ -1478,7 +1471,7 @@ impl<T> Conductance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_siemens(self) -> T {
+	pub fn to_siemens(&self) -> T {
 		return self.S.clone();
 	}
 
@@ -1493,7 +1486,7 @@ impl<T> fmt::Display for Conductance<T> where T: NumLike {
 impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical conductance value in millisiemens
-	pub fn to_mS(self) -> T {
+	pub fn to_mS(&self) -> T {
 		return self.S.clone() * T::from(1000.0_f64);
 	}
 
@@ -1506,7 +1499,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in microsiemens
-	pub fn to_uS(self) -> T {
+	pub fn to_uS(&self) -> T {
 		return self.S.clone() * T::from(1000000.0_f64);
 	}
 
@@ -1519,7 +1512,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in nanosiemens
-	pub fn to_nS(self) -> T {
+	pub fn to_nS(&self) -> T {
 		return self.S.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -1532,7 +1525,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in kilosiemens
-	pub fn to_kS(self) -> T {
+	pub fn to_kS(&self) -> T {
 		return self.S.clone() * T::from(0.001_f64);
 	}
 
@@ -1545,7 +1538,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in megasiemens
-	pub fn to_MS(self) -> T {
+	pub fn to_MS(&self) -> T {
 		return self.S.clone() * T::from(1e-06_f64);
 	}
 
@@ -1558,7 +1551,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in gigasiemens
-	pub fn to_GS(self) -> T {
+	pub fn to_GS(&self) -> T {
 		return self.S.clone() * T::from(1e-09_f64);
 	}
 
@@ -2037,7 +2030,7 @@ impl<T> Capacitance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_F(self) -> T {
+	pub fn to_F(&self) -> T {
 		return self.F.clone();
 	}
 
@@ -2050,7 +2043,7 @@ impl<T> Capacitance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_farads(self) -> T {
+	pub fn to_farads(&self) -> T {
 		return self.F.clone();
 	}
 
@@ -2065,7 +2058,7 @@ impl<T> fmt::Display for Capacitance<T> where T: NumLike {
 impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical capacitance value in millifarads
-	pub fn to_mF(self) -> T {
+	pub fn to_mF(&self) -> T {
 		return self.F.clone() * T::from(1000.0_f64);
 	}
 
@@ -2078,7 +2071,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in microfarads
-	pub fn to_uF(self) -> T {
+	pub fn to_uF(&self) -> T {
 		return self.F.clone() * T::from(1000000.0_f64);
 	}
 
@@ -2091,7 +2084,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in nanofarads
-	pub fn to_nF(self) -> T {
+	pub fn to_nF(&self) -> T {
 		return self.F.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -2104,7 +2097,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in picofarads
-	pub fn to_pF(self) -> T {
+	pub fn to_pF(&self) -> T {
 		return self.F.clone() * T::from(1000000000000.0_f64);
 	}
 
@@ -2117,7 +2110,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in kilofarads
-	pub fn to_kF(self) -> T {
+	pub fn to_kF(&self) -> T {
 		return self.F.clone() * T::from(0.001_f64);
 	}
 
@@ -2130,7 +2123,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in megafarads
-	pub fn to_MF(self) -> T {
+	pub fn to_MF(&self) -> T {
 		return self.F.clone() * T::from(1e-06_f64);
 	}
 
@@ -2143,7 +2136,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in gigafarads
-	pub fn to_GF(self) -> T {
+	pub fn to_GF(&self) -> T {
 		return self.F.clone() * T::from(1e-09_f64);
 	}
 
@@ -2336,7 +2329,7 @@ impl<T> Inductance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this inductance value in henries
-	pub fn to_H(self) -> T {
+	pub fn to_H(&self) -> T {
 		return self.H.clone();
 	}
 
@@ -2349,7 +2342,7 @@ impl<T> Inductance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this inductance value in henries
-	pub fn to_henries(self) -> T {
+	pub fn to_henries(&self) -> T {
 		return self.H.clone();
 	}
 
@@ -2364,7 +2357,7 @@ impl<T> fmt::Display for Inductance<T> where T: NumLike {
 impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this inductance value in millihenries
-	pub fn to_mH(self) -> T {
+	pub fn to_mH(&self) -> T {
 		return self.H.clone() * T::from(1000.0_f64);
 	}
 
@@ -2377,7 +2370,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in microhenries
-	pub fn to_uH(self) -> T {
+	pub fn to_uH(&self) -> T {
 		return self.H.clone() * T::from(1000000.0_f64);
 	}
 
@@ -2390,7 +2383,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in nanohenries
-	pub fn to_nH(self) -> T {
+	pub fn to_nH(&self) -> T {
 		return self.H.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -2403,7 +2396,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in kilohenries
-	pub fn to_kH(self) -> T {
+	pub fn to_kH(&self) -> T {
 		return self.H.clone() * T::from(0.001_f64);
 	}
 
@@ -2416,7 +2409,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in megahenries
-	pub fn to_MH(self) -> T {
+	pub fn to_MH(&self) -> T {
 		return self.H.clone() * T::from(1e-06_f64);
 	}
 
@@ -2429,7 +2422,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in gigahenries
-	pub fn to_GH(self) -> T {
+	pub fn to_GH(&self) -> T {
 		return self.H.clone() * T::from(1e-09_f64);
 	}
 
@@ -2622,7 +2615,7 @@ impl<T> MagneticFlux<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_Wb(self) -> T {
+	pub fn to_Wb(&self) -> T {
 		return self.Wb.clone();
 	}
 
@@ -2635,7 +2628,7 @@ impl<T> MagneticFlux<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_webers(self) -> T {
+	pub fn to_webers(&self) -> T {
 		return self.Wb.clone();
 	}
 
@@ -2650,7 +2643,7 @@ impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
 impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this magnetic flux value in milliwebers
-	pub fn to_mWb(self) -> T {
+	pub fn to_mWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000.0_f64);
 	}
 
@@ -2663,7 +2656,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in microwebers
-	pub fn to_uWb(self) -> T {
+	pub fn to_uWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000000.0_f64);
 	}
 
@@ -2676,7 +2669,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in nanowebers
-	pub fn to_nWb(self) -> T {
+	pub fn to_nWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -2689,7 +2682,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in kilowebers
-	pub fn to_kWb(self) -> T {
+	pub fn to_kWb(&self) -> T {
 		return self.Wb.clone() * T::from(0.001_f64);
 	}
 
@@ -2702,7 +2695,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in megawebers
-	pub fn to_MWb(self) -> T {
+	pub fn to_MWb(&self) -> T {
 		return self.Wb.clone() * T::from(1e-06_f64);
 	}
 
@@ -2715,7 +2708,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in gigawebers
-	pub fn to_GWb(self) -> T {
+	pub fn to_GWb(&self) -> T {
 		return self.Wb.clone() * T::from(1e-09_f64);
 	}
 
@@ -3088,7 +3081,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_T(self) -> T {
+	pub fn to_T(&self) -> T {
 		return self.T.clone();
 	}
 
@@ -3101,7 +3094,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_teslas(self) -> T {
+	pub fn to_teslas(&self) -> T {
 		return self.T.clone();
 	}
 
@@ -3116,7 +3109,7 @@ impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
 impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this magnetic flux density value in milliteslas
-	pub fn to_mT(self) -> T {
+	pub fn to_mT(&self) -> T {
 		return self.T.clone() * T::from(1000.0_f64);
 	}
 
@@ -3129,7 +3122,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in microteslas
-	pub fn to_uT(self) -> T {
+	pub fn to_uT(&self) -> T {
 		return self.T.clone() * T::from(1000000.0_f64);
 	}
 
@@ -3142,7 +3135,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in nanoteslas
-	pub fn to_nT(self) -> T {
+	pub fn to_nT(&self) -> T {
 		return self.T.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -3155,7 +3148,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in kiloteslas
-	pub fn to_kT(self) -> T {
+	pub fn to_kT(&self) -> T {
 		return self.T.clone() * T::from(0.001_f64);
 	}
 
@@ -3168,7 +3161,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in megateslas
-	pub fn to_MT(self) -> T {
+	pub fn to_MT(&self) -> T {
 		return self.T.clone() * T::from(1e-06_f64);
 	}
 
@@ -3181,7 +3174,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in gigateslas
-	pub fn to_GT(self) -> T {
+	pub fn to_GT(&self) -> T {
 		return self.T.clone() * T::from(1e-09_f64);
 	}
 
@@ -3254,7 +3247,7 @@ impl<T> LuminousFlux<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lm(self) -> T {
+	pub fn to_lm(&self) -> T {
 		return self.lm.clone();
 	}
 
@@ -3267,7 +3260,7 @@ impl<T> LuminousFlux<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lumens(self) -> T {
+	pub fn to_lumens(&self) -> T {
 		return self.lm.clone();
 	}
 
@@ -3282,7 +3275,7 @@ impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
 impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this luminous flux value in millilumens
-	pub fn to_mlm(self) -> T {
+	pub fn to_mlm(&self) -> T {
 		return self.lm.clone() * T::from(1000.0_f64);
 	}
 
@@ -3295,7 +3288,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in microlumens
-	pub fn to_ulm(self) -> T {
+	pub fn to_ulm(&self) -> T {
 		return self.lm.clone() * T::from(1000000.0_f64);
 	}
 
@@ -3308,7 +3301,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in nanolumens
-	pub fn to_nlm(self) -> T {
+	pub fn to_nlm(&self) -> T {
 		return self.lm.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -3321,7 +3314,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in kilolumens
-	pub fn to_klm(self) -> T {
+	pub fn to_klm(&self) -> T {
 		return self.lm.clone() * T::from(0.001_f64);
 	}
 
@@ -3334,7 +3327,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in megalumens
-	pub fn to_Mlm(self) -> T {
+	pub fn to_Mlm(&self) -> T {
 		return self.lm.clone() * T::from(1e-06_f64);
 	}
 
@@ -3347,7 +3340,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in gigalumens
-	pub fn to_Glm(self) -> T {
+	pub fn to_Glm(&self) -> T {
 		return self.lm.clone() * T::from(1e-09_f64);
 	}
 
@@ -3510,7 +3503,7 @@ impl<T> Illuminance<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this illuminance value in lux
-	pub fn to_lux(self) -> T {
+	pub fn to_lux(&self) -> T {
 		return self.lux.clone();
 	}
 
@@ -3525,7 +3518,7 @@ impl<T> fmt::Display for Illuminance<T> where T: NumLike {
 impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this illuminance value in millilux
-	pub fn to_mlux(self) -> T {
+	pub fn to_mlux(&self) -> T {
 		return self.lux.clone() * T::from(1000.0_f64);
 	}
 
@@ -3538,7 +3531,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in microlux
-	pub fn to_ulux(self) -> T {
+	pub fn to_ulux(&self) -> T {
 		return self.lux.clone() * T::from(1000000.0_f64);
 	}
 
@@ -3551,7 +3544,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in nanolux
-	pub fn to_nlux(self) -> T {
+	pub fn to_nlux(&self) -> T {
 		return self.lux.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -3564,7 +3557,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in kilolux
-	pub fn to_klux(self) -> T {
+	pub fn to_klux(&self) -> T {
 		return self.lux.clone() * T::from(0.001_f64);
 	}
 
@@ -3577,7 +3570,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in megalux
-	pub fn to_Mlux(self) -> T {
+	pub fn to_Mlux(&self) -> T {
 		return self.lux.clone() * T::from(1e-06_f64);
 	}
 
@@ -3590,7 +3583,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in gigalux
-	pub fn to_Glux(self) -> T {
+	pub fn to_Glux(&self) -> T {
 		return self.lux.clone() * T::from(1e-09_f64);
 	}
 

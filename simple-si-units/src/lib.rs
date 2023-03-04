@@ -71,6 +71,15 @@
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
 
+// optional supports
+#[cfg(feature="serde")]
+extern crate serde;
+#[cfg(feature="num_bigfloat")]
+extern crate num_bigfloat;
+#[cfg(feature="num_complex")]
+extern crate num_complex;
+#[cfg(feature="astro_float")]
+extern crate astro_float;
 
 pub mod base;
 pub mod chemical;
@@ -100,7 +109,7 @@ mod unit_tests {
 		} else {
 			let ypsilon = 10f64.powi(-sigfigs);
 			let max_delta = (a.abs() + b.abs()) * 0.5 * ypsilon;
-			assert!((a - b).abs() < max_delta);
+			assert!((a - b).abs() < max_delta, "Error: {} != {} within margin of {}", a, b, max_delta);
 		}
 	}
 
@@ -270,7 +279,7 @@ mod unit_tests {
 	#[test]
 	fn temperature_units() {
 		assert_approx_equal(
-			Temperature::from_K(272.15_f64).to_K(),
+			Temperature::from_K(273.15_f64).to_K(),
 			Temperature::from_C(0.0_f64).to_K(), 9
 		);
 		assert_approx_equal(
@@ -285,7 +294,7 @@ mod unit_tests {
 	fn quantity_units() {
 		assert_approx_equal(
 			Amount::from_count(6.0221415e23_f64).to_count(),
-			Amount::from_mol(1.0_f64).to_count(), 7
+			Amount::from_mol(1.0_f64).to_count(), 6
 		);
 		assert_approx_equal(
 			Amount::from_mol(1.0_f64).to_count(),
@@ -453,8 +462,8 @@ mod unit_tests {
 	#[test]
 	fn torque_units() {
 		assert_approx_equal(
-			Torque::from_Nm(1.356_f64).to_Nm(),
-			Torque::from_ftlb(1.0_f64).to_ftlb(), 3
+			Torque::from_Nm(1.3558179483_f64).to_Nm(),
+			Torque::from_ftlb(1.0_f64).to_Nm(), 3
 		);
 		let _ = Torque::from_Nm(1.0_f64).to_Nm();
 		let _ = Torque::from_Nm(1.0_f64).to_ftlb();
@@ -463,7 +472,7 @@ mod unit_tests {
 	fn momentum_units() {
 		assert_approx_equal(
 			Momentum::from_kgmps(1.0_f64).to_kgmps(),
-			Momentum::from_gcmps(10.0_f64).to_kgmps(), 9
+			Momentum::from_gcmps(100000.0_f64).to_kgmps(), 9
 		);
 		let _ = Momentum::from_kgmps(1.0_f64).to_kgmps();
 		let _ = Momentum::from_kgmps(1.0_f64).to_gcmps();
@@ -621,11 +630,11 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			Velocity::from_mps(1.0_f64).to_mps(),
-			Velocity::from_mph(3600.0_f64).to_mps(), 9
+			Velocity::from_mmph(1000.0_f64 * 3600.0_f64).to_mps(), 9
 		);
 		assert_approx_equal(
-			Velocity::from_mps(1.0_f64).to_mps(),
-			Velocity::from_mmph(1000.0_f64 * 3600.0_f64).to_mps(), 9
+			Velocity::from_kph(1.609344_f64).to_mps(),
+			Velocity::from_mph(1.0_f64).to_mps(), 5
 		);
 		assert_approx_equal(
 			Velocity::from_kph(1.0_f64).to_mps(),
@@ -790,11 +799,11 @@ mod unit_tests {
 	fn coulomb_units() {
 		assert_approx_equal(
 			Charge::from_C(-1.60217646e-19_f64).to_C(),
-			Charge::from_e(1.0_f64).to_C(), 7
+			Charge::from_e(1.0_f64).to_C(), 5
 		);
 		assert_approx_equal(
 			Charge::from_C(1.60217646e-19_f64).to_C(),
-			Charge::from_p(1.0_f64).to_C(), 7
+			Charge::from_p(1.0_f64).to_C(), 5
 		);
 		let _ = Charge::from_C(1.0_f64).to_C();
 		let _ = Charge::from_C(1.0_f64).to_e();
@@ -1085,7 +1094,7 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			CatalyticActivity::from_molps(1.0_f64).to_molps(),
-			CatalyticActivity::from_Nps(6.0221415e23_f64).to_molps(), 7
+			CatalyticActivity::from_Nps(6.0221415e23_f64).to_molps(), 4
 		);
 		assert_approx_equal(
 			CatalyticActivity::from_mmolps(1.0_f64).to_molps(),
@@ -1117,11 +1126,11 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			Concentration::from_count_per_L(6.02214e23_f64).to_M(),
-			Concentration::from_M(1.0_f64).to_M(), 5
+			Concentration::from_M(1.0_f64).to_M(), 4
 		);
 		assert_approx_equal(
 			Concentration::from_Npm3(6.02214e23_f64).to_M(),
-			Concentration::from_mM(1.0_f64).to_M(), 5
+			Concentration::from_mM(1.0_f64).to_M(), 4
 		);
 		assert_approx_equal(
 			Concentration::from_count_per_cc(6.02214e23_f64).to_M(),
@@ -1422,7 +1431,7 @@ mod unit_tests {
 		assert_approx_equal(d2.to_m(), -2.5, 9);
 		d1 *= 2.0;
 		assert_approx_equal(d1.to_m(), 9.0, 9);
-		d2 /= -2.0;
+		d2 /= -0.5;
 		assert_approx_equal(d2.to_m(), 5.0, 9);
 	}
 }

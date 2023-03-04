@@ -12,18 +12,11 @@ use super::nuclear::*;
 
 // optional supports
 #[cfg(feature="serde")]
-#[macro_use]
-extern crate serde;
-#[cfg(feature="num_bigfloat")]
-extern crate num_bigfloat;
+use serde::{Serialize, Deserialize};
 #[cfg(feature="num_bigfloat")]
 use num_bigfloat;
 #[cfg(feature="num_complex")]
-extern crate num_complex;
-#[cfg(feature="num_complex")]
 use num_complex;
-#[cfg(feature="astro_float")]
-extern crate astro_float;
 #[cfg(feature="astro_float")]
 use astro_float;
 
@@ -57,7 +50,7 @@ impl<T> AngularVelocity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radps(self) -> T {
+	pub fn to_radps(&self) -> T {
 		return self.radps.clone();
 	}
 
@@ -70,7 +63,7 @@ impl<T> AngularVelocity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radians_per_second(self) -> T {
+	pub fn to_radians_per_second(&self) -> T {
 		return self.radps.clone();
 	}
 
@@ -85,7 +78,7 @@ impl<T> fmt::Display for AngularVelocity<T> where T: NumLike {
 impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular velocity value in degrees per second
-	pub fn to_degrees_per_second(self) -> T {
+	pub fn to_degrees_per_second(&self) -> T {
 		return self.radps.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -98,7 +91,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in degrees per second
-	pub fn to_degps(self) -> T {
+	pub fn to_degps(&self) -> T {
 		return self.radps.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -111,7 +104,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per second
-	pub fn to_rps(self) -> T {
+	pub fn to_rps(&self) -> T {
 		return self.radps.clone() * T::from(0.159154943091895_f64);
 	}
 
@@ -124,7 +117,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per minute
-	pub fn to_rpm(self) -> T {
+	pub fn to_rpm(&self) -> T {
 		return self.radps.clone() * T::from(9.54929658551372_f64);
 	}
 
@@ -137,7 +130,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per hour
-	pub fn to_rph(self) -> T {
+	pub fn to_rph(&self) -> T {
 		return self.radps.clone() * T::from(572.957795130823_f64);
 	}
 
@@ -146,7 +139,7 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `rph` - Any number-like type, representing a quantity of revolutions per hour
 	pub fn from_rph(rph: T) -> Self {
-		AngularVelocity{radps: rph * T::from(0.00174532925199433_f64)}
+		AngularVelocity{radps: rph * T::from(0.0017453292519943_f64)}
 	}
 
 }
@@ -420,7 +413,7 @@ impl<T> AngularAcceleration<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radps2(self) -> T {
+	pub fn to_radps2(&self) -> T {
 		return self.radps2.clone();
 	}
 
@@ -433,7 +426,7 @@ impl<T> AngularAcceleration<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radians_per_second_squared(self) -> T {
+	pub fn to_radians_per_second_squared(&self) -> T {
 		return self.radps2.clone();
 	}
 
@@ -448,7 +441,7 @@ impl<T> fmt::Display for AngularAcceleration<T> where T: NumLike {
 impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular acceleration value in degrees per second squared
-	pub fn to_degrees_per_second_squared(self) -> T {
+	pub fn to_degrees_per_second_squared(&self) -> T {
 		return self.radps2.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -461,7 +454,7 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per second squared
-	pub fn to_rps2(self) -> T {
+	pub fn to_rps2(&self) -> T {
 		return self.radps2.clone() * T::from(0.159154943091895_f64);
 	}
 
@@ -474,7 +467,7 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per minute squared
-	pub fn to_rpm2(self) -> T {
+	pub fn to_rpm2(&self) -> T {
 		return self.radps2.clone() * T::from(572.957795130823_f64);
 	}
 
@@ -483,11 +476,11 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `rpm2` - Any number-like type, representing a quantity of revolutions per minute squared
 	pub fn from_rpm2(rpm2: T) -> Self {
-		AngularAcceleration{radps2: rpm2 * T::from(0.00174532925199433_f64)}
+		AngularAcceleration{radps2: rpm2 * T::from(0.0017453292519943_f64)}
 	}
 
 	/// Returns a copy of this angular acceleration value in degrees per second squared
-	pub fn to_degps2(self) -> T {
+	pub fn to_degps2(&self) -> T {
 		return self.radps2.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -500,7 +493,7 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per hour squared
-	pub fn to_rph2(self) -> T {
+	pub fn to_rph2(&self) -> T {
 		return self.radps2.clone() * T::from(2062648.06247096_f64);
 	}
 
@@ -633,7 +626,7 @@ impl<T> MomentOfInertia<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kgm2(self) -> T {
+	pub fn to_kgm2(&self) -> T {
 		return self.kgm2.clone();
 	}
 
@@ -646,7 +639,7 @@ impl<T> MomentOfInertia<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kilogram_meters_squared(self) -> T {
+	pub fn to_kilogram_meters_squared(&self) -> T {
 		return self.kgm2.clone();
 	}
 
@@ -661,7 +654,7 @@ impl<T> fmt::Display for MomentOfInertia<T> where T: NumLike {
 impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this moment of inertia value in gram cm squared
-	pub fn to_gcm2(self) -> T {
+	pub fn to_gcm2(&self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
 	}
 
@@ -674,8 +667,8 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this moment of inertia value in gram meters squared
-	pub fn to_gm2(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+	pub fn to_gm2(&self) -> T {
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new moment of inertia value from the given number of gram meters squared
@@ -683,7 +676,7 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `gm2` - Any number-like type, representing a quantity of gram meters squared
 	pub fn from_gm2(gm2: T) -> Self {
-		MomentOfInertia{kgm2: gm2 * T::from(1000.0_f64)}
+		MomentOfInertia{kgm2: gm2 * T::from(0.001_f64)}
 	}
 
 }
@@ -807,7 +800,7 @@ impl<T> AngularMomentum<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kgm2radps(self) -> T {
+	pub fn to_kgm2radps(&self) -> T {
 		return self.kgm2radps.clone();
 	}
 
@@ -820,7 +813,7 @@ impl<T> AngularMomentum<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kilogram_meters_squared_radians_per_second(self) -> T {
+	pub fn to_kilogram_meters_squared_radians_per_second(&self) -> T {
 		return self.kgm2radps.clone();
 	}
 
@@ -835,7 +828,7 @@ impl<T> fmt::Display for AngularMomentum<T> where T: NumLike {
 impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular momentum value in gram cm squared radians per second
-	pub fn to_gcm2radps(self) -> T {
+	pub fn to_gcm2radps(&self) -> T {
 		return self.kgm2radps.clone() * T::from(0.1_f64);
 	}
 
@@ -968,7 +961,7 @@ impl<T> Torque<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this torque value in newton meters
-	pub fn to_Nm(self) -> T {
+	pub fn to_Nm(&self) -> T {
 		return self.Nm.clone();
 	}
 
@@ -981,7 +974,7 @@ impl<T> Torque<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this torque value in newton meters
-	pub fn to_newton_meters(self) -> T {
+	pub fn to_newton_meters(&self) -> T {
 		return self.Nm.clone();
 	}
 
@@ -995,17 +988,17 @@ impl<T> fmt::Display for Torque<T> where T: NumLike {
 
 impl<T> Torque<T> where T: NumLike+From<f64> {
 	
-	/// Returns a copy of this torque value in Foot-pounds
-	pub fn to_ftlb(self) -> T {
-		return self.Nm.clone() * T::from(1.35581794833139_f64);
+	/// Returns a copy of this torque value in foot-pounds
+	pub fn to_ftlb(&self) -> T {
+		return self.Nm.clone() * T::from(0.73756214927727_f64);
 	}
 
-	/// Returns a new torque value from the given number of Foot-pounds
+	/// Returns a new torque value from the given number of foot-pounds
 	///
 	/// # Arguments
-	/// * `ftlb` - Any number-like type, representing a quantity of Foot-pounds
+	/// * `ftlb` - Any number-like type, representing a quantity of foot-pounds
 	pub fn from_ftlb(ftlb: T) -> Self {
-		Torque{Nm: ftlb * T::from(0.73756214927727_f64)}
+		Torque{Nm: ftlb * T::from(1.35581794833139_f64)}
 	}
 
 }
@@ -1429,7 +1422,7 @@ impl<T> Frequency<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this frequency value in hertz
-	pub fn to_Hz(self) -> T {
+	pub fn to_Hz(&self) -> T {
 		return self.Hz.clone();
 	}
 
@@ -1442,7 +1435,7 @@ impl<T> Frequency<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this frequency value in hertz
-	pub fn to_hertz(self) -> T {
+	pub fn to_hertz(&self) -> T {
 		return self.Hz.clone();
 	}
 
@@ -1457,7 +1450,7 @@ impl<T> fmt::Display for Frequency<T> where T: NumLike {
 impl<T> Frequency<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this frequency value in kilohertz
-	pub fn to_kHz(self) -> T {
+	pub fn to_kHz(&self) -> T {
 		return self.Hz.clone() * T::from(0.001_f64);
 	}
 
@@ -1470,7 +1463,7 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in megahertz
-	pub fn to_MHz(self) -> T {
+	pub fn to_MHz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-06_f64);
 	}
 
@@ -1483,7 +1476,7 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in gigahertz
-	pub fn to_GHz(self) -> T {
+	pub fn to_GHz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-09_f64);
 	}
 
@@ -1496,7 +1489,7 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in terahertz
-	pub fn to_THz(self) -> T {
+	pub fn to_THz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-12_f64);
 	}
 
@@ -2155,7 +2148,7 @@ impl<T> AreaDensity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kgpm2(self) -> T {
+	pub fn to_kgpm2(&self) -> T {
 		return self.kgm2.clone();
 	}
 
@@ -2168,7 +2161,7 @@ impl<T> AreaDensity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kilograms_per_square_meter(self) -> T {
+	pub fn to_kilograms_per_square_meter(&self) -> T {
 		return self.kgm2.clone();
 	}
 
@@ -2183,8 +2176,8 @@ impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
 impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this area density value in grams per square meter
-	pub fn to_gpm2(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+	pub fn to_gpm2(&self) -> T {
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
@@ -2192,12 +2185,12 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `gpm2` - Any number-like type, representing a quantity of grams per square meter
 	pub fn from_gpm2(gpm2: T) -> Self {
-		AreaDensity{kgm2: gpm2 * T::from(1000.0_f64)}
+		AreaDensity{kgm2: gpm2 * T::from(0.001_f64)}
 	}
 
 	/// Returns a copy of this area density value in grams per square meter
-	pub fn to_grams_per_square_meter(self) -> T {
-		return self.kgm2.clone() * T::from(0.001_f64);
+	pub fn to_grams_per_square_meter(&self) -> T {
+		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
@@ -2205,11 +2198,11 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `grams_per_square_meter` - Any number-like type, representing a quantity of grams per square meter
 	pub fn from_grams_per_square_meter(grams_per_square_meter: T) -> Self {
-		AreaDensity{kgm2: grams_per_square_meter * T::from(1000.0_f64)}
+		AreaDensity{kgm2: grams_per_square_meter * T::from(0.001_f64)}
 	}
 
 	/// Returns a copy of this area density value in grams per square cm
-	pub fn to_gpcm2(self) -> T {
+	pub fn to_gpcm2(&self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
 	}
 
@@ -2222,7 +2215,7 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area density value in grams per square cm
-	pub fn to_grams_per_square_cm(self) -> T {
+	pub fn to_grams_per_square_cm(&self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
 	}
 
@@ -2355,7 +2348,7 @@ impl<T> Density<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kgpm3(self) -> T {
+	pub fn to_kgpm3(&self) -> T {
 		return self.kgpm3.clone();
 	}
 
@@ -2368,7 +2361,7 @@ impl<T> Density<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kilograms_per_cubic_meter(self) -> T {
+	pub fn to_kilograms_per_cubic_meter(&self) -> T {
 		return self.kgpm3.clone();
 	}
 
@@ -2383,7 +2376,7 @@ impl<T> fmt::Display for Density<T> where T: NumLike {
 impl<T> Density<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kgpL(self) -> T {
+	pub fn to_kgpL(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
@@ -2396,7 +2389,7 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in kilograms per liter
-	pub fn to_kilograms_per_liter(self) -> T {
+	pub fn to_kilograms_per_liter(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
@@ -2409,7 +2402,7 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cc
-	pub fn to_gpcc(self) -> T {
+	pub fn to_gpcc(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
@@ -2422,7 +2415,7 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cc
-	pub fn to_grams_per_cubic_centimeter(self) -> T {
+	pub fn to_grams_per_cubic_centimeter(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
@@ -2435,7 +2428,7 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cubic meter
-	pub fn to_gpm3(self) -> T {
+	pub fn to_gpm3(&self) -> T {
 		return self.kgpm3.clone() * T::from(1000.0_f64);
 	}
 
@@ -2508,7 +2501,7 @@ impl<T> Velocity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this velocity value in meters per second
-	pub fn to_mps(self) -> T {
+	pub fn to_mps(&self) -> T {
 		return self.mps.clone();
 	}
 
@@ -2521,7 +2514,7 @@ impl<T> Velocity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this velocity value in meters per second
-	pub fn to_meters_per_second(self) -> T {
+	pub fn to_meters_per_second(&self) -> T {
 		return self.mps.clone();
 	}
 
@@ -2536,7 +2529,7 @@ impl<T> fmt::Display for Velocity<T> where T: NumLike {
 impl<T> Velocity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this velocity value in centimeters per second
-	pub fn to_cmps(self) -> T {
+	pub fn to_cmps(&self) -> T {
 		return self.mps.clone() * T::from(100.0_f64);
 	}
 
@@ -2549,7 +2542,7 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in millimeters per second
-	pub fn to_mmps(self) -> T {
+	pub fn to_mmps(&self) -> T {
 		return self.mps.clone() * T::from(1000.0_f64);
 	}
 
@@ -2562,7 +2555,7 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in millimeters per hour
-	pub fn to_mmph(self) -> T {
+	pub fn to_mmph(&self) -> T {
 		return self.mps.clone() * T::from(3600000.0_f64);
 	}
 
@@ -2575,7 +2568,7 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in kilometers per hour
-	pub fn to_kph(self) -> T {
+	pub fn to_kph(&self) -> T {
 		return self.mps.clone() * T::from(3.6_f64);
 	}
 
@@ -2588,8 +2581,8 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in miles per hour
-	pub fn to_mph(self) -> T {
-		return self.mps.clone() * T::from(5.79363839999999_f64);
+	pub fn to_mph(&self) -> T {
+		return self.mps.clone() * T::from(2.2369362920544_f64);
 	}
 
 	/// Returns a new velocity value from the given number of miles per hour
@@ -2597,11 +2590,11 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `mph` - Any number-like type, representing a quantity of miles per hour
 	pub fn from_mph(mph: T) -> Self {
-		Velocity{mps: mph * T::from(0.172603108954815_f64)}
+		Velocity{mps: mph * T::from(0.44704_f64)}
 	}
 
 	/// Returns a copy of this velocity value in kilometers per second
-	pub fn to_kmps(self) -> T {
+	pub fn to_kmps(&self) -> T {
 		return self.mps.clone() * T::from(0.001_f64);
 	}
 
@@ -2614,7 +2607,7 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in light speed
-	pub fn to_c(self) -> T {
+	pub fn to_c(&self) -> T {
 		return self.mps.clone() * T::from(3.3356409519815204e-09_f64);
 	}
 
@@ -2927,7 +2920,7 @@ impl<T> Acceleration<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_mps2(self) -> T {
+	pub fn to_mps2(&self) -> T {
 		return self.mps2.clone();
 	}
 
@@ -2940,7 +2933,7 @@ impl<T> Acceleration<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_meters_per_second_squared(self) -> T {
+	pub fn to_meters_per_second_squared(&self) -> T {
 		return self.mps2.clone();
 	}
 
@@ -2955,7 +2948,7 @@ impl<T> fmt::Display for Acceleration<T> where T: NumLike {
 impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this acceleration value in millimeters per second squared
-	pub fn to_mmps2(self) -> T {
+	pub fn to_mmps2(&self) -> T {
 		return self.mps2.clone() * T::from(1000.0_f64);
 	}
 
@@ -2968,7 +2961,7 @@ impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this acceleration value in kilometers per hour squared
-	pub fn to_kilometers_per_hour_squared(self) -> T {
+	pub fn to_kilometers_per_hour_squared(&self) -> T {
 		return self.mps2.clone() * T::from(1000000.0_f64);
 	}
 
@@ -2981,7 +2974,7 @@ impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this acceleration value in kilometers per hour squared
-	pub fn to_kph2(self) -> T {
+	pub fn to_kph2(&self) -> T {
 		return self.mps2.clone() * T::from(12960.0_f64);
 	}
 
@@ -3174,7 +3167,7 @@ impl<T> Momentum<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kgmps(self) -> T {
+	pub fn to_kgmps(&self) -> T {
 		return self.kgmps.clone();
 	}
 
@@ -3187,7 +3180,7 @@ impl<T> Momentum<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kilogram_meters_per_second(self) -> T {
+	pub fn to_kilogram_meters_per_second(&self) -> T {
 		return self.kgmps.clone();
 	}
 
@@ -3202,7 +3195,7 @@ impl<T> fmt::Display for Momentum<T> where T: NumLike {
 impl<T> Momentum<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this momentum value in gram centimeters per second
-	pub fn to_gram_centimeters_per_second(self) -> T {
+	pub fn to_gram_centimeters_per_second(&self) -> T {
 		return self.kgmps.clone() * T::from(100000.0_f64);
 	}
 
@@ -3215,7 +3208,7 @@ impl<T> Momentum<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this momentum value in gram centimeters per second
-	pub fn to_gcmps(self) -> T {
+	pub fn to_gcmps(&self) -> T {
 		return self.kgmps.clone() * T::from(100000.0_f64);
 	}
 
@@ -3468,7 +3461,7 @@ impl<T> Force<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this force value in newtons
-	pub fn to_N(self) -> T {
+	pub fn to_N(&self) -> T {
 		return self.N.clone();
 	}
 
@@ -3481,7 +3474,7 @@ impl<T> Force<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this force value in newtons
-	pub fn to_newtons(self) -> T {
+	pub fn to_newtons(&self) -> T {
 		return self.N.clone();
 	}
 
@@ -3496,7 +3489,7 @@ impl<T> fmt::Display for Force<T> where T: NumLike {
 impl<T> Force<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this force value in pounds
-	pub fn to_lb(self) -> T {
+	pub fn to_lb(&self) -> T {
 		return self.N.clone() * T::from(0.224337566199999_f64);
 	}
 
@@ -3509,7 +3502,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in kilogram-force
-	pub fn to_kgG(self) -> T {
+	pub fn to_kgG(&self) -> T {
 		return self.N.clone() * T::from(0.101971620999999_f64);
 	}
 
@@ -3522,7 +3515,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in millinewtons
-	pub fn to_mN(self) -> T {
+	pub fn to_mN(&self) -> T {
 		return self.N.clone() * T::from(1000.0_f64);
 	}
 
@@ -3535,7 +3528,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in micronewtons
-	pub fn to_uN(self) -> T {
+	pub fn to_uN(&self) -> T {
 		return self.N.clone() * T::from(1000000.0_f64);
 	}
 
@@ -3548,7 +3541,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in nanonewtons
-	pub fn to_nN(self) -> T {
+	pub fn to_nN(&self) -> T {
 		return self.N.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -3561,7 +3554,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in kilonewtons
-	pub fn to_kN(self) -> T {
+	pub fn to_kN(&self) -> T {
 		return self.N.clone() * T::from(0.001_f64);
 	}
 
@@ -3574,7 +3567,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in meganewtons
-	pub fn to_MN(self) -> T {
+	pub fn to_MN(&self) -> T {
 		return self.N.clone() * T::from(1e-06_f64);
 	}
 
@@ -3587,7 +3580,7 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in giganewtons
-	pub fn to_GN(self) -> T {
+	pub fn to_GN(&self) -> T {
 		return self.N.clone() * T::from(1e-09_f64);
 	}
 
@@ -3900,7 +3893,7 @@ impl<T> Pressure<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this pressure value in pascals
-	pub fn to_Pa(self) -> T {
+	pub fn to_Pa(&self) -> T {
 		return self.Pa.clone();
 	}
 
@@ -3913,7 +3906,7 @@ impl<T> Pressure<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this pressure value in pascals
-	pub fn to_pascals(self) -> T {
+	pub fn to_pascals(&self) -> T {
 		return self.Pa.clone();
 	}
 
@@ -3928,7 +3921,7 @@ impl<T> fmt::Display for Pressure<T> where T: NumLike {
 impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this pressure value in pounds per square inch
-	pub fn to_psi(self) -> T {
+	pub fn to_psi(&self) -> T {
 		return self.Pa.clone() * T::from(0.00014503773773_f64);
 	}
 
@@ -3941,7 +3934,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in millipascals
-	pub fn to_mPa(self) -> T {
+	pub fn to_mPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000.0_f64);
 	}
 
@@ -3954,7 +3947,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in micropascals
-	pub fn to_uPa(self) -> T {
+	pub fn to_uPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000000.0_f64);
 	}
 
@@ -3967,7 +3960,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in nanopascals
-	pub fn to_nPa(self) -> T {
+	pub fn to_nPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -3980,7 +3973,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in kilopascals
-	pub fn to_kPa(self) -> T {
+	pub fn to_kPa(&self) -> T {
 		return self.Pa.clone() * T::from(0.001_f64);
 	}
 
@@ -3993,7 +3986,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in megapascals
-	pub fn to_MPa(self) -> T {
+	pub fn to_MPa(&self) -> T {
 		return self.Pa.clone() * T::from(1e-06_f64);
 	}
 
@@ -4006,7 +3999,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in gigapascals
-	pub fn to_GPa(self) -> T {
+	pub fn to_GPa(&self) -> T {
 		return self.Pa.clone() * T::from(1e-09_f64);
 	}
 
@@ -4019,7 +4012,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in hectopascals
-	pub fn to_hPa(self) -> T {
+	pub fn to_hPa(&self) -> T {
 		return self.Pa.clone() * T::from(0.01_f64);
 	}
 
@@ -4032,7 +4025,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in bar
-	pub fn to_bar(self) -> T {
+	pub fn to_bar(&self) -> T {
 		return self.Pa.clone() * T::from(1e-05_f64);
 	}
 
@@ -4045,7 +4038,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in millibar
-	pub fn to_mbar(self) -> T {
+	pub fn to_mbar(&self) -> T {
 		return self.Pa.clone() * T::from(0.01_f64);
 	}
 
@@ -4058,7 +4051,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in atmospheres
-	pub fn to_atm(self) -> T {
+	pub fn to_atm(&self) -> T {
 		return self.Pa.clone() * T::from(9.86923266716013e-06_f64);
 	}
 
@@ -4071,7 +4064,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in torr
-	pub fn to_torr(self) -> T {
+	pub fn to_torr(&self) -> T {
 		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
@@ -4084,7 +4077,7 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in mm Hg
-	pub fn to_mmHg(self) -> T {
+	pub fn to_mmHg(&self) -> T {
 		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
@@ -4187,7 +4180,7 @@ impl<T> Energy<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this energy value in joules
-	pub fn to_J(self) -> T {
+	pub fn to_J(&self) -> T {
 		return self.J.clone();
 	}
 
@@ -4200,7 +4193,7 @@ impl<T> Energy<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this energy value in joules
-	pub fn to_joules(self) -> T {
+	pub fn to_joules(&self) -> T {
 		return self.J.clone();
 	}
 
@@ -4215,7 +4208,7 @@ impl<T> fmt::Display for Energy<T> where T: NumLike {
 impl<T> Energy<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this energy value in millijoules
-	pub fn to_mJ(self) -> T {
+	pub fn to_mJ(&self) -> T {
 		return self.J.clone() * T::from(1000.0_f64);
 	}
 
@@ -4228,7 +4221,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in microjoules
-	pub fn to_uJ(self) -> T {
+	pub fn to_uJ(&self) -> T {
 		return self.J.clone() * T::from(1000000.0_f64);
 	}
 
@@ -4241,7 +4234,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in nanojoules
-	pub fn to_nJ(self) -> T {
+	pub fn to_nJ(&self) -> T {
 		return self.J.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -4254,7 +4247,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilojoules
-	pub fn to_kJ(self) -> T {
+	pub fn to_kJ(&self) -> T {
 		return self.J.clone() * T::from(0.001_f64);
 	}
 
@@ -4267,7 +4260,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in megajoules
-	pub fn to_MJ(self) -> T {
+	pub fn to_MJ(&self) -> T {
 		return self.J.clone() * T::from(1e-06_f64);
 	}
 
@@ -4280,7 +4273,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in gigajoules
-	pub fn to_GJ(self) -> T {
+	pub fn to_GJ(&self) -> T {
 		return self.J.clone() * T::from(1e-09_f64);
 	}
 
@@ -4293,7 +4286,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in calories
-	pub fn to_cal(self) -> T {
+	pub fn to_cal(&self) -> T {
 		return self.J.clone() * T::from(0.239005736137667_f64);
 	}
 
@@ -4306,7 +4299,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilocalories
-	pub fn to_kcal(self) -> T {
+	pub fn to_kcal(&self) -> T {
 		return self.J.clone() * T::from(0.0002390057361376_f64);
 	}
 
@@ -4319,7 +4312,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in watt-hours
-	pub fn to_Whr(self) -> T {
+	pub fn to_Whr(&self) -> T {
 		return self.J.clone() * T::from(0.0002777777777777_f64);
 	}
 
@@ -4332,7 +4325,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilowatt-hours
-	pub fn to_kWhr(self) -> T {
+	pub fn to_kWhr(&self) -> T {
 		return self.J.clone() * T::from(2.77777777777778e-07_f64);
 	}
 
@@ -4345,7 +4338,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in electron-volts
-	pub fn to_eV(self) -> T {
+	pub fn to_eV(&self) -> T {
 		return self.J.clone() * T::from(6.24150907446076e+18_f64);
 	}
 
@@ -4358,7 +4351,7 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in british thermal units
-	pub fn to_BTU(self) -> T {
+	pub fn to_BTU(&self) -> T {
 		return self.J.clone() * T::from(0.0009478672985781_f64);
 	}
 
@@ -4851,7 +4844,7 @@ impl<T> Power<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this power value in watts
-	pub fn to_W(self) -> T {
+	pub fn to_W(&self) -> T {
 		return self.W.clone();
 	}
 
@@ -4864,7 +4857,7 @@ impl<T> Power<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this power value in watts
-	pub fn to_watts(self) -> T {
+	pub fn to_watts(&self) -> T {
 		return self.W.clone();
 	}
 
@@ -4879,7 +4872,7 @@ impl<T> fmt::Display for Power<T> where T: NumLike {
 impl<T> Power<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this power value in milliwatts
-	pub fn to_mW(self) -> T {
+	pub fn to_mW(&self) -> T {
 		return self.W.clone() * T::from(1000.0_f64);
 	}
 
@@ -4892,7 +4885,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in microwatts
-	pub fn to_uW(self) -> T {
+	pub fn to_uW(&self) -> T {
 		return self.W.clone() * T::from(1000000.0_f64);
 	}
 
@@ -4905,7 +4898,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in nanowatts
-	pub fn to_nW(self) -> T {
+	pub fn to_nW(&self) -> T {
 		return self.W.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -4918,7 +4911,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in kilowatts
-	pub fn to_kW(self) -> T {
+	pub fn to_kW(&self) -> T {
 		return self.W.clone() * T::from(0.001_f64);
 	}
 
@@ -4931,7 +4924,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in megawatts
-	pub fn to_MW(self) -> T {
+	pub fn to_MW(&self) -> T {
 		return self.W.clone() * T::from(1e-06_f64);
 	}
 
@@ -4944,7 +4937,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in gigawatts
-	pub fn to_GW(self) -> T {
+	pub fn to_GW(&self) -> T {
 		return self.W.clone() * T::from(1e-09_f64);
 	}
 
@@ -4957,7 +4950,7 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in horse power
-	pub fn to_horsepower(self) -> T {
+	pub fn to_horsepower(&self) -> T {
 		return self.W.clone() * T::from(0.0013410218586563_f64);
 	}
 

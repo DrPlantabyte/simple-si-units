@@ -3,12 +3,6 @@ use simple_si_units::base::{Distance, Mass, Time};
 use simple_si_units::geometry::{Area};
 use simple_si_units::mechanical::{Velocity, Acceleration};
 
-#[test]
-pub fn placeholder_test() {
-	//  placeholder to ensure we fail the testing phase until tests are done
-	assert_eq!(1, 2)
-}
-
 // ===== ASTROPHYSICS SIMULATION ===== //
 #[derive(Debug, Clone)]
 struct MassPoint {

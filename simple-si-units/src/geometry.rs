@@ -11,18 +11,11 @@ use super::mechanical::*;
 
 // optional supports
 #[cfg(feature="serde")]
-#[macro_use]
-extern crate serde;
-#[cfg(feature="num_bigfloat")]
-extern crate num_bigfloat;
+use serde::{Serialize, Deserialize};
 #[cfg(feature="num_bigfloat")]
 use num_bigfloat;
 #[cfg(feature="num_complex")]
-extern crate num_complex;
-#[cfg(feature="num_complex")]
 use num_complex;
-#[cfg(feature="astro_float")]
-extern crate astro_float;
 #[cfg(feature="astro_float")]
 use astro_float;
 
@@ -56,7 +49,7 @@ impl<T> Angle<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angle value in radians
-	pub fn to_rad(self) -> T {
+	pub fn to_rad(&self) -> T {
 		return self.rad.clone();
 	}
 
@@ -69,7 +62,7 @@ impl<T> Angle<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this angle value in radians
-	pub fn to_radians(self) -> T {
+	pub fn to_radians(&self) -> T {
 		return self.rad.clone();
 	}
 
@@ -84,7 +77,7 @@ impl<T> fmt::Display for Angle<T> where T: NumLike {
 impl<T> Angle<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angle value in degrees
-	pub fn to_degrees(self) -> T {
+	pub fn to_degrees(&self) -> T {
 		return self.rad.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -97,7 +90,7 @@ impl<T> Angle<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angle value in degrees
-	pub fn to_deg(self) -> T {
+	pub fn to_deg(&self) -> T {
 		return self.rad.clone() * T::from(57.2957795130823_f64);
 	}
 
@@ -230,7 +223,7 @@ impl<T> SolidAngle<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this solid angle value in steradians
-	pub fn to_sr(self) -> T {
+	pub fn to_sr(&self) -> T {
 		return self.sr.clone();
 	}
 
@@ -243,7 +236,7 @@ impl<T> SolidAngle<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this solid angle value in steradians
-	pub fn to_steradians(self) -> T {
+	pub fn to_steradians(&self) -> T {
 		return self.sr.clone();
 	}
 
@@ -318,7 +311,7 @@ impl<T> Area<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this area value in square meters
-	pub fn to_m2(self) -> T {
+	pub fn to_m2(&self) -> T {
 		return self.m2.clone();
 	}
 
@@ -331,7 +324,7 @@ impl<T> Area<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this area value in square meters
-	pub fn to_square_meters(self) -> T {
+	pub fn to_square_meters(&self) -> T {
 		return self.m2.clone();
 	}
 
@@ -346,7 +339,7 @@ impl<T> fmt::Display for Area<T> where T: NumLike {
 impl<T> Area<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this area value in square cm
-	pub fn to_cm2(self) -> T {
+	pub fn to_cm2(&self) -> T {
 		return self.m2.clone() * T::from(10000.0_f64);
 	}
 
@@ -359,7 +352,7 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square cm
-	pub fn to_square_cm(self) -> T {
+	pub fn to_square_cm(&self) -> T {
 		return self.m2.clone() * T::from(10000.0_f64);
 	}
 
@@ -372,7 +365,7 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square mm
-	pub fn to_mm2(self) -> T {
+	pub fn to_mm2(&self) -> T {
 		return self.m2.clone() * T::from(1000000.0_f64);
 	}
 
@@ -385,7 +378,7 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square um
-	pub fn to_um2(self) -> T {
+	pub fn to_um2(&self) -> T {
 		return self.m2.clone() * T::from(1000000000000.0_f64);
 	}
 
@@ -398,7 +391,7 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square nm
-	pub fn to_nm2(self) -> T {
+	pub fn to_nm2(&self) -> T {
 		return self.m2.clone() * T::from(1e+18_f64);
 	}
 
@@ -411,7 +404,7 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square km
-	pub fn to_km2(self) -> T {
+	pub fn to_km2(&self) -> T {
 		return self.m2.clone() * T::from(1e-06_f64);
 	}
 
@@ -634,7 +627,7 @@ impl<T> Volume<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this volume value in cubic meters
-	pub fn to_m3(self) -> T {
+	pub fn to_m3(&self) -> T {
 		return self.m3.clone();
 	}
 
@@ -647,7 +640,7 @@ impl<T> Volume<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this volume value in cubic meters
-	pub fn to_cubic_meters(self) -> T {
+	pub fn to_cubic_meters(&self) -> T {
 		return self.m3.clone();
 	}
 
@@ -660,7 +653,7 @@ impl<T> Volume<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this volume value in kiloliters
-	pub fn to_kL(self) -> T {
+	pub fn to_kL(&self) -> T {
 		return self.m3.clone();
 	}
 
@@ -675,7 +668,7 @@ impl<T> fmt::Display for Volume<T> where T: NumLike {
 impl<T> Volume<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this volume value in cubic cm
-	pub fn to_cc(self) -> T {
+	pub fn to_cc(&self) -> T {
 		return self.m3.clone() * T::from(1000000.0_f64);
 	}
 
@@ -688,7 +681,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in liters
-	pub fn to_L(self) -> T {
+	pub fn to_L(&self) -> T {
 		return self.m3.clone() * T::from(1000.0_f64);
 	}
 
@@ -701,7 +694,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in liters
-	pub fn to_liters(self) -> T {
+	pub fn to_liters(&self) -> T {
 		return self.m3.clone() * T::from(1000.0_f64);
 	}
 
@@ -714,7 +707,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in milliliters
-	pub fn to_mL(self) -> T {
+	pub fn to_mL(&self) -> T {
 		return self.m3.clone() * T::from(1000000.0_f64);
 	}
 
@@ -727,7 +720,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in microliters
-	pub fn to_uL(self) -> T {
+	pub fn to_uL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -740,7 +733,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in nanoliters
-	pub fn to_nL(self) -> T {
+	pub fn to_nL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000000.0_f64);
 	}
 
@@ -753,7 +746,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in picoliters
-	pub fn to_pL(self) -> T {
+	pub fn to_pL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000000000.0_f64);
 	}
 
@@ -766,7 +759,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in megaliters
-	pub fn to_ML(self) -> T {
+	pub fn to_ML(&self) -> T {
 		return self.m3.clone() * T::from(0.001_f64);
 	}
 
@@ -779,7 +772,7 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in gigaliters
-	pub fn to_GL(self) -> T {
+	pub fn to_GL(&self) -> T {
 		return self.m3.clone() * T::from(1e-06_f64);
 	}
 
