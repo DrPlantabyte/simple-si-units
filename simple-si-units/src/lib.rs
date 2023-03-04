@@ -109,7 +109,7 @@ mod unit_tests {
 		} else {
 			let ypsilon = 10f64.powi(-sigfigs);
 			let max_delta = (a.abs() + b.abs()) * 0.5 * ypsilon;
-			assert!((a - b).abs() < max_delta);
+			assert!((a - b).abs() < max_delta, "Error: {} != {} within margin of {}", a, b, max_delta);
 		}
 	}
 
@@ -462,8 +462,8 @@ mod unit_tests {
 	#[test]
 	fn torque_units() {
 		assert_approx_equal(
-			Torque::from_Nm(1.3558_f64).to_Nm(),
-			Torque::from_ftlb(1.0_f64).to_ftlb(), 3
+			Torque::from_Nm(1.3558179483_f64).to_Nm(),
+			Torque::from_ftlb(1.0_f64).to_Nm(), 3
 		);
 		let _ = Torque::from_Nm(1.0_f64).to_Nm();
 		let _ = Torque::from_Nm(1.0_f64).to_ftlb();

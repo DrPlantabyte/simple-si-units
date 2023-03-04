@@ -47,7 +47,7 @@ impl<T> Radioactivity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_Bq(self) -> T {
+	pub fn to_Bq(&self) -> T {
 		return self.Bq.clone();
 	}
 
@@ -60,7 +60,7 @@ impl<T> Radioactivity<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_becquerels(self) -> T {
+	pub fn to_becquerels(&self) -> T {
 		return self.Bq.clone();
 	}
 
@@ -75,7 +75,7 @@ impl<T> fmt::Display for Radioactivity<T> where T: NumLike {
 impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this radioactivity value in millibecquerels
-	pub fn to_mBq(self) -> T {
+	pub fn to_mBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000.0_f64);
 	}
 
@@ -88,7 +88,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in microbecquerels
-	pub fn to_uBq(self) -> T {
+	pub fn to_uBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000000.0_f64);
 	}
 
@@ -101,7 +101,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in nanobecquerels
-	pub fn to_nBq(self) -> T {
+	pub fn to_nBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -114,7 +114,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in kilobecquerels
-	pub fn to_kBq(self) -> T {
+	pub fn to_kBq(&self) -> T {
 		return self.Bq.clone() * T::from(0.001_f64);
 	}
 
@@ -127,7 +127,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in megabecquerels
-	pub fn to_MBq(self) -> T {
+	pub fn to_MBq(&self) -> T {
 		return self.Bq.clone() * T::from(1e-06_f64);
 	}
 
@@ -140,7 +140,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in gigabecquerels
-	pub fn to_GBq(self) -> T {
+	pub fn to_GBq(&self) -> T {
 		return self.Bq.clone() * T::from(1e-09_f64);
 	}
 
@@ -153,7 +153,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in curies
-	pub fn to_Ci(self) -> T {
+	pub fn to_Ci(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-11_f64);
 	}
 
@@ -166,7 +166,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in millicuries
-	pub fn to_mCi(self) -> T {
+	pub fn to_mCi(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-08_f64);
 	}
 
@@ -179,7 +179,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in microcuries
-	pub fn to_uCi(self) -> T {
+	pub fn to_uCi(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-05_f64);
 	}
 
@@ -192,7 +192,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in nanocuries
-	pub fn to_nCi(self) -> T {
+	pub fn to_nCi(&self) -> T {
 		return self.Bq.clone() * T::from(0.027027027027027_f64);
 	}
 
@@ -205,7 +205,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in picocuries
-	pub fn to_pCi(self) -> T {
+	pub fn to_pCi(&self) -> T {
 		return self.Bq.clone() * T::from(27.027027027027_f64);
 	}
 
@@ -218,7 +218,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in rutherfords
-	pub fn to_Rd(self) -> T {
+	pub fn to_Rd(&self) -> T {
 		return self.Bq.clone() * T::from(1e-06_f64);
 	}
 
@@ -517,7 +517,7 @@ impl<T> AbsorbedDose<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_Gy(self) -> T {
+	pub fn to_Gy(&self) -> T {
 		return self.Gy.clone();
 	}
 
@@ -530,7 +530,7 @@ impl<T> AbsorbedDose<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_grays(self) -> T {
+	pub fn to_grays(&self) -> T {
 		return self.Gy.clone();
 	}
 
@@ -545,7 +545,7 @@ impl<T> fmt::Display for AbsorbedDose<T> where T: NumLike {
 impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this absorbed dose value in milligrays
-	pub fn to_mGy(self) -> T {
+	pub fn to_mGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000.0_f64);
 	}
 
@@ -558,7 +558,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in micrograys
-	pub fn to_uGy(self) -> T {
+	pub fn to_uGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000000.0_f64);
 	}
 
@@ -571,7 +571,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in nanograys
-	pub fn to_nGy(self) -> T {
+	pub fn to_nGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -584,7 +584,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in kilograys
-	pub fn to_kGy(self) -> T {
+	pub fn to_kGy(&self) -> T {
 		return self.Gy.clone() * T::from(0.001_f64);
 	}
 
@@ -597,7 +597,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in megagrays
-	pub fn to_MGy(self) -> T {
+	pub fn to_MGy(&self) -> T {
 		return self.Gy.clone() * T::from(1e-06_f64);
 	}
 
@@ -610,7 +610,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in gigagrays
-	pub fn to_GGy(self) -> T {
+	pub fn to_GGy(&self) -> T {
 		return self.Gy.clone() * T::from(1e-09_f64);
 	}
 
@@ -623,7 +623,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in rads
-	pub fn to_rad(self) -> T {
+	pub fn to_rad(&self) -> T {
 		return self.Gy.clone() * T::from(100.0_f64);
 	}
 
@@ -636,7 +636,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in kilorads
-	pub fn to_krad(self) -> T {
+	pub fn to_krad(&self) -> T {
 		return self.Gy.clone() * T::from(0.1_f64);
 	}
 
@@ -649,7 +649,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in millirads
-	pub fn to_mrad(self) -> T {
+	pub fn to_mrad(&self) -> T {
 		return self.Gy.clone() * T::from(100000.0_f64);
 	}
 
@@ -662,7 +662,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in microrads
-	pub fn to_urad(self) -> T {
+	pub fn to_urad(&self) -> T {
 		return self.Gy.clone() * T::from(100000000.0_f64);
 	}
 
@@ -675,7 +675,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in ergs per gram
-	pub fn to_erg(self) -> T {
+	pub fn to_erg(&self) -> T {
 		return self.Gy.clone() * T::from(10000.0_f64);
 	}
 
@@ -748,7 +748,7 @@ impl<T> DoseEquivalent<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_Sv(self) -> T {
+	pub fn to_Sv(&self) -> T {
 		return self.Sv.clone();
 	}
 
@@ -761,7 +761,7 @@ impl<T> DoseEquivalent<T> where T: NumLike {
 	}
 	
 	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_sieverts(self) -> T {
+	pub fn to_sieverts(&self) -> T {
 		return self.Sv.clone();
 	}
 
@@ -776,7 +776,7 @@ impl<T> fmt::Display for DoseEquivalent<T> where T: NumLike {
 impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this dose equivalent value in millisieverts
-	pub fn to_mSv(self) -> T {
+	pub fn to_mSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000.0_f64);
 	}
 
@@ -789,7 +789,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in microsieverts
-	pub fn to_uSv(self) -> T {
+	pub fn to_uSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000000.0_f64);
 	}
 
@@ -802,7 +802,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in nanosieverts
-	pub fn to_nSv(self) -> T {
+	pub fn to_nSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000000000.0_f64);
 	}
 
@@ -815,7 +815,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in kilosieverts
-	pub fn to_kSv(self) -> T {
+	pub fn to_kSv(&self) -> T {
 		return self.Sv.clone() * T::from(0.001_f64);
 	}
 
@@ -828,7 +828,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in megasieverts
-	pub fn to_MSv(self) -> T {
+	pub fn to_MSv(&self) -> T {
 		return self.Sv.clone() * T::from(1e-06_f64);
 	}
 
@@ -841,7 +841,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in gigasieverts
-	pub fn to_GSv(self) -> T {
+	pub fn to_GSv(&self) -> T {
 		return self.Sv.clone() * T::from(1e-09_f64);
 	}
 
@@ -854,7 +854,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in roentgen equivalent man
-	pub fn to_rem(self) -> T {
+	pub fn to_rem(&self) -> T {
 		return self.Sv.clone() * T::from(100.0_f64);
 	}
 
@@ -867,7 +867,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in milli-roentgen equivalents
-	pub fn to_mrem(self) -> T {
+	pub fn to_mrem(&self) -> T {
 		return self.Sv.clone() * T::from(100000.0_f64);
 	}
 
@@ -880,7 +880,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in kilo-roentgen equivalents
-	pub fn to_krem(self) -> T {
+	pub fn to_krem(&self) -> T {
 		return self.Sv.clone() * T::from(0.1_f64);
 	}
 

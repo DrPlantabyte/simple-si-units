@@ -65,15 +65,15 @@ NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
 	}
 	
 	/// Returns a copy of this %(desc name)s value in %(user unit name)s
-	pub fn to_%(user unit symbol)s(self) -> T {
+	pub fn to_%(user unit symbol)s(&self) -> T {
 		return self.%(unit symbol)s.clone();
 	}
 '''
 
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
-	pub fn to_%(unit symbol)s(self) -> T {
-		return (self.%(si unit symbol)s.clone() - T::from(%(offset)s_f64)) * T::from(%(inverse slope)s_f64);
+	pub fn to_%(unit symbol)s(&self) -> T {
+		return (self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64)) - T::from(%(offset)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
@@ -81,13 +81,13 @@ TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// # Arguments
 	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
 	pub fn from_%(unit symbol)s(%(unit symbol)s: T) -> Self {
-		%(code name)s{%(si unit symbol)s: %(unit symbol)s * T::from(%(slope)s_f64) + T::from(%(offset)s_f64)}
+		%(code name)s{%(si unit symbol)s: (%(unit symbol)s + T::from(%(offset)s_f64)) * T::from(%(slope)s_f64)}
 	}
 '''
 
 TO_FROM_SLOPE_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
-	pub fn to_%(unit symbol)s(self) -> T {
+	pub fn to_%(unit symbol)s(&self) -> T {
 		return self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64);
 	}
 
