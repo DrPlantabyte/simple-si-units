@@ -17,7 +17,7 @@ proc-macro = true
 
 
 [dependencies]
-simple-si-units-core = "0.7.2"
+simple-si-units-core = "0.7"
 #simple-si-units-core = { path = "../simple-si-units-core" }
 # macro helpers
 syn = { version = "1.0", features = ["full", "extra-traits"] }
