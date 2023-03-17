@@ -4,9 +4,6 @@
 This Rust library provides compiler-checked types for the standard set of SI 
 units, as specified by the US [National Institute of Standards and Technology](https://www.nist.gov/pml/owm/metric-si/si-units) (this project is not officially endorsed by NIST).
 
-* Note from the developer: After a two-month pause for the holiday season, 
-  I'm back to working on this project. Thank you for your understanding! *
-
 ## What's included?
 * Official standard SI Units
 * Common secondary units, such as velocity
