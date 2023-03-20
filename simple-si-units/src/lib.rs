@@ -91,6 +91,7 @@ pub mod nuclear;
 /// Unit tests
 #[cfg(test)]
 mod unit_tests {
+	use std::process::Output;
 	use num_traits::Zero;
 	use super::base::*;
 	use super::chemical::*;
@@ -1569,5 +1570,41 @@ mod unit_tests {
 		println!("{}", Radioactivity{Bq: 1});
 	}
 
+	fn mul_check<
+		'y,
+		A: std::ops::Mul<B, Output = X>+Clone+'y,
+		B: std::ops::Mul<A, Output = X>+Clone+'y,
+		X: std::cmp::PartialEq+Clone
+	>(a: &'y A, b: &'y B) -> X where &'y B: std::ops::Mul<&'y A, Output = X>, &'y A: std::ops::Mul<&'y B, Output = X>
+	{
+		let x1: X = a * b;
+		let x2: X = b * a;
+		let x3: X = a.clone() * b.clone();
+		let x4: X = b.clone() * a.clone();
+		assert!((x1.eq(&x2)));
+		assert!((x1.eq(&x3)));
+		assert!((x1.eq(&x4)));
+		return x1;
+	}
+
+	fn div_check<
+		'y,
+		A: std::ops::Div<B, Output = X>+Clone+'y,
+		B: Clone+'y,
+		X: std::cmp::PartialEq+Clone
+	>(a: &'y A, b: &'y B) -> X where &'y A: std::ops::Div<&'y B, Output = X>
+	{
+		let x1: X = a / b;
+		let x2: X = a.clone() / b.clone();
+		assert!((x1.eq(&x2)));
+		return x1;
+	}
+
+	#[test]
+	fn test_unit_converions(){
+		assert_eq!(div_check(&Amount{mol:2.5}, &Time{s:0.5}), CatalyticActivity{molps: 2.5/0.5});
+		assert_eq!(div_check(&Amount{mol:2.5}, &Concentration{molpm3:0.5}), Volume{m3: 2.5/0.5});
+		todo!();
+	}
 	// TODO: templated function to test all unit struct operators and then use it on all structs
 }
