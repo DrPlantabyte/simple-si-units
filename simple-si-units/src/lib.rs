@@ -1522,4 +1522,52 @@ mod unit_tests {
 		assert!(Radioactivity::<f64>::unit_name().eq("becquerels"));
 		assert!(Radioactivity::<f64>::unit_symbol().eq("Bq"));
 	}
+
+	#[test]
+	fn unit_print_display_test() {
+		println!("Printing 1 of every unit to terminal");
+		println!("{}", Amount{mol: 1});
+		println!("{}", Current{A: 1});
+		println!("{}", Distance{m: 1});
+		println!("{}", Luminosity{cd: 1});
+		println!("{}", Mass{kg: 1});
+		println!("{}", Temperature{K: 1});
+		println!("{}", Time{s: 1});
+		println!("{}", CatalyticActivity{molps: 1});
+		println!("{}", Concentration{molpm3: 1});
+		println!("{}", Capacitance{F: 1});
+		println!("{}", Charge{C: 1});
+		println!("{}", Conductance{S: 1});
+		println!("{}", Illuminance{lux: 1});
+		println!("{}", Inductance{H: 1});
+		println!("{}", LuminousFlux{lm: 1});
+		println!("{}", MagneticFlux{Wb: 1});
+		println!("{}", MagneticFluxDensity{T: 1});
+		println!("{}", Resistance{Ohm: 1});
+		println!("{}", Voltage{V: 1});
+		println!("{}", Angle{rad: 1});
+		println!("{}", Area{m2: 1});
+		println!("{}", SolidAngle{sr: 1});
+		println!("{}", Volume{m3: 1});
+		println!("{}", Acceleration{mps2: 1});
+		println!("{}", AngularAcceleration{radps2: 1});
+		println!("{}", AngularMomentum{kgm2radps: 1});
+		println!("{}", AngularVelocity{radps: 1});
+		println!("{}", AreaDensity{kgpm2: 1});
+		println!("{}", Density{kgpm3: 1});
+		println!("{}", Energy{J: 1});
+		println!("{}", Force{N: 1});
+		println!("{}", Frequency{Hz: 1});
+		println!("{}", MomentOfInertia{kgm2: 1});
+		println!("{}", Momentum{kgmps: 1});
+		println!("{}", Power{W: 1});
+		println!("{}", Pressure{Pa: 1});
+		println!("{}", Torque{Nm: 1});
+		println!("{}", Velocity{mps: 1});
+		println!("{}", AbsorbedDose{Gy: 1});
+		println!("{}", DoseEquivalent{Sv: 1});
+		println!("{}", Radioactivity{Bq: 1});
+	}
+
+	// TODO: templated function to test all unit struct operators and then use it on all structs
 }
