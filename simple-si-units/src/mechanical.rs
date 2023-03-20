@@ -36,9 +36,9 @@ impl<T> Acceleration<T> where T: NumLike {
 		return "meters per second squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of acceleration: "mps2" for meters per second squared
+	/// Returns the abbreviated name or symbol of acceleration: "m/s²" for meters per second squared
 	pub fn unit_symbol() -> &'static str {
-		return "mps2";
+		return "m/s²";
 	}
 	
 	/// Returns a new acceleration value from the given number of meters per second squared
@@ -313,9 +313,9 @@ impl<T> AngularAcceleration<T> where T: NumLike {
 		return "radians per second squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of angular acceleration: "radps2" for radians per second squared
+	/// Returns the abbreviated name or symbol of angular acceleration: "rad/s²" for radians per second squared
 	pub fn unit_symbol() -> &'static str {
-		return "radps2";
+		return "rad/s²";
 	}
 	
 	/// Returns a new angular acceleration value from the given number of radians per second squared
@@ -526,9 +526,9 @@ impl<T> AngularMomentum<T> where T: NumLike {
 		return "kilogram meters squared radians per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of angular momentum: "kgm2radps" for kilogram meters squared radians per second
+	/// Returns the abbreviated name or symbol of angular momentum: "kg·m²·rad/s" for kilogram meters squared radians per second
 	pub fn unit_symbol() -> &'static str {
-		return "kgm2radps";
+		return "kg·m²·rad/s";
 	}
 	
 	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
@@ -627,9 +627,9 @@ impl<T> AngularVelocity<T> where T: NumLike {
 		return "radians per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of angular velocity: "radps" for radians per second
+	/// Returns the abbreviated name or symbol of angular velocity: "rad/s" for radians per second
 	pub fn unit_symbol() -> &'static str {
-		return "radps";
+		return "rad/s";
 	}
 	
 	/// Returns a new angular velocity value from the given number of radians per second
@@ -960,9 +960,9 @@ impl<T> AreaDensity<T> where T: NumLike {
 		return "kilograms per square meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of area density: "kgpm2" for kilograms per square meter
+	/// Returns the abbreviated name or symbol of area density: "kg/m²" for kilograms per square meter
 	pub fn unit_symbol() -> &'static str {
-		return "kgpm2";
+		return "kg/m²";
 	}
 	
 	/// Returns a new area density value from the given number of kilograms per square meter
@@ -1190,9 +1190,9 @@ impl<T> Density<T> where T: NumLike {
 		return "kilograms per cubic meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of density: "kgpm3" for kilograms per cubic meter
+	/// Returns the abbreviated name or symbol of density: "kg/m³" for kilograms per cubic meter
 	pub fn unit_symbol() -> &'static str {
-		return "kgpm3";
+		return "kg/m³";
 	}
 	
 	/// Returns a new density value from the given number of kilograms per cubic meter
@@ -3195,9 +3195,9 @@ impl<T> MomentOfInertia<T> where T: NumLike {
 		return "kilogram meters squared";
 	}
 	
-	/// Returns the abbreviated name or symbol of moment of inertia: "kgm2" for kilogram meters squared
+	/// Returns the abbreviated name or symbol of moment of inertia: "kg·m²" for kilogram meters squared
 	pub fn unit_symbol() -> &'static str {
-		return "kgm2";
+		return "kg·m²";
 	}
 	
 	/// Returns a new moment of inertia value from the given number of kilogram meters squared
@@ -3369,9 +3369,9 @@ impl<T> Momentum<T> where T: NumLike {
 		return "kilogram meters per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of momentum: "kgmps" for kilogram meters per second
+	/// Returns the abbreviated name or symbol of momentum: "kg·m/s" for kilogram meters per second
 	pub fn unit_symbol() -> &'static str {
-		return "kgmps";
+		return "kg·m/s";
 	}
 	
 	/// Returns a new momentum value from the given number of kilogram meters per second
@@ -4920,9 +4920,9 @@ impl<T> Velocity<T> where T: NumLike {
 		return "meters per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of velocity: "mps" for meters per second
+	/// Returns the abbreviated name or symbol of velocity: "m/s" for meters per second
 	pub fn unit_symbol() -> &'static str {
-		return "mps";
+		return "m/s";
 	}
 	
 	/// Returns a new velocity value from the given number of meters per second

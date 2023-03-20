@@ -34,9 +34,9 @@ impl<T> CatalyticActivity<T> where T: NumLike {
 		return "moles per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of catalytic activity: "molps" for moles per second
+	/// Returns the abbreviated name or symbol of catalytic activity: "mol/s" for moles per second
 	pub fn unit_symbol() -> &'static str {
-		return "molps";
+		return "mol/s";
 	}
 	
 	/// Returns a new catalytic activity value from the given number of moles per second
@@ -234,9 +234,9 @@ impl<T> Concentration<T> where T: NumLike {
 		return "moles per cubic meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of chemical concentration: "molpm3" for moles per cubic meter
+	/// Returns the abbreviated name or symbol of chemical concentration: "mol/m³" for moles per cubic meter
 	pub fn unit_symbol() -> &'static str {
-		return "molpm3";
+		return "mol/m³";
 	}
 	
 	/// Returns a new chemical concentration value from the given number of moles per cubic meter

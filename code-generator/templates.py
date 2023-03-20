@@ -37,9 +37,9 @@ impl<T> %(code name)s<T> where T: NumLike {
 		return "%(unit name)s";
 	}
 	
-	/// Returns the abbreviated name or symbol of %(desc name)s: "%(unit symbol)s" for %(unit name)s
+	/// Returns the abbreviated name or symbol of %(desc name)s: "%(unit symbol human)s" for %(unit name)s
 	pub fn unit_symbol() -> &'static str {
-		return "%(unit symbol)s";
+		return "%(unit symbol human)s";
 	}
 	%(non-converting methods)s
 }

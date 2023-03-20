@@ -209,9 +209,9 @@ impl<T> Area<T> where T: NumLike {
 		return "square meters";
 	}
 	
-	/// Returns the abbreviated name or symbol of area: "m2" for square meters
+	/// Returns the abbreviated name or symbol of area: "m²" for square meters
 	pub fn unit_symbol() -> &'static str {
-		return "m2";
+		return "m²";
 	}
 	
 	/// Returns a new area value from the given number of square meters
@@ -613,9 +613,9 @@ impl<T> Volume<T> where T: NumLike {
 		return "cubic meters";
 	}
 	
-	/// Returns the abbreviated name or symbol of volume: "m3" for cubic meters
+	/// Returns the abbreviated name or symbol of volume: "m³" for cubic meters
 	pub fn unit_symbol() -> &'static str {
-		return "m3";
+		return "m³";
 	}
 	
 	/// Returns a new volume value from the given number of cubic meters
