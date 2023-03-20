@@ -42,6 +42,7 @@ def main(*args):
 	project_root_dir= path.dirname(this_dir)
 	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
+	data.sort_values(by=['category', 'name'], axis=0, ascending=[True, True], inplace=True)
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data)
@@ -51,7 +52,8 @@ def main(*args):
 	conversions.insert(len(conversions.columns), 'op-function', conversions['operator'].apply(op_function_name))
 	conversions = add_capital_names(conversions, columns=['left-side', 'right-side', 'result', 'operator', 'verbing'])
 	#
-	modules = data['category'].unique()
+	modules = list(data['category'].unique())
+	modules.sort()
 	for module_name in modules:
 		module_file = path.join(main_proj_dir, 'src', '%s.rs' % module_name)
 		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions)
@@ -288,7 +290,7 @@ class SIUnits:
 		else:
 			return condense_units(self.numerator)
 
-	def inverse(self) -> Self:
+	def inverse(self) -> 'SIUnits':
 		return SIUnits(numerator=self.denominator, denominator=self.numerator)
 
 	def from_str(s: str):

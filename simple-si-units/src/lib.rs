@@ -1369,7 +1369,7 @@ mod unit_tests {
 		// let t:  Torque<f64> = Force::from_N(1.0) * Distance::from_m(1.0);
 		let f:  Frequency<f64> = 1.0 / Time::from_s(1.0);
 		let a:  Area<f64> = Distance::from_m(1.0) * Distance::from_m(1.0);
-		let ad: AreaDensity<f64> = a * Mass::from_kg(1.0);
+		let ad: AreaDensity<f64> = Mass::from_kg(1.0) / a;
 		let v:  Volume<f64> = a * Distance::from_m(1.0);
 		let v2: Velocity<f64> = Distance::from_m(1.0) / Time::from_s(1.0);
 		let a2: Acceleration<f64> = v2 / Time::from_s(1.0);
@@ -1433,5 +1433,93 @@ mod unit_tests {
 		assert_approx_equal(d1.to_m(), 9.0, 9);
 		d2 /= -0.5;
 		assert_approx_equal(d2.to_m(), 5.0, 9);
+	}
+
+	/// Unit test
+	#[test]
+	fn unit_names_and_symbols_test(){
+		// test the .unit_name() and .unit_symbol() functions
+		assert!(Amount::<f64>::unit_name().eq("moles"));
+		assert!(Amount::<f64>::unit_symbol().eq("mol"));
+		assert!(Current::<f64>::unit_name().eq("amperes"));
+		assert!(Current::<f64>::unit_symbol().eq("A"));
+		assert!(Distance::<f64>::unit_name().eq("meters"));
+		assert!(Distance::<f64>::unit_symbol().eq("m"));
+		assert!(Luminosity::<f64>::unit_name().eq("candela"));
+		assert!(Luminosity::<f64>::unit_symbol().eq("cd"));
+		assert!(Mass::<f64>::unit_name().eq("kilograms"));
+		assert!(Mass::<f64>::unit_symbol().eq("kg"));
+		assert!(Temperature::<f64>::unit_name().eq("degrees kelvin"));
+		assert!(Temperature::<f64>::unit_symbol().eq("K"));
+		assert!(Time::<f64>::unit_name().eq("seconds"));
+		assert!(Time::<f64>::unit_symbol().eq("s"));
+		assert!(CatalyticActivity::<f64>::unit_name().eq("moles per second"));
+		assert!(CatalyticActivity::<f64>::unit_symbol().eq("molps"));
+		assert!(Concentration::<f64>::unit_name().eq("moles per cubic meter"));
+		assert!(Concentration::<f64>::unit_symbol().eq("mol/m3"));
+		assert!(Capacitance::<f64>::unit_name().eq("farads"));
+		assert!(Capacitance::<f64>::unit_symbol().eq("F"));
+		assert!(Charge::<f64>::unit_name().eq("coulombs"));
+		assert!(Charge::<f64>::unit_symbol().eq("C"));
+		assert!(Conductance::<f64>::unit_name().eq("siemens"));
+		assert!(Conductance::<f64>::unit_symbol().eq("S"));
+		assert!(Illuminance::<f64>::unit_name().eq("lux"));
+		assert!(Illuminance::<f64>::unit_symbol().eq("lux"));
+		assert!(Inductance::<f64>::unit_name().eq("henries"));
+		assert!(Inductance::<f64>::unit_symbol().eq("H"));
+		assert!(LuminousFlux::<f64>::unit_name().eq("lumens"));
+		assert!(LuminousFlux::<f64>::unit_symbol().eq("lm"));
+		assert!(MagneticFlux::<f64>::unit_name().eq("webers"));
+		assert!(MagneticFlux::<f64>::unit_symbol().eq("Wb"));
+		assert!(MagneticFluxDensity::<f64>::unit_name().eq("teslas"));
+		assert!(MagneticFluxDensity::<f64>::unit_symbol().eq("T"));
+		assert!(Resistance::<f64>::unit_name().eq("ohms"));
+		assert!(Resistance::<f64>::unit_symbol().eq("Ohm"));
+		assert!(Voltage::<f64>::unit_name().eq("volts"));
+		assert!(Voltage::<f64>::unit_symbol().eq("V"));
+		assert!(Angle::<f64>::unit_name().eq("radians"));
+		assert!(Angle::<f64>::unit_symbol().eq("rad"));
+		assert!(Area::<f64>::unit_name().eq("square meters"));
+		assert!(Area::<f64>::unit_symbol().eq("m2"));
+		assert!(SolidAngle::<f64>::unit_name().eq("steradian"));
+		assert!(SolidAngle::<f64>::unit_symbol().eq("sr"));
+		assert!(Volume::<f64>::unit_name().eq("cubic meters"));
+		assert!(Volume::<f64>::unit_symbol().eq("m3"));
+		assert!(Acceleration::<f64>::unit_name().eq("meters per second squared"));
+		assert!(Acceleration::<f64>::unit_symbol().eq("m/s2"));
+		assert!(AngularAcceleration::<f64>::unit_name().eq("radians per second squared"));
+		assert!(AngularAcceleration::<f64>::unit_symbol().eq("rad/s2"));
+		assert!(AngularMomentum::<f64>::unit_name().eq("kilogram meters squared radians per second"));
+		assert!(AngularMomentum::<f64>::unit_symbol().eq("kg.m2.rad/s"));
+		assert!(AngularVelocity::<f64>::unit_name().eq("radians per second"));
+		assert!(AngularVelocity::<f64>::unit_symbol().eq("rad/s"));
+		assert!(AreaDensity::<f64>::unit_name().eq("kilograms per square meter"));
+		assert!(AreaDensity::<f64>::unit_symbol().eq("kg/m2"));
+		assert!(Density::<f64>::unit_name().eq("kilograms per cubic meter"));
+		assert!(Density::<f64>::unit_symbol().eq("kg/m3"));
+		assert!(Energy::<f64>::unit_name().eq("joules"));
+		assert!(Energy::<f64>::unit_symbol().eq("J"));
+		assert!(Force::<f64>::unit_name().eq("newtons"));
+		assert!(Force::<f64>::unit_symbol().eq("N"));
+		assert!(Frequency::<f64>::unit_name().eq("hertz"));
+		assert!(Frequency::<f64>::unit_symbol().eq("Hz"));
+		assert!(MomentOfInertia::<f64>::unit_name().eq("kilogram meters squared"));
+		assert!(MomentOfInertia::<f64>::unit_symbol().eq("kg.m2"));
+		assert!(Momentum::<f64>::unit_name().eq("kilogram meters per second"));
+		assert!(Momentum::<f64>::unit_symbol().eq("kg.m/s"));
+		assert!(Power::<f64>::unit_name().eq("watts"));
+		assert!(Power::<f64>::unit_symbol().eq("W"));
+		assert!(Pressure::<f64>::unit_name().eq("pascals"));
+		assert!(Pressure::<f64>::unit_symbol().eq("Pa"));
+		assert!(Torque::<f64>::unit_name().eq("newton meters"));
+		assert!(Torque::<f64>::unit_symbol().eq("Nm"));
+		assert!(Velocity::<f64>::unit_name().eq("meters per second"));
+		assert!(Velocity::<f64>::unit_symbol().eq("m/s"));
+		assert!(AbsorbedDose::<f64>::unit_name().eq("grays"));
+		assert!(AbsorbedDose::<f64>::unit_symbol().eq("Gy"));
+		assert!(DoseEquivalent::<f64>::unit_name().eq("sieverts"));
+		assert!(DoseEquivalent::<f64>::unit_symbol().eq("Sv"));
+		assert!(Radioactivity::<f64>::unit_name().eq("becquerels"));
+		assert!(Radioactivity::<f64>::unit_symbol().eq("Bq"));
 	}
 }

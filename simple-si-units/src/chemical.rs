@@ -129,36 +129,6 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 
 }
 
-// CatalyticActivity * Time -> Amount
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Amount{mol: self.molps * rhs.s}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Amount{mol: self.molps.clone() * rhs.s}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: &Time<T>) -> Self::Output {
-		Amount{mol: self.molps * rhs.s.clone()}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: &Time<T>) -> Self::Output {
-		Amount{mol: self.molps.clone() * rhs.s.clone()}
-	}
-}
-
 // CatalyticActivity / Amount -> Frequency
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
 impl<T> std::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
@@ -186,6 +156,36 @@ impl<T> std::ops::Div<&Amount<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps.clone() / rhs.mol.clone()}
+	}
+}
+
+// CatalyticActivity * Time -> Amount
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Amount{mol: self.molps * rhs.s}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Amount{mol: self.molps.clone() * rhs.s}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		Amount{mol: self.molps * rhs.s.clone()}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		Amount{mol: self.molps.clone() * rhs.s.clone()}
 	}
 }
 
