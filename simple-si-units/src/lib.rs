@@ -1602,8 +1602,61 @@ mod unit_tests {
 
 	#[test]
 	fn test_unit_converions(){
-		assert_eq!(div_check(&Amount{mol:2.5}, &Time{s:0.5}), CatalyticActivity{molps: 2.5/0.5});
-		assert_eq!(div_check(&Amount{mol:2.5}, &Concentration{molpm3:0.5}), Volume{m3: 2.5/0.5});
+		let x = 2.5f64;
+		let y = 0.5f64;
+		assert_eq!(div_check(&Amount{mol: x}, &Time{s: y}), CatalyticActivity{molps: x/y});
+		assert_eq!(div_check(&Amount{mol: x}, &Concentration{molpm3: y}), Volume{m3: x/y});
+		assert_eq!(div_check(&Amount{mol: x}, &Volume{m3: y}), Concentration{molpm3: x/y});
+		assert_eq!(mul_check(&Amount{mol: x}, &Frequency{Hz: y}), CatalyticActivity{molps: x*y});
+		assert_eq!(mul_check(&Current{A: x}, &Time{s: y}), Charge{C: x*y});
+		assert_eq!(div_check(&Current{A: x}, &Charge{C: y}), Frequency{Hz: x/y});
+		assert_eq!(div_check(&Current{A: x}, &Conductance{S: y}), Voltage{V: x/y});
+		assert_eq!(mul_check(&Current{A: x}, &Inductance{H: y}), MagneticFlux{Wb: x*y});
+		assert_eq!(mul_check(&Current{A: x}, &MagneticFlux{Wb: y}), Energy{J: x*y});
+		assert_eq!(mul_check(&Current{A: x}, &Resistance{Ohm: y}), Voltage{V: x*y});
+		assert_eq!(mul_check(&Current{A: x}, &Voltage{V: y}), Power{W: x*y});
+		assert_eq!(div_check(&Current{A: x}, &Voltage{V: y}), Condusctance{S: x/y});
+		assert_eq!(div_check(&Current{A: x}, &Frequency{Hz: y}), Charge{C: x/y});
+		assert_eq!(mul_check(&Distance{m: x}, &Distance{m: y}), Area{m2: x*y});
+		assert_eq!(div_check(&Distance{m: x}, &Time{s: y}), Velocity{mps: x/y});
+		assert_eq!(mul_check(&Distance{m: x}, &Area{m2: y}), Volume{m3: x*y});
+		assert_eq!(mul_check(&Distance{m: x}, &Density{kgpm3: y}), AreaDensity{kgpm2: x*y});
+		assert_eq!(mul_check(&Distance{m: x}, &Force{N: y}), Energy{J: x*y});
+		assert_eq!(mul_check(&Distance{m: x}, &Frequency{m2: y}), Velocity{mps: x*y});
+		assert_eq!(div_check(&Distance{m: x}, &Velocity{mps: y}), Time{s: x/y});
+		assert_eq!(mul_check(&Luminosity{cd: x}, &SolidAngle{sr: y}), LuminousFlux{lm: x*y});
+		assert_eq!(div_check(&Mass{kg: x}, &Area{m2: y}), AreaDensity{kgpm2: x/y});
+		assert_eq!(div_check(&Mass{kg: x}, &Volume{m3: y}), Density{kgpm3: x/y});
+		assert_eq!(mul_check(&Mass{kg: x}, &Acceleration{mps2: y}), Force{N: x*y});
+		assert_eq!(div_check(&Mass{kg: x}, &AreaDensity{kgpm2: y}), Area{m2: x/y});
+		assert_eq!(div_check(&Mass{kg: x}, &Density{kgpm3: y}), Volume{m3: x/y});
+		assert_eq!(mul_check(&Mass{kg: x}, &Velocity{mps: y}), Momentum{kgmps: x*y});
+		assert_eq!(mul_check(&Mass{kg: x}, &AbsorbedDose{Gy: y}), Energy{J: x*y});
+		assert_eq!(mul_check(&Mass{kg: x}, &DoseEquivalent{Sv: y}), Energy{J: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &CatalyticActivity{molps: y}), Amount{mol: x*y});
+		assert_eq!(div_check(&Time{s: x}, &Capacitance{F: y}), Resistance{Ohm: x/y});
+		assert_eq!(mul_check(&Time{s: x}, &Conductance{S: y}), Capacitance{F: x*y});
+		assert_eq!(div_check(&Time{s: x}, &Conductance{S: y}), Inductance{H: x/y});
+		assert_eq!(div_check(&Time{s: x}, &Inductance{H: y}), Conductance{S: x/y});
+		assert_eq!(mul_check(&Time{s: x}, &Resistance{Ohm: y}), Inductance{H: x*y});
+		assert_eq!(div_check(&Time{s: x}, &Resistance{Ohm: y}), Capacitance{F: x/y});
+		assert_eq!(mul_check(&Time{s: x}, &Voltage{V: y}), MagneticFlux{Wb: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &Acceleration{mps2: y}), Velocity{mps: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &Velocity{mps: y}), Distance{m: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &AngularAcceleration{radps2: y}), AngularVelocity{radps: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &AngularVelocity{radps: y}), Angle{rad: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &Force{N: y}), Momentum{kgmps: x*y});
+		assert_eq!(mul_check(&Time{s: x}, &Power{W: y}), Energy{J: x*y});
+		assert_eq!(mul_check(&x, &Time{s: y}), Frequency{Hz: x*y});
+		assert_eq!(div_check(&CatalyticActivity{molps: x}, &Amount{mol: y}), Frequency{Hz: x/y});
+		assert_eq!(div_check(&CatalyticActivity{molps: x}, &Frequency{Hz: y}), Amount{mol: x/y});
+		assert_eq!(mul_check(&Concentration{molpm3: x}, &Volume{m3: y}), Amount{mol: x*y});
+		assert_eq!(div_check(&Capacitance{F: x}, &Time{s: y}), Conductanec{S: x/y});
+		assert_eq!(div_check(&Capacitance{F: x}, &Conductance{S: y}), Time{s: x/y});
+		assert_eq!(mul_check(&Capacitance{F: x}, &Resistance{Ohm: y}), Time{s: x*y});
+		assert_eq!(mul_check(&Capacitance{F: x}, &Voltage{V: y}), Charge{C: x*y});
+		assert_eq!(mul_check(&Capacitance{F: x}, &Frequency{Hz: y}), Conductance{S: x*y});
+		assert_eq!(div_check(&Charge{C: x}, &Current{A: y}), Time{s: x/y});
 		todo!();
 	}
 	// TODO: templated function to test all unit struct operators and then use it on all structs
