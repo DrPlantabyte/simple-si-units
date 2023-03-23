@@ -1,6 +1,4 @@
 use std::fmt::{Debug, Display, Formatter};
-use num_complex::ComplexFloat;
-use num_traits::Num;
 use simple_si_units::base::*;
 use simple_si_units::geometry::*;
 use simple_si_units::{NumLike, UnitStruct};

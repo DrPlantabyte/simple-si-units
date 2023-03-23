@@ -1,4 +1,3 @@
-use num_complex::ComplexFloat;
 use simple_si_units::base::{Distance, Mass, Time};
 use simple_si_units::geometry::{Area};
 use simple_si_units::mechanical::{Velocity, Acceleration};
@@ -44,6 +43,7 @@ fn populate_system() -> Vec<MassPoint> {
 	return system;
 }
 
+#[allow(non_snake_case)]
 fn calc_gravity_at(mass: &MassPoint, masses: &[MassPoint]) -> [Acceleration<f64>; 2] {
 	use std::ptr;
 	const G: f64 = 6.67408e-11; // m3 kg-1 s-2

@@ -34,9 +34,9 @@ impl<T> CatalyticActivity<T> where T: NumLike {
 		return "moles per second";
 	}
 	
-	/// Returns the abbreviated name or symbol of catalytic activity: "molps" for moles per second
+	/// Returns the abbreviated name or symbol of catalytic activity: "mol/s" for moles per second
 	pub fn unit_symbol() -> &'static str {
-		return "molps";
+		return "mol/s";
 	}
 	
 	/// Returns a new catalytic activity value from the given number of moles per second
@@ -129,36 +129,6 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 
 }
 
-// CatalyticActivity * Time -> Amount
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Amount{mol: self.molps * rhs.s}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: Time<T>) -> Self::Output {
-		Amount{mol: self.molps.clone() * rhs.s}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: &Time<T>) -> Self::Output {
-		Amount{mol: self.molps * rhs.s.clone()}
-	}
-}
-/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
-	type Output = Amount<T>;
-	fn mul(self, rhs: &Time<T>) -> Self::Output {
-		Amount{mol: self.molps.clone() * rhs.s.clone()}
-	}
-}
-
 // CatalyticActivity / Amount -> Frequency
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
 impl<T> std::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
@@ -186,6 +156,36 @@ impl<T> std::ops::Div<&Amount<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps.clone() / rhs.mol.clone()}
+	}
+}
+
+// CatalyticActivity * Time -> Amount
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Amount{mol: self.molps * rhs.s}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		Amount{mol: self.molps.clone() * rhs.s}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		Amount{mol: self.molps * rhs.s.clone()}
+	}
+}
+/// Multiplying a CatalyticActivity by a Time returns a value of type Amount
+impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		Amount{mol: self.molps.clone() * rhs.s.clone()}
 	}
 }
 
@@ -234,9 +234,9 @@ impl<T> Concentration<T> where T: NumLike {
 		return "moles per cubic meter";
 	}
 	
-	/// Returns the abbreviated name or symbol of chemical concentration: "molpm3" for moles per cubic meter
+	/// Returns the abbreviated name or symbol of chemical concentration: "mol/m³" for moles per cubic meter
 	pub fn unit_symbol() -> &'static str {
-		return "molpm3";
+		return "mol/m³";
 	}
 	
 	/// Returns a new chemical concentration value from the given number of moles per cubic meter
