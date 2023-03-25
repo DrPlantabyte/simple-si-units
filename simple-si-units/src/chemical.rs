@@ -30,40 +30,28 @@ pub struct CatalyticActivity<T: NumLike>{
 impl<T> CatalyticActivity<T> where T: NumLike {
 
 	/// Returns the standard unit name of catalytic activity: "moles per second"
-	pub fn unit_name() -> &'static str {
-		return "moles per second";
-	}
+	pub fn unit_name() -> &'static str { "moles per second" }
 	
 	/// Returns the abbreviated name or symbol of catalytic activity: "mol/s" for moles per second
-	pub fn unit_symbol() -> &'static str {
-		return "mol/s";
-	}
+	pub fn unit_symbol() -> &'static str { "mol/s" }
 	
 	/// Returns a new catalytic activity value from the given number of moles per second
 	///
 	/// # Arguments
 	/// * `molps` - Any number-like type, representing a quantity of moles per second
-	pub fn from_molps(molps: T) -> Self {
-		CatalyticActivity{molps: molps}
-	}
+	pub fn from_molps(molps: T) -> Self { CatalyticActivity{molps: molps} }
 	
 	/// Returns a copy of this catalytic activity value in moles per second
-	pub fn to_molps(&self) -> T {
-		return self.molps.clone();
-	}
+	pub fn to_molps(&self) -> T { self.molps.clone() }
 
 	/// Returns a new catalytic activity value from the given number of moles per second
 	///
 	/// # Arguments
 	/// * `moles_per_second` - Any number-like type, representing a quantity of moles per second
-	pub fn from_moles_per_second(moles_per_second: T) -> Self {
-		CatalyticActivity{molps: moles_per_second}
-	}
+	pub fn from_moles_per_second(moles_per_second: T) -> Self { CatalyticActivity{molps: moles_per_second} }
 	
 	/// Returns a copy of this catalytic activity value in moles per second
-	pub fn to_moles_per_second(&self) -> T {
-		return self.molps.clone();
-	}
+	pub fn to_moles_per_second(&self) -> T { self.molps.clone() }
 
 }
 
@@ -230,53 +218,37 @@ pub struct Concentration<T: NumLike>{
 impl<T> Concentration<T> where T: NumLike {
 
 	/// Returns the standard unit name of chemical concentration: "moles per cubic meter"
-	pub fn unit_name() -> &'static str {
-		return "moles per cubic meter";
-	}
+	pub fn unit_name() -> &'static str { "moles per cubic meter" }
 	
 	/// Returns the abbreviated name or symbol of chemical concentration: "mol/m³" for moles per cubic meter
-	pub fn unit_symbol() -> &'static str {
-		return "mol/m³";
-	}
+	pub fn unit_symbol() -> &'static str { "mol/m³" }
 	
 	/// Returns a new chemical concentration value from the given number of moles per cubic meter
 	///
 	/// # Arguments
 	/// * `molpm3` - Any number-like type, representing a quantity of moles per cubic meter
-	pub fn from_molpm3(molpm3: T) -> Self {
-		Concentration{molpm3: molpm3}
-	}
+	pub fn from_molpm3(molpm3: T) -> Self { Concentration{molpm3: molpm3} }
 	
 	/// Returns a copy of this chemical concentration value in moles per cubic meter
-	pub fn to_molpm3(&self) -> T {
-		return self.molpm3.clone();
-	}
+	pub fn to_molpm3(&self) -> T { self.molpm3.clone() }
 
 	/// Returns a new chemical concentration value from the given number of moles per cubic meter
 	///
 	/// # Arguments
 	/// * `moles_per_cubic_meter` - Any number-like type, representing a quantity of moles per cubic meter
-	pub fn from_moles_per_cubic_meter(moles_per_cubic_meter: T) -> Self {
-		Concentration{molpm3: moles_per_cubic_meter}
-	}
+	pub fn from_moles_per_cubic_meter(moles_per_cubic_meter: T) -> Self { Concentration{molpm3: moles_per_cubic_meter} }
 	
 	/// Returns a copy of this chemical concentration value in moles per cubic meter
-	pub fn to_moles_per_cubic_meter(&self) -> T {
-		return self.molpm3.clone();
-	}
+	pub fn to_moles_per_cubic_meter(&self) -> T { self.molpm3.clone() }
 
 	/// Returns a new chemical concentration value from the given number of millimolar
 	///
 	/// # Arguments
 	/// * `mM` - Any number-like type, representing a quantity of moles per cubic meter
-	pub fn from_mM(mM: T) -> Self {
-		Concentration{molpm3: mM}
-	}
+	pub fn from_mM(mM: T) -> Self { Concentration{molpm3: mM} }
 	
 	/// Returns a copy of this chemical concentration value in millimolar
-	pub fn to_mM(&self) -> T {
-		return self.molpm3.clone();
-	}
+	pub fn to_mM(&self) -> T { self.molpm3.clone() }
 
 }
 

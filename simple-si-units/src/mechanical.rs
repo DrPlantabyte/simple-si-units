@@ -32,40 +32,28 @@ pub struct Acceleration<T: NumLike>{
 impl<T> Acceleration<T> where T: NumLike {
 
 	/// Returns the standard unit name of acceleration: "meters per second squared"
-	pub fn unit_name() -> &'static str {
-		return "meters per second squared";
-	}
+	pub fn unit_name() -> &'static str { "meters per second squared" }
 	
 	/// Returns the abbreviated name or symbol of acceleration: "m/s²" for meters per second squared
-	pub fn unit_symbol() -> &'static str {
-		return "m/s²";
-	}
+	pub fn unit_symbol() -> &'static str { "m/s²" }
 	
 	/// Returns a new acceleration value from the given number of meters per second squared
 	///
 	/// # Arguments
 	/// * `mps2` - Any number-like type, representing a quantity of meters per second squared
-	pub fn from_mps2(mps2: T) -> Self {
-		Acceleration{mps2: mps2}
-	}
+	pub fn from_mps2(mps2: T) -> Self { Acceleration{mps2: mps2} }
 	
 	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_mps2(&self) -> T {
-		return self.mps2.clone();
-	}
+	pub fn to_mps2(&self) -> T { self.mps2.clone() }
 
 	/// Returns a new acceleration value from the given number of meters per second squared
 	///
 	/// # Arguments
 	/// * `meters_per_second_squared` - Any number-like type, representing a quantity of meters per second squared
-	pub fn from_meters_per_second_squared(meters_per_second_squared: T) -> Self {
-		Acceleration{mps2: meters_per_second_squared}
-	}
+	pub fn from_meters_per_second_squared(meters_per_second_squared: T) -> Self { Acceleration{mps2: meters_per_second_squared} }
 	
 	/// Returns a copy of this acceleration value in meters per second squared
-	pub fn to_meters_per_second_squared(&self) -> T {
-		return self.mps2.clone();
-	}
+	pub fn to_meters_per_second_squared(&self) -> T { self.mps2.clone() }
 
 }
 
@@ -309,40 +297,28 @@ pub struct AngularAcceleration<T: NumLike>{
 impl<T> AngularAcceleration<T> where T: NumLike {
 
 	/// Returns the standard unit name of angular acceleration: "radians per second squared"
-	pub fn unit_name() -> &'static str {
-		return "radians per second squared";
-	}
+	pub fn unit_name() -> &'static str { "radians per second squared" }
 	
 	/// Returns the abbreviated name or symbol of angular acceleration: "rad/s²" for radians per second squared
-	pub fn unit_symbol() -> &'static str {
-		return "rad/s²";
-	}
+	pub fn unit_symbol() -> &'static str { "rad/s²" }
 	
 	/// Returns a new angular acceleration value from the given number of radians per second squared
 	///
 	/// # Arguments
 	/// * `radps2` - Any number-like type, representing a quantity of radians per second squared
-	pub fn from_radps2(radps2: T) -> Self {
-		AngularAcceleration{radps2: radps2}
-	}
+	pub fn from_radps2(radps2: T) -> Self { AngularAcceleration{radps2: radps2} }
 	
 	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radps2(&self) -> T {
-		return self.radps2.clone();
-	}
+	pub fn to_radps2(&self) -> T { self.radps2.clone() }
 
 	/// Returns a new angular acceleration value from the given number of radians per second squared
 	///
 	/// # Arguments
 	/// * `radians_per_second_squared` - Any number-like type, representing a quantity of radians per second squared
-	pub fn from_radians_per_second_squared(radians_per_second_squared: T) -> Self {
-		AngularAcceleration{radps2: radians_per_second_squared}
-	}
+	pub fn from_radians_per_second_squared(radians_per_second_squared: T) -> Self { AngularAcceleration{radps2: radians_per_second_squared} }
 	
 	/// Returns a copy of this angular acceleration value in radians per second squared
-	pub fn to_radians_per_second_squared(&self) -> T {
-		return self.radps2.clone();
-	}
+	pub fn to_radians_per_second_squared(&self) -> T { self.radps2.clone() }
 
 }
 
@@ -522,40 +498,28 @@ pub struct AngularMomentum<T: NumLike>{
 impl<T> AngularMomentum<T> where T: NumLike {
 
 	/// Returns the standard unit name of angular momentum: "kilogram meters squared radians per second"
-	pub fn unit_name() -> &'static str {
-		return "kilogram meters squared radians per second";
-	}
+	pub fn unit_name() -> &'static str { "kilogram meters squared radians per second" }
 	
 	/// Returns the abbreviated name or symbol of angular momentum: "kg·m²·rad/s" for kilogram meters squared radians per second
-	pub fn unit_symbol() -> &'static str {
-		return "kg·m²·rad/s";
-	}
+	pub fn unit_symbol() -> &'static str { "kg·m²·rad/s" }
 	
 	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
 	///
 	/// # Arguments
 	/// * `kgm2radps` - Any number-like type, representing a quantity of kilogram meters squared radians per second
-	pub fn from_kgm2radps(kgm2radps: T) -> Self {
-		AngularMomentum{kgm2radps: kgm2radps}
-	}
+	pub fn from_kgm2radps(kgm2radps: T) -> Self { AngularMomentum{kgm2radps: kgm2radps} }
 	
 	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kgm2radps(&self) -> T {
-		return self.kgm2radps.clone();
-	}
+	pub fn to_kgm2radps(&self) -> T { self.kgm2radps.clone() }
 
 	/// Returns a new angular momentum value from the given number of kilogram meters squared radians per second
 	///
 	/// # Arguments
 	/// * `kilogram_meters_squared_radians_per_second` - Any number-like type, representing a quantity of kilogram meters squared radians per second
-	pub fn from_kilogram_meters_squared_radians_per_second(kilogram_meters_squared_radians_per_second: T) -> Self {
-		AngularMomentum{kgm2radps: kilogram_meters_squared_radians_per_second}
-	}
+	pub fn from_kilogram_meters_squared_radians_per_second(kilogram_meters_squared_radians_per_second: T) -> Self { AngularMomentum{kgm2radps: kilogram_meters_squared_radians_per_second} }
 	
 	/// Returns a copy of this angular momentum value in kilogram meters squared radians per second
-	pub fn to_kilogram_meters_squared_radians_per_second(&self) -> T {
-		return self.kgm2radps.clone();
-	}
+	pub fn to_kilogram_meters_squared_radians_per_second(&self) -> T { self.kgm2radps.clone() }
 
 }
 
@@ -623,40 +587,28 @@ pub struct AngularVelocity<T: NumLike>{
 impl<T> AngularVelocity<T> where T: NumLike {
 
 	/// Returns the standard unit name of angular velocity: "radians per second"
-	pub fn unit_name() -> &'static str {
-		return "radians per second";
-	}
+	pub fn unit_name() -> &'static str { "radians per second" }
 	
 	/// Returns the abbreviated name or symbol of angular velocity: "rad/s" for radians per second
-	pub fn unit_symbol() -> &'static str {
-		return "rad/s";
-	}
+	pub fn unit_symbol() -> &'static str { "rad/s" }
 	
 	/// Returns a new angular velocity value from the given number of radians per second
 	///
 	/// # Arguments
 	/// * `radps` - Any number-like type, representing a quantity of radians per second
-	pub fn from_radps(radps: T) -> Self {
-		AngularVelocity{radps: radps}
-	}
+	pub fn from_radps(radps: T) -> Self { AngularVelocity{radps: radps} }
 	
 	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radps(&self) -> T {
-		return self.radps.clone();
-	}
+	pub fn to_radps(&self) -> T { self.radps.clone() }
 
 	/// Returns a new angular velocity value from the given number of radians per second
 	///
 	/// # Arguments
 	/// * `radians_per_second` - Any number-like type, representing a quantity of radians per second
-	pub fn from_radians_per_second(radians_per_second: T) -> Self {
-		AngularVelocity{radps: radians_per_second}
-	}
+	pub fn from_radians_per_second(radians_per_second: T) -> Self { AngularVelocity{radps: radians_per_second} }
 	
 	/// Returns a copy of this angular velocity value in radians per second
-	pub fn to_radians_per_second(&self) -> T {
-		return self.radps.clone();
-	}
+	pub fn to_radians_per_second(&self) -> T { self.radps.clone() }
 
 }
 
@@ -956,40 +908,28 @@ pub struct AreaDensity<T: NumLike>{
 impl<T> AreaDensity<T> where T: NumLike {
 
 	/// Returns the standard unit name of area density: "kilograms per square meter"
-	pub fn unit_name() -> &'static str {
-		return "kilograms per square meter";
-	}
+	pub fn unit_name() -> &'static str { "kilograms per square meter" }
 	
 	/// Returns the abbreviated name or symbol of area density: "kg/m²" for kilograms per square meter
-	pub fn unit_symbol() -> &'static str {
-		return "kg/m²";
-	}
+	pub fn unit_symbol() -> &'static str { "kg/m²" }
 	
 	/// Returns a new area density value from the given number of kilograms per square meter
 	///
 	/// # Arguments
 	/// * `kgpm2` - Any number-like type, representing a quantity of kilograms per square meter
-	pub fn from_kgpm2(kgpm2: T) -> Self {
-		AreaDensity{kgpm2: kgpm2}
-	}
+	pub fn from_kgpm2(kgpm2: T) -> Self { AreaDensity{kgpm2: kgpm2} }
 	
 	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kgpm2(&self) -> T {
-		return self.kgpm2.clone();
-	}
+	pub fn to_kgpm2(&self) -> T { self.kgpm2.clone() }
 
 	/// Returns a new area density value from the given number of kilograms per square meter
 	///
 	/// # Arguments
 	/// * `kilograms_per_square_meter` - Any number-like type, representing a quantity of kilograms per square meter
-	pub fn from_kilograms_per_square_meter(kilograms_per_square_meter: T) -> Self {
-		AreaDensity{kgpm2: kilograms_per_square_meter}
-	}
+	pub fn from_kilograms_per_square_meter(kilograms_per_square_meter: T) -> Self { AreaDensity{kgpm2: kilograms_per_square_meter} }
 	
 	/// Returns a copy of this area density value in kilograms per square meter
-	pub fn to_kilograms_per_square_meter(&self) -> T {
-		return self.kgpm2.clone();
-	}
+	pub fn to_kilograms_per_square_meter(&self) -> T { self.kgpm2.clone() }
 
 }
 
@@ -1186,40 +1126,28 @@ pub struct Density<T: NumLike>{
 impl<T> Density<T> where T: NumLike {
 
 	/// Returns the standard unit name of density: "kilograms per cubic meter"
-	pub fn unit_name() -> &'static str {
-		return "kilograms per cubic meter";
-	}
+	pub fn unit_name() -> &'static str { "kilograms per cubic meter" }
 	
 	/// Returns the abbreviated name or symbol of density: "kg/m³" for kilograms per cubic meter
-	pub fn unit_symbol() -> &'static str {
-		return "kg/m³";
-	}
+	pub fn unit_symbol() -> &'static str { "kg/m³" }
 	
 	/// Returns a new density value from the given number of kilograms per cubic meter
 	///
 	/// # Arguments
 	/// * `kgpm3` - Any number-like type, representing a quantity of kilograms per cubic meter
-	pub fn from_kgpm3(kgpm3: T) -> Self {
-		Density{kgpm3: kgpm3}
-	}
+	pub fn from_kgpm3(kgpm3: T) -> Self { Density{kgpm3: kgpm3} }
 	
 	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kgpm3(&self) -> T {
-		return self.kgpm3.clone();
-	}
+	pub fn to_kgpm3(&self) -> T { self.kgpm3.clone() }
 
 	/// Returns a new density value from the given number of kilograms per cubic meter
 	///
 	/// # Arguments
 	/// * `kilograms_per_cubic_meter` - Any number-like type, representing a quantity of kilograms per cubic meter
-	pub fn from_kilograms_per_cubic_meter(kilograms_per_cubic_meter: T) -> Self {
-		Density{kgpm3: kilograms_per_cubic_meter}
-	}
+	pub fn from_kilograms_per_cubic_meter(kilograms_per_cubic_meter: T) -> Self { Density{kgpm3: kilograms_per_cubic_meter} }
 	
 	/// Returns a copy of this density value in kilograms per cubic meter
-	pub fn to_kilograms_per_cubic_meter(&self) -> T {
-		return self.kgpm3.clone();
-	}
+	pub fn to_kilograms_per_cubic_meter(&self) -> T { self.kgpm3.clone() }
 
 }
 
@@ -1369,40 +1297,28 @@ pub struct Energy<T: NumLike>{
 impl<T> Energy<T> where T: NumLike {
 
 	/// Returns the standard unit name of energy: "joules"
-	pub fn unit_name() -> &'static str {
-		return "joules";
-	}
+	pub fn unit_name() -> &'static str { "joules" }
 	
 	/// Returns the abbreviated name or symbol of energy: "J" for joules
-	pub fn unit_symbol() -> &'static str {
-		return "J";
-	}
+	pub fn unit_symbol() -> &'static str { "J" }
 	
 	/// Returns a new energy value from the given number of joules
 	///
 	/// # Arguments
 	/// * `J` - Any number-like type, representing a quantity of joules
-	pub fn from_J(J: T) -> Self {
-		Energy{J: J}
-	}
+	pub fn from_J(J: T) -> Self { Energy{J: J} }
 	
 	/// Returns a copy of this energy value in joules
-	pub fn to_J(&self) -> T {
-		return self.J.clone();
-	}
+	pub fn to_J(&self) -> T { self.J.clone() }
 
 	/// Returns a new energy value from the given number of joules
 	///
 	/// # Arguments
 	/// * `joules` - Any number-like type, representing a quantity of joules
-	pub fn from_joules(joules: T) -> Self {
-		Energy{J: joules}
-	}
+	pub fn from_joules(joules: T) -> Self { Energy{J: joules} }
 	
 	/// Returns a copy of this energy value in joules
-	pub fn to_joules(&self) -> T {
-		return self.J.clone();
-	}
+	pub fn to_joules(&self) -> T { self.J.clone() }
 
 }
 
@@ -2033,40 +1949,28 @@ pub struct Force<T: NumLike>{
 impl<T> Force<T> where T: NumLike {
 
 	/// Returns the standard unit name of force: "newtons"
-	pub fn unit_name() -> &'static str {
-		return "newtons";
-	}
+	pub fn unit_name() -> &'static str { "newtons" }
 	
 	/// Returns the abbreviated name or symbol of force: "N" for newtons
-	pub fn unit_symbol() -> &'static str {
-		return "N";
-	}
+	pub fn unit_symbol() -> &'static str { "N" }
 	
 	/// Returns a new force value from the given number of newtons
 	///
 	/// # Arguments
 	/// * `N` - Any number-like type, representing a quantity of newtons
-	pub fn from_N(N: T) -> Self {
-		Force{N: N}
-	}
+	pub fn from_N(N: T) -> Self { Force{N: N} }
 	
 	/// Returns a copy of this force value in newtons
-	pub fn to_N(&self) -> T {
-		return self.N.clone();
-	}
+	pub fn to_N(&self) -> T { self.N.clone() }
 
 	/// Returns a new force value from the given number of newtons
 	///
 	/// # Arguments
 	/// * `newtons` - Any number-like type, representing a quantity of newtons
-	pub fn from_newtons(newtons: T) -> Self {
-		Force{N: newtons}
-	}
+	pub fn from_newtons(newtons: T) -> Self { Force{N: newtons} }
 	
 	/// Returns a copy of this force value in newtons
-	pub fn to_newtons(&self) -> T {
-		return self.N.clone();
-	}
+	pub fn to_newtons(&self) -> T { self.N.clone() }
 
 }
 
@@ -2465,40 +2369,28 @@ pub struct Frequency<T: NumLike>{
 impl<T> Frequency<T> where T: NumLike {
 
 	/// Returns the standard unit name of frequency: "hertz"
-	pub fn unit_name() -> &'static str {
-		return "hertz";
-	}
+	pub fn unit_name() -> &'static str { "hertz" }
 	
 	/// Returns the abbreviated name or symbol of frequency: "Hz" for hertz
-	pub fn unit_symbol() -> &'static str {
-		return "Hz";
-	}
+	pub fn unit_symbol() -> &'static str { "Hz" }
 	
 	/// Returns a new frequency value from the given number of hertz
 	///
 	/// # Arguments
 	/// * `Hz` - Any number-like type, representing a quantity of hertz
-	pub fn from_Hz(Hz: T) -> Self {
-		Frequency{Hz: Hz}
-	}
+	pub fn from_Hz(Hz: T) -> Self { Frequency{Hz: Hz} }
 	
 	/// Returns a copy of this frequency value in hertz
-	pub fn to_Hz(&self) -> T {
-		return self.Hz.clone();
-	}
+	pub fn to_Hz(&self) -> T { self.Hz.clone() }
 
 	/// Returns a new frequency value from the given number of hertz
 	///
 	/// # Arguments
 	/// * `hertz` - Any number-like type, representing a quantity of hertz
-	pub fn from_hertz(hertz: T) -> Self {
-		Frequency{Hz: hertz}
-	}
+	pub fn from_hertz(hertz: T) -> Self { Frequency{Hz: hertz} }
 	
 	/// Returns a copy of this frequency value in hertz
-	pub fn to_hertz(&self) -> T {
-		return self.Hz.clone();
-	}
+	pub fn to_hertz(&self) -> T { self.Hz.clone() }
 
 }
 
@@ -3191,40 +3083,28 @@ pub struct MomentOfInertia<T: NumLike>{
 impl<T> MomentOfInertia<T> where T: NumLike {
 
 	/// Returns the standard unit name of moment of inertia: "kilogram meters squared"
-	pub fn unit_name() -> &'static str {
-		return "kilogram meters squared";
-	}
+	pub fn unit_name() -> &'static str { "kilogram meters squared" }
 	
 	/// Returns the abbreviated name or symbol of moment of inertia: "kg·m²" for kilogram meters squared
-	pub fn unit_symbol() -> &'static str {
-		return "kg·m²";
-	}
+	pub fn unit_symbol() -> &'static str { "kg·m²" }
 	
 	/// Returns a new moment of inertia value from the given number of kilogram meters squared
 	///
 	/// # Arguments
 	/// * `kgm2` - Any number-like type, representing a quantity of kilogram meters squared
-	pub fn from_kgm2(kgm2: T) -> Self {
-		MomentOfInertia{kgm2: kgm2}
-	}
+	pub fn from_kgm2(kgm2: T) -> Self { MomentOfInertia{kgm2: kgm2} }
 	
 	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kgm2(&self) -> T {
-		return self.kgm2.clone();
-	}
+	pub fn to_kgm2(&self) -> T { self.kgm2.clone() }
 
 	/// Returns a new moment of inertia value from the given number of kilogram meters squared
 	///
 	/// # Arguments
 	/// * `kilogram_meters_squared` - Any number-like type, representing a quantity of kilogram meters squared
-	pub fn from_kilogram_meters_squared(kilogram_meters_squared: T) -> Self {
-		MomentOfInertia{kgm2: kilogram_meters_squared}
-	}
+	pub fn from_kilogram_meters_squared(kilogram_meters_squared: T) -> Self { MomentOfInertia{kgm2: kilogram_meters_squared} }
 	
 	/// Returns a copy of this moment of inertia value in kilogram meters squared
-	pub fn to_kilogram_meters_squared(&self) -> T {
-		return self.kgm2.clone();
-	}
+	pub fn to_kilogram_meters_squared(&self) -> T { self.kgm2.clone() }
 
 }
 
@@ -3365,40 +3245,28 @@ pub struct Momentum<T: NumLike>{
 impl<T> Momentum<T> where T: NumLike {
 
 	/// Returns the standard unit name of momentum: "kilogram meters per second"
-	pub fn unit_name() -> &'static str {
-		return "kilogram meters per second";
-	}
+	pub fn unit_name() -> &'static str { "kilogram meters per second" }
 	
 	/// Returns the abbreviated name or symbol of momentum: "kg·m/s" for kilogram meters per second
-	pub fn unit_symbol() -> &'static str {
-		return "kg·m/s";
-	}
+	pub fn unit_symbol() -> &'static str { "kg·m/s" }
 	
 	/// Returns a new momentum value from the given number of kilogram meters per second
 	///
 	/// # Arguments
 	/// * `kgmps` - Any number-like type, representing a quantity of kilogram meters per second
-	pub fn from_kgmps(kgmps: T) -> Self {
-		Momentum{kgmps: kgmps}
-	}
+	pub fn from_kgmps(kgmps: T) -> Self { Momentum{kgmps: kgmps} }
 	
 	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kgmps(&self) -> T {
-		return self.kgmps.clone();
-	}
+	pub fn to_kgmps(&self) -> T { self.kgmps.clone() }
 
 	/// Returns a new momentum value from the given number of kilogram meters per second
 	///
 	/// # Arguments
 	/// * `kilogram_meters_per_second` - Any number-like type, representing a quantity of kilogram meters per second
-	pub fn from_kilogram_meters_per_second(kilogram_meters_per_second: T) -> Self {
-		Momentum{kgmps: kilogram_meters_per_second}
-	}
+	pub fn from_kilogram_meters_per_second(kilogram_meters_per_second: T) -> Self { Momentum{kgmps: kilogram_meters_per_second} }
 	
 	/// Returns a copy of this momentum value in kilogram meters per second
-	pub fn to_kilogram_meters_per_second(&self) -> T {
-		return self.kgmps.clone();
-	}
+	pub fn to_kilogram_meters_per_second(&self) -> T { self.kgmps.clone() }
 
 }
 
@@ -3659,40 +3527,28 @@ pub struct Power<T: NumLike>{
 impl<T> Power<T> where T: NumLike {
 
 	/// Returns the standard unit name of power: "watts"
-	pub fn unit_name() -> &'static str {
-		return "watts";
-	}
+	pub fn unit_name() -> &'static str { "watts" }
 	
 	/// Returns the abbreviated name or symbol of power: "W" for watts
-	pub fn unit_symbol() -> &'static str {
-		return "W";
-	}
+	pub fn unit_symbol() -> &'static str { "W" }
 	
 	/// Returns a new power value from the given number of watts
 	///
 	/// # Arguments
 	/// * `W` - Any number-like type, representing a quantity of watts
-	pub fn from_W(W: T) -> Self {
-		Power{W: W}
-	}
+	pub fn from_W(W: T) -> Self { Power{W: W} }
 	
 	/// Returns a copy of this power value in watts
-	pub fn to_W(&self) -> T {
-		return self.W.clone();
-	}
+	pub fn to_W(&self) -> T { self.W.clone() }
 
 	/// Returns a new power value from the given number of watts
 	///
 	/// # Arguments
 	/// * `watts` - Any number-like type, representing a quantity of watts
-	pub fn from_watts(watts: T) -> Self {
-		Power{W: watts}
-	}
+	pub fn from_watts(watts: T) -> Self { Power{W: watts} }
 	
 	/// Returns a copy of this power value in watts
-	pub fn to_watts(&self) -> T {
-		return self.W.clone();
-	}
+	pub fn to_watts(&self) -> T { self.W.clone() }
 
 }
 
@@ -4108,40 +3964,28 @@ pub struct Pressure<T: NumLike>{
 impl<T> Pressure<T> where T: NumLike {
 
 	/// Returns the standard unit name of pressure: "pascals"
-	pub fn unit_name() -> &'static str {
-		return "pascals";
-	}
+	pub fn unit_name() -> &'static str { "pascals" }
 	
 	/// Returns the abbreviated name or symbol of pressure: "Pa" for pascals
-	pub fn unit_symbol() -> &'static str {
-		return "Pa";
-	}
+	pub fn unit_symbol() -> &'static str { "Pa" }
 	
 	/// Returns a new pressure value from the given number of pascals
 	///
 	/// # Arguments
 	/// * `Pa` - Any number-like type, representing a quantity of pascals
-	pub fn from_Pa(Pa: T) -> Self {
-		Pressure{Pa: Pa}
-	}
+	pub fn from_Pa(Pa: T) -> Self { Pressure{Pa: Pa} }
 	
 	/// Returns a copy of this pressure value in pascals
-	pub fn to_Pa(&self) -> T {
-		return self.Pa.clone();
-	}
+	pub fn to_Pa(&self) -> T { self.Pa.clone() }
 
 	/// Returns a new pressure value from the given number of pascals
 	///
 	/// # Arguments
 	/// * `pascals` - Any number-like type, representing a quantity of pascals
-	pub fn from_pascals(pascals: T) -> Self {
-		Pressure{Pa: pascals}
-	}
+	pub fn from_pascals(pascals: T) -> Self { Pressure{Pa: pascals} }
 	
 	/// Returns a copy of this pressure value in pascals
-	pub fn to_pascals(&self) -> T {
-		return self.Pa.clone();
-	}
+	pub fn to_pascals(&self) -> T { self.Pa.clone() }
 
 }
 
@@ -4455,40 +4299,28 @@ pub struct Torque<T: NumLike>{
 impl<T> Torque<T> where T: NumLike {
 
 	/// Returns the standard unit name of torque: "newton meters"
-	pub fn unit_name() -> &'static str {
-		return "newton meters";
-	}
+	pub fn unit_name() -> &'static str { "newton meters" }
 	
 	/// Returns the abbreviated name or symbol of torque: "Nm" for newton meters
-	pub fn unit_symbol() -> &'static str {
-		return "Nm";
-	}
+	pub fn unit_symbol() -> &'static str { "Nm" }
 	
 	/// Returns a new torque value from the given number of newton meters
 	///
 	/// # Arguments
 	/// * `Nm` - Any number-like type, representing a quantity of newton meters
-	pub fn from_Nm(Nm: T) -> Self {
-		Torque{Nm: Nm}
-	}
+	pub fn from_Nm(Nm: T) -> Self { Torque{Nm: Nm} }
 	
 	/// Returns a copy of this torque value in newton meters
-	pub fn to_Nm(&self) -> T {
-		return self.Nm.clone();
-	}
+	pub fn to_Nm(&self) -> T { self.Nm.clone() }
 
 	/// Returns a new torque value from the given number of newton meters
 	///
 	/// # Arguments
 	/// * `newton_meters` - Any number-like type, representing a quantity of newton meters
-	pub fn from_newton_meters(newton_meters: T) -> Self {
-		Torque{Nm: newton_meters}
-	}
+	pub fn from_newton_meters(newton_meters: T) -> Self { Torque{Nm: newton_meters} }
 	
 	/// Returns a copy of this torque value in newton meters
-	pub fn to_newton_meters(&self) -> T {
-		return self.Nm.clone();
-	}
+	pub fn to_newton_meters(&self) -> T { self.Nm.clone() }
 
 }
 
@@ -4916,40 +4748,28 @@ pub struct Velocity<T: NumLike>{
 impl<T> Velocity<T> where T: NumLike {
 
 	/// Returns the standard unit name of velocity: "meters per second"
-	pub fn unit_name() -> &'static str {
-		return "meters per second";
-	}
+	pub fn unit_name() -> &'static str { "meters per second" }
 	
 	/// Returns the abbreviated name or symbol of velocity: "m/s" for meters per second
-	pub fn unit_symbol() -> &'static str {
-		return "m/s";
-	}
+	pub fn unit_symbol() -> &'static str { "m/s" }
 	
 	/// Returns a new velocity value from the given number of meters per second
 	///
 	/// # Arguments
 	/// * `mps` - Any number-like type, representing a quantity of meters per second
-	pub fn from_mps(mps: T) -> Self {
-		Velocity{mps: mps}
-	}
+	pub fn from_mps(mps: T) -> Self { Velocity{mps: mps} }
 	
 	/// Returns a copy of this velocity value in meters per second
-	pub fn to_mps(&self) -> T {
-		return self.mps.clone();
-	}
+	pub fn to_mps(&self) -> T { self.mps.clone() }
 
 	/// Returns a new velocity value from the given number of meters per second
 	///
 	/// # Arguments
 	/// * `meters_per_second` - Any number-like type, representing a quantity of meters per second
-	pub fn from_meters_per_second(meters_per_second: T) -> Self {
-		Velocity{mps: meters_per_second}
-	}
+	pub fn from_meters_per_second(meters_per_second: T) -> Self { Velocity{mps: meters_per_second} }
 	
 	/// Returns a copy of this velocity value in meters per second
-	pub fn to_meters_per_second(&self) -> T {
-		return self.mps.clone();
-	}
+	pub fn to_meters_per_second(&self) -> T { self.mps.clone() }
 
 }
 

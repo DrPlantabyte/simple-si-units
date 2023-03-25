@@ -30,40 +30,28 @@ pub struct Capacitance<T: NumLike>{
 impl<T> Capacitance<T> where T: NumLike {
 
 	/// Returns the standard unit name of electrical capacitance: "farads"
-	pub fn unit_name() -> &'static str {
-		return "farads";
-	}
+	pub fn unit_name() -> &'static str { "farads" }
 	
 	/// Returns the abbreviated name or symbol of electrical capacitance: "F" for farads
-	pub fn unit_symbol() -> &'static str {
-		return "F";
-	}
+	pub fn unit_symbol() -> &'static str { "F" }
 	
 	/// Returns a new electrical capacitance value from the given number of farads
 	///
 	/// # Arguments
 	/// * `F` - Any number-like type, representing a quantity of farads
-	pub fn from_F(F: T) -> Self {
-		Capacitance{F: F}
-	}
+	pub fn from_F(F: T) -> Self { Capacitance{F: F} }
 	
 	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_F(&self) -> T {
-		return self.F.clone();
-	}
+	pub fn to_F(&self) -> T { self.F.clone() }
 
 	/// Returns a new electrical capacitance value from the given number of farads
 	///
 	/// # Arguments
 	/// * `farads` - Any number-like type, representing a quantity of farads
-	pub fn from_farads(farads: T) -> Self {
-		Capacitance{F: farads}
-	}
+	pub fn from_farads(farads: T) -> Self { Capacitance{F: farads} }
 	
 	/// Returns a copy of this electrical capacitance value in farads
-	pub fn to_farads(&self) -> T {
-		return self.F.clone();
-	}
+	pub fn to_farads(&self) -> T { self.F.clone() }
 
 }
 
@@ -329,40 +317,28 @@ pub struct Charge<T: NumLike>{
 impl<T> Charge<T> where T: NumLike {
 
 	/// Returns the standard unit name of electric charge: "coulombs"
-	pub fn unit_name() -> &'static str {
-		return "coulombs";
-	}
+	pub fn unit_name() -> &'static str { "coulombs" }
 	
 	/// Returns the abbreviated name or symbol of electric charge: "C" for coulombs
-	pub fn unit_symbol() -> &'static str {
-		return "C";
-	}
+	pub fn unit_symbol() -> &'static str { "C" }
 	
 	/// Returns a new electric charge value from the given number of coulombs
 	///
 	/// # Arguments
 	/// * `C` - Any number-like type, representing a quantity of coulombs
-	pub fn from_C(C: T) -> Self {
-		Charge{C: C}
-	}
+	pub fn from_C(C: T) -> Self { Charge{C: C} }
 	
 	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_C(&self) -> T {
-		return self.C.clone();
-	}
+	pub fn to_C(&self) -> T { self.C.clone() }
 
 	/// Returns a new electric charge value from the given number of coulombs
 	///
 	/// # Arguments
 	/// * `coulombs` - Any number-like type, representing a quantity of coulombs
-	pub fn from_coulombs(coulombs: T) -> Self {
-		Charge{C: coulombs}
-	}
+	pub fn from_coulombs(coulombs: T) -> Self { Charge{C: coulombs} }
 	
 	/// Returns a copy of this electric charge value in coulombs
-	pub fn to_coulombs(&self) -> T {
-		return self.C.clone();
-	}
+	pub fn to_coulombs(&self) -> T { self.C.clone() }
 
 }
 
@@ -761,40 +737,28 @@ pub struct Conductance<T: NumLike>{
 impl<T> Conductance<T> where T: NumLike {
 
 	/// Returns the standard unit name of electrical conductance: "siemens"
-	pub fn unit_name() -> &'static str {
-		return "siemens";
-	}
+	pub fn unit_name() -> &'static str { "siemens" }
 	
 	/// Returns the abbreviated name or symbol of electrical conductance: "S" for siemens
-	pub fn unit_symbol() -> &'static str {
-		return "S";
-	}
+	pub fn unit_symbol() -> &'static str { "S" }
 	
 	/// Returns a new electrical conductance value from the given number of siemens
 	///
 	/// # Arguments
 	/// * `S` - Any number-like type, representing a quantity of siemens
-	pub fn from_S(S: T) -> Self {
-		Conductance{S: S}
-	}
+	pub fn from_S(S: T) -> Self { Conductance{S: S} }
 	
 	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_S(&self) -> T {
-		return self.S.clone();
-	}
+	pub fn to_S(&self) -> T { self.S.clone() }
 
 	/// Returns a new electrical conductance value from the given number of siemens
 	///
 	/// # Arguments
 	/// * `siemens` - Any number-like type, representing a quantity of siemens
-	pub fn from_siemens(siemens: T) -> Self {
-		Conductance{S: siemens}
-	}
+	pub fn from_siemens(siemens: T) -> Self { Conductance{S: siemens} }
 	
 	/// Returns a copy of this electrical conductance value in siemens
-	pub fn to_siemens(&self) -> T {
-		return self.S.clone();
-	}
+	pub fn to_siemens(&self) -> T { self.S.clone() }
 
 }
 
@@ -1333,27 +1297,19 @@ pub struct Illuminance<T: NumLike>{
 impl<T> Illuminance<T> where T: NumLike {
 
 	/// Returns the standard unit name of illuminance: "lux"
-	pub fn unit_name() -> &'static str {
-		return "lux";
-	}
+	pub fn unit_name() -> &'static str { "lux" }
 	
 	/// Returns the abbreviated name or symbol of illuminance: "lux" for lux
-	pub fn unit_symbol() -> &'static str {
-		return "lux";
-	}
+	pub fn unit_symbol() -> &'static str { "lux" }
 	
 	/// Returns a new illuminance value from the given number of lux
 	///
 	/// # Arguments
 	/// * `lux` - Any number-like type, representing a quantity of lux
-	pub fn from_lux(lux: T) -> Self {
-		Illuminance{lux: lux}
-	}
+	pub fn from_lux(lux: T) -> Self { Illuminance{lux: lux} }
 	
 	/// Returns a copy of this illuminance value in lux
-	pub fn to_lux(&self) -> T {
-		return self.lux.clone();
-	}
+	pub fn to_lux(&self) -> T { self.lux.clone() }
 
 }
 
@@ -1486,40 +1442,28 @@ pub struct Inductance<T: NumLike>{
 impl<T> Inductance<T> where T: NumLike {
 
 	/// Returns the standard unit name of inductance: "henries"
-	pub fn unit_name() -> &'static str {
-		return "henries";
-	}
+	pub fn unit_name() -> &'static str { "henries" }
 	
 	/// Returns the abbreviated name or symbol of inductance: "H" for henries
-	pub fn unit_symbol() -> &'static str {
-		return "H";
-	}
+	pub fn unit_symbol() -> &'static str { "H" }
 	
 	/// Returns a new inductance value from the given number of henries
 	///
 	/// # Arguments
 	/// * `H` - Any number-like type, representing a quantity of henries
-	pub fn from_H(H: T) -> Self {
-		Inductance{H: H}
-	}
+	pub fn from_H(H: T) -> Self { Inductance{H: H} }
 	
 	/// Returns a copy of this inductance value in henries
-	pub fn to_H(&self) -> T {
-		return self.H.clone();
-	}
+	pub fn to_H(&self) -> T { self.H.clone() }
 
 	/// Returns a new inductance value from the given number of henries
 	///
 	/// # Arguments
 	/// * `henries` - Any number-like type, representing a quantity of henries
-	pub fn from_henries(henries: T) -> Self {
-		Inductance{H: henries}
-	}
+	pub fn from_henries(henries: T) -> Self { Inductance{H: henries} }
 	
 	/// Returns a copy of this inductance value in henries
-	pub fn to_henries(&self) -> T {
-		return self.H.clone();
-	}
+	pub fn to_henries(&self) -> T { self.H.clone() }
 
 }
 
@@ -1772,40 +1716,28 @@ pub struct LuminousFlux<T: NumLike>{
 impl<T> LuminousFlux<T> where T: NumLike {
 
 	/// Returns the standard unit name of luminous flux: "lumens"
-	pub fn unit_name() -> &'static str {
-		return "lumens";
-	}
+	pub fn unit_name() -> &'static str { "lumens" }
 	
 	/// Returns the abbreviated name or symbol of luminous flux: "lm" for lumens
-	pub fn unit_symbol() -> &'static str {
-		return "lm";
-	}
+	pub fn unit_symbol() -> &'static str { "lm" }
 	
 	/// Returns a new luminous flux value from the given number of lumens
 	///
 	/// # Arguments
 	/// * `lm` - Any number-like type, representing a quantity of lumens
-	pub fn from_lm(lm: T) -> Self {
-		LuminousFlux{lm: lm}
-	}
+	pub fn from_lm(lm: T) -> Self { LuminousFlux{lm: lm} }
 	
 	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lm(&self) -> T {
-		return self.lm.clone();
-	}
+	pub fn to_lm(&self) -> T { self.lm.clone() }
 
 	/// Returns a new luminous flux value from the given number of lumens
 	///
 	/// # Arguments
 	/// * `lumens` - Any number-like type, representing a quantity of lumens
-	pub fn from_lumens(lumens: T) -> Self {
-		LuminousFlux{lm: lumens}
-	}
+	pub fn from_lumens(lumens: T) -> Self { LuminousFlux{lm: lumens} }
 	
 	/// Returns a copy of this luminous flux value in lumens
-	pub fn to_lumens(&self) -> T {
-		return self.lm.clone();
-	}
+	pub fn to_lumens(&self) -> T { self.lm.clone() }
 
 }
 
@@ -2028,40 +1960,28 @@ pub struct MagneticFlux<T: NumLike>{
 impl<T> MagneticFlux<T> where T: NumLike {
 
 	/// Returns the standard unit name of magnetic flux: "webers"
-	pub fn unit_name() -> &'static str {
-		return "webers";
-	}
+	pub fn unit_name() -> &'static str { "webers" }
 	
 	/// Returns the abbreviated name or symbol of magnetic flux: "Wb" for webers
-	pub fn unit_symbol() -> &'static str {
-		return "Wb";
-	}
+	pub fn unit_symbol() -> &'static str { "Wb" }
 	
 	/// Returns a new magnetic flux value from the given number of webers
 	///
 	/// # Arguments
 	/// * `Wb` - Any number-like type, representing a quantity of webers
-	pub fn from_Wb(Wb: T) -> Self {
-		MagneticFlux{Wb: Wb}
-	}
+	pub fn from_Wb(Wb: T) -> Self { MagneticFlux{Wb: Wb} }
 	
 	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_Wb(&self) -> T {
-		return self.Wb.clone();
-	}
+	pub fn to_Wb(&self) -> T { self.Wb.clone() }
 
 	/// Returns a new magnetic flux value from the given number of webers
 	///
 	/// # Arguments
 	/// * `webers` - Any number-like type, representing a quantity of webers
-	pub fn from_webers(webers: T) -> Self {
-		MagneticFlux{Wb: webers}
-	}
+	pub fn from_webers(webers: T) -> Self { MagneticFlux{Wb: webers} }
 	
 	/// Returns a copy of this magnetic flux value in webers
-	pub fn to_webers(&self) -> T {
-		return self.Wb.clone();
-	}
+	pub fn to_webers(&self) -> T { self.Wb.clone() }
 
 }
 
@@ -2494,40 +2414,28 @@ pub struct MagneticFluxDensity<T: NumLike>{
 impl<T> MagneticFluxDensity<T> where T: NumLike {
 
 	/// Returns the standard unit name of magnetic flux density: "teslas"
-	pub fn unit_name() -> &'static str {
-		return "teslas";
-	}
+	pub fn unit_name() -> &'static str { "teslas" }
 	
 	/// Returns the abbreviated name or symbol of magnetic flux density: "T" for teslas
-	pub fn unit_symbol() -> &'static str {
-		return "T";
-	}
+	pub fn unit_symbol() -> &'static str { "T" }
 	
 	/// Returns a new magnetic flux density value from the given number of teslas
 	///
 	/// # Arguments
 	/// * `T` - Any number-like type, representing a quantity of teslas
-	pub fn from_T(T: T) -> Self {
-		MagneticFluxDensity{T: T}
-	}
+	pub fn from_T(T: T) -> Self { MagneticFluxDensity{T: T} }
 	
 	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_T(&self) -> T {
-		return self.T.clone();
-	}
+	pub fn to_T(&self) -> T { self.T.clone() }
 
 	/// Returns a new magnetic flux density value from the given number of teslas
 	///
 	/// # Arguments
 	/// * `teslas` - Any number-like type, representing a quantity of teslas
-	pub fn from_teslas(teslas: T) -> Self {
-		MagneticFluxDensity{T: teslas}
-	}
+	pub fn from_teslas(teslas: T) -> Self { MagneticFluxDensity{T: teslas} }
 	
 	/// Returns a copy of this magnetic flux density value in teslas
-	pub fn to_teslas(&self) -> T {
-		return self.T.clone();
-	}
+	pub fn to_teslas(&self) -> T { self.T.clone() }
 
 }
 
@@ -2660,40 +2568,28 @@ pub struct Resistance<T: NumLike>{
 impl<T> Resistance<T> where T: NumLike {
 
 	/// Returns the standard unit name of electrical resistance: "ohms"
-	pub fn unit_name() -> &'static str {
-		return "ohms";
-	}
+	pub fn unit_name() -> &'static str { "ohms" }
 	
 	/// Returns the abbreviated name or symbol of electrical resistance: "Ohm" for ohms
-	pub fn unit_symbol() -> &'static str {
-		return "Ohm";
-	}
+	pub fn unit_symbol() -> &'static str { "Ohm" }
 	
 	/// Returns a new electrical resistance value from the given number of ohms
 	///
 	/// # Arguments
 	/// * `Ohm` - Any number-like type, representing a quantity of ohms
-	pub fn from_Ohm(Ohm: T) -> Self {
-		Resistance{Ohm: Ohm}
-	}
+	pub fn from_Ohm(Ohm: T) -> Self { Resistance{Ohm: Ohm} }
 	
 	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_Ohm(&self) -> T {
-		return self.Ohm.clone();
-	}
+	pub fn to_Ohm(&self) -> T { self.Ohm.clone() }
 
 	/// Returns a new electrical resistance value from the given number of ohms
 	///
 	/// # Arguments
 	/// * `ohms` - Any number-like type, representing a quantity of ohms
-	pub fn from_ohms(ohms: T) -> Self {
-		Resistance{Ohm: ohms}
-	}
+	pub fn from_ohms(ohms: T) -> Self { Resistance{Ohm: ohms} }
 	
 	/// Returns a copy of this electrical resistance value in ohms
-	pub fn to_ohms(&self) -> T {
-		return self.Ohm.clone();
-	}
+	pub fn to_ohms(&self) -> T { self.Ohm.clone() }
 
 }
 
@@ -3232,40 +3128,28 @@ pub struct Voltage<T: NumLike>{
 impl<T> Voltage<T> where T: NumLike {
 
 	/// Returns the standard unit name of voltage: "volts"
-	pub fn unit_name() -> &'static str {
-		return "volts";
-	}
+	pub fn unit_name() -> &'static str { "volts" }
 	
 	/// Returns the abbreviated name or symbol of voltage: "V" for volts
-	pub fn unit_symbol() -> &'static str {
-		return "V";
-	}
+	pub fn unit_symbol() -> &'static str { "V" }
 	
 	/// Returns a new voltage value from the given number of volts
 	///
 	/// # Arguments
 	/// * `V` - Any number-like type, representing a quantity of volts
-	pub fn from_V(V: T) -> Self {
-		Voltage{V: V}
-	}
+	pub fn from_V(V: T) -> Self { Voltage{V: V} }
 	
 	/// Returns a copy of this voltage value in volts
-	pub fn to_V(&self) -> T {
-		return self.V.clone();
-	}
+	pub fn to_V(&self) -> T { self.V.clone() }
 
 	/// Returns a new voltage value from the given number of volts
 	///
 	/// # Arguments
 	/// * `volts` - Any number-like type, representing a quantity of volts
-	pub fn from_volts(volts: T) -> Self {
-		Voltage{V: volts}
-	}
+	pub fn from_volts(volts: T) -> Self { Voltage{V: volts} }
 	
 	/// Returns a copy of this voltage value in volts
-	pub fn to_volts(&self) -> T {
-		return self.V.clone();
-	}
+	pub fn to_volts(&self) -> T { self.V.clone() }
 
 }
 
