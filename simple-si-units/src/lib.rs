@@ -91,6 +91,7 @@ pub mod nuclear;
 /// Unit tests
 #[cfg(test)]
 mod unit_tests {
+	use std::borrow::Borrow;
 	use num_traits::Zero;
 	use super::base::*;
 	use super::chemical::*;
@@ -1580,9 +1581,13 @@ mod unit_tests {
 		let x2: X = b * a;
 		let x3: X = a.clone() * b.clone();
 		let x4: X = b.clone() * a.clone();
+		let x5: X = (a.clone().borrow()) * b.clone();
+		// let x6: X = b.clone() * &(a.clone());
 		assert!((x1.eq(&x2)));
 		assert!((x1.eq(&x3)));
 		assert!((x1.eq(&x4)));
+		assert!((x1.eq(&x5)));
+		// assert!((x1.eq(&x6)));
 		return x1;
 	}
 
@@ -1595,7 +1600,11 @@ mod unit_tests {
 	{
 		let x1: X = a / b;
 		let x2: X = a.clone() / b.clone();
+		// let x3: X = &(a.clone()) / b.clone();
+		// let x4: X = a.clone() / &(b.clone());
 		assert!((x1.eq(&x2)));
+		// assert!((x1.eq(&x3)));
+		// assert!((x1.eq(&x4)));
 		return x1;
 	}
 
