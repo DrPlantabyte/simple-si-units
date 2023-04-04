@@ -290,7 +290,7 @@ mod unit_tests {
 		let _ = Temperature::from_K(300_f64).to_C();
 		let _ = Temperature::from_K(300_f64).to_F();
 		assert_eq!(Temperature::from_C(12.3_f64).to_K(), Temperature::from_celsius(12.3_f64).to_K());
-		assert_eq!(Temperature::from_K(300_f64).to_C(), Temperature::from_K(300_f64).to_celcius());
+		assert_eq!(Temperature::from_K(300_f64).to_C(), Temperature::from_K(300_f64).to_celsius());
 		
 	}
 	#[test]
@@ -1621,6 +1621,20 @@ mod unit_tests {
 		return x1;
 	}
 
+	fn simple_div_check<
+		'y,
+		A: std::ops::Div<B, Output = X>+Clone+'y,
+		B: Clone+'y,
+		X: std::cmp::PartialEq+Clone
+	>(a: &'y A, b: &'y B) -> X where
+		A: std::ops::Div<B, Output = X>+std::ops::Div<&'y B, Output = X>
+	{
+		let x1: X = a / b;
+		let x2: X = a.clone() / b.clone();
+		assert!((x1.eq(&x2)));
+		return x1;
+	}
+
 	#[test]
 	fn test_unit_converions(){
 		let x = 2.5f64;
@@ -1806,10 +1820,13 @@ mod unit_tests {
 		assert_eq!(mul_check(&Frequency{Hz: x}, &Momentum{kgmps: y}), Force{N: x*y});
 		assert_eq!(mul_check(&Frequency{Hz: x}, &Velocity{mps: y}), Acceleration{mps2: x*y});
 		assert_eq!(div_check(&x, &Time{s: y}), Frequency{Hz: x/y});
-		assert_eq!(div_check(&x as f32, &Time{s: y as f32}), Frequency{Hz: x as f32/y as f32});
-		assert_eq!(div_check(&x as i64, &Time{s: y as i64}), Frequency{Hz: x as i64/y as i64});
-		assert_eq!(div_check(&x as i32, &Time{s: y as i32}), Frequency{Hz: x as i32/y as i32});
-		assert_eq!(div_check(&num_bigfloat::BigFloat::from(x), &Time{s: y}), Frequency{Hz: x/y});
+		assert_eq!(div_check(&(x as f32), &Time{s: y as f32}), Frequency{Hz: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i64), &Time{s: y as i64}), Frequency{Hz: x as i64/y as i64});
+		assert_eq!(div_check(&(x as i32), &Time{s: y as i32}), Frequency{Hz: x as i32/y as i32});
+		assert_eq!(simple_div_check(
+			&num_bigfloat::BigFloat::from(x), &Time{s: &num_bigfloat::BigFloat::from(y)}), 
+			Frequency{Hz: &num_bigfloat::BigFloat::from(x)/&num_bigfloat::BigFloat::from(y)}
+		);
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Mass{kg: y}), Area{m2: x/y});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Area{m2: y}), Mass{kg: x/y});
 		assert_eq!(mul_check(&MomentOfInertia{kgm2: x}, &AngularVelocity{radps: y}), AngularMomentum{kgm2radps: x*y});
