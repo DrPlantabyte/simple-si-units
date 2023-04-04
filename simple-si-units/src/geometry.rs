@@ -31,40 +31,28 @@ pub struct Angle<T: NumLike>{
 impl<T> Angle<T> where T: NumLike {
 
 	/// Returns the standard unit name of angle: "radians"
-	pub fn unit_name() -> &'static str {
-		return "radians";
-	}
+	pub fn unit_name() -> &'static str { "radians" }
 	
 	/// Returns the abbreviated name or symbol of angle: "rad" for radians
-	pub fn unit_symbol() -> &'static str {
-		return "rad";
-	}
+	pub fn unit_symbol() -> &'static str { "rad" }
 	
 	/// Returns a new angle value from the given number of radians
 	///
 	/// # Arguments
 	/// * `rad` - Any number-like type, representing a quantity of radians
-	pub fn from_rad(rad: T) -> Self {
-		Angle{rad: rad}
-	}
+	pub fn from_rad(rad: T) -> Self { Angle{rad: rad} }
 	
 	/// Returns a copy of this angle value in radians
-	pub fn to_rad(&self) -> T {
-		return self.rad.clone();
-	}
+	pub fn to_rad(&self) -> T { self.rad.clone() }
 
 	/// Returns a new angle value from the given number of radians
 	///
 	/// # Arguments
 	/// * `radians` - Any number-like type, representing a quantity of radians
-	pub fn from_radians(radians: T) -> Self {
-		Angle{rad: radians}
-	}
+	pub fn from_radians(radians: T) -> Self { Angle{rad: radians} }
 	
 	/// Returns a copy of this angle value in radians
-	pub fn to_radians(&self) -> T {
-		return self.rad.clone();
-	}
+	pub fn to_radians(&self) -> T { self.rad.clone() }
 
 }
 
@@ -205,40 +193,28 @@ pub struct Area<T: NumLike>{
 impl<T> Area<T> where T: NumLike {
 
 	/// Returns the standard unit name of area: "square meters"
-	pub fn unit_name() -> &'static str {
-		return "square meters";
-	}
+	pub fn unit_name() -> &'static str { "square meters" }
 	
 	/// Returns the abbreviated name or symbol of area: "m²" for square meters
-	pub fn unit_symbol() -> &'static str {
-		return "m²";
-	}
+	pub fn unit_symbol() -> &'static str { "m²" }
 	
 	/// Returns a new area value from the given number of square meters
 	///
 	/// # Arguments
 	/// * `m2` - Any number-like type, representing a quantity of square meters
-	pub fn from_m2(m2: T) -> Self {
-		Area{m2: m2}
-	}
+	pub fn from_m2(m2: T) -> Self { Area{m2: m2} }
 	
 	/// Returns a copy of this area value in square meters
-	pub fn to_m2(&self) -> T {
-		return self.m2.clone();
-	}
+	pub fn to_m2(&self) -> T { self.m2.clone() }
 
 	/// Returns a new area value from the given number of square meters
 	///
 	/// # Arguments
 	/// * `square_meters` - Any number-like type, representing a quantity of square meters
-	pub fn from_square_meters(square_meters: T) -> Self {
-		Area{m2: square_meters}
-	}
+	pub fn from_square_meters(square_meters: T) -> Self { Area{m2: square_meters} }
 	
 	/// Returns a copy of this area value in square meters
-	pub fn to_square_meters(&self) -> T {
-		return self.m2.clone();
-	}
+	pub fn to_square_meters(&self) -> T { self.m2.clone() }
 
 }
 
@@ -521,40 +497,28 @@ pub struct SolidAngle<T: NumLike>{
 impl<T> SolidAngle<T> where T: NumLike {
 
 	/// Returns the standard unit name of solid angle: "steradian"
-	pub fn unit_name() -> &'static str {
-		return "steradian";
-	}
+	pub fn unit_name() -> &'static str { "steradian" }
 	
 	/// Returns the abbreviated name or symbol of solid angle: "sr" for steradian
-	pub fn unit_symbol() -> &'static str {
-		return "sr";
-	}
+	pub fn unit_symbol() -> &'static str { "sr" }
 	
 	/// Returns a new solid angle value from the given number of steradians
 	///
 	/// # Arguments
 	/// * `sr` - Any number-like type, representing a quantity of steradian
-	pub fn from_sr(sr: T) -> Self {
-		SolidAngle{sr: sr}
-	}
+	pub fn from_sr(sr: T) -> Self { SolidAngle{sr: sr} }
 	
 	/// Returns a copy of this solid angle value in steradians
-	pub fn to_sr(&self) -> T {
-		return self.sr.clone();
-	}
+	pub fn to_sr(&self) -> T { self.sr.clone() }
 
 	/// Returns a new solid angle value from the given number of steradians
 	///
 	/// # Arguments
 	/// * `steradians` - Any number-like type, representing a quantity of steradian
-	pub fn from_steradians(steradians: T) -> Self {
-		SolidAngle{sr: steradians}
-	}
+	pub fn from_steradians(steradians: T) -> Self { SolidAngle{sr: steradians} }
 	
 	/// Returns a copy of this solid angle value in steradians
-	pub fn to_steradians(&self) -> T {
-		return self.sr.clone();
-	}
+	pub fn to_steradians(&self) -> T { self.sr.clone() }
 
 }
 
@@ -609,53 +573,37 @@ pub struct Volume<T: NumLike>{
 impl<T> Volume<T> where T: NumLike {
 
 	/// Returns the standard unit name of volume: "cubic meters"
-	pub fn unit_name() -> &'static str {
-		return "cubic meters";
-	}
+	pub fn unit_name() -> &'static str { "cubic meters" }
 	
 	/// Returns the abbreviated name or symbol of volume: "m³" for cubic meters
-	pub fn unit_symbol() -> &'static str {
-		return "m³";
-	}
+	pub fn unit_symbol() -> &'static str { "m³" }
 	
 	/// Returns a new volume value from the given number of cubic meters
 	///
 	/// # Arguments
 	/// * `m3` - Any number-like type, representing a quantity of cubic meters
-	pub fn from_m3(m3: T) -> Self {
-		Volume{m3: m3}
-	}
+	pub fn from_m3(m3: T) -> Self { Volume{m3: m3} }
 	
 	/// Returns a copy of this volume value in cubic meters
-	pub fn to_m3(&self) -> T {
-		return self.m3.clone();
-	}
+	pub fn to_m3(&self) -> T { self.m3.clone() }
 
 	/// Returns a new volume value from the given number of cubic meters
 	///
 	/// # Arguments
 	/// * `cubic_meters` - Any number-like type, representing a quantity of cubic meters
-	pub fn from_cubic_meters(cubic_meters: T) -> Self {
-		Volume{m3: cubic_meters}
-	}
+	pub fn from_cubic_meters(cubic_meters: T) -> Self { Volume{m3: cubic_meters} }
 	
 	/// Returns a copy of this volume value in cubic meters
-	pub fn to_cubic_meters(&self) -> T {
-		return self.m3.clone();
-	}
+	pub fn to_cubic_meters(&self) -> T { self.m3.clone() }
 
 	/// Returns a new volume value from the given number of kiloliters
 	///
 	/// # Arguments
 	/// * `kL` - Any number-like type, representing a quantity of cubic meters
-	pub fn from_kL(kL: T) -> Self {
-		Volume{m3: kL}
-	}
+	pub fn from_kL(kL: T) -> Self { Volume{m3: kL} }
 	
 	/// Returns a copy of this volume value in kiloliters
-	pub fn to_kL(&self) -> T {
-		return self.m3.clone();
-	}
+	pub fn to_kL(&self) -> T { self.m3.clone() }
 
 }
 

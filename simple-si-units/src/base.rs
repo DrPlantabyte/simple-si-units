@@ -32,40 +32,28 @@ pub struct Amount<T: NumLike>{
 impl<T> Amount<T> where T: NumLike {
 
 	/// Returns the standard unit name of amount: "moles"
-	pub fn unit_name() -> &'static str {
-		return "moles";
-	}
+	pub fn unit_name() -> &'static str { "moles" }
 	
 	/// Returns the abbreviated name or symbol of amount: "mol" for moles
-	pub fn unit_symbol() -> &'static str {
-		return "mol";
-	}
+	pub fn unit_symbol() -> &'static str { "mol" }
 	
 	/// Returns a new amount value from the given number of moles
 	///
 	/// # Arguments
 	/// * `moles` - Any number-like type, representing a quantity of moles
-	pub fn from_moles(moles: T) -> Self {
-		Amount{mol: moles}
-	}
+	pub fn from_moles(moles: T) -> Self { Amount{mol: moles} }
 	
 	/// Returns a copy of this amount value in moles
-	pub fn to_moles(&self) -> T {
-		return self.mol.clone();
-	}
+	pub fn to_moles(&self) -> T { self.mol.clone() }
 
 	/// Returns a new amount value from the given number of moles
 	///
 	/// # Arguments
 	/// * `mol` - Any number-like type, representing a quantity of moles
-	pub fn from_mol(mol: T) -> Self {
-		Amount{mol: mol}
-	}
+	pub fn from_mol(mol: T) -> Self { Amount{mol: mol} }
 	
 	/// Returns a copy of this amount value in moles
-	pub fn to_mol(&self) -> T {
-		return self.mol.clone();
-	}
+	pub fn to_mol(&self) -> T { self.mol.clone() }
 
 }
 
@@ -305,40 +293,28 @@ pub struct Current<T: NumLike>{
 impl<T> Current<T> where T: NumLike {
 
 	/// Returns the standard unit name of electrical current: "amperes"
-	pub fn unit_name() -> &'static str {
-		return "amperes";
-	}
+	pub fn unit_name() -> &'static str { "amperes" }
 	
 	/// Returns the abbreviated name or symbol of electrical current: "A" for amperes
-	pub fn unit_symbol() -> &'static str {
-		return "A";
-	}
+	pub fn unit_symbol() -> &'static str { "A" }
 	
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
 	/// * `A` - Any number-like type, representing a quantity of amperes
-	pub fn from_A(A: T) -> Self {
-		Current{A: A}
-	}
+	pub fn from_A(A: T) -> Self { Current{A: A} }
 	
 	/// Returns a copy of this electrical current value in amperes
-	pub fn to_A(&self) -> T {
-		return self.A.clone();
-	}
+	pub fn to_A(&self) -> T { self.A.clone() }
 
 	/// Returns a new electrical current value from the given number of amperes
 	///
 	/// # Arguments
 	/// * `amps` - Any number-like type, representing a quantity of amperes
-	pub fn from_amps(amps: T) -> Self {
-		Current{A: amps}
-	}
+	pub fn from_amps(amps: T) -> Self { Current{A: amps} }
 	
 	/// Returns a copy of this electrical current value in amperes
-	pub fn to_amps(&self) -> T {
-		return self.A.clone();
-	}
+	pub fn to_amps(&self) -> T { self.A.clone() }
 
 }
 
@@ -711,40 +687,28 @@ pub struct Distance<T: NumLike>{
 impl<T> Distance<T> where T: NumLike {
 
 	/// Returns the standard unit name of distance: "meters"
-	pub fn unit_name() -> &'static str {
-		return "meters";
-	}
+	pub fn unit_name() -> &'static str { "meters" }
 	
 	/// Returns the abbreviated name or symbol of distance: "m" for meters
-	pub fn unit_symbol() -> &'static str {
-		return "m";
-	}
+	pub fn unit_symbol() -> &'static str { "m" }
 	
 	/// Returns a new distance value from the given number of meters
 	///
 	/// # Arguments
 	/// * `m` - Any number-like type, representing a quantity of meters
-	pub fn from_m(m: T) -> Self {
-		Distance{m: m}
-	}
+	pub fn from_m(m: T) -> Self { Distance{m: m} }
 	
 	/// Returns a copy of this distance value in meters
-	pub fn to_m(&self) -> T {
-		return self.m.clone();
-	}
+	pub fn to_m(&self) -> T { self.m.clone() }
 
 	/// Returns a new distance value from the given number of meters
 	///
 	/// # Arguments
 	/// * `meters` - Any number-like type, representing a quantity of meters
-	pub fn from_meters(meters: T) -> Self {
-		Distance{m: meters}
-	}
+	pub fn from_meters(meters: T) -> Self { Distance{m: meters} }
 	
 	/// Returns a copy of this distance value in meters
-	pub fn to_meters(&self) -> T {
-		return self.m.clone();
-	}
+	pub fn to_meters(&self) -> T { self.m.clone() }
 
 }
 
@@ -1096,40 +1060,28 @@ pub struct Luminosity<T: NumLike>{
 impl<T> Luminosity<T> where T: NumLike {
 
 	/// Returns the standard unit name of luminosity: "candela"
-	pub fn unit_name() -> &'static str {
-		return "candela";
-	}
+	pub fn unit_name() -> &'static str { "candela" }
 	
 	/// Returns the abbreviated name or symbol of luminosity: "cd" for candela
-	pub fn unit_symbol() -> &'static str {
-		return "cd";
-	}
+	pub fn unit_symbol() -> &'static str { "cd" }
 	
 	/// Returns a new luminosity value from the given number of candela
 	///
 	/// # Arguments
 	/// * `cd` - Any number-like type, representing a quantity of candela
-	pub fn from_cd(cd: T) -> Self {
-		Luminosity{cd: cd}
-	}
+	pub fn from_cd(cd: T) -> Self { Luminosity{cd: cd} }
 	
 	/// Returns a copy of this luminosity value in candela
-	pub fn to_cd(&self) -> T {
-		return self.cd.clone();
-	}
+	pub fn to_cd(&self) -> T { self.cd.clone() }
 
 	/// Returns a new luminosity value from the given number of candela
 	///
 	/// # Arguments
 	/// * `candela` - Any number-like type, representing a quantity of candela
-	pub fn from_candela(candela: T) -> Self {
-		Luminosity{cd: candela}
-	}
+	pub fn from_candela(candela: T) -> Self { Luminosity{cd: candela} }
 	
 	/// Returns a copy of this luminosity value in candela
-	pub fn to_candela(&self) -> T {
-		return self.cd.clone();
-	}
+	pub fn to_candela(&self) -> T { self.cd.clone() }
 
 }
 
@@ -1262,40 +1214,28 @@ pub struct Mass<T: NumLike>{
 impl<T> Mass<T> where T: NumLike {
 
 	/// Returns the standard unit name of mass: "kilograms"
-	pub fn unit_name() -> &'static str {
-		return "kilograms";
-	}
+	pub fn unit_name() -> &'static str { "kilograms" }
 	
 	/// Returns the abbreviated name or symbol of mass: "kg" for kilograms
-	pub fn unit_symbol() -> &'static str {
-		return "kg";
-	}
+	pub fn unit_symbol() -> &'static str { "kg" }
 	
 	/// Returns a new mass value from the given number of kilograms
 	///
 	/// # Arguments
 	/// * `kg` - Any number-like type, representing a quantity of kilograms
-	pub fn from_kg(kg: T) -> Self {
-		Mass{kg: kg}
-	}
+	pub fn from_kg(kg: T) -> Self { Mass{kg: kg} }
 	
 	/// Returns a copy of this mass value in kilograms
-	pub fn to_kg(&self) -> T {
-		return self.kg.clone();
-	}
+	pub fn to_kg(&self) -> T { self.kg.clone() }
 
 	/// Returns a new mass value from the given number of kilograms
 	///
 	/// # Arguments
 	/// * `kilograms` - Any number-like type, representing a quantity of kilograms
-	pub fn from_kilograms(kilograms: T) -> Self {
-		Mass{kg: kilograms}
-	}
+	pub fn from_kilograms(kilograms: T) -> Self { Mass{kg: kilograms} }
 	
 	/// Returns a copy of this mass value in kilograms
-	pub fn to_kilograms(&self) -> T {
-		return self.kg.clone();
-	}
+	pub fn to_kilograms(&self) -> T { self.kg.clone() }
 
 }
 
@@ -1677,27 +1617,19 @@ pub struct Temperature<T: NumLike>{
 impl<T> Temperature<T> where T: NumLike {
 
 	/// Returns the standard unit name of temperature: "degrees kelvin"
-	pub fn unit_name() -> &'static str {
-		return "degrees kelvin";
-	}
+	pub fn unit_name() -> &'static str { "degrees kelvin" }
 	
 	/// Returns the abbreviated name or symbol of temperature: "K" for degrees kelvin
-	pub fn unit_symbol() -> &'static str {
-		return "K";
-	}
+	pub fn unit_symbol() -> &'static str { "K" }
 	
 	/// Returns a new temperature value from the given number of degrees kelvin
 	///
 	/// # Arguments
 	/// * `K` - Any number-like type, representing a quantity of degrees kelvin
-	pub fn from_K(K: T) -> Self {
-		Temperature{K: K}
-	}
+	pub fn from_K(K: T) -> Self { Temperature{K: K} }
 	
 	/// Returns a copy of this temperature value in degrees kelvin
-	pub fn to_K(&self) -> T {
-		return self.K.clone();
-	}
+	pub fn to_K(&self) -> T { self.K.clone() }
 
 }
 
@@ -1761,40 +1693,28 @@ pub struct Time<T: NumLike>{
 impl<T> Time<T> where T: NumLike {
 
 	/// Returns the standard unit name of time: "seconds"
-	pub fn unit_name() -> &'static str {
-		return "seconds";
-	}
+	pub fn unit_name() -> &'static str { "seconds" }
 	
 	/// Returns the abbreviated name or symbol of time: "s" for seconds
-	pub fn unit_symbol() -> &'static str {
-		return "s";
-	}
+	pub fn unit_symbol() -> &'static str { "s" }
 	
 	/// Returns a new time value from the given number of seconds
 	///
 	/// # Arguments
 	/// * `s` - Any number-like type, representing a quantity of seconds
-	pub fn from_s(s: T) -> Self {
-		Time{s: s}
-	}
+	pub fn from_s(s: T) -> Self { Time{s: s} }
 	
 	/// Returns a copy of this time value in seconds
-	pub fn to_s(&self) -> T {
-		return self.s.clone();
-	}
+	pub fn to_s(&self) -> T { self.s.clone() }
 
 	/// Returns a new time value from the given number of seconds
 	///
 	/// # Arguments
 	/// * `seconds` - Any number-like type, representing a quantity of seconds
-	pub fn from_seconds(seconds: T) -> Self {
-		Time{s: seconds}
-	}
+	pub fn from_seconds(seconds: T) -> Self { Time{s: seconds} }
 	
 	/// Returns a copy of this time value in seconds
-	pub fn to_seconds(&self) -> T {
-		return self.s.clone();
-	}
+	pub fn to_seconds(&self) -> T { self.s.clone() }
 
 }
 

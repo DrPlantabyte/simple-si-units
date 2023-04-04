@@ -29,40 +29,28 @@ pub struct AbsorbedDose<T: NumLike>{
 impl<T> AbsorbedDose<T> where T: NumLike {
 
 	/// Returns the standard unit name of absorbed dose: "grays"
-	pub fn unit_name() -> &'static str {
-		return "grays";
-	}
+	pub fn unit_name() -> &'static str { "grays" }
 	
 	/// Returns the abbreviated name or symbol of absorbed dose: "Gy" for grays
-	pub fn unit_symbol() -> &'static str {
-		return "Gy";
-	}
+	pub fn unit_symbol() -> &'static str { "Gy" }
 	
 	/// Returns a new absorbed dose value from the given number of grays
 	///
 	/// # Arguments
 	/// * `Gy` - Any number-like type, representing a quantity of grays
-	pub fn from_Gy(Gy: T) -> Self {
-		AbsorbedDose{Gy: Gy}
-	}
+	pub fn from_Gy(Gy: T) -> Self { AbsorbedDose{Gy: Gy} }
 	
 	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_Gy(&self) -> T {
-		return self.Gy.clone();
-	}
+	pub fn to_Gy(&self) -> T { self.Gy.clone() }
 
 	/// Returns a new absorbed dose value from the given number of grays
 	///
 	/// # Arguments
 	/// * `grays` - Any number-like type, representing a quantity of grays
-	pub fn from_grays(grays: T) -> Self {
-		AbsorbedDose{Gy: grays}
-	}
+	pub fn from_grays(grays: T) -> Self { AbsorbedDose{Gy: grays} }
 	
 	/// Returns a copy of this absorbed dose value in grays
-	pub fn to_grays(&self) -> T {
-		return self.Gy.clone();
-	}
+	pub fn to_grays(&self) -> T { self.Gy.clone() }
 
 }
 
@@ -260,40 +248,28 @@ pub struct DoseEquivalent<T: NumLike>{
 impl<T> DoseEquivalent<T> where T: NumLike {
 
 	/// Returns the standard unit name of dose equivalent: "sieverts"
-	pub fn unit_name() -> &'static str {
-		return "sieverts";
-	}
+	pub fn unit_name() -> &'static str { "sieverts" }
 	
 	/// Returns the abbreviated name or symbol of dose equivalent: "Sv" for sieverts
-	pub fn unit_symbol() -> &'static str {
-		return "Sv";
-	}
+	pub fn unit_symbol() -> &'static str { "Sv" }
 	
 	/// Returns a new dose equivalent value from the given number of sieverts
 	///
 	/// # Arguments
 	/// * `Sv` - Any number-like type, representing a quantity of sieverts
-	pub fn from_Sv(Sv: T) -> Self {
-		DoseEquivalent{Sv: Sv}
-	}
+	pub fn from_Sv(Sv: T) -> Self { DoseEquivalent{Sv: Sv} }
 	
 	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_Sv(&self) -> T {
-		return self.Sv.clone();
-	}
+	pub fn to_Sv(&self) -> T { self.Sv.clone() }
 
 	/// Returns a new dose equivalent value from the given number of sieverts
 	///
 	/// # Arguments
 	/// * `sieverts` - Any number-like type, representing a quantity of sieverts
-	pub fn from_sieverts(sieverts: T) -> Self {
-		DoseEquivalent{Sv: sieverts}
-	}
+	pub fn from_sieverts(sieverts: T) -> Self { DoseEquivalent{Sv: sieverts} }
 	
 	/// Returns a copy of this dose equivalent value in sieverts
-	pub fn to_sieverts(&self) -> T {
-		return self.Sv.clone();
-	}
+	pub fn to_sieverts(&self) -> T { self.Sv.clone() }
 
 }
 
@@ -465,40 +441,28 @@ pub struct Radioactivity<T: NumLike>{
 impl<T> Radioactivity<T> where T: NumLike {
 
 	/// Returns the standard unit name of radioactivity: "becquerels"
-	pub fn unit_name() -> &'static str {
-		return "becquerels";
-	}
+	pub fn unit_name() -> &'static str { "becquerels" }
 	
 	/// Returns the abbreviated name or symbol of radioactivity: "Bq" for becquerels
-	pub fn unit_symbol() -> &'static str {
-		return "Bq";
-	}
+	pub fn unit_symbol() -> &'static str { "Bq" }
 	
 	/// Returns a new radioactivity value from the given number of becquerels
 	///
 	/// # Arguments
 	/// * `Bq` - Any number-like type, representing a quantity of becquerels
-	pub fn from_Bq(Bq: T) -> Self {
-		Radioactivity{Bq: Bq}
-	}
+	pub fn from_Bq(Bq: T) -> Self { Radioactivity{Bq: Bq} }
 	
 	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_Bq(&self) -> T {
-		return self.Bq.clone();
-	}
+	pub fn to_Bq(&self) -> T { self.Bq.clone() }
 
 	/// Returns a new radioactivity value from the given number of becquerels
 	///
 	/// # Arguments
 	/// * `becquerels` - Any number-like type, representing a quantity of becquerels
-	pub fn from_becquerels(becquerels: T) -> Self {
-		Radioactivity{Bq: becquerels}
-	}
+	pub fn from_becquerels(becquerels: T) -> Self { Radioactivity{Bq: becquerels} }
 	
 	/// Returns a copy of this radioactivity value in becquerels
-	pub fn to_becquerels(&self) -> T {
-		return self.Bq.clone();
-	}
+	pub fn to_becquerels(&self) -> T { self.Bq.clone() }
 
 }
 

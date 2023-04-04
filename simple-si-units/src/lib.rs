@@ -1574,15 +1574,28 @@ mod unit_tests {
 		A: std::ops::Mul<B, Output = X>+Clone+'y,
 		B: std::ops::Mul<A, Output = X>+Clone+'y,
 		X: std::cmp::PartialEq+Clone
-	>(a: &'y A, b: &'y B) -> X where &'y B: std::ops::Mul<&'y A, Output = X>, &'y A: std::ops::Mul<&'y B, Output = X>
+	>(a: &'y A, b: &'y B) -> X where
+		A: std::ops::Mul<B, Output = X>+std::ops::Mul<&'y B, Output = X>,
+		B: std::ops::Mul<A, Output = X>+std::ops::Mul<&'y A, Output = X>,
+		&'y A: std::ops::Mul<B, Output = X>, &'y B: std::ops::Mul<A, Output = X>,
+		&'y A: std::ops::Mul<&'y B, Output = X>, &'y B: std::ops::Mul<&'y A, Output = X>
 	{
 		let x1: X = a * b;
 		let x2: X = b * a;
 		let x3: X = a.clone() * b.clone();
 		let x4: X = b.clone() * a.clone();
+		let x5: X = a * b.clone();
+		let x6: X = b * a.clone();
+		let x7: X = a.clone() * b;
+		let x8: X = b.clone() * a;
+		// let x6: X = b.clone() * &(a.clone());
 		assert!((x1.eq(&x2)));
 		assert!((x1.eq(&x3)));
 		assert!((x1.eq(&x4)));
+		assert!((x1.eq(&x5)));
+		assert!((x1.eq(&x6)));
+		assert!((x1.eq(&x7)));
+		assert!((x1.eq(&x8)));
 		return x1;
 	}
 
@@ -1591,11 +1604,17 @@ mod unit_tests {
 		A: std::ops::Div<B, Output = X>+Clone+'y,
 		B: Clone+'y,
 		X: std::cmp::PartialEq+Clone
-	>(a: &'y A, b: &'y B) -> X where &'y A: std::ops::Div<&'y B, Output = X>
+	>(a: &'y A, b: &'y B) -> X where
+		A: std::ops::Div<B, Output = X>+std::ops::Div<&'y B, Output = X>,
+		&'y A: std::ops::Div<B, Output = X>+std::ops::Div<&'y B, Output = X>
 	{
 		let x1: X = a / b;
 		let x2: X = a.clone() / b.clone();
+		let x3: X = a / b.clone();
+		let x4: X = a.clone() / b;
 		assert!((x1.eq(&x2)));
+		assert!((x1.eq(&x3)));
+		assert!((x1.eq(&x4)));
 		return x1;
 	}
 

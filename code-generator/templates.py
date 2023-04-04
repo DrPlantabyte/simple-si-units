@@ -33,14 +33,10 @@ pub struct %(code name)s<T: NumLike>{
 impl<T> %(code name)s<T> where T: NumLike {
 
 	/// Returns the standard unit name of %(desc name)s: "%(unit name)s"
-	pub fn unit_name() -> &'static str {
-		return "%(unit name)s";
-	}
+	pub fn unit_name() -> &'static str { "%(unit name)s" }
 	
 	/// Returns the abbreviated name or symbol of %(desc name)s: "%(unit symbol human)s" for %(unit name)s
-	pub fn unit_symbol() -> &'static str {
-		return "%(unit symbol human)s";
-	}
+	pub fn unit_symbol() -> &'static str { "%(unit symbol human)s" }
 	%(non-converting methods)s
 }
 
@@ -60,14 +56,10 @@ NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
 	///
 	/// # Arguments
 	/// * `%(user unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
-	pub fn from_%(user unit symbol)s(%(user unit symbol)s: T) -> Self {
-		%(code name)s{%(unit symbol)s: %(user unit symbol)s}
-	}
+	pub fn from_%(user unit symbol)s(%(user unit symbol)s: T) -> Self { %(code name)s{%(unit symbol)s: %(user unit symbol)s} }
 	
 	/// Returns a copy of this %(desc name)s value in %(user unit name)s
-	pub fn to_%(user unit symbol)s(&self) -> T {
-		return self.%(unit symbol)s.clone();
-	}
+	pub fn to_%(user unit symbol)s(&self) -> T { self.%(unit symbol)s.clone() }
 '''
 
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
