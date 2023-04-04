@@ -289,6 +289,9 @@ mod unit_tests {
 		let _ = Temperature::from_K(300_f64).to_K();
 		let _ = Temperature::from_K(300_f64).to_C();
 		let _ = Temperature::from_K(300_f64).to_F();
+		assert_eq!(Temperature::from_C(12.3_f64).to_K(), Temperature::from_celsius(12.3_f64).to_K());
+		assert_eq!(Temperature::from_K(300_f64).to_C(), Temperature::from_K(300_f64).to_celcius());
+		
 	}
 	#[test]
 	fn quantity_units() {
@@ -1802,6 +1805,11 @@ mod unit_tests {
 		assert_eq!(mul_check(&Frequency{Hz: x}, &Torque{Nm: y}), Power{W: x*y});
 		assert_eq!(mul_check(&Frequency{Hz: x}, &Momentum{kgmps: y}), Force{N: x*y});
 		assert_eq!(mul_check(&Frequency{Hz: x}, &Velocity{mps: y}), Acceleration{mps2: x*y});
+		assert_eq!(div_check(&x, &Time{s: y}), Frequency{Hz: x/y});
+		assert_eq!(div_check(&x as f32, &Time{s: y as f32}), Frequency{Hz: x as f32/y as f32});
+		assert_eq!(div_check(&x as i64, &Time{s: y as i64}), Frequency{Hz: x as i64/y as i64});
+		assert_eq!(div_check(&x as i32, &Time{s: y as i32}), Frequency{Hz: x as i32/y as i32});
+		assert_eq!(div_check(&num_bigfloat::BigFloat::from(x), &Time{s: y}), Frequency{Hz: x/y});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Mass{kg: y}), Area{m2: x/y});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Area{m2: y}), Mass{kg: x/y});
 		assert_eq!(mul_check(&MomentOfInertia{kgm2: x}, &AngularVelocity{radps: y}), AngularMomentum{kgm2radps: x*y});
@@ -1851,5 +1859,4 @@ mod unit_tests {
 		assert_eq!(mul_check(&AbsorbedDose{Gy: x}, &Mass{kg: y}), Energy{J: x*y});
 		assert_eq!(mul_check(&DoseEquivalent{Sv: x}, &Mass{kg: y}), Energy{J: x*y});
 	}
-	// TODO: templated function to test all unit struct operators and then use it on all structs
 }
