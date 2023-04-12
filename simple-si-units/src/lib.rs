@@ -1621,24 +1621,11 @@ mod unit_tests {
 		return x1;
 	}
 
-	fn simple_div_check<
-		'y,
-		A: std::ops::Div<B, Output = X>+Clone+'y,
-		B: Clone+'y,
-		X: std::cmp::PartialEq+Clone
-	>(a: &'y A, b: &'y B) -> X where
-		A: std::ops::Div<B, Output = X>+std::ops::Div<&'y B, Output = X>
-	{
-		let x1: X = a.clone() / b;
-		let x2: X = a.clone() / b.clone();
-		assert!((x1.eq(&x2)));
-		return x1;
-	}
 
 	#[test]
 	fn test_unit_converions(){
-		let x = 2.5f64;
-		let y = 0.5f64;
+		let x = 4.5f64;
+		let y = 2.5f64;
 		assert_eq!(div_check(&Amount{mol: x}, &Time{s: y}), CatalyticActivity{molps: x/y});
 		assert_eq!(div_check(&Amount{mol: x}, &CatalyticActivity{molps: y}), Time{s: x/y});
 		assert_eq!(div_check(&Amount{mol: x}, &Concentration{molpm3: y}), Volume{m3: x/y});
@@ -1823,11 +1810,6 @@ mod unit_tests {
 		assert_eq!(div_check(&(x as f32), &Time{s: y as f32}), Frequency{Hz: x as f32/y as f32});
 		assert_eq!(div_check(&(x as i64), &Time{s: y as i64}), Frequency{Hz: x as i64/y as i64});
 		assert_eq!(div_check(&(x as i32), &Time{s: y as i32}), Frequency{Hz: x as i32/y as i32});
-		let _ = num_bigfloat::BigFloat::from(x) / Time{s: num_bigfloat::BigFloat::from(y)};
-		// assert_eq!(simple_div_check(
-		// 	&num_bigfloat::BigFloat::from(x), &Time{s: num_bigfloat::BigFloat::from(y)}),
-		// 	Frequency{Hz: num_bigfloat::BigFloat::from(x)/num_bigfloat::BigFloat::from(y)}
-		// );
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Mass{kg: y}), Area{m2: x/y});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Area{m2: y}), Mass{kg: x/y});
 		assert_eq!(mul_check(&MomentOfInertia{kgm2: x}, &AngularVelocity{radps: y}), AngularMomentum{kgm2radps: x*y});
@@ -1876,5 +1858,18 @@ mod unit_tests {
 		assert_eq!(mul_check(&Velocity{mps: x}, &Momentum{kgmps: y}), Energy{J: x*y});
 		assert_eq!(mul_check(&AbsorbedDose{Gy: x}, &Mass{kg: y}), Energy{J: x*y});
 		assert_eq!(mul_check(&DoseEquivalent{Sv: x}, &Mass{kg: y}), Energy{J: x*y});
+	}
+
+	#[test]
+	#[cfg(feature="num-bigfloat")]
+	fn test_bigfloat_unit_conversions() {
+		use num_bigfloat::BigFloat;
+		let x = 2.5f64;
+		let y = 0.5f64;
+		let _ = BigFloat::from(x) / Time{s: BigFloat::from(y)};
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
+				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}
+		);
 	}
 }

@@ -13,7 +13,7 @@ use super::nuclear::*;
 // optional supports
 #[cfg(feature="serde")]
 use serde::{Serialize, Deserialize};
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 use num_bigfloat;
 #[cfg(feature="num_complex")]
 use num_complex;
@@ -2456,7 +2456,7 @@ impl<T> std::ops::Div<&Time<T>> for &i32 where T: NumLike+From<i32> {
 
 // 1/Time -> Frequency
 /// Dividing a scalar value by a Time unit value returns a value of type Frequency
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Time<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
@@ -2464,7 +2464,7 @@ impl<T> std::ops::Div<Time<T>> for num_bigfloat::BigFloat where T: NumLike+From<
 	}
 }
 /// Dividing a scalar value by a Time unit value returns a value of type Frequency
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Time<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
@@ -2472,7 +2472,7 @@ impl<T> std::ops::Div<Time<T>> for &num_bigfloat::BigFloat where T: NumLike+From
 	}
 }
 /// Dividing a scalar value by a Time unit value returns a value of type Frequency
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Time<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
@@ -2480,7 +2480,7 @@ impl<T> std::ops::Div<&Time<T>> for num_bigfloat::BigFloat where T: NumLike+From
 	}
 }
 /// Dividing a scalar value by a Time unit value returns a value of type Frequency
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Time<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
