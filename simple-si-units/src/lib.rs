@@ -1864,9 +1864,13 @@ mod unit_tests {
 	#[cfg(feature="num-bigfloat")]
 	fn test_bigfloat_unit_conversions() {
 		use num_bigfloat::BigFloat;
-		let x = 2.5f64;
-		let y = 0.5f64;
+		let x = 4.5f64;
+		let y = 2.5f64;
 		let _ = BigFloat::from(x) / Time{s: BigFloat::from(y)};
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
+				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}
+		);
 		assert_eq!(div_check(
 			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
 				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}

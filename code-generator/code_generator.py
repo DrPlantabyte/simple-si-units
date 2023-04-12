@@ -168,13 +168,13 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 	inverse_units = src_units.inverse()
 	concrete_types = [
 		'f64', 'f32', 'i64', 'i32',
-		'num_bigfloat::BigFloat', 'astro_float::BigFloat',
+		'num_bigfloat::BigFloat',
 		'num_complex::Complex32', 'num_complex::Complex64'
 	]
 	cfg_attrs = [
 		'', '', '', '',
-		'#[cfg(feature="num_bigfloat")]\n', '#[cfg(feature="astro_float")]\n',
-		'#[cfg(feature="num_complex")]\n', '#[cfg(feature="num_complex")]\n'
+		'#[cfg(feature="num-bigfloat")]\n',
+		'#[cfg(feature="num-complex")]\n', '#[cfg(feature="num-complex")]\n'
 	]
 	for i, row in data.iterrows():
 		# print('\t%s (%s)' % (row['name'], SIUnits.from_str(row['si units'])))
