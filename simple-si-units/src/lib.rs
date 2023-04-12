@@ -1871,9 +1871,22 @@ mod unit_tests {
 			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
 				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}
 		);
+	}
+	#[test]
+	#[cfg(feature="num-complex")]
+	fn test_complex_unit_conversions() {
+		use num_complex::{Complex32, Complex64};
+		let x = 4.5f64;
+		let y = 2.5f64;
+		let x32 = x as f32;
+		let y32 = y as f32;
 		assert_eq!(div_check(
-			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
-				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}
+			&Complex32::from(x32), &Time{s: Complex32::from(y32)}),
+				   Frequency{Hz: Complex32::from(x32)/Complex32::from(y32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Time{s: Complex64::from(y)}),
+				   Frequency{Hz: Complex64::from(x)/Complex64::from(y)}
 		);
 	}
 }

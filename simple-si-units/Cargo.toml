@@ -33,7 +33,7 @@ num-complex = "0.4"
 num-bigfloat = "1.6"
 num-traits = "0.2"
 num = "0.4"
-uom = "0.33"
+uom = "0.34"
 
 [build-dependencies]
 # no build dependencies
