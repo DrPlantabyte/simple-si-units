@@ -422,8 +422,16 @@ mod unit_tests {
 			AngularVelocity::from_rpm(1.0_f64).to_radps(), 9
 		);
 		assert_approx_equal(
+			AngularVelocity::from_rpm(1.0_f64).to_rph(),
+			AngularVelocity::from_rph(60.0_f64).to_rph(), 9
+		);
+		assert_approx_equal(
 			AngularVelocity::from_degps(360.0_f64).to_radps(),
 			AngularVelocity::from_rps(1.0_f64).to_radps(), 9
+		);
+		assert_approx_equal(
+			AngularVelocity::from_degps(1.0_f64).to_degrees_per_second(),
+			AngularVelocity::from_degrees_per_second(1.0_f64).to_degrees_per_second(), 9
 		);
 		let _ = AngularVelocity::from_radps(1.0_f64).to_radps();
 		let _ = AngularVelocity::from_radps(1.0_f64).to_degps();
@@ -488,6 +496,10 @@ mod unit_tests {
 		assert_approx_equal(
 			Momentum::from_kgmps(1.0_f64).to_kgmps(),
 			Momentum::from_gcmps(100000.0_f64).to_kgmps(), 9
+		);
+		assert_approx_equal(
+			Momentum::from_gram_centimeters_per_second(1.0_f64).to_gram_centimeters_per_second(),
+			Momentum::from_gcmps(1.0_f64).to_gcmps(), 9
 		);
 		let _ = Momentum::from_kgmps(1.0_f64).to_kgmps();
 		let _ = Momentum::from_kgmps(1.0_f64).to_gcmps();
@@ -572,6 +584,14 @@ mod unit_tests {
 			AreaDensity::from_kgpm2(1.0_f64).to_kgpm2(),
 			AreaDensity::from_gpcm2(0.1_f64).to_kgpm2(), 9
 		);
+		assert_approx_equal(
+			AreaDensity::from_gpm2(1.0_f64).to_gpm2(),
+			AreaDensity::from_grams_per_square_meter(1.0_f64).to_grams_per_square_meter(), 9
+		);
+		assert_approx_equal(
+			AreaDensity::from_gpcm2(1.0_f64).to_gpcm2(),
+			AreaDensity::from_grams_per_square_cm(1.0_f64).to_grams_per_square_cm(), 9
+		);
 		let _ = AreaDensity::from_kgpm2(1.0_f64).to_kgpm2();
 		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpm2();
 		let _ = AreaDensity::from_kgpm2(1.0_f64).to_gpcm2();
@@ -638,6 +658,10 @@ mod unit_tests {
 		);
 		assert_approx_equal(
 			Density::from_kgpL(1.0_f64).to_kgpL(),
+			Density::from_kilograms_per_liter(1.0_f64).to_kilograms_per_liter(), 9
+		);
+		assert_approx_equal(
+			Density::from_kgpL(1.0_f64).to_kgpL(),
 			Density::from_gpcc(1.0_f64).to_kgpL(), 9
 		);
 		assert_approx_equal(
@@ -660,8 +684,12 @@ mod unit_tests {
 			Velocity::from_mmps(1000.0_f64).to_mps(), 9
 		);
 		assert_approx_equal(
-			Velocity::from_mps(1.0_f64).to_mps(),
-			Velocity::from_mmph(1000.0_f64 * 3600.0_f64).to_mps(), 9
+			Velocity::from_mps(1000.0_f64).to_mps(),
+			Velocity::from_kmps(1.0_f64).to_kmps() * 1000.0_f64, 9
+		);
+		assert_approx_equal(
+			Velocity::from_mps(1.0_f64).to_mps() * 1000.0_f64 * 3600.0_f64,
+			Velocity::from_mmph(1000.0_f64 * 3600.0_f64).to_mmph(), 9
 		);
 		assert_approx_equal(
 			Velocity::from_kph(1.609344_f64).to_mps(),
@@ -742,8 +770,28 @@ mod unit_tests {
 	#[test]
 	fn pressure_units() {
 		assert_approx_equal(
+			Pressure::from_Pa(1.0_f64).to_mPa(),
+			Pressure::from_mPa(1000.0_f64).to_mPa(), 9
+		);
+		assert_approx_equal(
+			Pressure::from_mPa(1.0_f64).to_uPa(),
+			Pressure::from_uPa(1000.0_f64).to_uPa(), 9
+		);
+		assert_approx_equal(
+			Pressure::from_uPa(1.0_f64).to_nPa(),
+			Pressure::from_nPa(1000.0_f64).to_nPa(), 9
+		);
+		assert_approx_equal(
 			Pressure::from_Pa(1000.0_f64).to_Pa(),
 			Pressure::from_kPa(1.0_f64).to_Pa(), 9
+		);
+		assert_approx_equal(
+			Pressure::from_kPa(1000.0_f64).to_MPa(),
+			Pressure::from_MPa(1.0_f64).to_MPa(), 9
+		);
+		assert_approx_equal(
+			Pressure::from_MPa(1000.0_f64).to_GPa(),
+			Pressure::from_GPa(1.0_f64).to_GPa(), 9
 		);
 		assert_approx_equal(
 			Pressure::from_hPa(10.0_f64).to_Pa(),
@@ -754,12 +802,20 @@ mod unit_tests {
 			Pressure::from_kPa(100.0_f64).to_Pa(), 9
 		);
 		assert_approx_equal(
+			Pressure::from_bar(1.0_f64).to_bar() * 1000f64,
+			Pressure::from_mbar(1000.0_f64).to_mbar(), 9
+		);
+		assert_approx_equal(
 			Pressure::from_atm(1.0_f64).to_Pa(),
 			Pressure::from_kPa(101.325_f64).to_Pa(), 3
 		);
 		assert_approx_equal(
 			Pressure::from_atm(1.0_f64).to_Pa(),
 			Pressure::from_mmHg(760_f64).to_Pa(), 3
+		);
+		assert_approx_equal(
+			Pressure::from_mmHg(1.0_f64).to_mmHg(),
+			Pressure::from_torr(1.0_f64).to_torr(), 3
 		);
 		assert_approx_equal(
 			Pressure::from_psi(1.0_f64).to_Pa(),
@@ -780,12 +836,16 @@ mod unit_tests {
 			Energy::from_kJ(1.0_f64).to_J(), 9
 		);
 		assert_approx_equal(
-			Energy::from_kcal(1.0_f64).to_J(),
-			Energy::from_kJ(4.184_f64).to_J(), 3
+			Energy::from_kcal(1.0_f64).to_kcal(),
+			Energy::from_kJ(4.184_f64).to_kcal(), 3
 		);
 		assert_approx_equal(
-			Energy::from_BTU(1.0_f64).to_J(),
-			Energy::from_kJ(1.055_f64).to_J(), 3
+			Energy::from_kcal(1.0_f64).to_cal(),
+			Energy::from_cal(1000.0_f64).to_cal(), 3
+		);
+		assert_approx_equal(
+			Energy::from_BTU(1.0_f64).to_BTU(),
+			Energy::from_kJ(1.055_f64).to_BTU(), 3
 		);
 		assert_approx_equal(
 			Energy::from_J(1.0_f64).to_J(),
