@@ -396,6 +396,10 @@ mod unit_tests {
 			Angle::from_deg(360.0_f64).to_rad(),
 			Angle::from_rad(6.283185307179586_f64).to_rad(), 9
 		);
+		assert_approx_equal(
+			Angle::from_degrees(360.0_f64).to_degrees(),
+			Angle::from_rad(6.283185307179586_f64).to_degrees(), 9
+		);
 		let _ = Angle::from_deg(360.0_f64).to_rad();
 		let _ = Angle::from_deg(360.0_f64).to_deg();
 	}
@@ -443,6 +447,14 @@ mod unit_tests {
 		assert_approx_equal(
 			AngularAcceleration::from_degps2(360.0_f64).to_radps2(),
 			AngularAcceleration::from_rps2(1.0_f64).to_radps2(), 9
+		);
+		assert_approx_equal(
+			AngularAcceleration::from_degrees_per_second_squared(1.0_f64).to_degrees_per_second_squared(),
+			AngularAcceleration::from_degps2(1.0_f64).to_degps2(), 9
+		);
+		assert_approx_equal(
+			AngularAcceleration::from_rpm2(1.0_f64).to_rph2(),
+			AngularAcceleration::from_rph2(3600.0_f64).to_rph2(), 9
 		);
 		let _ = AngularAcceleration::from_radps2(1.0_f64).to_radps2();
 		let _ = AngularAcceleration::from_radps2(1.0_f64).to_degps2();
@@ -520,6 +532,14 @@ mod unit_tests {
 			Area::from_mm2(100.0_f64).to_m2(), 9
 		);
 		assert_approx_equal(
+			Area::from_square_cm(1.0_f64).to_square_cm(),
+			Area::from_cm2(1.0_f64).to_square_cm(), 9
+		);
+		assert_approx_equal(
+			Area::from_square_meters(1.0_f64).to_square_meters(),
+			Area::from_m2(1.0_f64).to_square_meters(), 9
+		);
+		assert_approx_equal(
 			Area::from_mm2(1.0_f64).to_m2(),
 			Area::from_um2(1e6_f64).to_m2(), 9
 		);
@@ -554,6 +574,10 @@ mod unit_tests {
 	}
 	#[test]
 	fn volume_units() {
+		assert_approx_equal(
+			Volume::from_liters(1.0_f64).to_liters(),
+			Volume::from_L(1.0_f64).to_L(), 9
+		);
 		assert_approx_equal(
 			Volume::from_L(1.0_f64).to_L(),
 			Volume::from_mL(1000.0_f64).to_L(), 9
@@ -659,6 +683,10 @@ mod unit_tests {
 		assert_approx_equal(
 			Acceleration::from_mps2(1.0_f64).to_mps2(),
 			Acceleration::from_mmps2(1000.0_f64).to_mps2(), 9
+		);
+		assert_approx_equal(
+			Acceleration::from_kilometers_per_hour_squared(1.0_f64).to_kilometers_per_hour_squared(),
+			Acceleration::from_kph2(1.0_f64).to_kph2(), 9
 		);
 		let _ = Acceleration::from_mps2(1.0_f64).to_mps2();
 		let _ = Acceleration::from_mps2(1.0_f64).to_mmps2();
@@ -807,6 +835,30 @@ mod unit_tests {
 		assert_approx_equal(
 			Charge::from_C(1.60217646e-19_f64).to_C(),
 			Charge::from_p(1.0_f64).to_C(), 5
+		);
+		assert_approx_equal(
+			Charge::from_C(1.0_f64).to_mC(),
+			Charge::from_mC(1000.0_f64).to_mC(), 9
+		);
+		assert_approx_equal(
+			Charge::from_mC(1.0_f64).to_uC(),
+			Charge::from_uC(1000.0_f64).to_uC(), 9
+		);
+		assert_approx_equal(
+			Charge::from_uC(1.0_f64).to_nC(),
+			Charge::from_nC(1000.0_f64).to_nC(), 9
+		);
+		assert_approx_equal(
+			Charge::from_C(1000.0_f64).to_kC(),
+			Charge::from_kC(1.0_f64).to_kC(), 9
+		);
+		assert_approx_equal(
+			Charge::from_kC(1000.0_f64).to_MC(),
+			Charge::from_MC(1.0_f64).to_MC(), 9
+		);
+		assert_approx_equal(
+			Charge::from_MC(1000.0_f64).to_GC(),
+			Charge::from_GC(1.0_f64).to_GC(), 9
 		);
 		let _ = Charge::from_C(1.0_f64).to_C();
 		let _ = Charge::from_C(1.0_f64).to_e();
@@ -968,6 +1020,10 @@ mod unit_tests {
 			Capacitance::from_nF(1000.0_f64).to_F(), 9
 		);
 		assert_approx_equal(
+			Capacitance::from_nF(1.0_f64).to_F(),
+			Capacitance::from_pF(1000.0_f64).to_F(), 9
+		);
+		assert_approx_equal(
 			Capacitance::from_kF(1.0_f64).to_F(),
 			Capacitance::from_F(1000.0_f64).to_F(), 9
 		);
@@ -983,6 +1039,7 @@ mod unit_tests {
 		let _ = Capacitance::from_F(1.0_f64).to_mF();
 		let _ = Capacitance::from_F(1.0_f64).to_uF();
 		let _ = Capacitance::from_F(1.0_f64).to_nF();
+		let _ = Capacitance::from_F(1.0_f64).to_pF();
 		let _ = Capacitance::from_F(1.0_f64).to_kF();
 		let _ = Capacitance::from_F(1.0_f64).to_MF();
 		let _ = Capacitance::from_F(1.0_f64).to_GF();
@@ -1132,12 +1189,36 @@ mod unit_tests {
 			Concentration::from_M(1.0_f64).to_M(), 4
 		);
 		assert_approx_equal(
+			Concentration::from_count_per_cubic_meter(6.02214e23_f64).to_M(),
+			Concentration::from_mM(1.0_f64).to_M(), 4
+		);
+		assert_approx_equal(
+			Concentration::from_count_per_cubic_meter(6.02214e23_f64).to_count_per_cubic_meter(),
+			Concentration::from_mM(1.0_f64).to_count_per_cubic_meter(), 4
+		);
+		assert_approx_equal(
+			Concentration::from_count_per_L(1.0_f64).to_M(),
+			Concentration::from_NpL(1.0_f64).to_M(), 9
+		);
+		assert_approx_equal(
+			Concentration::from_count_per_L(1.0_f64).to_NpL(),
+			Concentration::from_NpL(1.0_f64).to_NpL(), 9
+		);
+		assert_approx_equal(
 			Concentration::from_Npm3(6.02214e23_f64).to_M(),
 			Concentration::from_mM(1.0_f64).to_M(), 4
 		);
 		assert_approx_equal(
 			Concentration::from_count_per_cc(6.02214e23_f64).to_M(),
 			Concentration::from_M(1000.0_f64).to_M(), 5
+		);
+		assert_approx_equal(
+			Concentration::from_count_per_cc(1.0_f64).to_Npcc(),
+			Concentration::from_Npcc(1.0_f64).to_Npcc(), 9
+		);
+		assert_approx_equal(
+			Concentration::from_molarity(1.0_f64).to_molarity(),
+			Concentration::from_molpm3(1000.0_f64).to_molarity(), 9
 		);
 		let _ = Concentration::from_M(1.0_f64).to_M();
 		let _ = Concentration::from_M(1.0_f64).to_mM();
@@ -1248,6 +1329,22 @@ mod unit_tests {
 			Radioactivity::from_Rd(1.0_f64).to_Bq(),
 			Radioactivity::from_MBq(1.0_f64).to_Bq(), 9
 		);
+		assert_approx_equal(
+			Radioactivity::from_Ci(1.0_f64).to_mCi(),
+			Radioactivity::from_mCi(1000.0_f64).to_mCi(), 9
+		);
+		assert_approx_equal(
+			Radioactivity::from_mCi(1.0_f64).to_uCi(),
+			Radioactivity::from_uCi(1000.0_f64).to_uCi(), 9
+		);
+		assert_approx_equal(
+			Radioactivity::from_uCi(1.0_f64).to_nCi(),
+			Radioactivity::from_nCi(1000.0_f64).to_nCi(), 9
+		);
+		assert_approx_equal(
+			Radioactivity::from_nCi(1.0_f64).to_pCi(),
+			Radioactivity::from_pCi(1000.0_f64).to_pCi(), 9
+		);
 		let _ = Radioactivity::from_Bq(1.0_f64).to_Bq();
 		let _ = Radioactivity::from_Bq(1.0_f64).to_mBq();
 		let _ = Radioactivity::from_Bq(1.0_f64).to_uBq();
@@ -1295,6 +1392,10 @@ mod unit_tests {
 		assert_approx_equal(
 			AbsorbedDose::from_rad(1.0_f64).to_rad(),
 			AbsorbedDose::from_mrad(1000.0_f64).to_rad(), 9
+		);
+		assert_approx_equal(
+			AbsorbedDose::from_mrad(1.0_f64).to_urad(),
+			AbsorbedDose::from_urad(1000.0_f64).to_urad(), 9
 		);
 		assert_approx_equal(
 			AbsorbedDose::from_krad(1.0_f64).to_rad(),
@@ -1695,6 +1796,14 @@ mod unit_tests {
 		assert_eq!(mul_check(&Conductance{S: x}, &MagneticFlux{Wb: y}), Charge{C: x*y});
 		assert_eq!(mul_check(&Conductance{S: x}, &Voltage{V: y}), Current{A: x*y});
 		assert_eq!(div_check(&Conductance{S: x}, &Frequency{Hz: y}), Capacitance{F: x/y});
+		assert_eq!(div_check(&x, &Conductance{S: y}), Resistance{Ohm: x/y});
+		assert_eq!(div_check(&(x as f32), &Conductance{S: y as f32}), Resistance{Ohm: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i32), &Conductance{S: y as i32}), Resistance{Ohm: x as i32/y as i32});
+		assert_eq!(div_check(&(x as i64), &Conductance{S: y as i64}), Resistance{Ohm: x as i64/y as i64});
+		assert_eq!(div_check(&x, &Resistance{Ohm: y}), Conductance{S: x/y});
+		assert_eq!(div_check(&(x as f32), &Resistance{Ohm: y as f32}), Conductance{S: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i32), &Resistance{Ohm: y as i32}), Conductance{S: x as i32/y as i32});
+		assert_eq!(div_check(&(x as i64), &Resistance{Ohm: y as i64}), Conductance{S: x as i64/y as i64});
 		assert_eq!(mul_check(&Illuminance{lux: x}, &Area{m2: y}), LuminousFlux{lm: x*y});
 		assert_eq!(mul_check(&Inductance{H: x}, &Current{A: y}), MagneticFlux{Wb: x*y});
 		assert_eq!(div_check(&Inductance{H: x}, &Time{s: y}), Resistance{Ohm: x/y});
@@ -1810,6 +1919,10 @@ mod unit_tests {
 		assert_eq!(div_check(&(x as f32), &Time{s: y as f32}), Frequency{Hz: x as f32/y as f32});
 		assert_eq!(div_check(&(x as i64), &Time{s: y as i64}), Frequency{Hz: x as i64/y as i64});
 		assert_eq!(div_check(&(x as i32), &Time{s: y as i32}), Frequency{Hz: x as i32/y as i32});
+		assert_eq!(div_check(&x, &Frequency{Hz: y}), Time{s: x/y});
+		assert_eq!(div_check(&(x as f32), &Frequency{Hz: y as f32}), Time{s: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i64), &Frequency{Hz: y as i64}), Time{s: x as i64/y as i64});
+		assert_eq!(div_check(&(x as i32), &Frequency{Hz: y as i32}), Time{s: x as i32/y as i32});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Mass{kg: y}), Area{m2: x/y});
 		assert_eq!(div_check(&MomentOfInertia{kgm2: x}, &Area{m2: y}), Mass{kg: x/y});
 		assert_eq!(mul_check(&MomentOfInertia{kgm2: x}, &AngularVelocity{radps: y}), AngularMomentum{kgm2radps: x*y});
@@ -1858,6 +1971,10 @@ mod unit_tests {
 		assert_eq!(mul_check(&Velocity{mps: x}, &Momentum{kgmps: y}), Energy{J: x*y});
 		assert_eq!(mul_check(&AbsorbedDose{Gy: x}, &Mass{kg: y}), Energy{J: x*y});
 		assert_eq!(mul_check(&DoseEquivalent{Sv: x}, &Mass{kg: y}), Energy{J: x*y});
+		assert_eq!(div_check(&x, &Radioactivity{Bq: y}), Time{s: x/y});
+		assert_eq!(div_check(&(x as f32), &Radioactivity{Bq: y as f32}), Time{s: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i64), &Radioactivity{Bq: y as i64}), Time{s: x as i64/y as i64});
+		assert_eq!(div_check(&(x as i32), &Radioactivity{Bq: y as i32}), Time{s: x as i32/y as i32});
 	}
 
 	#[test]
@@ -1870,6 +1987,22 @@ mod unit_tests {
 		assert_eq!(div_check(
 			&BigFloat::from(x), &Time{s: BigFloat::from(y)}),
 				   Frequency{Hz: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Frequency{Hz: BigFloat::from(y)}),
+				   Time{s: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Conductance{S: BigFloat::from(y)}),
+				   Resistance{Ohm: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Resistance{Ohm: BigFloat::from(y)}),
+				   Conductance{S: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Radioactivity{Bq: BigFloat::from(y)}),
+				   Time{s: BigFloat::from(x)/BigFloat::from(y)}
 		);
 	}
 	#[test]
@@ -1887,6 +2020,38 @@ mod unit_tests {
 		assert_eq!(div_check(
 			&Complex64::from(x), &Time{s: Complex64::from(y)}),
 				   Frequency{Hz: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x32), &Frequency{Hz: Complex32::from(y32)}),
+				   Time{s: Complex32::from(x32)/Complex32::from(y32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Frequency{Hz: Complex64::from(y)}),
+				   Time{s: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x32), &Conductance{S: Complex32::from(y32)}),
+				   Resistance{Ohm: Complex32::from(x32)/Complex32::from(y32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Conductance{S: Complex64::from(y)}),
+				   Resistance{Ohm: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x32), &Resistance{Ohm: Complex32::from(y32)}),
+				   Conductance{S: Complex32::from(x32)/Complex32::from(y32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Resistance{Ohm: Complex64::from(y)}),
+				   Conductance{S: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x32), &Radioactivity{Bq: Complex32::from(y32)}),
+				   Time{s: Complex32::from(x32)/Complex32::from(y32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Radioactivity{Bq: Complex64::from(y)}),
+				   Time{s: Complex64::from(x)/Complex64::from(y)}
 		);
 	}
 }
