@@ -1,7 +1,7 @@
 [package]
 name = "simple-si-units"
 authors = ["Christopher Collin Hall"]
-version = "0.7.6"
+version = "0.7.7"
 edition = "2021"
 license = "MPL-2.0"
 description = "A Rust library providing base SI Units and common conversions. SI Units are provided as templated types so that you can write APIs that enforce correct units"
