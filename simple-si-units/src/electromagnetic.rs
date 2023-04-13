@@ -11,12 +11,10 @@ use super::mechanical::*;
 // optional supports
 #[cfg(feature="serde")]
 use serde::{Serialize, Deserialize};
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 use num_bigfloat;
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 use num_complex;
-#[cfg(feature="astro_float")]
-use astro_float;
 
 
 /// The electrical capacitance unit type, defined as farads in SI units
@@ -1152,7 +1150,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &i32 where T: NumLike+From<i32> {
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1160,7 +1158,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1168,7 +1166,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -1176,7 +1174,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -1186,41 +1184,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumL
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<Conductance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Resistance<T>;
-	fn div(self, rhs: Conductance<T>) -> Self::Output {
-		Resistance{Ohm: T::from(self) / rhs.S}
-	}
-}
-/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<Conductance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Resistance<T>;
-	fn div(self, rhs: Conductance<T>) -> Self::Output {
-		Resistance{Ohm: T::from(self.clone()) / rhs.S}
-	}
-}
-/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<&Conductance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Resistance<T>;
-	fn div(self, rhs: &Conductance<T>) -> Self::Output {
-		Resistance{Ohm: T::from(self) / rhs.S.clone()}
-	}
-}
-/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<&Conductance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Resistance<T>;
-	fn div(self, rhs: &Conductance<T>) -> Self::Output {
-		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
-	}
-}
-
-// 1/Conductance -> Resistance
-/// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1228,7 +1192,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1236,7 +1200,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -1244,7 +1208,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -1254,7 +1218,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumL
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1262,7 +1226,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
@@ -1270,7 +1234,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -1278,7 +1242,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLi
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
@@ -2983,7 +2947,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &i32 where T: NumLike+From<i32> {
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -2991,7 +2955,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -2999,7 +2963,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
@@ -3007,7 +2971,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 impl<T> std::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
@@ -3017,41 +2981,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLi
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<Resistance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Conductance<T>;
-	fn div(self, rhs: Resistance<T>) -> Self::Output {
-		Conductance{S: T::from(self) / rhs.Ohm}
-	}
-}
-/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<Resistance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Conductance<T>;
-	fn div(self, rhs: Resistance<T>) -> Self::Output {
-		Conductance{S: T::from(self.clone()) / rhs.Ohm}
-	}
-}
-/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<&Resistance<T>> for astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Conductance<T>;
-	fn div(self, rhs: &Resistance<T>) -> Self::Output {
-		Conductance{S: T::from(self) / rhs.Ohm.clone()}
-	}
-}
-/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="astro_float")]
-impl<T> std::ops::Div<&Resistance<T>> for &astro_float::BigFloat where T: NumLike+From<astro_float::BigFloat> {
-	type Output = Conductance<T>;
-	fn div(self, rhs: &Resistance<T>) -> Self::Output {
-		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
-	}
-}
-
-// 1/Resistance -> Conductance
-/// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -3059,7 +2989,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -3067,7 +2997,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
@@ -3075,7 +3005,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
@@ -3085,7 +3015,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLi
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -3093,7 +3023,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
@@ -3101,7 +3031,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
@@ -3109,7 +3039,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLik
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {

@@ -33,10 +33,12 @@ fn templated_op_test<T: NumLike+From<f64>>() -> T{
 	return repeated_vol.to_L();
 }
 #[test]
+#[cfg(feature="num-bigfloat")]
 pub fn num_bigfloat_test() {
 	use num_bigfloat::BigFloat;
 	let _ = templated_op_test::<BigFloat>();
 }
+
 // unfortunately, astro_float does not support by-value std ops, and therefore cannot be used
 // #[test]
 // pub fn num_astrofloat_test() {

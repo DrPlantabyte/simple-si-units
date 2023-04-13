@@ -9,12 +9,10 @@ use super::NumLike;
 // optional supports
 #[cfg(feature="serde")]
 use serde::{Serialize, Deserialize};
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 use num_bigfloat;
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 use num_complex;
-#[cfg(feature="astro_float")]
-use astro_float;
 
 %(content)s
 

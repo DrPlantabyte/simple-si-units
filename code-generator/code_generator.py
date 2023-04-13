@@ -57,10 +57,17 @@ def main(*args):
 	for module_name in modules:
 		module_file = path.join(main_proj_dir, 'src', '%s.rs' % module_name)
 		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions)
+		generated_code = post_gen_patching(generated_code)
 		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
 		with open(module_file, 'w', newline='\n') as fout:
 			fout.write(generated_code)
 	# done!
+def post_gen_patching(code: str) -> str:
+	if '#[cfg(feature="num-bigfloat")]\nimpl' not in code:
+		code = code.replace('#[cfg(feature="num-bigfloat")]\nuse num_bigfloat;', '')
+	if '#[cfg(feature="num-complex")]\nimpl' not in code:
+		code = code.replace('#[cfg(feature="num-complex")]\nuse num_complex;', '')
+	return code
 
 def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
 	out_buf = ''
@@ -168,13 +175,13 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 	inverse_units = src_units.inverse()
 	concrete_types = [
 		'f64', 'f32', 'i64', 'i32',
-		'num_bigfloat::BigFloat', 'astro_float::BigFloat',
+		'num_bigfloat::BigFloat',
 		'num_complex::Complex32', 'num_complex::Complex64'
 	]
 	cfg_attrs = [
 		'', '', '', '',
-		'#[cfg(feature="num_bigfloat")]\n', '#[cfg(feature="astro_float")]\n',
-		'#[cfg(feature="num_complex")]\n', '#[cfg(feature="num_complex")]\n'
+		'#[cfg(feature="num-bigfloat")]\n',
+		'#[cfg(feature="num-complex")]\n', '#[cfg(feature="num-complex")]\n'
 	]
 	for i, row in data.iterrows():
 		# print('\t%s (%s)' % (row['name'], SIUnits.from_str(row['si units'])))
