@@ -531,7 +531,7 @@ impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular momentum value in gram cm squared radians per second
 	pub fn to_gcm2radps(&self) -> T {
-		return self.kgm2radps.clone() * T::from(0.1_f64);
+		return self.kgm2radps.clone() * T::from(10000000.0_f64);
 	}
 
 	/// Returns a new angular momentum value from the given number of gram cm squared radians per second
@@ -539,7 +539,7 @@ impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `gcm2radps` - Any number-like type, representing a quantity of gram cm squared radians per second
 	pub fn from_gcm2radps(gcm2radps: T) -> Self {
-		AngularMomentum{kgm2radps: gcm2radps * T::from(10.0_f64)}
+		AngularMomentum{kgm2radps: gcm2radps * T::from(1e-07_f64)}
 	}
 
 }

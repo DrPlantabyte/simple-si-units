@@ -495,6 +495,10 @@ mod unit_tests {
 	#[test]
 	fn angular_momentum_units() {
 		// only one unit of measure supported
+		assert_approx_equal(
+			AngularMomentum::from_kgm2radps(1e-7_f64).to_gcm2radps(),
+			AngularMomentum::from_gcm2radps(1.0_f64).to_gcm2radps(), 9
+		);
 		let _ = AngularMomentum::from_kgm2radps(1.0_f64).to_kgm2radps();
 	}
 	#[test]

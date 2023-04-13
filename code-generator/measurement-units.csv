@@ -88,7 +88,7 @@ moment of inertia,gram cm squared,gcm2,10,,0.1
 moment of inertia,gram meters squared,gm2,0.001,,1000
 angular momentum,kilogram meters squared radians per second,kgm2radps,1,,1
 angular momentum,kilogram meters squared radians per second,kilogram_meters_squared_radians_per_second,1,,1
-angular momentum,gram cm squared radians per second,gcm2radps,10,,0.1
+angular momentum,gram cm squared radians per second,gcm2radps,1.000000000000000E-07,,1.000000000000000E+07
 torque,newton meters,Nm,1,,1
 torque,newton meters,newton_meters,1,,1
 torque,foot-pounds,ftlb,1.35581794833139,,0.73756214927727
@@ -137,7 +137,7 @@ velocity,centimeters per second,cmps,0.01,,100
 velocity,millimeters per second,mmps,0.001,,1000
 velocity,millimeters per hour,mmph,2.77777777777778E-07,,3600000
 velocity,kilometers per hour,kph,0.277777777777778,,3.6
-velocity,miles per hour,mph,0.447040000000000,,2.236936292054400
+velocity,miles per hour,mph,0.44704,,2.2369362920544
 velocity,kilometers per second,kmps,1000,,0.001
 velocity,light speed,c,299792458,,3.33564095198152E-09
 acceleration,meters per second squared,mps2,1,,1
@@ -274,10 +274,10 @@ concentration,moles per cubic meter,molpm3,1,,1
 concentration,moles per cubic meter,moles_per_cubic_meter,1,,1
 concentration,count per cubic meter,Npm3,1.66053906717385E-24,,6.02214076E+023
 concentration,count per cubic meter,count_per_cubic_meter,1.66053906717385E-24,,6.02214076E+023
-concentration,count per liter,NpL,1.660539067173850E-21,,6.02214076E+026
-concentration,count per liter,count_per_L,1.660539067173850E-21,,6.02214076E+026
-concentration,count per cubic centimeter,Npcc,1.660539067173850E-18,,6.02214076E+029
-concentration,count per cubic centimeter,count_per_cc,1.660539067173850E-18,,6.02214076E+029
+concentration,count per liter,NpL,1.66053906717385E-21,,6.02214076E+026
+concentration,count per liter,count_per_L,1.66053906717385E-21,,6.02214076E+026
+concentration,count per cubic centimeter,Npcc,1.66053906717385E-18,,6.02214076E+029
+concentration,count per cubic centimeter,count_per_cc,1.66053906717385E-18,,6.02214076E+029
 concentration,moles per L,M,1000,,0.001
 concentration,moles per liter,molarity,1000,,0.001
 concentration,millimolar,mM,1,,1

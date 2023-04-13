@@ -292,7 +292,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `NpL` - Any number-like type, representing a quantity of count per liter
 	pub fn from_NpL(NpL: T) -> Self {
-		Concentration{molpm3: NpL * T::from(1.6605390671738499e-21_f64)}
+		Concentration{molpm3: NpL * T::from(1.66053906717385e-21_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per liter
@@ -305,7 +305,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `count_per_L` - Any number-like type, representing a quantity of count per liter
 	pub fn from_count_per_L(count_per_L: T) -> Self {
-		Concentration{molpm3: count_per_L * T::from(1.6605390671738499e-21_f64)}
+		Concentration{molpm3: count_per_L * T::from(1.66053906717385e-21_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic centimeter
@@ -318,7 +318,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `Npcc` - Any number-like type, representing a quantity of count per cubic centimeter
 	pub fn from_Npcc(Npcc: T) -> Self {
-		Concentration{molpm3: Npcc * T::from(1.6605390671738501e-18_f64)}
+		Concentration{molpm3: Npcc * T::from(1.66053906717385e-18_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic centimeter
@@ -331,7 +331,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `count_per_cc` - Any number-like type, representing a quantity of count per cubic centimeter
 	pub fn from_count_per_cc(count_per_cc: T) -> Self {
-		Concentration{molpm3: count_per_cc * T::from(1.6605390671738501e-18_f64)}
+		Concentration{molpm3: count_per_cc * T::from(1.66053906717385e-18_f64)}
 	}
 
 	/// Returns a copy of this chemical concentration value in moles per L
