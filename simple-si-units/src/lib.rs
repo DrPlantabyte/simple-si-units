@@ -1265,8 +1265,8 @@ mod unit_tests {
 			Concentration::from_mM(1.0_f64).to_count_per_cubic_meter(), 4
 		);
 		assert_approx_equal(
-			Concentration::from_count_per_L(1.0_f64).to_M(),
-			Concentration::from_NpL(1.0_f64).to_M(), 9
+			Concentration::from_count_per_L(1.0_f64).to_count_per_L(),
+			Concentration::from_NpL(1.0_f64).to_NpL(), 9
 		);
 		assert_approx_equal(
 			Concentration::from_count_per_L(1.0_f64).to_NpL(),
