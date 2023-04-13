@@ -665,6 +665,10 @@ mod unit_tests {
 			Density::from_gpcc(1.0_f64).to_kgpL(), 9
 		);
 		assert_approx_equal(
+			Density::from_grams_per_cubic_centimeter(1.0_f64).to_grams_per_cubic_centimeter(),
+			Density::from_gpcc(1.0_f64).to_gpcc(), 9
+		);
+		assert_approx_equal(
 			Density::from_kgpm3(1.0_f64).to_kgpL(),
 			Density::from_gpm3(1000.0_f64).to_kgpL(), 9
 		);
