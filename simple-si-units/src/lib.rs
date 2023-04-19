@@ -70,16 +70,17 @@
 //! 
 pub use simple_si_units_macros::UnitStruct;
 pub use simple_si_units_core::NumLike;
+// NOTE: test with: RUST_BACKTRACE=full cargo clean && cargo test --all-features
 
 // optional supports
 #[cfg(feature="serde")]
 extern crate serde;
-#[cfg(feature="num_bigfloat")]
+#[cfg(feature="num-bigfloat")]
 extern crate num_bigfloat;
-#[cfg(feature="num_complex")]
+#[cfg(feature="num-complex")]
 extern crate num_complex;
-#[cfg(feature="astro_float")]
-extern crate astro_float;
+#[cfg(feature="uom")]
+extern crate uom;
 
 pub mod base;
 pub mod chemical;
