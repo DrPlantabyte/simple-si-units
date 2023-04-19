@@ -129,6 +129,25 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	}
 
 }
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::AmountOfSubstance> for Amount<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::AmountOfSubstance {
+		uom::si::f64::AmountOfSubstance::new::<uom::si::amount_of_substance::mole>(self.mol.into())
+	}
+}
+
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::AmountOfSubstance> for Amount<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::AmountOfSubstance) -> Self {
+		Amount{mol: T::from(src.value)}
+	}
+}
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::AmountOfSubstance> for Amount<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::AmountOfSubstance) -> Self {
+		Amount{mol: T::from(src.value)}
+	}
+}
 
 // Amount / Time -> CatalyticActivity
 /// Dividing a Amount by a Time returns a value of type CatalyticActivity

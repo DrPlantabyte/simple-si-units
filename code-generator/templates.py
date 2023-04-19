@@ -47,6 +47,8 @@ impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
 impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 	%(to-and-from)s
 }
+
+%(uom integration)s
 '''
 
 NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
@@ -150,6 +152,24 @@ INVERSE_CONVERSION_TEMPLATE='''
 	type Output = %(code result)s<T>;
 	fn div(self, rhs: &%(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: T::from(self.clone()) / rhs.%(right-side symbol)s.clone()}
+	}
+}
+'''
+
+INTO_UOM_TEMPLATE='''
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::%(uom data type)s::%(uom name)> for %(code name)s<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::%(uom data type)s::%(uom name) {
+		uom::si::%(uom data type)s::%(uom name)::new::<uom::si::%(uom module)s::%(uom type)s>(self.%(si unit symbol)s.into())
+	}
+}
+'''
+
+FROM_UOM_TEMPLATE='''
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::%(uom data type)s::%(uom name)> for %(code name)s<T> where T: NumLike+From<%(data type)s> {
+	fn from(src: uom::si::%(uom data type)s::%(uom name)) -> Self {
+		%(code name)s{%(si unit symbol)s: T::from(src.value)}
 	}
 }
 '''
