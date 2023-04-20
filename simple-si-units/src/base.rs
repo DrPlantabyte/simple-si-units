@@ -130,6 +130,40 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Amount into the equivalent [uom](https://crates.io/crates/uom) type [AmountOfSubstance](https://docs.rs/uom/0.34.0/uom/si/f32/type.AmountOfSubstance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::AmountOfSubstance> for Amount<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::AmountOfSubstance {
+		uom::si::f32::AmountOfSubstance::new::<uom::si::amount_of_substance::mole>(self.mol.into())
+	}
+}
+
+/// Creates a Amount from the equivalent [uom](https://crates.io/crates/uom) type [AmountOfSubstance](https://docs.rs/uom/0.34.0/uom/si/f32/type.AmountOfSubstance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::AmountOfSubstance> for Amount<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::AmountOfSubstance) -> Self {
+		Amount{mol: T::from(src.value)}
+	}
+}
+
+/// Converts a Amount into the equivalent [uom](https://crates.io/crates/uom) type [AmountOfSubstance](https://docs.rs/uom/0.34.0/uom/si/f64/type.AmountOfSubstance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::AmountOfSubstance> for Amount<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::AmountOfSubstance {
+		uom::si::f64::AmountOfSubstance::new::<uom::si::amount_of_substance::mole>(self.mol.into())
+	}
+}
+
+/// Creates a Amount from the equivalent [uom](https://crates.io/crates/uom) type [AmountOfSubstance](https://docs.rs/uom/0.34.0/uom/si/f64/type.AmountOfSubstance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::AmountOfSubstance> for Amount<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::AmountOfSubstance) -> Self {
+		Amount{mol: T::from(src.value)}
+	}
+}
+
+
 // Amount / Time -> CatalyticActivity
 /// Dividing a Amount by a Time returns a value of type CatalyticActivity
 impl<T> std::ops::Div<Time<T>> for Amount<T> where T: NumLike {
@@ -403,6 +437,40 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Current into the equivalent [uom](https://crates.io/crates/uom) type [ElectricCurrent](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricCurrent.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ElectricCurrent> for Current<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ElectricCurrent {
+		uom::si::f32::ElectricCurrent::new::<uom::si::electric_current::ampere>(self.A.into())
+	}
+}
+
+/// Creates a Current from the equivalent [uom](https://crates.io/crates/uom) type [ElectricCurrent](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricCurrent.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ElectricCurrent> for Current<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ElectricCurrent) -> Self {
+		Current{A: T::from(src.value)}
+	}
+}
+
+/// Converts a Current into the equivalent [uom](https://crates.io/crates/uom) type [ElectricCurrent](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricCurrent.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ElectricCurrent> for Current<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ElectricCurrent {
+		uom::si::f64::ElectricCurrent::new::<uom::si::electric_current::ampere>(self.A.into())
+	}
+}
+
+/// Creates a Current from the equivalent [uom](https://crates.io/crates/uom) type [ElectricCurrent](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricCurrent.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ElectricCurrent> for Current<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ElectricCurrent) -> Self {
+		Current{A: T::from(src.value)}
+	}
+}
+
 
 // Current * Time -> Charge
 /// Multiplying a Current by a Time returns a value of type Charge
@@ -837,6 +905,40 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Distance into the equivalent [uom](https://crates.io/crates/uom) type [Length](https://docs.rs/uom/0.34.0/uom/si/f32/type.Length.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Length> for Distance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Length {
+		uom::si::f32::Length::new::<uom::si::length::meter>(self.m.into())
+	}
+}
+
+/// Creates a Distance from the equivalent [uom](https://crates.io/crates/uom) type [Length](https://docs.rs/uom/0.34.0/uom/si/f32/type.Length.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Length> for Distance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Length) -> Self {
+		Distance{m: T::from(src.value)}
+	}
+}
+
+/// Converts a Distance into the equivalent [uom](https://crates.io/crates/uom) type [Length](https://docs.rs/uom/0.34.0/uom/si/f64/type.Length.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Length> for Distance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Length {
+		uom::si::f64::Length::new::<uom::si::length::meter>(self.m.into())
+	}
+}
+
+/// Creates a Distance from the equivalent [uom](https://crates.io/crates/uom) type [Length](https://docs.rs/uom/0.34.0/uom/si/f64/type.Length.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Length> for Distance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Length) -> Self {
+		Distance{m: T::from(src.value)}
+	}
+}
+
+
 // Distance * Distance -> Area
 /// Multiplying a Distance by a Distance returns a value of type Area
 impl<T> std::ops::Mul<Distance<T>> for Distance<T> where T: NumLike {
@@ -1171,6 +1273,40 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Luminosity into the equivalent [uom](https://crates.io/crates/uom) type [LuminousIntensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.LuminousIntensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::LuminousIntensity> for Luminosity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::LuminousIntensity {
+		uom::si::f32::LuminousIntensity::new::<uom::si::luminous_intensity::candela>(self.cd.into())
+	}
+}
+
+/// Creates a Luminosity from the equivalent [uom](https://crates.io/crates/uom) type [LuminousIntensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.LuminousIntensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::LuminousIntensity> for Luminosity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::LuminousIntensity) -> Self {
+		Luminosity{cd: T::from(src.value)}
+	}
+}
+
+/// Converts a Luminosity into the equivalent [uom](https://crates.io/crates/uom) type [LuminousIntensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.LuminousIntensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::LuminousIntensity> for Luminosity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::LuminousIntensity {
+		uom::si::f64::LuminousIntensity::new::<uom::si::luminous_intensity::candela>(self.cd.into())
+	}
+}
+
+/// Creates a Luminosity from the equivalent [uom](https://crates.io/crates/uom) type [LuminousIntensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.LuminousIntensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::LuminousIntensity> for Luminosity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::LuminousIntensity) -> Self {
+		Luminosity{cd: T::from(src.value)}
+	}
+}
+
+
 // Luminosity * SolidAngle -> LuminousFlux
 /// Multiplying a Luminosity by a SolidAngle returns a value of type LuminousFlux
 impl<T> std::ops::Mul<SolidAngle<T>> for Luminosity<T> where T: NumLike {
@@ -1363,6 +1499,40 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Mass into the equivalent [uom](https://crates.io/crates/uom) type [Mass](https://docs.rs/uom/0.34.0/uom/si/f32/type.Mass.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Mass> for Mass<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Mass {
+		uom::si::f32::Mass::new::<uom::si::mass::kilogram>(self.kg.into())
+	}
+}
+
+/// Creates a Mass from the equivalent [uom](https://crates.io/crates/uom) type [Mass](https://docs.rs/uom/0.34.0/uom/si/f32/type.Mass.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Mass> for Mass<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Mass) -> Self {
+		Mass{kg: T::from(src.value)}
+	}
+}
+
+/// Converts a Mass into the equivalent [uom](https://crates.io/crates/uom) type [Mass](https://docs.rs/uom/0.34.0/uom/si/f64/type.Mass.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Mass> for Mass<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Mass {
+		uom::si::f64::Mass::new::<uom::si::mass::kilogram>(self.kg.into())
+	}
+}
+
+/// Creates a Mass from the equivalent [uom](https://crates.io/crates/uom) type [Mass](https://docs.rs/uom/0.34.0/uom/si/f64/type.Mass.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Mass> for Mass<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Mass) -> Self {
+		Mass{kg: T::from(src.value)}
+	}
+}
+
 
 // Mass / Area -> AreaDensity
 /// Dividing a Mass by a Area returns a value of type AreaDensity
@@ -1680,6 +1850,40 @@ impl<T> Temperature<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Temperature into the equivalent [uom](https://crates.io/crates/uom) type [ThermodynamicTemperature](https://docs.rs/uom/0.34.0/uom/si/f32/type.ThermodynamicTemperature.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ThermodynamicTemperature> for Temperature<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ThermodynamicTemperature {
+		uom::si::f32::ThermodynamicTemperature::new::<uom::si::thermodynamic_temperature::kelvin>(self.K.into())
+	}
+}
+
+/// Creates a Temperature from the equivalent [uom](https://crates.io/crates/uom) type [ThermodynamicTemperature](https://docs.rs/uom/0.34.0/uom/si/f32/type.ThermodynamicTemperature.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ThermodynamicTemperature> for Temperature<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ThermodynamicTemperature) -> Self {
+		Temperature{K: T::from(src.value)}
+	}
+}
+
+/// Converts a Temperature into the equivalent [uom](https://crates.io/crates/uom) type [ThermodynamicTemperature](https://docs.rs/uom/0.34.0/uom/si/f64/type.ThermodynamicTemperature.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ThermodynamicTemperature> for Temperature<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ThermodynamicTemperature {
+		uom::si::f64::ThermodynamicTemperature::new::<uom::si::thermodynamic_temperature::kelvin>(self.K.into())
+	}
+}
+
+/// Creates a Temperature from the equivalent [uom](https://crates.io/crates/uom) type [ThermodynamicTemperature](https://docs.rs/uom/0.34.0/uom/si/f64/type.ThermodynamicTemperature.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ThermodynamicTemperature> for Temperature<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ThermodynamicTemperature) -> Self {
+		Temperature{K: T::from(src.value)}
+	}
+}
+
+
 /// The time unit type, defined as seconds in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -1881,6 +2085,40 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Time into the equivalent [uom](https://crates.io/crates/uom) type [Time](https://docs.rs/uom/0.34.0/uom/si/f32/type.Time.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Time> for Time<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Time {
+		uom::si::f32::Time::new::<uom::si::time::second>(self.s.into())
+	}
+}
+
+/// Creates a Time from the equivalent [uom](https://crates.io/crates/uom) type [Time](https://docs.rs/uom/0.34.0/uom/si/f32/type.Time.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Time> for Time<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Time) -> Self {
+		Time{s: T::from(src.value)}
+	}
+}
+
+/// Converts a Time into the equivalent [uom](https://crates.io/crates/uom) type [Time](https://docs.rs/uom/0.34.0/uom/si/f64/type.Time.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Time> for Time<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Time {
+		uom::si::f64::Time::new::<uom::si::time::second>(self.s.into())
+	}
+}
+
+/// Creates a Time from the equivalent [uom](https://crates.io/crates/uom) type [Time](https://docs.rs/uom/0.34.0/uom/si/f64/type.Time.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Time> for Time<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Time) -> Self {
+		Time{s: T::from(src.value)}
+	}
+}
+
 
 // Time * Current -> Charge
 /// Multiplying a Time by a Current returns a value of type Charge

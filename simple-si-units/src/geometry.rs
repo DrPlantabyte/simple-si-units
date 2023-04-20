@@ -88,6 +88,40 @@ impl<T> Angle<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Angle into the equivalent [uom](https://crates.io/crates/uom) type [Angle](https://docs.rs/uom/0.34.0/uom/si/f32/type.Angle.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Angle> for Angle<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Angle {
+		uom::si::f32::Angle::new::<uom::si::angle::radian>(self.rad.into())
+	}
+}
+
+/// Creates a Angle from the equivalent [uom](https://crates.io/crates/uom) type [Angle](https://docs.rs/uom/0.34.0/uom/si/f32/type.Angle.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Angle> for Angle<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Angle) -> Self {
+		Angle{rad: T::from(src.value)}
+	}
+}
+
+/// Converts a Angle into the equivalent [uom](https://crates.io/crates/uom) type [Angle](https://docs.rs/uom/0.34.0/uom/si/f64/type.Angle.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Angle> for Angle<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Angle {
+		uom::si::f64::Angle::new::<uom::si::angle::radian>(self.rad.into())
+	}
+}
+
+/// Creates a Angle from the equivalent [uom](https://crates.io/crates/uom) type [Angle](https://docs.rs/uom/0.34.0/uom/si/f64/type.Angle.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Angle> for Angle<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Angle) -> Self {
+		Angle{rad: T::from(src.value)}
+	}
+}
+
+
 // Angle / Time -> AngularVelocity
 /// Dividing a Angle by a Time returns a value of type AngularVelocity
 impl<T> std::ops::Div<Time<T>> for Angle<T> where T: NumLike {
@@ -301,6 +335,40 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Area into the equivalent [uom](https://crates.io/crates/uom) type [Area](https://docs.rs/uom/0.34.0/uom/si/f32/type.Area.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Area> for Area<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Area {
+		uom::si::f32::Area::new::<uom::si::area::square_meter>(self.m2.into())
+	}
+}
+
+/// Creates a Area from the equivalent [uom](https://crates.io/crates/uom) type [Area](https://docs.rs/uom/0.34.0/uom/si/f32/type.Area.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Area> for Area<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Area) -> Self {
+		Area{m2: T::from(src.value)}
+	}
+}
+
+/// Converts a Area into the equivalent [uom](https://crates.io/crates/uom) type [Area](https://docs.rs/uom/0.34.0/uom/si/f64/type.Area.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Area> for Area<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Area {
+		uom::si::f64::Area::new::<uom::si::area::square_meter>(self.m2.into())
+	}
+}
+
+/// Creates a Area from the equivalent [uom](https://crates.io/crates/uom) type [Area](https://docs.rs/uom/0.34.0/uom/si/f64/type.Area.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Area> for Area<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Area) -> Self {
+		Area{m2: T::from(src.value)}
+	}
+}
+
 
 // Area * Distance -> Volume
 /// Multiplying a Area by a Distance returns a value of type Volume
@@ -528,6 +596,8 @@ impl<T> SolidAngle<T> where T: NumLike+From<f64> {
 	
 }
 
+
+
 // SolidAngle * Luminosity -> LuminousFlux
 /// Multiplying a SolidAngle by a Luminosity returns a value of type LuminousFlux
 impl<T> std::ops::Mul<Luminosity<T>> for SolidAngle<T> where T: NumLike {
@@ -729,6 +799,40 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Volume into the equivalent [uom](https://crates.io/crates/uom) type [Volume](https://docs.rs/uom/0.34.0/uom/si/f32/type.Volume.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Volume> for Volume<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Volume {
+		uom::si::f32::Volume::new::<uom::si::volume::cubic_meter>(self.m3.into())
+	}
+}
+
+/// Creates a Volume from the equivalent [uom](https://crates.io/crates/uom) type [Volume](https://docs.rs/uom/0.34.0/uom/si/f32/type.Volume.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Volume> for Volume<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Volume) -> Self {
+		Volume{m3: T::from(src.value)}
+	}
+}
+
+/// Converts a Volume into the equivalent [uom](https://crates.io/crates/uom) type [Volume](https://docs.rs/uom/0.34.0/uom/si/f64/type.Volume.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Volume> for Volume<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Volume {
+		uom::si::f64::Volume::new::<uom::si::volume::cubic_meter>(self.m3.into())
+	}
+}
+
+/// Creates a Volume from the equivalent [uom](https://crates.io/crates/uom) type [Volume](https://docs.rs/uom/0.34.0/uom/si/f64/type.Volume.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Volume> for Volume<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Volume) -> Self {
+		Volume{m3: T::from(src.value)}
+	}
+}
+
 
 // Volume / Distance -> Area
 /// Dividing a Volume by a Distance returns a value of type Area

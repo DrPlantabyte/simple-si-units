@@ -111,10 +111,22 @@ def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_
 			**row.to_dict(),
 			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions),
 			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
+			'uom integration': generate_uom_conversions(row)
 		}
 		out_buf += generate_unit_conversions(row, conversions)
 		out_buf += inversions
 	return out_buf
+
+def generate_uom_conversions(data_row: Series):
+	if data_row['uom name'] is None or str(data_row['uom name']).lower() == 'nan':
+		# no uom equivalent
+		return ''
+	output = ''
+	for dt in ['f32', 'f64']:
+		dd = {**data_row, 'data type': dt, 'uom data type': dt}
+		output += INTO_UOM_TEMPLATE % dd
+		output += FROM_UOM_TEMPLATE % dd
+	return output
 
 def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
 	unit_name = data_row['name']
