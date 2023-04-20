@@ -13,7 +13,7 @@ This macro uses the `NumLike` trait from [simple-si-units-core](https://crates.i
 use simple_si_units_macros::Unit;
 use simple_si_units_core::NumLike;
 
-#[derive(UnitStruct, Debug, Copy, Clone)]
+#[derive(UnitStruct, Debug, Clone)]
 struct Velocity<T: NumLike>{
 	pub meters_per_second: T
 }

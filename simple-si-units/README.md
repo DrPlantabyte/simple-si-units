@@ -121,7 +121,7 @@ the
 
 ```rust
 use simple_si_units::{UnitStruct, NumLike};
-#[derive(UnitStruct, Debug, Copy, Clone)]
+#[derive(UnitStruct, Debug, Clone)]
 struct HyperVelocity<T: NumLike>{
 	square_meters_per_second: T
 }
@@ -149,35 +149,8 @@ have to wrap primitive types other than f64 to use the constructor functions
 primitives which are not convertible from `f64`, you will need to wrap them
 with an implementation of `From<f64>`. For example:
 ```rust
-struct MyFloat32 {
-    x: f32
-}
-impl MyFloat32 {
-    pub fn new(n: f32) -> Self{return Self{x: n}}
-}
-impl From<f64> for MyFloat32 {
-    fn from(n: f64) -> Self {return Self::new(n as f32)}
-}
-impl std::ops::Add<Self> for MyFloat32 {
-    type Output = Self;
-    fn add(self, rhs: Self) -> Self::Output {Self{ x: self.x + rhs.x }}
-}
-impl std::ops::Sub<Self> for MyFloat32 {
-    type Output = Self;
-    fn sub(self, rhs: Self) -> Self::Output {Self{ x: self.x - rhs.x }}
-}
-impl std::ops::Div<Self> for MyFloat32 {
-    type Output = Self;
-    fn div(self, rhs: Self) -> Self::Output {Self{ x: self.x / rhs.x}}
-}
-impl std::ops::Mul<Self> for MyFloat32 {
-    type Output = Self;
-    fn mul(self, rhs: Self) -> Self::Output {Self{ x: self.x * rhs.x }}
-}
-fn my_fn() -> Mass<MyFloat32>{
-    let m = Mass::from_g(MyFloat32::new(1100_f32));
-    return m * MyFloat32::new(0.5);
-}
+// TODO: updated example
+
 ```
 
 ## License
