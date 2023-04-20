@@ -68,6 +68,12 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Not supporting unusual number types (eg integers)
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
+## Features
+TODO
+
+## Quickstart Guide
+TODO
+
 ## Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
 
@@ -133,24 +139,79 @@ fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f6
 }
 ```
 
-## Caveats
-There are a few limitations owing to the Rust compiler's lack of 
+## Limitations
+Due to the Rust compiler's lack of 
 [type specialization](https://github.com/rust-lang/rust/issues/31844) in stable 
-Rust, the most notable of which is that some functions won't work with `f32` as 
-the input type.
+Rust, some of the unit constructor functions (eg `Mass::from_g(...)`) only work 
+with number types that implement `From<f64>`. This means that those functions 
+will not work for Rust's built-in `f32` or integer types. You can still 
+construct unit structs with their SI reference measurement using any number 
+type (eg `Mass::from_kg(1f32)` will work).
 
-### Primitive types other than f64 
-Many of the member functions will only work with number types
-that implement `From<f64>` (because they need to multiply by an internal 
-coefficient of type `f64`), so while you can still instantiate these structs
-with f32 and other primitive types (eg `Mass{kg: 1.1_f32}` will work), you will
-have to wrap primitive types other than f64 to use the constructor functions
-(eg `Mass::from_g(1100_f32)` will *not* work). Thus to use `f32` or other
-primitives which are not convertible from `f64`, you will need to wrap them
-with an implementation of `From<f64>`. For example:
+## Custom Number Types
+**simple-si-units** works with any "number-like" data type, including libraries 
+such as [num-bigfloat](https://crates.io/crates/num-bigfloat), 
+[num-complex](https://crates.io/crates/num-complex), and even number types you 
+define yourself. A data type is "number-like" if it implements the following 
+traits: Clone, Debug, Display, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, 
+Div, DivAssign, Neg
+
+For example, here's a snippet of code that defines and uses a number type that is 
+like `f32` but also implements `From<f64>`:
 ```rust
-// TODO: updated example
+use std::ops::*;
+use std::fmt::{Display, Formatter, Result};
+use simple_si_units::base::Mass;
+use simple_si_units::geometry::Volume;
+use simple_si_units::mechanical::Density;
 
+#[derive(Debug, Copy, Clone)]
+struct MyNumber(f32);
+
+impl Display for MyNumber {
+  fn fmt(&self, f: &mut Formatter<'_>) -> Result {std::fmt::Display::fmt(&self.0, f)}
+}
+impl Add for MyNumber {
+  type Output = MyNumber;
+  fn add(self, rhs: Self) -> Self::Output {MyNumber(self.0 + rhs.0)}
+}
+impl AddAssign for MyNumber {
+  fn add_assign(&mut self, rhs: Self) {self.0 += rhs.0;}
+}
+impl Sub for MyNumber {
+  type Output = MyNumber;
+  fn sub(self, rhs: Self) -> Self::Output {MyNumber(self.0 - rhs.0)}
+}
+impl SubAssign for MyNumber {
+  fn sub_assign(&mut self, rhs: Self) {self.0 -= rhs.0;}
+}
+impl Mul for MyNumber {
+  type Output = MyNumber;
+  fn mul(self, rhs: Self) -> Self::Output {MyNumber(self.0 * rhs.0)}
+}
+impl MulAssign for MyNumber {
+  fn mul_assign(&mut self, rhs: Self) {self.0 *= rhs.0;}
+}
+impl Div for MyNumber {
+  type Output = MyNumber;
+  fn div(self, rhs: Self) -> Self::Output {MyNumber(self.0 / rhs.0)}
+}
+impl DivAssign for MyNumber {
+  fn div_assign(&mut self, rhs: Self) {self.0 /= rhs.0;}
+}
+impl Neg for MyNumber {
+  type Output = MyNumber;
+  fn neg(self) -> Self::Output {MyNumber(-self.0)}
+}
+impl From<f64> for MyNumber{
+  fn from(value: f64) -> Self {MyNumber(value as f32)}
+}
+
+fn my_fn() -> Density<MyNumber>{
+  let m = Mass::from_g(MyNumber(1222.5_f32));
+  let v = Volume::from_L(MyNumber(11.3_f32));
+  return m / v;
+}
 ```
 
 ## License
