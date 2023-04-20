@@ -69,10 +69,22 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Not aiming for full integration with [uom](https://crates.io/crates/uom)
 
 ## Features
-TODO
+TODO: all optional features
 
-## Quickstart Guide
-TODO
+## Quickstart guide
+TODO: quick tutorial
+
+## Why not use [uom](https://crates.io/crates/uom)?
+The [uom](https://crates.io/crates/uom) crate and **simple-si-units** crate were 
+both designed to provide compile-time type checking for scientific units of 
+measure, thus helping developers catch math errors and write cleaner simulation 
+APIs. The difference is that [uom](https://crates.io/crates/uom) also performs 
+dimensional analysis but cannot canndle custom data types while 
+**simple-si-units** handles any number-like data type, but does not attempt to 
+implement full compile-time dimensional analysis. **simple-si-units** also 
+
+
+TODO: more explanation
 
 ## Roadmap
 The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
@@ -117,7 +129,7 @@ can use any number-like data type with these structs, including
 [num_bigfloat::BigFloat](https://crates.io/crates/num-bigfloat) (see caveat 
 section below regarding primitive types other than `f64`).
 
-## Adding your own units
+## Adding Your Own Units
 Simple SI Units does not provide an exhaustive list of possible units of 
 measure. To create your own units, use the `UnitStruct` procedural macro and 
 `NumLike` trait bundle (`NumLike` is just shorthand for 
@@ -148,7 +160,7 @@ will not work for Rust's built-in `f32` or integer types. You can still
 construct unit structs with their SI reference measurement using any number 
 type (eg `Mass::from_kg(1f32)` will work).
 
-## Custom Number Types
+## Custom number types
 **simple-si-units** works with any "number-like" data type, including libraries 
 such as [num-bigfloat](https://crates.io/crates/num-bigfloat), 
 [num-complex](https://crates.io/crates/num-complex), and even number types you 
