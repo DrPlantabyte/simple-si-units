@@ -205,6 +205,8 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 
 }
 
+
+
 // AbsorbedDose * Mass -> Energy
 /// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
 impl<T> std::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
@@ -397,6 +399,8 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
 
 // DoseEquivalent * Mass -> Energy
 /// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
@@ -629,6 +633,40 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Radioactivity into the equivalent [uom](https://crates.io/crates/uom) type [Radioactivity](https://docs.rs/uom/0.34.0/uom/si/f32/type.Radioactivity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Radioactivity> for Radioactivity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Radioactivity {
+		uom::si::f32::Radioactivity::new::<uom::si::radioactivity::becquerel>(self.Bq.into())
+	}
+}
+
+/// Creates a Radioactivity from the equivalent [uom](https://crates.io/crates/uom) type [Radioactivity](https://docs.rs/uom/0.34.0/uom/si/f32/type.Radioactivity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Radioactivity> for Radioactivity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Radioactivity) -> Self {
+		Radioactivity{Bq: T::from(src.value)}
+	}
+}
+
+/// Converts a Radioactivity into the equivalent [uom](https://crates.io/crates/uom) type [Radioactivity](https://docs.rs/uom/0.34.0/uom/si/f64/type.Radioactivity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Radioactivity> for Radioactivity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Radioactivity {
+		uom::si::f64::Radioactivity::new::<uom::si::radioactivity::becquerel>(self.Bq.into())
+	}
+}
+
+/// Creates a Radioactivity from the equivalent [uom](https://crates.io/crates/uom) type [Radioactivity](https://docs.rs/uom/0.34.0/uom/si/f64/type.Radioactivity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Radioactivity> for Radioactivity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Radioactivity) -> Self {
+		Radioactivity{Bq: T::from(src.value)}
+	}
+}
+
 
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time

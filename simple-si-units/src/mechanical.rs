@@ -104,6 +104,40 @@ impl<T> Acceleration<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Acceleration into the equivalent [uom](https://crates.io/crates/uom) type [Acceleration](https://docs.rs/uom/0.34.0/uom/si/f32/type.Acceleration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Acceleration> for Acceleration<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Acceleration {
+		uom::si::f32::Acceleration::new::<uom::si::acceleration::meter_per_second_squared>(self.mps2.into())
+	}
+}
+
+/// Creates a Acceleration from the equivalent [uom](https://crates.io/crates/uom) type [Acceleration](https://docs.rs/uom/0.34.0/uom/si/f32/type.Acceleration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Acceleration> for Acceleration<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Acceleration) -> Self {
+		Acceleration{mps2: T::from(src.value)}
+	}
+}
+
+/// Converts a Acceleration into the equivalent [uom](https://crates.io/crates/uom) type [Acceleration](https://docs.rs/uom/0.34.0/uom/si/f64/type.Acceleration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Acceleration> for Acceleration<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Acceleration {
+		uom::si::f64::Acceleration::new::<uom::si::acceleration::meter_per_second_squared>(self.mps2.into())
+	}
+}
+
+/// Creates a Acceleration from the equivalent [uom](https://crates.io/crates/uom) type [Acceleration](https://docs.rs/uom/0.34.0/uom/si/f64/type.Acceleration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Acceleration> for Acceleration<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Acceleration) -> Self {
+		Acceleration{mps2: T::from(src.value)}
+	}
+}
+
+
 // Acceleration * Mass -> Force
 /// Multiplying a Acceleration by a Mass returns a value of type Force
 impl<T> std::ops::Mul<Mass<T>> for Acceleration<T> where T: NumLike {
@@ -395,6 +429,40 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a AngularAcceleration into the equivalent [uom](https://crates.io/crates/uom) type [AngularAcceleration](https://docs.rs/uom/0.34.0/uom/si/f32/type.AngularAcceleration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::AngularAcceleration> for AngularAcceleration<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::AngularAcceleration {
+		uom::si::f32::AngularAcceleration::new::<uom::si::angular_acceleration::radian_per_second_squared>(self.radps2.into())
+	}
+}
+
+/// Creates a AngularAcceleration from the equivalent [uom](https://crates.io/crates/uom) type [AngularAcceleration](https://docs.rs/uom/0.34.0/uom/si/f32/type.AngularAcceleration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::AngularAcceleration> for AngularAcceleration<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::AngularAcceleration) -> Self {
+		AngularAcceleration{radps2: T::from(src.value)}
+	}
+}
+
+/// Converts a AngularAcceleration into the equivalent [uom](https://crates.io/crates/uom) type [AngularAcceleration](https://docs.rs/uom/0.34.0/uom/si/f64/type.AngularAcceleration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::AngularAcceleration> for AngularAcceleration<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::AngularAcceleration {
+		uom::si::f64::AngularAcceleration::new::<uom::si::angular_acceleration::radian_per_second_squared>(self.radps2.into())
+	}
+}
+
+/// Creates a AngularAcceleration from the equivalent [uom](https://crates.io/crates/uom) type [AngularAcceleration](https://docs.rs/uom/0.34.0/uom/si/f64/type.AngularAcceleration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::AngularAcceleration> for AngularAcceleration<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::AngularAcceleration) -> Self {
+		AngularAcceleration{radps2: T::from(src.value)}
+	}
+}
+
+
 // AngularAcceleration * Time -> AngularVelocity
 /// Multiplying a AngularAcceleration by a Time returns a value of type AngularVelocity
 impl<T> std::ops::Mul<Time<T>> for AngularAcceleration<T> where T: NumLike {
@@ -544,6 +612,8 @@ impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 
 }
 
+
+
 // AngularMomentum / MomentOfInertia -> AngularVelocity
 /// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
 impl<T> std::ops::Div<MomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
@@ -684,6 +754,40 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a AngularVelocity into the equivalent [uom](https://crates.io/crates/uom) type [AngularVelocity](https://docs.rs/uom/0.34.0/uom/si/f32/type.AngularVelocity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::AngularVelocity> for AngularVelocity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::AngularVelocity {
+		uom::si::f32::AngularVelocity::new::<uom::si::angular_velocity::radian_per_second>(self.radps.into())
+	}
+}
+
+/// Creates a AngularVelocity from the equivalent [uom](https://crates.io/crates/uom) type [AngularVelocity](https://docs.rs/uom/0.34.0/uom/si/f32/type.AngularVelocity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::AngularVelocity> for AngularVelocity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::AngularVelocity) -> Self {
+		AngularVelocity{radps: T::from(src.value)}
+	}
+}
+
+/// Converts a AngularVelocity into the equivalent [uom](https://crates.io/crates/uom) type [AngularVelocity](https://docs.rs/uom/0.34.0/uom/si/f64/type.AngularVelocity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::AngularVelocity> for AngularVelocity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::AngularVelocity {
+		uom::si::f64::AngularVelocity::new::<uom::si::angular_velocity::radian_per_second>(self.radps.into())
+	}
+}
+
+/// Creates a AngularVelocity from the equivalent [uom](https://crates.io/crates/uom) type [AngularVelocity](https://docs.rs/uom/0.34.0/uom/si/f64/type.AngularVelocity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::AngularVelocity> for AngularVelocity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::AngularVelocity) -> Self {
+		AngularVelocity{radps: T::from(src.value)}
+	}
+}
+
 
 // AngularVelocity * Time -> Angle
 /// Multiplying a AngularVelocity by a Time returns a value of type Angle
@@ -993,6 +1097,40 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a AreaDensity into the equivalent [uom](https://crates.io/crates/uom) type [ArealMassDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.ArealMassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ArealMassDensity> for AreaDensity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ArealMassDensity {
+		uom::si::f32::ArealMassDensity::new::<uom::si::areal_mass_density::kilogram_per_square_meter>(self.kgpm2.into())
+	}
+}
+
+/// Creates a AreaDensity from the equivalent [uom](https://crates.io/crates/uom) type [ArealMassDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.ArealMassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ArealMassDensity> for AreaDensity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ArealMassDensity) -> Self {
+		AreaDensity{kgpm2: T::from(src.value)}
+	}
+}
+
+/// Converts a AreaDensity into the equivalent [uom](https://crates.io/crates/uom) type [ArealMassDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.ArealMassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ArealMassDensity> for AreaDensity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ArealMassDensity {
+		uom::si::f64::ArealMassDensity::new::<uom::si::areal_mass_density::kilogram_per_square_meter>(self.kgpm2.into())
+	}
+}
+
+/// Creates a AreaDensity from the equivalent [uom](https://crates.io/crates/uom) type [ArealMassDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.ArealMassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ArealMassDensity> for AreaDensity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ArealMassDensity) -> Self {
+		AreaDensity{kgpm2: T::from(src.value)}
+	}
+}
+
+
 // AreaDensity / Distance -> Density
 /// Dividing a AreaDensity by a Distance returns a value of type Density
 impl<T> std::ops::Div<Distance<T>> for AreaDensity<T> where T: NumLike {
@@ -1223,6 +1361,40 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Density into the equivalent [uom](https://crates.io/crates/uom) type [MassDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.MassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::MassDensity> for Density<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::MassDensity {
+		uom::si::f32::MassDensity::new::<uom::si::mass_density::kilogram_per_cubic_meter>(self.kgpm3.into())
+	}
+}
+
+/// Creates a Density from the equivalent [uom](https://crates.io/crates/uom) type [MassDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.MassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::MassDensity> for Density<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::MassDensity) -> Self {
+		Density{kgpm3: T::from(src.value)}
+	}
+}
+
+/// Converts a Density into the equivalent [uom](https://crates.io/crates/uom) type [MassDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.MassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::MassDensity> for Density<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::MassDensity {
+		uom::si::f64::MassDensity::new::<uom::si::mass_density::kilogram_per_cubic_meter>(self.kgpm3.into())
+	}
+}
+
+/// Creates a Density from the equivalent [uom](https://crates.io/crates/uom) type [MassDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.MassDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::MassDensity> for Density<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::MassDensity) -> Self {
+		Density{kgpm3: T::from(src.value)}
+	}
+}
+
 
 // Density * Distance -> AreaDensity
 /// Multiplying a Density by a Distance returns a value of type AreaDensity
@@ -1485,6 +1657,40 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Energy into the equivalent [uom](https://crates.io/crates/uom) type [Energy](https://docs.rs/uom/0.34.0/uom/si/f32/type.Energy.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Energy> for Energy<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Energy {
+		uom::si::f32::Energy::new::<uom::si::energy::joule>(self.J.into())
+	}
+}
+
+/// Creates a Energy from the equivalent [uom](https://crates.io/crates/uom) type [Energy](https://docs.rs/uom/0.34.0/uom/si/f32/type.Energy.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Energy> for Energy<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Energy) -> Self {
+		Energy{J: T::from(src.value)}
+	}
+}
+
+/// Converts a Energy into the equivalent [uom](https://crates.io/crates/uom) type [Energy](https://docs.rs/uom/0.34.0/uom/si/f64/type.Energy.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Energy> for Energy<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Energy {
+		uom::si::f64::Energy::new::<uom::si::energy::joule>(self.J.into())
+	}
+}
+
+/// Creates a Energy from the equivalent [uom](https://crates.io/crates/uom) type [Energy](https://docs.rs/uom/0.34.0/uom/si/f64/type.Energy.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Energy> for Energy<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Energy) -> Self {
+		Energy{J: T::from(src.value)}
+	}
+}
+
 
 // Energy / Current -> MagneticFlux
 /// Dividing a Energy by a Current returns a value of type MagneticFlux
@@ -2086,6 +2292,40 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Force into the equivalent [uom](https://crates.io/crates/uom) type [Force](https://docs.rs/uom/0.34.0/uom/si/f32/type.Force.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Force> for Force<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Force {
+		uom::si::f32::Force::new::<uom::si::force::newton>(self.N.into())
+	}
+}
+
+/// Creates a Force from the equivalent [uom](https://crates.io/crates/uom) type [Force](https://docs.rs/uom/0.34.0/uom/si/f32/type.Force.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Force> for Force<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Force) -> Self {
+		Force{N: T::from(src.value)}
+	}
+}
+
+/// Converts a Force into the equivalent [uom](https://crates.io/crates/uom) type [Force](https://docs.rs/uom/0.34.0/uom/si/f64/type.Force.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Force> for Force<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Force {
+		uom::si::f64::Force::new::<uom::si::force::newton>(self.N.into())
+	}
+}
+
+/// Creates a Force from the equivalent [uom](https://crates.io/crates/uom) type [Force](https://docs.rs/uom/0.34.0/uom/si/f64/type.Force.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Force> for Force<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Force) -> Self {
+		Force{N: T::from(src.value)}
+	}
+}
+
+
 // Force * Distance -> Energy
 /// Multiplying a Force by a Distance returns a value of type Energy
 impl<T> std::ops::Mul<Distance<T>> for Force<T> where T: NumLike {
@@ -2453,6 +2693,40 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Frequency into the equivalent [uom](https://crates.io/crates/uom) type [Frequency](https://docs.rs/uom/0.34.0/uom/si/f32/type.Frequency.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Frequency> for Frequency<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Frequency {
+		uom::si::f32::Frequency::new::<uom::si::frequency::hertz>(self.Hz.into())
+	}
+}
+
+/// Creates a Frequency from the equivalent [uom](https://crates.io/crates/uom) type [Frequency](https://docs.rs/uom/0.34.0/uom/si/f32/type.Frequency.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Frequency> for Frequency<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Frequency) -> Self {
+		Frequency{Hz: T::from(src.value)}
+	}
+}
+
+/// Converts a Frequency into the equivalent [uom](https://crates.io/crates/uom) type [Frequency](https://docs.rs/uom/0.34.0/uom/si/f64/type.Frequency.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Frequency> for Frequency<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Frequency {
+		uom::si::f64::Frequency::new::<uom::si::frequency::hertz>(self.Hz.into())
+	}
+}
+
+/// Creates a Frequency from the equivalent [uom](https://crates.io/crates/uom) type [Frequency](https://docs.rs/uom/0.34.0/uom/si/f64/type.Frequency.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Frequency> for Frequency<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Frequency) -> Self {
+		Frequency{Hz: T::from(src.value)}
+	}
+}
+
 
 // Frequency * Amount -> CatalyticActivity
 /// Multiplying a Frequency by a Amount returns a value of type CatalyticActivity
@@ -3108,6 +3382,40 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a MomentOfInertia into the equivalent [uom](https://crates.io/crates/uom) type [MomentOfInertia](https://docs.rs/uom/0.34.0/uom/si/f32/type.MomentOfInertia.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::MomentOfInertia> for MomentOfInertia<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::MomentOfInertia {
+		uom::si::f32::MomentOfInertia::new::<uom::si::moment_of_inertia::kilogram_square_meter>(self.kgm2.into())
+	}
+}
+
+/// Creates a MomentOfInertia from the equivalent [uom](https://crates.io/crates/uom) type [MomentOfInertia](https://docs.rs/uom/0.34.0/uom/si/f32/type.MomentOfInertia.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::MomentOfInertia> for MomentOfInertia<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::MomentOfInertia) -> Self {
+		MomentOfInertia{kgm2: T::from(src.value)}
+	}
+}
+
+/// Converts a MomentOfInertia into the equivalent [uom](https://crates.io/crates/uom) type [MomentOfInertia](https://docs.rs/uom/0.34.0/uom/si/f64/type.MomentOfInertia.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::MomentOfInertia> for MomentOfInertia<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::MomentOfInertia {
+		uom::si::f64::MomentOfInertia::new::<uom::si::moment_of_inertia::kilogram_square_meter>(self.kgm2.into())
+	}
+}
+
+/// Creates a MomentOfInertia from the equivalent [uom](https://crates.io/crates/uom) type [MomentOfInertia](https://docs.rs/uom/0.34.0/uom/si/f64/type.MomentOfInertia.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::MomentOfInertia> for MomentOfInertia<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::MomentOfInertia) -> Self {
+		MomentOfInertia{kgm2: T::from(src.value)}
+	}
+}
+
+
 // MomentOfInertia / Mass -> Area
 /// Dividing a MomentOfInertia by a Mass returns a value of type Area
 impl<T> std::ops::Div<Mass<T>> for MomentOfInertia<T> where T: NumLike {
@@ -3269,6 +3577,40 @@ impl<T> Momentum<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Momentum into the equivalent [uom](https://crates.io/crates/uom) type [Momentum](https://docs.rs/uom/0.34.0/uom/si/f32/type.Momentum.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Momentum> for Momentum<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Momentum {
+		uom::si::f32::Momentum::new::<uom::si::momentum::kilogram_meter_per_second>(self.kgmps.into())
+	}
+}
+
+/// Creates a Momentum from the equivalent [uom](https://crates.io/crates/uom) type [Momentum](https://docs.rs/uom/0.34.0/uom/si/f32/type.Momentum.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Momentum> for Momentum<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Momentum) -> Self {
+		Momentum{kgmps: T::from(src.value)}
+	}
+}
+
+/// Converts a Momentum into the equivalent [uom](https://crates.io/crates/uom) type [Momentum](https://docs.rs/uom/0.34.0/uom/si/f64/type.Momentum.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Momentum> for Momentum<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Momentum {
+		uom::si::f64::Momentum::new::<uom::si::momentum::kilogram_meter_per_second>(self.kgmps.into())
+	}
+}
+
+/// Creates a Momentum from the equivalent [uom](https://crates.io/crates/uom) type [Momentum](https://docs.rs/uom/0.34.0/uom/si/f64/type.Momentum.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Momentum> for Momentum<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Momentum) -> Self {
+		Momentum{kgmps: T::from(src.value)}
+	}
+}
+
 
 // Momentum / Mass -> Velocity
 /// Dividing a Momentum by a Mass returns a value of type Velocity
@@ -3616,6 +3958,40 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Power into the equivalent [uom](https://crates.io/crates/uom) type [Power](https://docs.rs/uom/0.34.0/uom/si/f32/type.Power.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Power> for Power<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Power {
+		uom::si::f32::Power::new::<uom::si::power::watt>(self.W.into())
+	}
+}
+
+/// Creates a Power from the equivalent [uom](https://crates.io/crates/uom) type [Power](https://docs.rs/uom/0.34.0/uom/si/f32/type.Power.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Power> for Power<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Power) -> Self {
+		Power{W: T::from(src.value)}
+	}
+}
+
+/// Converts a Power into the equivalent [uom](https://crates.io/crates/uom) type [Power](https://docs.rs/uom/0.34.0/uom/si/f64/type.Power.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Power> for Power<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Power {
+		uom::si::f64::Power::new::<uom::si::power::watt>(self.W.into())
+	}
+}
+
+/// Creates a Power from the equivalent [uom](https://crates.io/crates/uom) type [Power](https://docs.rs/uom/0.34.0/uom/si/f64/type.Power.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Power> for Power<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Power) -> Self {
+		Power{W: T::from(src.value)}
+	}
+}
+
 
 // Power / Current -> Voltage
 /// Dividing a Power by a Current returns a value of type Voltage
@@ -4132,6 +4508,40 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Pressure into the equivalent [uom](https://crates.io/crates/uom) type [Pressure](https://docs.rs/uom/0.34.0/uom/si/f32/type.Pressure.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Pressure> for Pressure<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Pressure {
+		uom::si::f32::Pressure::new::<uom::si::pressure::pascal>(self.Pa.into())
+	}
+}
+
+/// Creates a Pressure from the equivalent [uom](https://crates.io/crates/uom) type [Pressure](https://docs.rs/uom/0.34.0/uom/si/f32/type.Pressure.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Pressure> for Pressure<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Pressure) -> Self {
+		Pressure{Pa: T::from(src.value)}
+	}
+}
+
+/// Converts a Pressure into the equivalent [uom](https://crates.io/crates/uom) type [Pressure](https://docs.rs/uom/0.34.0/uom/si/f64/type.Pressure.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Pressure> for Pressure<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Pressure {
+		uom::si::f64::Pressure::new::<uom::si::pressure::pascal>(self.Pa.into())
+	}
+}
+
+/// Creates a Pressure from the equivalent [uom](https://crates.io/crates/uom) type [Pressure](https://docs.rs/uom/0.34.0/uom/si/f64/type.Pressure.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Pressure> for Pressure<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Pressure) -> Self {
+		Pressure{Pa: T::from(src.value)}
+	}
+}
+
+
 // Pressure * Area -> Force
 /// Multiplying a Pressure by a Area returns a value of type Force
 impl<T> std::ops::Mul<Area<T>> for Pressure<T> where T: NumLike {
@@ -4310,6 +4720,40 @@ impl<T> Torque<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Torque into the equivalent [uom](https://crates.io/crates/uom) type [Torque](https://docs.rs/uom/0.34.0/uom/si/f32/type.Torque.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Torque> for Torque<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Torque {
+		uom::si::f32::Torque::new::<uom::si::torque::newton_meter>(self.Nm.into())
+	}
+}
+
+/// Creates a Torque from the equivalent [uom](https://crates.io/crates/uom) type [Torque](https://docs.rs/uom/0.34.0/uom/si/f32/type.Torque.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Torque> for Torque<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Torque) -> Self {
+		Torque{Nm: T::from(src.value)}
+	}
+}
+
+/// Converts a Torque into the equivalent [uom](https://crates.io/crates/uom) type [Torque](https://docs.rs/uom/0.34.0/uom/si/f64/type.Torque.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Torque> for Torque<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Torque {
+		uom::si::f64::Torque::new::<uom::si::torque::newton_meter>(self.Nm.into())
+	}
+}
+
+/// Creates a Torque from the equivalent [uom](https://crates.io/crates/uom) type [Torque](https://docs.rs/uom/0.34.0/uom/si/f64/type.Torque.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Torque> for Torque<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Torque) -> Self {
+		Torque{Nm: T::from(src.value)}
+	}
+}
+
 
 // Torque / Current -> MagneticFlux
 /// Dividing a Torque by a Current returns a value of type MagneticFlux
@@ -4837,6 +5281,40 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Velocity into the equivalent [uom](https://crates.io/crates/uom) type [Velocity](https://docs.rs/uom/0.34.0/uom/si/f32/type.Velocity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Velocity> for Velocity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Velocity {
+		uom::si::f32::Velocity::new::<uom::si::velocity::meter_per_second>(self.mps.into())
+	}
+}
+
+/// Creates a Velocity from the equivalent [uom](https://crates.io/crates/uom) type [Velocity](https://docs.rs/uom/0.34.0/uom/si/f32/type.Velocity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Velocity> for Velocity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Velocity) -> Self {
+		Velocity{mps: T::from(src.value)}
+	}
+}
+
+/// Converts a Velocity into the equivalent [uom](https://crates.io/crates/uom) type [Velocity](https://docs.rs/uom/0.34.0/uom/si/f64/type.Velocity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Velocity> for Velocity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Velocity {
+		uom::si::f64::Velocity::new::<uom::si::velocity::meter_per_second>(self.mps.into())
+	}
+}
+
+/// Creates a Velocity from the equivalent [uom](https://crates.io/crates/uom) type [Velocity](https://docs.rs/uom/0.34.0/uom/si/f64/type.Velocity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Velocity> for Velocity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Velocity) -> Self {
+		Velocity{mps: T::from(src.value)}
+	}
+}
+
 
 // Velocity / Distance -> Frequency
 /// Dividing a Velocity by a Distance returns a value of type Frequency

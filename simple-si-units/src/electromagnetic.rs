@@ -154,6 +154,40 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Capacitance into the equivalent [uom](https://crates.io/crates/uom) type [Capacitance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Capacitance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Capacitance> for Capacitance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Capacitance {
+		uom::si::f32::Capacitance::new::<uom::si::capacitance::farad>(self.F.into())
+	}
+}
+
+/// Creates a Capacitance from the equivalent [uom](https://crates.io/crates/uom) type [Capacitance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Capacitance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Capacitance> for Capacitance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Capacitance) -> Self {
+		Capacitance{F: T::from(src.value)}
+	}
+}
+
+/// Converts a Capacitance into the equivalent [uom](https://crates.io/crates/uom) type [Capacitance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Capacitance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Capacitance> for Capacitance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Capacitance {
+		uom::si::f64::Capacitance::new::<uom::si::capacitance::farad>(self.F.into())
+	}
+}
+
+/// Creates a Capacitance from the equivalent [uom](https://crates.io/crates/uom) type [Capacitance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Capacitance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Capacitance> for Capacitance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Capacitance) -> Self {
+		Capacitance{F: T::from(src.value)}
+	}
+}
+
+
 // Capacitance / Time -> Conductance
 /// Dividing a Capacitance by a Time returns a value of type Conductance
 impl<T> std::ops::Div<Time<T>> for Capacitance<T> where T: NumLike {
@@ -453,6 +487,40 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Charge into the equivalent [uom](https://crates.io/crates/uom) type [ElectricCharge](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricCharge.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ElectricCharge> for Charge<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ElectricCharge {
+		uom::si::f32::ElectricCharge::new::<uom::si::electric_charge::coulomb>(self.C.into())
+	}
+}
+
+/// Creates a Charge from the equivalent [uom](https://crates.io/crates/uom) type [ElectricCharge](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricCharge.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ElectricCharge> for Charge<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ElectricCharge) -> Self {
+		Charge{C: T::from(src.value)}
+	}
+}
+
+/// Converts a Charge into the equivalent [uom](https://crates.io/crates/uom) type [ElectricCharge](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricCharge.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ElectricCharge> for Charge<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ElectricCharge {
+		uom::si::f64::ElectricCharge::new::<uom::si::electric_charge::coulomb>(self.C.into())
+	}
+}
+
+/// Creates a Charge from the equivalent [uom](https://crates.io/crates/uom) type [ElectricCharge](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricCharge.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ElectricCharge> for Charge<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ElectricCharge) -> Self {
+		Charge{C: T::from(src.value)}
+	}
+}
+
 
 // Charge / Current -> Time
 /// Dividing a Charge by a Current returns a value of type Time
@@ -847,6 +915,40 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Conductance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalConductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalConductance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ElectricalConductance> for Conductance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ElectricalConductance {
+		uom::si::f32::ElectricalConductance::new::<uom::si::electrical_conductance::siemens>(self.S.into())
+	}
+}
+
+/// Creates a Conductance from the equivalent [uom](https://crates.io/crates/uom) type [ElectricalConductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalConductance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ElectricalConductance> for Conductance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ElectricalConductance) -> Self {
+		Conductance{S: T::from(src.value)}
+	}
+}
+
+/// Converts a Conductance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalConductance](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricalConductance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ElectricalConductance> for Conductance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ElectricalConductance {
+		uom::si::f64::ElectricalConductance::new::<uom::si::electrical_conductance::siemens>(self.S.into())
+	}
+}
+
+/// Creates a Conductance from the equivalent [uom](https://crates.io/crates/uom) type [ElectricalConductance](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricalConductance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ElectricalConductance> for Conductance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ElectricalConductance) -> Self {
+		Conductance{S: T::from(src.value)}
+	}
+}
+
 
 // Conductance * Time -> Capacitance
 /// Multiplying a Conductance by a Time returns a value of type Capacitance
@@ -1365,6 +1467,40 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a Illuminance into the equivalent [uom](https://crates.io/crates/uom) type [Luminance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Luminance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Luminance> for Illuminance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Luminance {
+		uom::si::f32::Luminance::new::<uom::si::luminance::candela_per_square_meter>(self.lux.into())
+	}
+}
+
+/// Creates a Illuminance from the equivalent [uom](https://crates.io/crates/uom) type [Luminance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Luminance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Luminance> for Illuminance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Luminance) -> Self {
+		Illuminance{lux: T::from(src.value)}
+	}
+}
+
+/// Converts a Illuminance into the equivalent [uom](https://crates.io/crates/uom) type [Luminance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Luminance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Luminance> for Illuminance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Luminance {
+		uom::si::f64::Luminance::new::<uom::si::luminance::candela_per_square_meter>(self.lux.into())
+	}
+}
+
+/// Creates a Illuminance from the equivalent [uom](https://crates.io/crates/uom) type [Luminance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Luminance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Luminance> for Illuminance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Luminance) -> Self {
+		Illuminance{lux: T::from(src.value)}
+	}
+}
+
+
 // Illuminance * Area -> LuminousFlux
 /// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
 impl<T> std::ops::Mul<Area<T>> for Illuminance<T> where T: NumLike {
@@ -1518,6 +1654,40 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Inductance into the equivalent [uom](https://crates.io/crates/uom) type [Inductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Inductance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::Inductance> for Inductance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::Inductance {
+		uom::si::f32::Inductance::new::<uom::si::inductance::henry>(self.H.into())
+	}
+}
+
+/// Creates a Inductance from the equivalent [uom](https://crates.io/crates/uom) type [Inductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Inductance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::Inductance> for Inductance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::Inductance) -> Self {
+		Inductance{H: T::from(src.value)}
+	}
+}
+
+/// Converts a Inductance into the equivalent [uom](https://crates.io/crates/uom) type [Inductance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Inductance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::Inductance> for Inductance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::Inductance {
+		uom::si::f64::Inductance::new::<uom::si::inductance::henry>(self.H.into())
+	}
+}
+
+/// Creates a Inductance from the equivalent [uom](https://crates.io/crates/uom) type [Inductance](https://docs.rs/uom/0.34.0/uom/si/f64/type.Inductance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::Inductance> for Inductance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::Inductance) -> Self {
+		Inductance{H: T::from(src.value)}
+	}
+}
+
 
 // Inductance * Current -> MagneticFlux
 /// Multiplying a Inductance by a Current returns a value of type MagneticFlux
@@ -1793,6 +1963,8 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 
 }
 
+
+
 // LuminousFlux / Luminosity -> SolidAngle
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
 impl<T> std::ops::Div<Luminosity<T>> for LuminousFlux<T> where T: NumLike {
@@ -2036,6 +2208,40 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a MagneticFlux into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFlux](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFlux.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::MagneticFlux> for MagneticFlux<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::MagneticFlux {
+		uom::si::f32::MagneticFlux::new::<uom::si::magnetic_flux::weber>(self.Wb.into())
+	}
+}
+
+/// Creates a MagneticFlux from the equivalent [uom](https://crates.io/crates/uom) type [MagneticFlux](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFlux.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::MagneticFlux> for MagneticFlux<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::MagneticFlux) -> Self {
+		MagneticFlux{Wb: T::from(src.value)}
+	}
+}
+
+/// Converts a MagneticFlux into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFlux](https://docs.rs/uom/0.34.0/uom/si/f64/type.MagneticFlux.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::MagneticFlux> for MagneticFlux<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::MagneticFlux {
+		uom::si::f64::MagneticFlux::new::<uom::si::magnetic_flux::weber>(self.Wb.into())
+	}
+}
+
+/// Creates a MagneticFlux from the equivalent [uom](https://crates.io/crates/uom) type [MagneticFlux](https://docs.rs/uom/0.34.0/uom/si/f64/type.MagneticFlux.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::MagneticFlux> for MagneticFlux<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::MagneticFlux) -> Self {
+		MagneticFlux{Wb: T::from(src.value)}
+	}
+}
+
 
 // MagneticFlux * Current -> Energy
 /// Multiplying a MagneticFlux by a Current returns a value of type Energy
@@ -2491,6 +2697,40 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a MagneticFluxDensity into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFluxDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFluxDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::MagneticFluxDensity> for MagneticFluxDensity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::MagneticFluxDensity {
+		uom::si::f32::MagneticFluxDensity::new::<uom::si::magnetic_flux_density::tesla>(self.T.into())
+	}
+}
+
+/// Creates a MagneticFluxDensity from the equivalent [uom](https://crates.io/crates/uom) type [MagneticFluxDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFluxDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::MagneticFluxDensity> for MagneticFluxDensity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::MagneticFluxDensity) -> Self {
+		MagneticFluxDensity{T: T::from(src.value)}
+	}
+}
+
+/// Converts a MagneticFluxDensity into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFluxDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.MagneticFluxDensity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::MagneticFluxDensity> for MagneticFluxDensity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::MagneticFluxDensity {
+		uom::si::f64::MagneticFluxDensity::new::<uom::si::magnetic_flux_density::tesla>(self.T.into())
+	}
+}
+
+/// Creates a MagneticFluxDensity from the equivalent [uom](https://crates.io/crates/uom) type [MagneticFluxDensity](https://docs.rs/uom/0.34.0/uom/si/f64/type.MagneticFluxDensity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::MagneticFluxDensity> for MagneticFluxDensity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::MagneticFluxDensity) -> Self {
+		MagneticFluxDensity{T: T::from(src.value)}
+	}
+}
+
+
 // MagneticFluxDensity * Area -> MagneticFlux
 /// Multiplying a MagneticFluxDensity by a Area returns a value of type MagneticFlux
 impl<T> std::ops::Mul<Area<T>> for MagneticFluxDensity<T> where T: NumLike {
@@ -2644,6 +2884,40 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Resistance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalResistance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalResistance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ElectricalResistance> for Resistance<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ElectricalResistance {
+		uom::si::f32::ElectricalResistance::new::<uom::si::electrical_resistance::ohm>(self.Ohm.into())
+	}
+}
+
+/// Creates a Resistance from the equivalent [uom](https://crates.io/crates/uom) type [ElectricalResistance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalResistance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ElectricalResistance> for Resistance<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ElectricalResistance) -> Self {
+		Resistance{Ohm: T::from(src.value)}
+	}
+}
+
+/// Converts a Resistance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalResistance](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricalResistance.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ElectricalResistance> for Resistance<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ElectricalResistance {
+		uom::si::f64::ElectricalResistance::new::<uom::si::electrical_resistance::ohm>(self.Ohm.into())
+	}
+}
+
+/// Creates a Resistance from the equivalent [uom](https://crates.io/crates/uom) type [ElectricalResistance](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricalResistance.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ElectricalResistance> for Resistance<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ElectricalResistance) -> Self {
+		Resistance{Ohm: T::from(src.value)}
+	}
+}
+
 
 // Resistance * Current -> Voltage
 /// Multiplying a Resistance by a Current returns a value of type Voltage
@@ -3170,6 +3444,40 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Voltage into the equivalent [uom](https://crates.io/crates/uom) type [ElectricPotential](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricPotential.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::ElectricPotential> for Voltage<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::ElectricPotential {
+		uom::si::f32::ElectricPotential::new::<uom::si::electric_potential::volt>(self.V.into())
+	}
+}
+
+/// Creates a Voltage from the equivalent [uom](https://crates.io/crates/uom) type [ElectricPotential](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricPotential.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::ElectricPotential> for Voltage<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::ElectricPotential) -> Self {
+		Voltage{V: T::from(src.value)}
+	}
+}
+
+/// Converts a Voltage into the equivalent [uom](https://crates.io/crates/uom) type [ElectricPotential](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricPotential.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::ElectricPotential> for Voltage<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::ElectricPotential {
+		uom::si::f64::ElectricPotential::new::<uom::si::electric_potential::volt>(self.V.into())
+	}
+}
+
+/// Creates a Voltage from the equivalent [uom](https://crates.io/crates/uom) type [ElectricPotential](https://docs.rs/uom/0.34.0/uom/si/f64/type.ElectricPotential.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::ElectricPotential> for Voltage<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::ElectricPotential) -> Self {
+		Voltage{V: T::from(src.value)}
+	}
+}
+
 
 // Voltage * Current -> Power
 /// Multiplying a Voltage by a Current returns a value of type Power

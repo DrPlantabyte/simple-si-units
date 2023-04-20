@@ -157,19 +157,21 @@ INVERSE_CONVERSION_TEMPLATE='''
 '''
 
 INTO_UOM_TEMPLATE='''
+/// Converts a %(code name)s into the equivalent [uom](https://crates.io/crates/uom) type [%(uom name)s](https://docs.rs/uom/0.34.0/uom/si/%(uom data type)s/type.%(uom name)s.html)
 #[cfg(feature = "uom")]
-impl<T> Into<uom::si::%(uom data type)s::%(uom name)> for %(code name)s<T> where T: NumLike+Into<f64> {
-	fn into(self) -> uom::si::%(uom data type)s::%(uom name) {
-		uom::si::%(uom data type)s::%(uom name)::new::<uom::si::%(uom module)s::%(uom type)s>(self.%(si unit symbol)s.into())
+impl<T> Into<uom::si::%(uom data type)s::%(uom name)s> for %(code name)s<T> where T: NumLike+Into<%(data type)s> {
+	fn into(self) -> uom::si::%(uom data type)s::%(uom name)s {
+		uom::si::%(uom data type)s::%(uom name)s::new::<uom::si::%(uom module)s::%(uom type)s>(self.%(unit symbol)s.into())
 	}
 }
 '''
 
 FROM_UOM_TEMPLATE='''
+/// Creates a %(code name)s from the equivalent [uom](https://crates.io/crates/uom) type [%(uom name)s](https://docs.rs/uom/0.34.0/uom/si/%(uom data type)s/type.%(uom name)s.html)
 #[cfg(feature = "uom")]
-impl<T> From<uom::si::%(uom data type)s::%(uom name)> for %(code name)s<T> where T: NumLike+From<%(data type)s> {
-	fn from(src: uom::si::%(uom data type)s::%(uom name)) -> Self {
-		%(code name)s{%(si unit symbol)s: T::from(src.value)}
+impl<T> From<uom::si::%(uom data type)s::%(uom name)s> for %(code name)s<T> where T: NumLike+From<%(data type)s> {
+	fn from(src: uom::si::%(uom data type)s::%(uom name)s) -> Self {
+		%(code name)s{%(unit symbol)s: T::from(src.value)}
 	}
 }
 '''

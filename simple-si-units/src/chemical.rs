@@ -113,6 +113,40 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 
 }
 
+
+/// Converts a CatalyticActivity into the equivalent [uom](https://crates.io/crates/uom) type [CatalyticActivity](https://docs.rs/uom/0.34.0/uom/si/f32/type.CatalyticActivity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::CatalyticActivity> for CatalyticActivity<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::CatalyticActivity {
+		uom::si::f32::CatalyticActivity::new::<uom::si::catalytic_activity::mole_per_second>(self.molps.into())
+	}
+}
+
+/// Creates a CatalyticActivity from the equivalent [uom](https://crates.io/crates/uom) type [CatalyticActivity](https://docs.rs/uom/0.34.0/uom/si/f32/type.CatalyticActivity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::CatalyticActivity> for CatalyticActivity<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::CatalyticActivity) -> Self {
+		CatalyticActivity{molps: T::from(src.value)}
+	}
+}
+
+/// Converts a CatalyticActivity into the equivalent [uom](https://crates.io/crates/uom) type [CatalyticActivity](https://docs.rs/uom/0.34.0/uom/si/f64/type.CatalyticActivity.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::CatalyticActivity> for CatalyticActivity<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::CatalyticActivity {
+		uom::si::f64::CatalyticActivity::new::<uom::si::catalytic_activity::mole_per_second>(self.molps.into())
+	}
+}
+
+/// Creates a CatalyticActivity from the equivalent [uom](https://crates.io/crates/uom) type [CatalyticActivity](https://docs.rs/uom/0.34.0/uom/si/f64/type.CatalyticActivity.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::CatalyticActivity> for CatalyticActivity<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::CatalyticActivity) -> Self {
+		CatalyticActivity{molps: T::from(src.value)}
+	}
+}
+
+
 // CatalyticActivity / Amount -> Frequency
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
 impl<T> std::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
@@ -387,6 +421,40 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Converts a Concentration into the equivalent [uom](https://crates.io/crates/uom) type [MolarConcentration](https://docs.rs/uom/0.34.0/uom/si/f32/type.MolarConcentration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::MolarConcentration> for Concentration<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::MolarConcentration {
+		uom::si::f32::MolarConcentration::new::<uom::si::molar_concentration::mole_per_cubic_meter>(self.molpm3.into())
+	}
+}
+
+/// Creates a Concentration from the equivalent [uom](https://crates.io/crates/uom) type [MolarConcentration](https://docs.rs/uom/0.34.0/uom/si/f32/type.MolarConcentration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::MolarConcentration> for Concentration<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::MolarConcentration) -> Self {
+		Concentration{molpm3: T::from(src.value)}
+	}
+}
+
+/// Converts a Concentration into the equivalent [uom](https://crates.io/crates/uom) type [MolarConcentration](https://docs.rs/uom/0.34.0/uom/si/f64/type.MolarConcentration.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::MolarConcentration> for Concentration<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::MolarConcentration {
+		uom::si::f64::MolarConcentration::new::<uom::si::molar_concentration::mole_per_cubic_meter>(self.molpm3.into())
+	}
+}
+
+/// Creates a Concentration from the equivalent [uom](https://crates.io/crates/uom) type [MolarConcentration](https://docs.rs/uom/0.34.0/uom/si/f64/type.MolarConcentration.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::MolarConcentration> for Concentration<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::MolarConcentration) -> Self {
+		Concentration{molpm3: T::from(src.value)}
+	}
+}
+
 
 // Concentration * Volume -> Amount
 /// Multiplying a Concentration by a Volume returns a value of type Amount

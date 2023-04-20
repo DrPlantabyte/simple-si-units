@@ -10,7 +10,7 @@ chemical,catalytic activity,catalytic activity,catalytic activity,moles per seco
 chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3,mol/m³,MolarConcentration,molar_concentration,mole_per_cubic_meter
 electromagnetic,capacitance,electrical capacitance,electrical capacitance,farads,F,s^4.A^2/kg.m^2,F,Capacitance,capacitance,farad
 electromagnetic,charge,electric charge (aka coulombs),electric charge,coulombs,C,A.s,C,ElectricCharge,electric_charge,coulomb
-electromagnetic,conductance,electrical conductance,electrical conductance,siemens,S,A^2.s^3/kg.m^2,S,,,
+electromagnetic,conductance,electrical conductance,electrical conductance,siemens,S,A^2.s^3/kg.m^2,S,ElectricalConductance,electrical_conductance,siemens
 electromagnetic,illuminance,illuminance,illuminance,lux,lux,cd.sr/m^2,lux,Luminance,luminance,candela_per_square_meter
 electromagnetic,inductance,inductance,inductance,henries,H,kg.m^2/A^2.s^2,H,Inductance,inductance,henry
 electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.sr,lm,,,
