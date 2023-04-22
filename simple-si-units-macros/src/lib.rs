@@ -141,6 +141,23 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 				return Self{#data_name: self.#data_name * rhs}
 			}
 		}
+		#[doc="Multiplying a unit value by a scalar value returns a unit value"]
+		impl<#data_type> std::ops::Mul<&#data_type> for #name<#data_type>
+			where #data_type: simple_si_units_core::NumLike {
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &#data_type) -> Self::Output {
+				#name{#data_name: self.#data_name * rhs.clone()}
+			}
+		}
+		#[doc="Multiplying a unit value by a scalar value returns a unit value"]
+		impl<'a, 'b, #data_type> std::ops::Mul<&'b #data_type> for &'a #name<#data_type>
+			where #data_type: simple_si_units_core::NumLike + 'b,
+				  &'b #data_type: std::ops::Mul<&'b #data_type, Output=#data_type>, 'a: 'b {
+			type Output = #name<#data_type>;
+			fn mul(self, rhs: &'b #data_type) -> Self::Output {
+				#name{#data_name: &self.#data_name * rhs}
+			}
+		}
 		#[doc="Multiplies this unit value by a scalar"]
 		impl<#data_type: simple_si_units_core::NumLike> std::ops::MulAssign<#data_type> for #name<#data_type> {
 			fn mul_assign(&mut self, rhs: #data_type){
@@ -280,6 +297,23 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 			type Output = #name<#data_type>;
 			fn div(self, rhs: #data_type) -> Self::Output {
 				return Self::Output{#data_name: self.#data_name.clone() / rhs}
+			}
+		}
+		#[doc="Dividing a unit value by a scalar value returns a unit value"]
+		impl<#data_type> std::ops::Div<&#data_type> for #name<#data_type>
+			where #data_type: simple_si_units_core::NumLike {
+			type Output = #name<#data_type>;
+			fn div(self, rhs: &#data_type) -> Self::Output {
+				#name{#data_name: self.#data_name / rhs.clone()}
+			}
+		}
+		#[doc="Dividing a unit value by a scalar value returns a unit value"]
+		impl<'a, 'b, #data_type> std::ops::Div<&'b #data_type> for &'a #name<#data_type>
+			where #data_type: simple_si_units_core::NumLike + 'b,
+				  &'b #data_type: std::ops::Div<&'b #data_type, Output=#data_type>, 'a: 'b {
+			type Output = #name<#data_type>;
+			fn div(self, rhs: &'b #data_type) -> Self::Output {
+				#name{#data_name: &self.#data_name / rhs}
 			}
 		}
 		#[doc="Multiplying a unit value by a scalar value returns a unit value (automatically \
