@@ -10,7 +10,7 @@ units, as specified by the US [National Institute of Standards and Technology](h
 * Implements operators to automatically convert between units with basic 
   arithmatic (eg distance / time = velocity)
 * Units are templated so that you can choose whether to use `f32` or `f64` or other number-like type as your concrete number type.
-* Optional, limited integration with [uom](https://crates.io/crates/uom)
+* Compatible with [uom](https://crates.io/crates/uom)
 
 ### Units
 This crate provides types for the following units. Other kinds of 
@@ -65,8 +65,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Not supporting dimensional analysis
 * Not providing an exhaustive list of all possible unit types (but you can use 
   this library to implement them yourself)
-* Not supporting unusual number types (eg integers)
-* Not aiming for full integration with [uom](https://crates.io/crates/uom)
+* Not aiming for 100% feature-for-feature equivalence to [uom](https://crates.io/crates/uom)
 
 ## Features
 TODO: all optional features
@@ -103,47 +102,47 @@ Here's a table comparing **simple-si-units** v1.0 and
 
 To further demonstrate the similarities and differences between **simple-si-units** and
 **[uom](https://crates.io/crates/uom)**, here's two different versions of the same 
-gravity calculation function, one using [uom](https://crates.io/crates/uom) and the 
-other using **simple-si-units**:
+gravity calculation function, one using **simple-si-units** and the 
+other using [uom](https://crates.io/crates/uom):
 ```rust
-// uom version
-mod uom_version {
-	use uom::si::f64::{Length, Mass, Acceleration};
-	use uom::si::length::*;
-	use uom::si::mass::*;
-	use uom::si::acceleration::*;
-
-	pub fn calc_gravity(mass: Mass, dist: Length) -> Acceleration {
-		const G: f64 = 6.67408e-11; // m3 kg-1 s-2
-		let d_squared = dist * dist;
-		return Acceleration::new::<meter_per_second_squared>(G * mass.value / d_squared.value)
-	}
-
-	#[test]
-	fn test_gravity1() {
-		let radius = Length::new::<kilometer>(6378.1);
-		let mass = Mass::new::<kilogram>(5.972e24);
-		println!("Earth gravity at sea-level is {} m/s^2", calc_gravity(mass, radius).value);
-	}
-}
-
 // simple-si-units version
 mod simple_si_version {
-	use simple_si_units::base::{Distance, Mass};
-	use simple_si_units::mechanical::{Acceleration};
+  use simple_si_units::base::{Distance, Mass};
+  use simple_si_units::mechanical::{Acceleration};
 
-	pub fn calc_gravity(mass: Mass<f64>, dist: Distance<f64>) -> Acceleration<f64> {
-		const G: f64 = 6.67408e-11; // m3 kg-1 s-2
-		let d_squared = &dist * &dist;
-		return Acceleration::from_mps2(G * mass.to_kg() / d_squared.to_m2())
-	}
+  pub fn calc_gravity(mass: Mass<f64>, dist: Distance<f64>) -> Acceleration<f64> {
+    const G: f64 = 6.67408e-11; // m3 kg-1 s-2
+    let d_squared = dist * dist;
+    return Acceleration::from_mps2(G * mass.to_kg() / d_squared.to_m2())
+  }
 
-	#[test]
-	fn test_gravity2() {
-		let radius = Distance::from_km(6378.1);
-		let mass = Mass::from_earth_mass(1.0);
-		println!("Earth gravity at sea-level is {}", calc_gravity(mass, radius));
-	}
+  fn test_gravity1() {
+    let radius = Distance::from_km(6378.1);
+    let mass = Mass::from_earth_mass(1.0);
+    println!("simple-si-units: Earth gravity at sea-level is {}", calc_gravity(mass, radius));
+  }
+}
+
+// uom version
+mod uom_version {
+  use uom::si::f64::{Length, Mass, Acceleration};
+  use uom::si::length::*;
+  use uom::si::mass::*;
+  use uom::si::acceleration::*;
+  use uom::fmt::DisplayStyle::Abbreviation;
+
+  pub fn calc_gravity(mass: Mass, dist: Length) -> Acceleration {
+    const G: f64 = 6.67408e-11; // m3 kg-1 s-2
+    let d_squared = dist * dist;
+    return Acceleration::new::<meter_per_second_squared>(G * mass.value / d_squared.value)
+  }
+
+  fn test_gravity2() {
+    let radius = Length::new::<kilometer>(6378.1);
+    let mass = Mass::new::<kilogram>(5.972e24);
+    println!("uom: Earth gravity at sea-level is {}",
+             calc_gravity(mass, radius).into_format_args(meter_per_second_squared, Abbreviation));
+  }
 }
 ```
 
@@ -187,8 +186,23 @@ fn main(){
 Since these structs use generic type templates for the internal data type, you 
 can use any number-like data type with these structs, including 
 [num_complex::Complex](https://crates.io/crates/num-complex) and 
-[num_bigfloat::BigFloat](https://crates.io/crates/num-bigfloat) (see caveat 
-section below regarding primitive types other than `f64`).
+[num_bigfloat::BigFloat](https://crates.io/crates/num-bigfloat) (see limitations 
+section below regarding types that do not implement `From<f64>`).
+
+For example, the above function could be rewritten as follows to allow almost 
+any number-like data type:
+```rust
+use simple_si_units::base::{Distance, Mass};
+use simple_si_units::mechanical::{Acceleration};
+use simple_si_units::NumLike;
+pub fn calc_gravity_generic<T>(mass: Mass<T>, dist: Distance<T>) -> Acceleration<T> 
+  where T: NumLike+From<f64> 
+{
+  const G: f64 = 6.67408e-11; // m3 kg-1 s-2
+  let d_squared = &dist * &dist;
+  return Acceleration::from_mps2(T::from(G) * mass.to_kg() / d_squared.to_m2())
+}
+```
 
 ## Adding Your Own Units
 Simple SI Units does not provide an exhaustive list of possible units of 
