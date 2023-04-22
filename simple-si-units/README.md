@@ -65,10 +65,15 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Not supporting dimensional analysis
 * Not providing an exhaustive list of all possible unit types (but you can use 
   this library to implement them yourself)
-* Not aiming for 100% feature-for-feature equivalence to [uom](https://crates.io/crates/uom)
+* Not supporting integer number types (use at your own risk)
 
 ## Features
-TODO: all optional features
+The **simple-si-units** crate has the following optional features which can be
+enabled to provide additional compatibility:
+* **serde** - Adds [serde](https://crates.io/crates/serde) serialization/deserialization compatibility
+* **uom** - If enabled, then unit structs will implement`Into` and `From` trait
+to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)** types
+* **num-complex** - Adds `std::ops::Mul` and `std::ops::Div` implementations for multiplying and dividing 
 
 ## Quickstart guide
 TODO: quick tutorial
@@ -90,15 +95,15 @@ Here's a table comparing **simple-si-units** v1.0 and
 **[uom](https://crates.io/crates/uom)** v0.34 to help you decide:
 
 | Feature                                                           | [simple-si-units](https://crates.io/crates/simple-si-units) | [uom](https://crates.io/crates/uom) |
-|-------------------------------------------------------------------|---|-------------------------------------|
-| Zero-cost measurement unit type safety                            | ✅ | ✅                                   |
-| All primary and secondary SI units as defined by NIST             | ✅ | ✅                                   |
-| Angular units (angular velocity, momentum, and intertia)          | ✅ | ❌                                   |
-| Support for standard numnber types (eg f64)                       | ✅ | ✅                                   |
-| Support for [num-rational](https://crates.io/crates/num-rational) | ✅ | ✅                                   |
-| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅ | ✅                                   |
-| Support for user-defined number types                             | ✅ | ❌                                   |
-| Compile-time dimensional analysis                                 | ❌ | ✅                                   |
+|-------------------------------------------------------------------|---|---|
+| Zero-cost measurement unit type safety                            | ✅ | ✅ |
+| All primary and secondary SI units as defined by NIST             | ✅ | ✅ |
+| Angular units (angular velocity, momentum, and intertia)          | ✅ | ❌ |
+| Support for standard numnber types (eg f64)                       | ✅ | ✅ |
+| Support for [num-rational](https://crates.io/crates/num-rational) | ✅ | ✅ |
+| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅ | ✅ |
+| Support for user-defined and other number types                   | ✅ | ❌ |
+| Compile-time dimensional analysis                                 | ❌ | ✅ |
 
 To further demonstrate the similarities and differences between **simple-si-units** and
 **[uom](https://crates.io/crates/uom)**, here's two different versions of the same 

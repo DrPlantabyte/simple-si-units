@@ -17,6 +17,7 @@ use serde::{Serialize, Deserialize};
 use num_bigfloat;
 #[cfg(feature="num-complex")]
 use num_complex;
+use num_complex::Complex64;
 
 
 /// The amount unit type, defined as moles in SI units
@@ -1771,6 +1772,39 @@ impl<T> std::ops::Mul<&DoseEquivalent<T>> for &Mass<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &DoseEquivalent<T>) -> Self::Output {
 		Energy{J: self.kg.clone() * rhs.Sv.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature = "num-complex")]
+impl std::ops::Mul<Mass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Mass<num_complex::Complex64>;
+	fn mul(self, rhs: Mass<Complex64>) -> Self::Output {
+		Mass{kg: self * rhs.kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature = "num-complex")]
+impl std::ops::Mul<Mass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Mass<num_complex::Complex64>;
+	fn mul(self, rhs: Mass<Complex64>) -> Self::Output {
+		Mass{kg: self * rhs.kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature = "num-complex")]
+impl std::ops::Mul<&Mass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Mass<num_complex::Complex64>;
+	fn mul(self, rhs: &Mass<Complex64>) -> Self::Output {
+		Mass{kg: self * rhs.kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature = "num-complex")]
+impl std::ops::Mul<&Mass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Mass<num_complex::Complex64>;
+	fn mul(self, rhs: &Mass<Complex64>) -> Self::Output {
+		Mass{kg: self * rhs.kg}
 	}
 }
 
