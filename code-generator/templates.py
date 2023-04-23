@@ -13,6 +13,8 @@ use serde::{Serialize, Deserialize};
 use num_bigfloat;
 #[cfg(feature="num-complex")]
 use num_complex;
+#[cfg(feature="num-rational")]
+use num_rational;
 
 %(content)s
 
@@ -47,6 +49,8 @@ impl<T> fmt::Display for %(code name)s<T> where T: NumLike {
 impl<T> %(code name)s<T> where T: NumLike+From<f64> {
 	%(to-and-from)s
 }
+
+%(extended scalar ops)s
 
 %(uom integration)s
 '''
@@ -120,6 +124,37 @@ impl<T> std::ops::%(capital op-function)s<&%(code right-side)s<T>> for &%(code l
 	type Output = %(code result)s<T>;
 	fn %(op-function)s(self, rhs: &%(code right-side)s<T>) -> Self::Output {
 		%(code result)s{%(result symbol)s: self.%(left-side symbol)s.clone() %(operator)s rhs.%(right-side symbol)s.clone()}
+	}
+}
+'''
+
+SCALAR_EXTENDED_TYPES_TEMPLATE='''
+/// Multiplying a unit value by a scalar value returns a unit value
+%(config attr prefix)simpl std::ops::Mul<%(code name)s<%(scalar type)s>> for %(scalar type)s {
+	type Output = %(code name)s<%(scalar type)s>;
+	fn mul(self, rhs: %(code name)s<%(scalar type)s>) -> Self::Output {
+		%(code name)s{%(unit symbol)s: self * rhs.%(unit symbol)s}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+%(config attr prefix)simpl std::ops::Mul<%(code name)s<%(scalar type)s>> for &%(scalar type)s {
+	type Output = %(code name)s<%(scalar type)s>;
+	fn mul(self, rhs: %(code name)s<%(scalar type)s>) -> Self::Output {
+		%(code name)s{%(unit symbol)s: self.clone() * rhs.%(unit symbol)s}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+%(config attr prefix)simpl std::ops::Mul<&%(code name)s<%(scalar type)s>> for %(scalar type)s {
+	type Output = %(code name)s<%(scalar type)s>;
+	fn mul(self, rhs: &%(code name)s<%(scalar type)s>) -> Self::Output {
+		%(code name)s{%(unit symbol)s: self * rhs.%(unit symbol)s.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+%(config attr prefix)simpl std::ops::Mul<&%(code name)s<%(scalar type)s>> for &%(scalar type)s {
+	type Output = %(code name)s<%(scalar type)s>;
+	fn mul(self, rhs: &%(code name)s<%(scalar type)s>) -> Self::Output {
+		%(code name)s{%(unit symbol)s: self.clone() * rhs.%(unit symbol)s.clone()}
 	}
 }
 '''

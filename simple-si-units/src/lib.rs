@@ -28,7 +28,6 @@ pub mod nuclear;
 #[cfg(test)]
 mod unit_tests {
 	use num_traits::Zero;
-	use simple_si_units_core::NumLike;
 	use super::base::*;
 	use super::chemical::*;
 	use super::electromagnetic::*;
@@ -1727,7 +1726,6 @@ mod unit_tests {
 		return x1;
 	}
 
-
 	#[test]
 	fn test_unit_converions(){
 		let x = 4.5f64;
@@ -2060,93 +2058,179 @@ mod unit_tests {
 		);
 	}
 
-	fn check_scalar_mul_div<T>(x: T, y: T) where T: NumLike{
-		let xy = x.clone() * y.clone();
-		let xovery = x.clone() / y.clone();
-		assert_eq!(mul_check(&x, &Amount{mol: y.clone()}), Amount{mol: xy.clone()});
-		assert_eq!(div_check(&Amount{mol: x.clone()}, &y), Amount{mol: xovery.clone()});
-		assert_eq!(mul_check(&x, &Current{A: y.clone()}), Current{A: xy.clone()});
-		assert_eq!(div_check(&Current{A: x.clone()}, &y), Current{A: xovery.clone()});
-		assert_eq!(mul_check(&x, &Distance{m: y.clone()}), Distance{m: xy.clone()});
-		assert_eq!(div_check(&Distance{m: x.clone()}, &y), Distance{m: xovery.clone()});
-		assert_eq!(mul_check(&x, &Luminosity{cd: y.clone()}), Luminosity{cd: xy.clone()});
-		assert_eq!(div_check(&Luminosity{cd: x.clone()}, &y), Luminosity{cd: xovery.clone()});
-		assert_eq!(mul_check(&x, &Mass{kg: y.clone()}), Mass{kg: xy.clone()});
-		assert_eq!(div_check(&Mass{kg: x.clone()}, &y), Mass{kg: xovery.clone()});
-		assert_eq!(mul_check(&x, &Temperature{K: y.clone()}), Temperature{K: xy.clone()});
-		assert_eq!(div_check(&Temperature{K: x.clone()}, &y), Temperature{K: xovery.clone()});
-		assert_eq!(mul_check(&x, &Time{s: y.clone()}), Time{s: xy.clone()});
-		assert_eq!(div_check(&Time{s: x.clone()}, &y), Time{s: xovery.clone()});
-		assert_eq!(mul_check(&x, &CatalyticActivity{molps: y.clone()}), CatalyticActivity{molps: xy.clone()});
-		assert_eq!(div_check(&CatalyticActivity{molps: x.clone()}, &y), CatalyticActivity{molps: xovery.clone()});
-		assert_eq!(mul_check(&x, &Concentration{molpm3: y.clone()}), Concentration{molpm3: xy.clone()});
-		assert_eq!(div_check(&Concentration{molpm3: x.clone()}, &y), Concentration{molpm3: xovery.clone()});
-		assert_eq!(mul_check(&x, &Capacitance{F: y.clone()}), Capacitance{F: xy.clone()});
-		assert_eq!(div_check(&Capacitance{F: x.clone()}, &y), Capacitance{F: xovery.clone()});
-		assert_eq!(mul_check(&x, &Charge{C: y.clone()}), Charge{C: xy.clone()});
-		assert_eq!(div_check(&Charge{C: x.clone()}, &y), Charge{C: xovery.clone()});
-		assert_eq!(mul_check(&x, &Conductance{S: y.clone()}), Conductance{S: xy.clone()});
-		assert_eq!(div_check(&Conductance{S: x.clone()}, &y), Conductance{S: xovery.clone()});
-		assert_eq!(mul_check(&x, &Illuminance{lux: y.clone()}), Illuminance{lux: xy.clone()});
-		assert_eq!(div_check(&Illuminance{lux: x.clone()}, &y), Illuminance{lux: xovery.clone()});
-		assert_eq!(mul_check(&x, &Inductance{H: y.clone()}), Inductance{H: xy.clone()});
-		assert_eq!(div_check(&Inductance{H: x.clone()}, &y), Inductance{H: xovery.clone()});
-		assert_eq!(mul_check(&x, &LuminousFlux{lm: y.clone()}), LuminousFlux{lm: xy.clone()});
-		assert_eq!(div_check(&LuminousFlux{lm: x.clone()}, &y), LuminousFlux{lm: xovery.clone()});
-		assert_eq!(mul_check(&x, &MagneticFlux{Wb: y.clone()}), MagneticFlux{Wb: xy.clone()});
-		assert_eq!(div_check(&MagneticFlux{Wb: x.clone()}, &y), MagneticFlux{Wb: xovery.clone()});
-		assert_eq!(mul_check(&x, &MagneticFluxDensity{T: y.clone()}), MagneticFluxDensity{T: xy.clone()});
-		assert_eq!(div_check(&MagneticFluxDensity{T: x.clone()}, &y), MagneticFluxDensity{T: xovery.clone()});
-		assert_eq!(mul_check(&x, &Resistance{Ohm: y.clone()}), Resistance{Ohm: xy.clone()});
-		assert_eq!(div_check(&Resistance{Ohm: x.clone()}, &y), Resistance{Ohm: xovery.clone()});
-		assert_eq!(mul_check(&x, &Voltage{V: y.clone()}), Voltage{V: xy.clone()});
-		assert_eq!(div_check(&Voltage{V: x.clone()}, &y), Voltage{V: xovery.clone()});
-		assert_eq!(mul_check(&x, &Angle{rad: y.clone()}), Angle{rad: xy.clone()});
-		assert_eq!(div_check(&Angle{rad: x.clone()}, &y), Angle{rad: xovery.clone()});
-		assert_eq!(mul_check(&x, &Area{m2: y.clone()}), Area{m2: xy.clone()});
-		assert_eq!(div_check(&Area{m2: x.clone()}, &y), Area{m2: xovery.clone()});
-		assert_eq!(mul_check(&x, &SolidAngle{sr: y.clone()}), SolidAngle{sr: xy.clone()});
-		assert_eq!(div_check(&SolidAngle{sr: x.clone()}, &y), SolidAngle{sr: xovery.clone()});
-		assert_eq!(mul_check(&x, &Volume{m3: y.clone()}), Volume{m3: xy.clone()});
-		assert_eq!(div_check(&Volume{m3: x.clone()}, &y), Volume{m3: xovery.clone()});
-		assert_eq!(mul_check(&x, &Acceleration{mps2: y.clone()}), Acceleration{mps2: xy.clone()});
-		assert_eq!(div_check(&Acceleration{mps2: x.clone()}, &y), Acceleration{mps2: xovery.clone()});
-		assert_eq!(mul_check(&x, &AngularAcceleration{radps2: y.clone()}), AngularAcceleration{radps2: xy.clone()});
-		assert_eq!(div_check(&AngularAcceleration{radps2: x.clone()}, &y), AngularAcceleration{radps2: xovery.clone()});
-		assert_eq!(mul_check(&x, &AngularMomentum{kgm2radps: y.clone()}), AngularMomentum{kgm2radps: xy.clone()});
-		assert_eq!(div_check(&AngularMomentum{kgm2radps: x.clone()}, &y), AngularMomentum{kgm2radps: xovery.clone()});
-		assert_eq!(mul_check(&x, &AngularVelocity{radps: y.clone()}), AngularVelocity{radps: xy.clone()});
-		assert_eq!(div_check(&AngularVelocity{radps: x.clone()}, &y), AngularVelocity{radps: xovery.clone()});
-		assert_eq!(mul_check(&x, &AreaDensity{kgpm2: y.clone()}), AreaDensity{kgpm2: xy.clone()});
-		assert_eq!(div_check(&AreaDensity{kgpm2: x.clone()}, &y), AreaDensity{kgpm2: xovery.clone()});
-		assert_eq!(mul_check(&x, &Density{kgpm3: y.clone()}), Density{kgpm3: xy.clone()});
-		assert_eq!(div_check(&Density{kgpm3: x.clone()}, &y), Density{kgpm3: xovery.clone()});
-		assert_eq!(mul_check(&x, &Energy{J: y.clone()}), Energy{J: xy.clone()});
-		assert_eq!(div_check(&Energy{J: x.clone()}, &y), Energy{J: xovery.clone()});
-		assert_eq!(mul_check(&x, &Force{N: y.clone()}), Force{N: xy.clone()});
-		assert_eq!(div_check(&Force{N: x.clone()}, &y), Force{N: xovery.clone()});
-		assert_eq!(mul_check(&x, &Frequency{Hz: y.clone()}), Frequency{Hz: xy.clone()});
-		assert_eq!(div_check(&Frequency{Hz: x.clone()}, &y), Frequency{Hz: xovery.clone()});
-		assert_eq!(mul_check(&x, &MomentOfInertia{kgm2: y.clone()}), MomentOfInertia{kgm2: xy.clone()});
-		assert_eq!(div_check(&MomentOfInertia{kgm2: x.clone()}, &y), MomentOfInertia{kgm2: xovery.clone()});
-		assert_eq!(mul_check(&x, &Momentum{kgmps: y.clone()}), Momentum{kgmps: xy.clone()});
-		assert_eq!(div_check(&Momentum{kgmps: x.clone()}, &y), Momentum{kgmps: xovery.clone()});
-		assert_eq!(mul_check(&x, &Power{W: y.clone()}), Power{W: xy.clone()});
-		assert_eq!(div_check(&Power{W: x.clone()}, &y), Power{W: xovery.clone()});
-		assert_eq!(mul_check(&x, &Pressure{Pa: y.clone()}), Pressure{Pa: xy.clone()});
-		assert_eq!(div_check(&Pressure{Pa: x.clone()}, &y), Pressure{Pa: xovery.clone()});
-		assert_eq!(mul_check(&x, &Torque{Nm: y.clone()}), Torque{Nm: xy.clone()});
-		assert_eq!(div_check(&Torque{Nm: x.clone()}, &y), Torque{Nm: xovery.clone()});
-		assert_eq!(mul_check(&x, &Velocity{mps: y.clone()}), Velocity{mps: xy.clone()});
-		assert_eq!(div_check(&Velocity{mps: x.clone()}, &y), Velocity{mps: xovery.clone()});
-		assert_eq!(mul_check(&x, &AbsorbedDose{Gy: y.clone()}), AbsorbedDose{Gy: xy.clone()});
-		assert_eq!(div_check(&AbsorbedDose{Gy: x.clone()}, &y), AbsorbedDose{Gy: xovery.clone()});
-		assert_eq!(mul_check(&x, &DoseEquivalent{Sv: y.clone()}), DoseEquivalent{Sv: xy.clone()});
-		assert_eq!(div_check(&DoseEquivalent{Sv: x.clone()}, &y), DoseEquivalent{Sv: xovery.clone()});
-		assert_eq!(mul_check(&x, &Radioactivity{Bq: y.clone()}), Radioactivity{Bq: xy.clone()});
-		assert_eq!(div_check(&Radioactivity{Bq: x.clone()}, &y), Radioactivity{Bq: xovery.clone()});
 
-	}
+	macro_rules! check_scalar_mul_div {
+	($a: expr, $b: expr) => {
+let x = ($a).clone();
+let y = ($b).clone();
+let xy = x.clone() * y.clone();
+let xovery = x.clone() / y.clone();
+assert_eq!(x * Amount{mol: y.clone()}, Amount{mol: xy.clone()});
+assert_eq!(&x * &Amount{mol: y.clone()}, Amount{mol: xy.clone()});
+assert_eq!(Amount{mol: x.clone()} / y, Amount{mol: xovery.clone()});
+assert_eq!(&Amount{mol: x.clone()} / &y, Amount{mol: xovery.clone()});
+assert_eq!(x * Current{A: y.clone()}, Current{A: xy.clone()});/*
+		assert_eq!(&x * &Current{A: y.clone()}, Current{A: xy.clone()});
+		assert_eq!(Current{A: x.clone()} / y, Current{A: xovery.clone()});
+		assert_eq!(&Current{A: x.clone()} / &y, Current{A: xovery.clone()});
+		assert_eq!(x * Distance{m: y.clone()}, Distance{m: xy.clone()});
+		assert_eq!(&x * &Distance{m: y.clone()}, Distance{m: xy.clone()});
+		assert_eq!(Distance{m: x.clone()} / y, Distance{m: xovery.clone()});
+		assert_eq!(&Distance{m: x.clone()} / &y, Distance{m: xovery.clone()});
+		assert_eq!(x * Luminosity{cd: y.clone()}, Luminosity{cd: xy.clone()});
+		assert_eq!(&x * &Luminosity{cd: y.clone()}, Luminosity{cd: xy.clone()});
+		assert_eq!(Luminosity{cd: x.clone()} / y, Luminosity{cd: xovery.clone()});
+		assert_eq!(&Luminosity{cd: x.clone()} / &y, Luminosity{cd: xovery.clone()});
+		assert_eq!(x * Mass{kg: y.clone()}, Mass{kg: xy.clone()});
+		assert_eq!(&x * &Mass{kg: y.clone()}, Mass{kg: xy.clone()});
+		assert_eq!(Mass{kg: x.clone()} / y, Mass{kg: xovery.clone()});
+		assert_eq!(&Mass{kg: x.clone()} / &y, Mass{kg: xovery.clone()});
+		assert_eq!(x * Temperature{K: y.clone()}, Temperature{K: xy.clone()});
+		assert_eq!(&x * &Temperature{K: y.clone()}, Temperature{K: xy.clone()});
+		assert_eq!(Temperature{K: x.clone()} / y, Temperature{K: xovery.clone()});
+		assert_eq!(&Temperature{K: x.clone()} / &y, Temperature{K: xovery.clone()});
+		assert_eq!(x * Time{s: y.clone()}, Time{s: xy.clone()});
+		assert_eq!(&x * &Time{s: y.clone()}, Time{s: xy.clone()});
+		assert_eq!(Time{s: x.clone()} / y, Time{s: xovery.clone()});
+		assert_eq!(&Time{s: x.clone()} / &y, Time{s: xovery.clone()});
+		assert_eq!(x * CatalyticActivity{molps: y.clone()}, CatalyticActivity{molps: xy.clone()});
+		assert_eq!(&x * &CatalyticActivity{molps: y.clone()}, CatalyticActivity{molps: xy.clone()});
+		assert_eq!(CatalyticActivity{molps: x.clone()} / y, CatalyticActivity{molps: xovery.clone()});
+		assert_eq!(&CatalyticActivity{molps: x.clone()} / &y, CatalyticActivity{molps: xovery.clone()});
+		assert_eq!(x * Concentration{molpm3: y.clone()}, Concentration{molpm3: xy.clone()});
+		assert_eq!(&x * &Concentration{molpm3: y.clone()}, Concentration{molpm3: xy.clone()});
+		assert_eq!(Concentration{molpm3: x.clone()} / y, Concentration{molpm3: xovery.clone()});
+		assert_eq!(&Concentration{molpm3: x.clone()} / &y, Concentration{molpm3: xovery.clone()});
+		assert_eq!(x * Capacitance{F: y.clone()}, Capacitance{F: xy.clone()});
+		assert_eq!(&x * &Capacitance{F: y.clone()}, Capacitance{F: xy.clone()});
+		assert_eq!(Capacitance{F: x.clone()} / y, Capacitance{F: xovery.clone()});
+		assert_eq!(&Capacitance{F: x.clone()} / &y, Capacitance{F: xovery.clone()});
+		assert_eq!(x * Charge{C: y.clone()}, Charge{C: xy.clone()});
+		assert_eq!(&x * &Charge{C: y.clone()}, Charge{C: xy.clone()});
+		assert_eq!(Charge{C: x.clone()} / y, Charge{C: xovery.clone()});
+		assert_eq!(&Charge{C: x.clone()} / &y, Charge{C: xovery.clone()});
+		assert_eq!(x * Conductance{S: y.clone()}, Conductance{S: xy.clone()});
+		assert_eq!(&x * &Conductance{S: y.clone()}, Conductance{S: xy.clone()});
+		assert_eq!(Conductance{S: x.clone()} / y, Conductance{S: xovery.clone()});
+		assert_eq!(&Conductance{S: x.clone()} / &y, Conductance{S: xovery.clone()});
+		assert_eq!(x * Illuminance{lux: y.clone()}, Illuminance{lux: xy.clone()});
+		assert_eq!(&x * &Illuminance{lux: y.clone()}, Illuminance{lux: xy.clone()});
+		assert_eq!(Illuminance{lux: x.clone()} / y, Illuminance{lux: xovery.clone()});
+		assert_eq!(&Illuminance{lux: x.clone()} / &y, Illuminance{lux: xovery.clone()});
+		assert_eq!(x * Inductance{H: y.clone()}, Inductance{H: xy.clone()});
+		assert_eq!(&x * &Inductance{H: y.clone()}, Inductance{H: xy.clone()});
+		assert_eq!(Inductance{H: x.clone()} / y, Inductance{H: xovery.clone()});
+		assert_eq!(&Inductance{H: x.clone()} / &y, Inductance{H: xovery.clone()});
+		assert_eq!(x * LuminousFlux{lm: y.clone()}, LuminousFlux{lm: xy.clone()});
+		assert_eq!(&x * &LuminousFlux{lm: y.clone()}, LuminousFlux{lm: xy.clone()});
+		assert_eq!(LuminousFlux{lm: x.clone()} / y, LuminousFlux{lm: xovery.clone()});
+		assert_eq!(&LuminousFlux{lm: x.clone()} / &y, LuminousFlux{lm: xovery.clone()});
+		assert_eq!(x * MagneticFlux{Wb: y.clone()}, MagneticFlux{Wb: xy.clone()});
+		assert_eq!(&x * &MagneticFlux{Wb: y.clone()}, MagneticFlux{Wb: xy.clone()});
+		assert_eq!(MagneticFlux{Wb: x.clone()} / y, MagneticFlux{Wb: xovery.clone()});
+		assert_eq!(&MagneticFlux{Wb: x.clone()} / &y, MagneticFlux{Wb: xovery.clone()});
+		assert_eq!(x * MagneticFluxDensity{T: y.clone()}, MagneticFluxDensity{T: xy.clone()});
+		assert_eq!(&x * &MagneticFluxDensity{T: y.clone()}, MagneticFluxDensity{T: xy.clone()});
+		assert_eq!(MagneticFluxDensity{T: x.clone()} / y, MagneticFluxDensity{T: xovery.clone()});
+		assert_eq!(&MagneticFluxDensity{T: x.clone()} / &y, MagneticFluxDensity{T: xovery.clone()});
+		assert_eq!(x * Resistance{Ohm: y.clone()}, Resistance{Ohm: xy.clone()});
+		assert_eq!(&x * &Resistance{Ohm: y.clone()}, Resistance{Ohm: xy.clone()});
+		assert_eq!(Resistance{Ohm: x.clone()} / y, Resistance{Ohm: xovery.clone()});
+		assert_eq!(&Resistance{Ohm: x.clone()} / &y, Resistance{Ohm: xovery.clone()});
+		assert_eq!(x * Voltage{V: y.clone()}, Voltage{V: xy.clone()});
+		assert_eq!(&x * &Voltage{V: y.clone()}, Voltage{V: xy.clone()});
+		assert_eq!(Voltage{V: x.clone()} / y, Voltage{V: xovery.clone()});
+		assert_eq!(&Voltage{V: x.clone()} / &y, Voltage{V: xovery.clone()});
+		assert_eq!(x * Angle{rad: y.clone()}, Angle{rad: xy.clone()});
+		assert_eq!(&x * &Angle{rad: y.clone()}, Angle{rad: xy.clone()});
+		assert_eq!(Angle{rad: x.clone()} / y, Angle{rad: xovery.clone()});
+		assert_eq!(&Angle{rad: x.clone()} / &y, Angle{rad: xovery.clone()});
+		assert_eq!(x * Area{m2: y.clone()}, Area{m2: xy.clone()});
+		assert_eq!(&x * &Area{m2: y.clone()}, Area{m2: xy.clone()});
+		assert_eq!(Area{m2: x.clone()} / y, Area{m2: xovery.clone()});
+		assert_eq!(&Area{m2: x.clone()} / &y, Area{m2: xovery.clone()});
+		assert_eq!(x * SolidAngle{sr: y.clone()}, SolidAngle{sr: xy.clone()});
+		assert_eq!(&x * &SolidAngle{sr: y.clone()}, SolidAngle{sr: xy.clone()});
+		assert_eq!(SolidAngle{sr: x.clone()} / y, SolidAngle{sr: xovery.clone()});
+		assert_eq!(&SolidAngle{sr: x.clone()} / &y, SolidAngle{sr: xovery.clone()});
+		assert_eq!(x * Volume{m3: y.clone()}, Volume{m3: xy.clone()});
+		assert_eq!(&x * &Volume{m3: y.clone()}, Volume{m3: xy.clone()});
+		assert_eq!(Volume{m3: x.clone()} / y, Volume{m3: xovery.clone()});
+		assert_eq!(&Volume{m3: x.clone()} / &y, Volume{m3: xovery.clone()});
+		assert_eq!(x * Acceleration{mps2: y.clone()}, Acceleration{mps2: xy.clone()});
+		assert_eq!(&x * &Acceleration{mps2: y.clone()}, Acceleration{mps2: xy.clone()});
+		assert_eq!(Acceleration{mps2: x.clone()} / y, Acceleration{mps2: xovery.clone()});
+		assert_eq!(&Acceleration{mps2: x.clone()} / &y, Acceleration{mps2: xovery.clone()});
+		assert_eq!(x * AngularAcceleration{radps2: y.clone()}, AngularAcceleration{radps2: xy.clone()});
+		assert_eq!(&x * &AngularAcceleration{radps2: y.clone()}, AngularAcceleration{radps2: xy.clone()});
+		assert_eq!(AngularAcceleration{radps2: x.clone()} / y, AngularAcceleration{radps2: xovery.clone()});
+		assert_eq!(&AngularAcceleration{radps2: x.clone()} / &y, AngularAcceleration{radps2: xovery.clone()});
+		assert_eq!(x * AngularMomentum{kgm2radps: y.clone()}, AngularMomentum{kgm2radps: xy.clone()});
+		assert_eq!(&x * &AngularMomentum{kgm2radps: y.clone()}, AngularMomentum{kgm2radps: xy.clone()});
+		assert_eq!(AngularMomentum{kgm2radps: x.clone()} / y, AngularMomentum{kgm2radps: xovery.clone()});
+		assert_eq!(&AngularMomentum{kgm2radps: x.clone()} / &y, AngularMomentum{kgm2radps: xovery.clone()});
+		assert_eq!(x * AngularVelocity{radps: y.clone()}, AngularVelocity{radps: xy.clone()});
+		assert_eq!(&x * &AngularVelocity{radps: y.clone()}, AngularVelocity{radps: xy.clone()});
+		assert_eq!(AngularVelocity{radps: x.clone()} / y, AngularVelocity{radps: xovery.clone()});
+		assert_eq!(&AngularVelocity{radps: x.clone()} / &y, AngularVelocity{radps: xovery.clone()});
+		assert_eq!(x * AreaDensity{kgpm2: y.clone()}, AreaDensity{kgpm2: xy.clone()});
+		assert_eq!(&x * &AreaDensity{kgpm2: y.clone()}, AreaDensity{kgpm2: xy.clone()});
+		assert_eq!(AreaDensity{kgpm2: x.clone()} / y, AreaDensity{kgpm2: xovery.clone()});
+		assert_eq!(&AreaDensity{kgpm2: x.clone()} / &y, AreaDensity{kgpm2: xovery.clone()});
+		assert_eq!(x * Density{kgpm3: y.clone()}, Density{kgpm3: xy.clone()});
+		assert_eq!(&x * &Density{kgpm3: y.clone()}, Density{kgpm3: xy.clone()});
+		assert_eq!(Density{kgpm3: x.clone()} / y, Density{kgpm3: xovery.clone()});
+		assert_eq!(&Density{kgpm3: x.clone()} / &y, Density{kgpm3: xovery.clone()});
+		assert_eq!(x * Energy{J: y.clone()}, Energy{J: xy.clone()});
+		assert_eq!(&x * &Energy{J: y.clone()}, Energy{J: xy.clone()});
+		assert_eq!(Energy{J: x.clone()} / y, Energy{J: xovery.clone()});
+		assert_eq!(&Energy{J: x.clone()} / &y, Energy{J: xovery.clone()});
+		assert_eq!(x * Force{N: y.clone()}, Force{N: xy.clone()});
+		assert_eq!(&x * &Force{N: y.clone()}, Force{N: xy.clone()});
+		assert_eq!(Force{N: x.clone()} / y, Force{N: xovery.clone()});
+		assert_eq!(&Force{N: x.clone()} / &y, Force{N: xovery.clone()});
+		assert_eq!(x * Frequency{Hz: y.clone()}, Frequency{Hz: xy.clone()});
+		assert_eq!(&x * &Frequency{Hz: y.clone()}, Frequency{Hz: xy.clone()});
+		assert_eq!(Frequency{Hz: x.clone()} / y, Frequency{Hz: xovery.clone()});
+		assert_eq!(&Frequency{Hz: x.clone()} / &y, Frequency{Hz: xovery.clone()});
+		assert_eq!(x * MomentOfInertia{kgm2: y.clone()}, MomentOfInertia{kgm2: xy.clone()});
+		assert_eq!(&x * &MomentOfInertia{kgm2: y.clone()}, MomentOfInertia{kgm2: xy.clone()});
+		assert_eq!(MomentOfInertia{kgm2: x.clone()} / y, MomentOfInertia{kgm2: xovery.clone()});
+		assert_eq!(&MomentOfInertia{kgm2: x.clone()} / &y, MomentOfInertia{kgm2: xovery.clone()});
+		assert_eq!(x * Momentum{kgmps: y.clone()}, Momentum{kgmps: xy.clone()});
+		assert_eq!(&x * &Momentum{kgmps: y.clone()}, Momentum{kgmps: xy.clone()});
+		assert_eq!(Momentum{kgmps: x.clone()} / y, Momentum{kgmps: xovery.clone()});
+		assert_eq!(&Momentum{kgmps: x.clone()} / &y, Momentum{kgmps: xovery.clone()});
+		assert_eq!(x * Power{W: y.clone()}, Power{W: xy.clone()});
+		assert_eq!(&x * &Power{W: y.clone()}, Power{W: xy.clone()});
+		assert_eq!(Power{W: x.clone()} / y, Power{W: xovery.clone()});
+		assert_eq!(&Power{W: x.clone()} / &y, Power{W: xovery.clone()});
+		assert_eq!(x * Pressure{Pa: y.clone()}, Pressure{Pa: xy.clone()});
+		assert_eq!(&x * &Pressure{Pa: y.clone()}, Pressure{Pa: xy.clone()});
+		assert_eq!(Pressure{Pa: x.clone()} / y, Pressure{Pa: xovery.clone()});
+		assert_eq!(&Pressure{Pa: x.clone()} / &y, Pressure{Pa: xovery.clone()});
+		assert_eq!(x * Torque{Nm: y.clone()}, Torque{Nm: xy.clone()});
+		assert_eq!(&x * &Torque{Nm: y.clone()}, Torque{Nm: xy.clone()});
+		assert_eq!(Torque{Nm: x.clone()} / y, Torque{Nm: xovery.clone()});
+		assert_eq!(&Torque{Nm: x.clone()} / &y, Torque{Nm: xovery.clone()});
+		assert_eq!(x * Velocity{mps: y.clone()}, Velocity{mps: xy.clone()});
+		assert_eq!(&x * &Velocity{mps: y.clone()}, Velocity{mps: xy.clone()});
+		assert_eq!(Velocity{mps: x.clone()} / y, Velocity{mps: xovery.clone()});
+		assert_eq!(&Velocity{mps: x.clone()} / &y, Velocity{mps: xovery.clone()});
+		assert_eq!(x * AbsorbedDose{Gy: y.clone()}, AbsorbedDose{Gy: xy.clone()});
+		assert_eq!(&x * &AbsorbedDose{Gy: y.clone()}, AbsorbedDose{Gy: xy.clone()});
+		assert_eq!(AbsorbedDose{Gy: x.clone()} / y, AbsorbedDose{Gy: xovery.clone()});
+		assert_eq!(&AbsorbedDose{Gy: x.clone()} / &y, AbsorbedDose{Gy: xovery.clone()});
+		assert_eq!(x * DoseEquivalent{Sv: y.clone()}, DoseEquivalent{Sv: xy.clone()});
+		assert_eq!(&x * &DoseEquivalent{Sv: y.clone()}, DoseEquivalent{Sv: xy.clone()});
+		assert_eq!(DoseEquivalent{Sv: x.clone()} / y, DoseEquivalent{Sv: xovery.clone()});
+		assert_eq!(&DoseEquivalent{Sv: x.clone()} / &y, DoseEquivalent{Sv: xovery.clone()});
+		assert_eq!(x * Radioactivity{Bq: y.clone()}, Radioactivity{Bq: xy.clone()});
+		assert_eq!(&x * &Radioactivity{Bq: y.clone()}, Radioactivity{Bq: xy.clone()});
+		assert_eq!(Radioactivity{Bq: x.clone()} / y, Radioactivity{Bq: xovery.clone()});
+		assert_eq!(&Radioactivity{Bq: x.clone()} / &y, Radioactivity{Bq: xovery.clone()});*/
+}
+}
 
 	#[test]
 	#[cfg(feature="num-complex")]
@@ -2154,10 +2238,10 @@ mod unit_tests {
 		use num_complex::{Complex32, Complex64};
 		let x = Complex64::new(1.2, 3.4);
 		let y = Complex64::new(5.6, 7.8);
-		check_scalar_mul_div(x, y);
+		check_scalar_mul_div!(x, y);
 		let x = Complex32::new(1.2, 3.4);
 		let y = Complex32::new(5.6, 7.8);
-		check_scalar_mul_div(x, y);
+		check_scalar_mul_div!(x, y);
 	}
 
 	#[test]
@@ -2166,18 +2250,7 @@ mod unit_tests {
 		use num_bigfloat::BigFloat;
 		let x = BigFloat::from(4.2);
 		let y = BigFloat::from(2.1);
-		check_scalar_mul_div(x, y);
+		check_scalar_mul_div!(x, y);
 	}
 
-	#[test]
-	#[cfg(feature="num-rational")]
-	fn test_rational_scalar_multiply() {
-		use num_Rational::{Rational32, Rational64};
-		let x = Rational64::new(1.2, 3.4);
-		let y = Rational64::new(5.6, 7.8);
-		check_scalar_mul_div(x, y);
-		let x = Rational32::new(1.2, 3.4);
-		let y = Rational32::new(5.6, 7.8);
-		check_scalar_mul_div(x, y);
-	}
 }

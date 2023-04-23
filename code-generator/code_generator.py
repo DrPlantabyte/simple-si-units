@@ -67,6 +67,8 @@ def post_gen_patching(code: str) -> str:
 		code = code.replace('#[cfg(feature="num-bigfloat")]\nuse num_bigfloat;', '')
 	if '#[cfg(feature="num-complex")]\nimpl' not in code:
 		code = code.replace('#[cfg(feature="num-complex")]\nuse num_complex;', '')
+	if '#[cfg(feature="num-rational")]\nimpl' not in code:
+		code = code.replace('#[cfg(feature="num-rational")]\nuse num_rational;', '')
 	return code
 
 def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
@@ -111,6 +113,7 @@ def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_
 			**row.to_dict(),
 			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions),
 			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
+			'extended scalar ops': generate_extended_scalar_ops(row),
 			'uom integration': generate_uom_conversions(row)
 		}
 		out_buf += generate_unit_conversions(row, conversions)
@@ -178,6 +181,26 @@ def generate_unit_conversions(data_row: Series, conversions: DataFrame) -> str:
 			**row
 		}
 	return out_buf
+
+def generate_extended_scalar_ops(data_row: Series):
+	output = ''
+	concrete_types = [
+		'num_bigfloat::BigFloat',
+		'num_complex::Complex32', 'num_complex::Complex64'
+	]
+	cfg_attrs = [
+		'#[cfg(feature="num-bigfloat")]\n',
+		'#[cfg(feature="num-complex")]\n', '#[cfg(feature="num-complex")]\n'
+	]
+	for n in range(0, len(concrete_types)):
+		stype = concrete_types[n]
+		cfg_stmnt = cfg_attrs[n]
+		output += SCALAR_EXTENDED_TYPES_TEMPLATE % {
+			'config attr prefix': cfg_stmnt,
+			'scalar type': stype,
+			**data_row
+		}
+	return output
 
 def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tuple[str, Set[str]]:
 	out_buf = ''
