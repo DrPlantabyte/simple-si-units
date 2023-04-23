@@ -150,12 +150,11 @@ fn impl_derive_unit(input: &syn::DeriveInput) -> TokenStream {
 			}
 		}
 		#[doc="Multiplying a unit value by a scalar value returns a unit value"]
-		impl<'a, 'b, #data_type> std::ops::Mul<&'b #data_type> for &'a #name<#data_type>
-			where #data_type: simple_si_units_core::NumLike + 'b,
-				  &'b #data_type: std::ops::Mul<&'b #data_type, Output=#data_type>, 'a: 'b {
+		impl<#data_type> std::ops::Mul<&#data_type> for &#name<#data_type>
+			where #data_type: simple_si_units_core::NumLike {
 			type Output = #name<#data_type>;
-			fn mul(self, rhs: &'b #data_type) -> Self::Output {
-				#name{#data_name: &self.#data_name * rhs}
+			fn mul(self, rhs: &#data_type) -> Self::Output {
+				#name{#data_name: self.#data_name.clone() * rhs.clone()}
 			}
 		}
 		#[doc="Multiplies this unit value by a scalar"]
