@@ -55,7 +55,7 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 The **simple-si-units** crate has the following optional features which can be
 enabled to provide additional compatibility:
 * **serde** - Adds [serde](https://crates.io/crates/serde) serialization/deserialization compatibility
-* **uom** - If enabled, then unit structs will implement`Into` and `From` trait
+* **uom** - If enabled, then unit structs will implement the `Into` and `From` traits
 to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)** types
 * **num-bigfloat** - Adds `std::ops::Mul` and `std::ops::Div` implementations
   for multiplying and dividing unit structs by `num-bigfloat` scalar values
@@ -137,8 +137,8 @@ APIs. The difference is that [uom](https://crates.io/crates/uom) also performs
 dimensional analysis but cannot handle custom data types, while 
 **simple-si-units** handles any number-like data type but does not attempt to 
 implement full compile-time dimensional analysis. **simple-si-units** also 
-prioritizes developer ergonomics, adhering to a consistent `Struct::to_...()`
-and `Struct::from_...()` syntax for simple and intuitive number conversions.
+prioritizes developer ergonomics, adhering to a consistent `Struct::from_...()`
+and `Struct.to_...()` syntax for simple and intuitive number conversions.
 Whether **[uom](https://crates.io/crates/uom)** or **simple-si-units** better 
 suits your application depends on your needs. 
 
