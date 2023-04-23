@@ -63,37 +63,102 @@ to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)
   for multiplying and dividing unit structs by `num-complex` scalar values
 
 ## Quickstart guide
-TODO: quick tutorial
+### Basic usage
+To use **simple-si-units**, just add `simple-si-units = "1"` to the `[dependencies]` 
+section of your `Cargo.toml` file, then import the units you need like this:
+```rust
+use simple_si_units::base::*;
+use simple_si_units::geometry::*;
+use simple_si_units::mechanical::*;
+
+fn main() {
+  let box_width = Distance::from_cm(33.5);
+  let box_length = Distance::from_cm(45.0);
+  let box_height = Distance::from_cm(23.5);
+  let carboard_density = AreaDensity::from_grams_per_square_meter(300.);
+  let box_volume = &box_width * &box_height * &box_length;
+  println!("Your box holds a total volume of {:.2} liters", box_volume.to_L());
+  let box_weight = (2. * &box_width * &box_length
+    + 2. * &box_width * &box_height
+    + 2. * &box_length * &box_height) * &carboard_density;
+  println!("Your box has a weight of {}", box_weight);
+}
+```
+Note that **simple-si-units** structs all implement `std::ops::{Add,Sub,Mul,Div}` 
+for both values and references, which is useful for number type which do not 
+implement the `Copy` trait.
+
+### Making APIs
+**simple-si-units** was designed specifically to help people create safer APIs
+for libraries and functions that perform scientific calculations. 
+
+For most applications, you can simply specify both the SI unit type and data 
+type for each variable, like this:
+```rust
+use simple_si_units::base::Distance;
+use simple_si_units::geometry::Volume;
+use std::f64::consts::PI;
+
+pub fn sphere_volume(radius: Distance<f64>) -> Volume<f64> {
+   &radius * &radius * &radius *  4. / 3. * PI
+}
+```
+
+However, if you want to support more than one data type, then you should use
+a generic templated function. The **simple-si-units** crate provides the 
+`NumLike` type to help simplify generic APIs, for example:
+```rust
+
+use simple_si_units::base::Distance;
+use simple_si_units::geometry::Volume;
+use std::f64::consts::PI;
+use simple_si_units::NumLike;
+
+pub fn sphere_volume<T>(radius: Distance<T>) -> Volume<T>
+where T: NumLike + From<f64>
+{
+    &radius * &radius * &radius * T::from(4. / 3. * PI)
+}
+```
+The above generic function will work for any number type which implements 
+`From<f64>`, such as `Complex64` or `BigFloat` (from the 
+[num-complex](https://crates.io/crates/num-complex) and
+[num-bigfloat](https://crates.io/crates/num-bigfloat) crates respectively). 
 
 ## Why not use [uom](https://crates.io/crates/uom)?
-The [uom](https://crates.io/crates/uom) crate and **simple-si-units** crate were 
+You don't have to choose, you can use both! All **simple-si-units** types implement the
+`Into` and `From` traits to convert to and from their 
+**[uom](https://crates.io/crates/uom)** equivalent.
+
+The **[uom](https://crates.io/crates/uom)** and **simple-si-units** crates were 
 both designed to provide compile-time type checking for scientific units of 
-measure, thus helping developers catch math errors and write cleaner simulation 
+measure to help developers catch math errors and write cleaner calculation 
 APIs. The difference is that [uom](https://crates.io/crates/uom) also performs 
-dimensional analysis but cannot canndle custom data types while 
-**simple-si-units** handles any number-like data type, but does not attempt to 
+dimensional analysis but cannot handle custom data types, while 
+**simple-si-units** handles any number-like data type but does not attempt to 
 implement full compile-time dimensional analysis. **simple-si-units** also 
 prioritizes developer ergonomics, adhering to a consistent `Struct::to_...()`
 and `Struct::from_...()` syntax for simple and intuitive number conversions.
-Whether [uom](https://crates.io/crates/uom) or **simple-si-units** better 
-suits your needs depends on your needs. 
+Whether **[uom](https://crates.io/crates/uom)** or **simple-si-units** better 
+suits your application depends on your needs. 
 
 Here's a table comparing **simple-si-units** v1.0 and 
-**[uom](https://crates.io/crates/uom)** v0.34 to help you decide:
+**[uom](https://crates.io/crates/uom)** v0.34 to help you decide which to use:
 
 | Feature                                                           | [simple-si-units](https://crates.io/crates/simple-si-units) | [uom](https://crates.io/crates/uom) |
 |-------------------------------------------------------------------|-------------------------------------------------------------|------------------------------------|
 | Zero-cost measurement unit type safety                            | ✅                                                           | ✅                                  |
 | All primary and secondary SI units as defined by NIST             | ✅                                                           | ✅                                  |
 | Angular units (angular velocity, momentum, and intertia)          | ✅                                                           | ❌                                  |
-| Support for standard numnber types (eg f64)                       | ✅                                                           | ✅                                  |
-| Support for [num-bigfloat](https://crates.io/crates/num-rational) | ✅                                                           | ❌                                  |
+| Support for standard decimal types (eg f64)                       | ✅                                                           | ✅                                  |
+| Support for standard integer types (eg i32)                       | partial**                                                   | partial**                           |
+| Support for [num-bigfloat](https://crates.io/crates/num-bigfloat) | ✅                                                           | ❌                                  |
 | Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                  |
 | Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                  |
 | Support for user-defined and other number types                   | ✅                                                           | ❌                                  |
 | Compile-time dimensional analysis                                 | ❌                                                           | ✅                                  |
 
-** *num-rational not fully supported because integer types are not fully supported in simple-si-units*
+** *integer types and int-based number types are not fully supported in simple-si-units*
 
 To further demonstrate the similarities and differences between **simple-si-units** and
 **[uom](https://crates.io/crates/uom)**, here's two different versions of the same 
@@ -190,6 +255,7 @@ any number-like data type:
 use simple_si_units::base::{Distance, Mass};
 use simple_si_units::mechanical::{Acceleration};
 use simple_si_units::NumLike;
+
 pub fn calc_gravity_generic<T>(mass: Mass<T>, dist: Distance<T>) -> Acceleration<T> 
   where T: NumLike+From<f64> 
 {
@@ -203,23 +269,27 @@ pub fn calc_gravity_generic<T>(mass: Mass<T>, dist: Distance<T>) -> Acceleration
 Simple SI Units does not provide an exhaustive list of possible units of 
 measure. To create your own units, use the `UnitStruct` procedural macro and 
 `NumLike` trait bundle (`NumLike` is just shorthand for 
-`Sized+std::ops::*<Output=Self>`, you could instead use the `Num` trait from 
-the 
-[num-traits crate](https://crates.io/crates/num-traits) if you prefer):
+`std::ops::*<Output=Self>+Clone+Debug+Display`, you could instead use the `Num`
+trait from the [num-traits crate](https://crates.io/crates/num-traits) if you 
+prefer):
 
 ```rust
 use simple_si_units::{UnitStruct, NumLike};
+
 #[derive(UnitStruct, Debug, Clone)]
 struct HyperVelocity<T: NumLike>{
-	square_meters_per_second: T
+  square_meters_per_second: T
 }
 
-fn weighted_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T> where
-	T:NumLike + From<f64>
+fn weighted_hypervel_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T>
+  where T:NumLike + From<f64>
 {
-	return weight*a + (1.-weight)*b;
+  return weight*a + (1.-weight)*b;
 }
 ```
+Note that the `UnitStruct` derive macro only works on structs that contain only a 
+single member variable. Otherwise it will generate a compiler error.
+
 
 ## Limitations
 Due to the Rust compiler's lack of 
@@ -235,8 +305,8 @@ type (eg `Mass::from_kg(1f32)` will work).
 such as [num-bigfloat](https://crates.io/crates/num-bigfloat), 
 [num-complex](https://crates.io/crates/num-complex), and even number types you 
 define yourself. A data type is "number-like" if it implements the following 
-traits: Clone, Debug, Display, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, 
-Div, DivAssign, Neg
+traits: **Clone, Debug, Display, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, 
+Div, DivAssign, Neg**
 
 For example, here's a snippet of code that defines and uses a number type that is 
 like `f32` but also implements `From<f64>`:
@@ -295,6 +365,9 @@ fn my_fn() -> Density<MyNumber>{
   return m / v;
 }
 ```
+It's higly recommended that you also implement the `std::ops::*` operators for 
+all combinations of values and reference types (eg `X + X`, `X + &X`, `&X + X`, and `&X + &X`),
+as this will make your number type much easier to use and integrate with **simple-si-units**.
 
 ## License
 This library is open source, licensed under the [Mozilla Public License version 2.0](https://www.mozilla.org/en-US/MPL/). In summary, you may include this source code *as-is* in both open-source and proprietary projects without requesting permission from me, but if you modify the source code from this library then you must make your modified version of this library available under an open-source license.
