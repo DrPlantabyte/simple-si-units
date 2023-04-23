@@ -2058,7 +2058,7 @@ mod unit_tests {
 		);
 	}
 
-	macro_rules! scalar_mul_div_check {
+	macro_rules! mul_div_check {
 		($a: expr, $b: expr, $c: expr, $d: expr) => {
 			assert_eq!(($a) * ($b), ($c));
 			assert_eq!(($a) * &($b), ($c));
@@ -2081,47 +2081,47 @@ mod unit_tests {
 			let y = ($b).clone();
 			let xy = x.clone() * y.clone();
 			let xovery = x.clone() / y.clone();
-			scalar_mul_div_check!(Amount{mol: x.clone()}, y.clone(), Amount{mol: xy.clone()}, Amount{mol: xovery.clone()});
-			scalar_mul_div_check!(Current{A: x.clone()}, y.clone(), Current{A: xy.clone()}, Current{A: xovery.clone()});
-			scalar_mul_div_check!(Distance{m: x.clone()}, y.clone(), Distance{m: xy.clone()}, Distance{m: xovery.clone()});
-			scalar_mul_div_check!(Luminosity{cd: x.clone()}, y.clone(), Luminosity{cd: xy.clone()}, Luminosity{cd: xovery.clone()});
-			scalar_mul_div_check!(Mass{kg: x.clone()}, y.clone(), Mass{kg: xy.clone()}, Mass{kg: xovery.clone()});
-			scalar_mul_div_check!(Temperature{K: x.clone()}, y.clone(), Temperature{K: xy.clone()}, Temperature{K: xovery.clone()});
-			scalar_mul_div_check!(Time{s: x.clone()}, y.clone(), Time{s: xy.clone()}, Time{s: xovery.clone()});
-			scalar_mul_div_check!(CatalyticActivity{molps: x.clone()}, y.clone(), CatalyticActivity{molps: xy.clone()}, CatalyticActivity{molps: xovery.clone()});
-			scalar_mul_div_check!(Concentration{molpm3: x.clone()}, y.clone(), Concentration{molpm3: xy.clone()}, Concentration{molpm3: xovery.clone()});
-			scalar_mul_div_check!(Capacitance{F: x.clone()}, y.clone(), Capacitance{F: xy.clone()}, Capacitance{F: xovery.clone()});
-			scalar_mul_div_check!(Charge{C: x.clone()}, y.clone(), Charge{C: xy.clone()}, Charge{C: xovery.clone()});
-			scalar_mul_div_check!(Conductance{S: x.clone()}, y.clone(), Conductance{S: xy.clone()}, Conductance{S: xovery.clone()});
-			scalar_mul_div_check!(Illuminance{lux: x.clone()}, y.clone(), Illuminance{lux: xy.clone()}, Illuminance{lux: xovery.clone()});
-			scalar_mul_div_check!(Inductance{H: x.clone()}, y.clone(), Inductance{H: xy.clone()}, Inductance{H: xovery.clone()});
-			scalar_mul_div_check!(LuminousFlux{lm: x.clone()}, y.clone(), LuminousFlux{lm: xy.clone()}, LuminousFlux{lm: xovery.clone()});
-			scalar_mul_div_check!(MagneticFlux{Wb: x.clone()}, y.clone(), MagneticFlux{Wb: xy.clone()}, MagneticFlux{Wb: xovery.clone()});
-			scalar_mul_div_check!(MagneticFluxDensity{T: x.clone()}, y.clone(), MagneticFluxDensity{T: xy.clone()}, MagneticFluxDensity{T: xovery.clone()});
-			scalar_mul_div_check!(Resistance{Ohm: x.clone()}, y.clone(), Resistance{Ohm: xy.clone()}, Resistance{Ohm: xovery.clone()});
-			scalar_mul_div_check!(Voltage{V: x.clone()}, y.clone(), Voltage{V: xy.clone()}, Voltage{V: xovery.clone()});
-			scalar_mul_div_check!(Angle{rad: x.clone()}, y.clone(), Angle{rad: xy.clone()}, Angle{rad: xovery.clone()});
-			scalar_mul_div_check!(Area{m2: x.clone()}, y.clone(), Area{m2: xy.clone()}, Area{m2: xovery.clone()});
-			scalar_mul_div_check!(SolidAngle{sr: x.clone()}, y.clone(), SolidAngle{sr: xy.clone()}, SolidAngle{sr: xovery.clone()});
-			scalar_mul_div_check!(Volume{m3: x.clone()}, y.clone(), Volume{m3: xy.clone()}, Volume{m3: xovery.clone()});
-			scalar_mul_div_check!(Acceleration{mps2: x.clone()}, y.clone(), Acceleration{mps2: xy.clone()}, Acceleration{mps2: xovery.clone()});
-			scalar_mul_div_check!(AngularAcceleration{radps2: x.clone()}, y.clone(), AngularAcceleration{radps2: xy.clone()}, AngularAcceleration{radps2: xovery.clone()});
-			scalar_mul_div_check!(AngularMomentum{kgm2radps: x.clone()}, y.clone(), AngularMomentum{kgm2radps: xy.clone()}, AngularMomentum{kgm2radps: xovery.clone()});
-			scalar_mul_div_check!(AngularVelocity{radps: x.clone()}, y.clone(), AngularVelocity{radps: xy.clone()}, AngularVelocity{radps: xovery.clone()});
-			scalar_mul_div_check!(AreaDensity{kgpm2: x.clone()}, y.clone(), AreaDensity{kgpm2: xy.clone()}, AreaDensity{kgpm2: xovery.clone()});
-			scalar_mul_div_check!(Density{kgpm3: x.clone()}, y.clone(), Density{kgpm3: xy.clone()}, Density{kgpm3: xovery.clone()});
-			scalar_mul_div_check!(Energy{J: x.clone()}, y.clone(), Energy{J: xy.clone()}, Energy{J: xovery.clone()});
-			scalar_mul_div_check!(Force{N: x.clone()}, y.clone(), Force{N: xy.clone()}, Force{N: xovery.clone()});
-			scalar_mul_div_check!(Frequency{Hz: x.clone()}, y.clone(), Frequency{Hz: xy.clone()}, Frequency{Hz: xovery.clone()});
-			scalar_mul_div_check!(MomentOfInertia{kgm2: x.clone()}, y.clone(), MomentOfInertia{kgm2: xy.clone()}, MomentOfInertia{kgm2: xovery.clone()});
-			scalar_mul_div_check!(Momentum{kgmps: x.clone()}, y.clone(), Momentum{kgmps: xy.clone()}, Momentum{kgmps: xovery.clone()});
-			scalar_mul_div_check!(Power{W: x.clone()}, y.clone(), Power{W: xy.clone()}, Power{W: xovery.clone()});
-			scalar_mul_div_check!(Pressure{Pa: x.clone()}, y.clone(), Pressure{Pa: xy.clone()}, Pressure{Pa: xovery.clone()});
-			scalar_mul_div_check!(Torque{Nm: x.clone()}, y.clone(), Torque{Nm: xy.clone()}, Torque{Nm: xovery.clone()});
-			scalar_mul_div_check!(Velocity{mps: x.clone()}, y.clone(), Velocity{mps: xy.clone()}, Velocity{mps: xovery.clone()});
-			scalar_mul_div_check!(AbsorbedDose{Gy: x.clone()}, y.clone(), AbsorbedDose{Gy: xy.clone()}, AbsorbedDose{Gy: xovery.clone()});
-			scalar_mul_div_check!(DoseEquivalent{Sv: x.clone()}, y.clone(), DoseEquivalent{Sv: xy.clone()}, DoseEquivalent{Sv: xovery.clone()});
-			scalar_mul_div_check!(Radioactivity{Bq: x.clone()}, y.clone(), Radioactivity{Bq: xy.clone()}, Radioactivity{Bq: xovery.clone()});
+			mul_div_check!(Amount{mol: x.clone()}, y.clone(), Amount{mol: xy.clone()}, Amount{mol: xovery.clone()});
+			mul_div_check!(Current{A: x.clone()}, y.clone(), Current{A: xy.clone()}, Current{A: xovery.clone()});
+			mul_div_check!(Distance{m: x.clone()}, y.clone(), Distance{m: xy.clone()}, Distance{m: xovery.clone()});
+			mul_div_check!(Luminosity{cd: x.clone()}, y.clone(), Luminosity{cd: xy.clone()}, Luminosity{cd: xovery.clone()});
+			mul_div_check!(Mass{kg: x.clone()}, y.clone(), Mass{kg: xy.clone()}, Mass{kg: xovery.clone()});
+			mul_div_check!(Temperature{K: x.clone()}, y.clone(), Temperature{K: xy.clone()}, Temperature{K: xovery.clone()});
+			mul_div_check!(Time{s: x.clone()}, y.clone(), Time{s: xy.clone()}, Time{s: xovery.clone()});
+			mul_div_check!(CatalyticActivity{molps: x.clone()}, y.clone(), CatalyticActivity{molps: xy.clone()}, CatalyticActivity{molps: xovery.clone()});
+			mul_div_check!(Concentration{molpm3: x.clone()}, y.clone(), Concentration{molpm3: xy.clone()}, Concentration{molpm3: xovery.clone()});
+			mul_div_check!(Capacitance{F: x.clone()}, y.clone(), Capacitance{F: xy.clone()}, Capacitance{F: xovery.clone()});
+			mul_div_check!(Charge{C: x.clone()}, y.clone(), Charge{C: xy.clone()}, Charge{C: xovery.clone()});
+			mul_div_check!(Conductance{S: x.clone()}, y.clone(), Conductance{S: xy.clone()}, Conductance{S: xovery.clone()});
+			mul_div_check!(Illuminance{lux: x.clone()}, y.clone(), Illuminance{lux: xy.clone()}, Illuminance{lux: xovery.clone()});
+			mul_div_check!(Inductance{H: x.clone()}, y.clone(), Inductance{H: xy.clone()}, Inductance{H: xovery.clone()});
+			mul_div_check!(LuminousFlux{lm: x.clone()}, y.clone(), LuminousFlux{lm: xy.clone()}, LuminousFlux{lm: xovery.clone()});
+			mul_div_check!(MagneticFlux{Wb: x.clone()}, y.clone(), MagneticFlux{Wb: xy.clone()}, MagneticFlux{Wb: xovery.clone()});
+			mul_div_check!(MagneticFluxDensity{T: x.clone()}, y.clone(), MagneticFluxDensity{T: xy.clone()}, MagneticFluxDensity{T: xovery.clone()});
+			mul_div_check!(Resistance{Ohm: x.clone()}, y.clone(), Resistance{Ohm: xy.clone()}, Resistance{Ohm: xovery.clone()});
+			mul_div_check!(Voltage{V: x.clone()}, y.clone(), Voltage{V: xy.clone()}, Voltage{V: xovery.clone()});
+			mul_div_check!(Angle{rad: x.clone()}, y.clone(), Angle{rad: xy.clone()}, Angle{rad: xovery.clone()});
+			mul_div_check!(Area{m2: x.clone()}, y.clone(), Area{m2: xy.clone()}, Area{m2: xovery.clone()});
+			mul_div_check!(SolidAngle{sr: x.clone()}, y.clone(), SolidAngle{sr: xy.clone()}, SolidAngle{sr: xovery.clone()});
+			mul_div_check!(Volume{m3: x.clone()}, y.clone(), Volume{m3: xy.clone()}, Volume{m3: xovery.clone()});
+			mul_div_check!(Acceleration{mps2: x.clone()}, y.clone(), Acceleration{mps2: xy.clone()}, Acceleration{mps2: xovery.clone()});
+			mul_div_check!(AngularAcceleration{radps2: x.clone()}, y.clone(), AngularAcceleration{radps2: xy.clone()}, AngularAcceleration{radps2: xovery.clone()});
+			mul_div_check!(AngularMomentum{kgm2radps: x.clone()}, y.clone(), AngularMomentum{kgm2radps: xy.clone()}, AngularMomentum{kgm2radps: xovery.clone()});
+			mul_div_check!(AngularVelocity{radps: x.clone()}, y.clone(), AngularVelocity{radps: xy.clone()}, AngularVelocity{radps: xovery.clone()});
+			mul_div_check!(AreaDensity{kgpm2: x.clone()}, y.clone(), AreaDensity{kgpm2: xy.clone()}, AreaDensity{kgpm2: xovery.clone()});
+			mul_div_check!(Density{kgpm3: x.clone()}, y.clone(), Density{kgpm3: xy.clone()}, Density{kgpm3: xovery.clone()});
+			mul_div_check!(Energy{J: x.clone()}, y.clone(), Energy{J: xy.clone()}, Energy{J: xovery.clone()});
+			mul_div_check!(Force{N: x.clone()}, y.clone(), Force{N: xy.clone()}, Force{N: xovery.clone()});
+			mul_div_check!(Frequency{Hz: x.clone()}, y.clone(), Frequency{Hz: xy.clone()}, Frequency{Hz: xovery.clone()});
+			mul_div_check!(MomentOfInertia{kgm2: x.clone()}, y.clone(), MomentOfInertia{kgm2: xy.clone()}, MomentOfInertia{kgm2: xovery.clone()});
+			mul_div_check!(Momentum{kgmps: x.clone()}, y.clone(), Momentum{kgmps: xy.clone()}, Momentum{kgmps: xovery.clone()});
+			mul_div_check!(Power{W: x.clone()}, y.clone(), Power{W: xy.clone()}, Power{W: xovery.clone()});
+			mul_div_check!(Pressure{Pa: x.clone()}, y.clone(), Pressure{Pa: xy.clone()}, Pressure{Pa: xovery.clone()});
+			mul_div_check!(Torque{Nm: x.clone()}, y.clone(), Torque{Nm: xy.clone()}, Torque{Nm: xovery.clone()});
+			mul_div_check!(Velocity{mps: x.clone()}, y.clone(), Velocity{mps: xy.clone()}, Velocity{mps: xovery.clone()});
+			mul_div_check!(AbsorbedDose{Gy: x.clone()}, y.clone(), AbsorbedDose{Gy: xy.clone()}, AbsorbedDose{Gy: xovery.clone()});
+			mul_div_check!(DoseEquivalent{Sv: x.clone()}, y.clone(), DoseEquivalent{Sv: xy.clone()}, DoseEquivalent{Sv: xovery.clone()});
+			mul_div_check!(Radioactivity{Bq: x.clone()}, y.clone(), Radioactivity{Bq: xy.clone()}, Radioactivity{Bq: xovery.clone()});
 	}
 }
 

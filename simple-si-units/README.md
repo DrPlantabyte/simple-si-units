@@ -17,6 +17,7 @@ This crate provides types for the following units. Other kinds of
 quantities not listed below (eg jolt) are beyond the scope of this crate.
 
 #### Base SI units (and standard unit of measure):
+(import with `use simple_si_units::base::*;`)
 * Distance, aka Length (meters)
 * Mass (kilogram)
 * Time (seconds)
@@ -26,45 +27,28 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Luminosity (candela)
 
 #### Derived units:
-* Angle (rad)
-* Angular Velocity (rad/s)
-* Angular Acceleration (rad/s^2)
-* Moment of Inertia (kg.m^2)
-* Angular Momentum (kg.m^2.rad/s)
-* Torque (kg.m^2/s^2, aka N.m)
-* Solid Angle (sr)
-* Frequency (1/s, aka Hz)
-* Area (m^2)
-* Area Density (kg.m^2)
-* Volume (m^3)
-* Density (kg/L)
-* Velocity (m/s)
-* Acceleration (m/s^2)
-* Momentum (kg.m/s)
-* Force (kg.m/s^2, aka N)
-* Pressure (N/m^2, aka Pa)
-* Energy (kg.m^2/s^2, aka J)
-* Charge, aka Coulomb (A.s, aka C)
-* Power, aka Watt (J/s, aka W)
-* Voltage (W/A, aka V)
-* Resistance (V/A, aka Ohm)
-* Conductance (1/ohm, aka S)
-* Capacitance (C/V, aka F)
-* Inductance (Wb/A, aka H)
-* Magnetic Flux (V.s, aka Wb)
-* Magnetic Flux Density (Wb/m^2, aka T)
-* Catalytic Activity (mol/s)
-* Concentration (mol/m^3)
-* Luminous Flux (cd.sr, aka lm)
-* Illuminance (lm/m^2, aka lux)
-* Radioactivity (1/s, aka Bq)
-* Absorbed Dose (J/kg, aka Gy)
-* Dose Equivalent (J/kg, aka Sv)
+| chemical                        | electromagnetic                       | geometry         | mechanical                      | nuclear                        |
+|---------------------------------|---------------------------------------|------------------|---------------------------------|--------------------------------|
+| Catalytic Activity (mol/s)      | Capacitance (C/V, aka F)              | Angle (rad)      | Acceleration (m/s^2)            | Absorbed Dose (J/kg, aka Gy)   |
+| Concentration (mol/m^3, aka mM) | Charge, aka Coulomb (A.s, aka C)      | Area (m^2)       | Angular Acceleration (rad/s^2)  | Dose Equivalent (J/kg, aka Sv) |
+|                                 | Conductance (1/ohm, aka S)            | Solid Angle (sr) | Angular Momentum (kg.m^2.rad/s) | Radioactivity (1/s, aka Bq)    |
+|                                 | Illuminance (lm/m^2, aka lux)         | Volume (m^3)     | Angular Velocity (rad/s)        |
+|                                 | Inductance (Wb/A, aka H)              |                  | Area Density (kg.m^2)           |
+|                                 | Luminous Flux (cd.sr, aka lm)         |                  | Density (kg/L)                  |
+|                                 | Magnetic Flux (V.s, aka Wb)           |                  | Energy (kg.m^2/s^2, aka J)      |
+|                                 | Magnetic Flux Density (Wb/m^2, aka T) |                  | Force (kg.m/s^2, aka N)         |
+|                                 | Resistance (V/A, aka Ohm)             |                  | Frequency (1/s, aka Hz)         |
+|                                 | Voltage (W/A, aka V)                  |                  | Moment of Inertia (kg.m^2)      |
+|                                 |                                       |                  | Momentum (kg.m/s)               |
+|                                 |                                       |                  | Power, aka Watt (J/s, aka W)    |
+|                                 |                                       |                  | Pressure (N/m^2, aka Pa)        |
+|                                 |                                       |                  | Torque (kg.m^2/s^2, aka N.m)    |
+|                                 |                                       |                  | Velocity (m/s)                  |
 
 ## What's NOT included?
 * Not supporting dimensional analysis
 * Not providing an exhaustive list of all possible unit types (but you can use 
-  this library to implement them yourself)
+  this library to implement your own)
 * Not supporting integer number types (use at your own risk)
 
 ## Features
@@ -73,7 +57,10 @@ enabled to provide additional compatibility:
 * **serde** - Adds [serde](https://crates.io/crates/serde) serialization/deserialization compatibility
 * **uom** - If enabled, then unit structs will implement`Into` and `From` trait
 to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)** types
-* **num-complex** - Adds `std::ops::Mul` and `std::ops::Div` implementations for multiplying and dividing 
+* **num-bigfloat** - Adds `std::ops::Mul` and `std::ops::Div` implementations
+  for multiplying and dividing unit structs by `num-bigfloat` scalar values
+* **num-complex** - Adds `std::ops::Mul` and `std::ops::Div` implementations
+  for multiplying and dividing unit structs by `num-complex` scalar values
 
 ## Quickstart guide
 TODO: quick tutorial
@@ -102,7 +89,7 @@ Here's a table comparing **simple-si-units** v1.0 and
 | Support for standard numnber types (eg f64)                       | ✅                                                           | ✅                                  |
 | Support for [num-bigfloat](https://crates.io/crates/num-rational) | ✅                                                           | ❌                                  |
 | Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                  |
-| Support for [num-rational](https://crates.io/crates/num-rational) | ❌**                                                         | ✅                                  |
+| Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                  |
 | Support for user-defined and other number types                   | ✅                                                           | ❌                                  |
 | Compile-time dimensional analysis                                 | ❌                                                           | ✅                                  |
 
