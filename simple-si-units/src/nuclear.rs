@@ -16,6 +16,7 @@ use num_bigfloat;
 use num_complex;
 
 
+
 /// The absorbed radiation dose unit type, defined as grays in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -204,6 +205,107 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = AbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: AbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = AbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: AbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = AbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = AbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = AbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: AbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = AbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: AbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = AbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		AbsorbedDose{Gy: self * rhs.Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = AbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
+	}
+}
+
 
 
 
@@ -399,6 +501,107 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = DoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: DoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = DoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: DoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = DoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = DoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = DoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: DoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = DoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: DoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = DoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		DoseEquivalent{Sv: self * rhs.Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = DoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
+	}
+}
+
 
 
 
@@ -633,6 +836,107 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Radioactivity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Radioactivity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Radioactivity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Radioactivity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Radioactivity<num_complex::Complex32>;
+	fn mul(self, rhs: Radioactivity<num_complex::Complex32>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Radioactivity<num_complex::Complex32>;
+	fn mul(self, rhs: Radioactivity<num_complex::Complex32>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Radioactivity<num_complex::Complex32>;
+	fn mul(self, rhs: &Radioactivity<num_complex::Complex32>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Radioactivity<num_complex::Complex32>;
+	fn mul(self, rhs: &Radioactivity<num_complex::Complex32>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Radioactivity<num_complex::Complex64>;
+	fn mul(self, rhs: Radioactivity<num_complex::Complex64>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Radioactivity<num_complex::Complex64>;
+	fn mul(self, rhs: Radioactivity<num_complex::Complex64>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Radioactivity<num_complex::Complex64>;
+	fn mul(self, rhs: &Radioactivity<num_complex::Complex64>) -> Self::Output {
+		Radioactivity{Bq: self * rhs.Bq.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Radioactivity<num_complex::Complex64>;
+	fn mul(self, rhs: &Radioactivity<num_complex::Complex64>) -> Self::Output {
+		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
+	}
+}
+
 
 
 /// Converts a Radioactivity into the equivalent [uom](https://crates.io/crates/uom) type [Radioactivity](https://docs.rs/uom/0.34.0/uom/si/f32/type.Radioactivity.html)

@@ -17,6 +17,7 @@ use num_bigfloat;
 use num_complex;
 
 
+
 /// The electrical capacitance unit type, defined as farads in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -153,6 +154,107 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Capacitance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
+		Capacitance{F: self * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Capacitance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Capacitance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
+		Capacitance{F: self * rhs.F.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Capacitance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Capacitance<num_complex::Complex32>;
+	fn mul(self, rhs: Capacitance<num_complex::Complex32>) -> Self::Output {
+		Capacitance{F: self * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Capacitance<num_complex::Complex32>;
+	fn mul(self, rhs: Capacitance<num_complex::Complex32>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Capacitance<num_complex::Complex32>;
+	fn mul(self, rhs: &Capacitance<num_complex::Complex32>) -> Self::Output {
+		Capacitance{F: self * rhs.F.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Capacitance<num_complex::Complex32>;
+	fn mul(self, rhs: &Capacitance<num_complex::Complex32>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Capacitance<num_complex::Complex64>;
+	fn mul(self, rhs: Capacitance<num_complex::Complex64>) -> Self::Output {
+		Capacitance{F: self * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Capacitance<num_complex::Complex64>;
+	fn mul(self, rhs: Capacitance<num_complex::Complex64>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Capacitance<num_complex::Complex64>;
+	fn mul(self, rhs: &Capacitance<num_complex::Complex64>) -> Self::Output {
+		Capacitance{F: self * rhs.F.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Capacitance<num_complex::Complex64>;
+	fn mul(self, rhs: &Capacitance<num_complex::Complex64>) -> Self::Output {
+		Capacitance{F: self.clone() * rhs.F.clone()}
+	}
+}
+
 
 
 /// Converts a Capacitance into the equivalent [uom](https://crates.io/crates/uom) type [Capacitance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Capacitance.html)
@@ -487,6 +589,107 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Charge<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Charge<num_bigfloat::BigFloat>) -> Self::Output {
+		Charge{C: self * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Charge<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Charge<num_bigfloat::BigFloat>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Charge<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Charge<num_bigfloat::BigFloat>) -> Self::Output {
+		Charge{C: self * rhs.C.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Charge<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Charge<num_bigfloat::BigFloat>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Charge<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Charge<num_complex::Complex32>;
+	fn mul(self, rhs: Charge<num_complex::Complex32>) -> Self::Output {
+		Charge{C: self * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Charge<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Charge<num_complex::Complex32>;
+	fn mul(self, rhs: Charge<num_complex::Complex32>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Charge<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Charge<num_complex::Complex32>;
+	fn mul(self, rhs: &Charge<num_complex::Complex32>) -> Self::Output {
+		Charge{C: self * rhs.C.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Charge<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Charge<num_complex::Complex32>;
+	fn mul(self, rhs: &Charge<num_complex::Complex32>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Charge<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Charge<num_complex::Complex64>;
+	fn mul(self, rhs: Charge<num_complex::Complex64>) -> Self::Output {
+		Charge{C: self * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Charge<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Charge<num_complex::Complex64>;
+	fn mul(self, rhs: Charge<num_complex::Complex64>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Charge<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Charge<num_complex::Complex64>;
+	fn mul(self, rhs: &Charge<num_complex::Complex64>) -> Self::Output {
+		Charge{C: self * rhs.C.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Charge<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Charge<num_complex::Complex64>;
+	fn mul(self, rhs: &Charge<num_complex::Complex64>) -> Self::Output {
+		Charge{C: self.clone() * rhs.C.clone()}
+	}
+}
+
 
 
 /// Converts a Charge into the equivalent [uom](https://crates.io/crates/uom) type [ElectricCharge](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricCharge.html)
@@ -915,6 +1118,107 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Conductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Conductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Conductance{S: self * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Conductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Conductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Conductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Conductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Conductance{S: self * rhs.S.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Conductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Conductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Conductance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Conductance<num_complex::Complex32>;
+	fn mul(self, rhs: Conductance<num_complex::Complex32>) -> Self::Output {
+		Conductance{S: self * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Conductance<num_complex::Complex32>;
+	fn mul(self, rhs: Conductance<num_complex::Complex32>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Conductance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Conductance<num_complex::Complex32>;
+	fn mul(self, rhs: &Conductance<num_complex::Complex32>) -> Self::Output {
+		Conductance{S: self * rhs.S.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Conductance<num_complex::Complex32>;
+	fn mul(self, rhs: &Conductance<num_complex::Complex32>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Conductance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Conductance<num_complex::Complex64>;
+	fn mul(self, rhs: Conductance<num_complex::Complex64>) -> Self::Output {
+		Conductance{S: self * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Conductance<num_complex::Complex64>;
+	fn mul(self, rhs: Conductance<num_complex::Complex64>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Conductance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Conductance<num_complex::Complex64>;
+	fn mul(self, rhs: &Conductance<num_complex::Complex64>) -> Self::Output {
+		Conductance{S: self * rhs.S.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Conductance<num_complex::Complex64>;
+	fn mul(self, rhs: &Conductance<num_complex::Complex64>) -> Self::Output {
+		Conductance{S: self.clone() * rhs.S.clone()}
+	}
+}
+
 
 
 /// Converts a Conductance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalConductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalConductance.html)
@@ -1468,6 +1772,107 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 }
 
 
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Illuminance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Illuminance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Illuminance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Illuminance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Illuminance<num_complex::Complex32>;
+	fn mul(self, rhs: Illuminance<num_complex::Complex32>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Illuminance<num_complex::Complex32>;
+	fn mul(self, rhs: Illuminance<num_complex::Complex32>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Illuminance<num_complex::Complex32>;
+	fn mul(self, rhs: &Illuminance<num_complex::Complex32>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Illuminance<num_complex::Complex32>;
+	fn mul(self, rhs: &Illuminance<num_complex::Complex32>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Illuminance<num_complex::Complex64>;
+	fn mul(self, rhs: Illuminance<num_complex::Complex64>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Illuminance<num_complex::Complex64>;
+	fn mul(self, rhs: Illuminance<num_complex::Complex64>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Illuminance<num_complex::Complex64>;
+	fn mul(self, rhs: &Illuminance<num_complex::Complex64>) -> Self::Output {
+		Illuminance{lux: self * rhs.lux.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Illuminance<num_complex::Complex64>;
+	fn mul(self, rhs: &Illuminance<num_complex::Complex64>) -> Self::Output {
+		Illuminance{lux: self.clone() * rhs.lux.clone()}
+	}
+}
+
+
+
 /// Converts a Illuminance into the equivalent [uom](https://crates.io/crates/uom) type [Luminance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Luminance.html)
 #[cfg(feature = "uom")]
 impl<T> Into<uom::si::f32::Luminance> for Illuminance<T> where T: NumLike+Into<f32> {
@@ -1654,6 +2059,107 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Inductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Inductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Inductance{H: self * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Inductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Inductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Inductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Inductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Inductance{H: self * rhs.H.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Inductance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Inductance<num_bigfloat::BigFloat>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Inductance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Inductance<num_complex::Complex32>;
+	fn mul(self, rhs: Inductance<num_complex::Complex32>) -> Self::Output {
+		Inductance{H: self * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Inductance<num_complex::Complex32>;
+	fn mul(self, rhs: Inductance<num_complex::Complex32>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Inductance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Inductance<num_complex::Complex32>;
+	fn mul(self, rhs: &Inductance<num_complex::Complex32>) -> Self::Output {
+		Inductance{H: self * rhs.H.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Inductance<num_complex::Complex32>;
+	fn mul(self, rhs: &Inductance<num_complex::Complex32>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Inductance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Inductance<num_complex::Complex64>;
+	fn mul(self, rhs: Inductance<num_complex::Complex64>) -> Self::Output {
+		Inductance{H: self * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Inductance<num_complex::Complex64>;
+	fn mul(self, rhs: Inductance<num_complex::Complex64>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Inductance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Inductance<num_complex::Complex64>;
+	fn mul(self, rhs: &Inductance<num_complex::Complex64>) -> Self::Output {
+		Inductance{H: self * rhs.H.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Inductance<num_complex::Complex64>;
+	fn mul(self, rhs: &Inductance<num_complex::Complex64>) -> Self::Output {
+		Inductance{H: self.clone() * rhs.H.clone()}
+	}
+}
+
 
 
 /// Converts a Inductance into the equivalent [uom](https://crates.io/crates/uom) type [Inductance](https://docs.rs/uom/0.34.0/uom/si/f32/type.Inductance.html)
@@ -1964,6 +2470,107 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 }
 
 
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = LuminousFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = LuminousFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = LuminousFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = LuminousFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = LuminousFlux<num_complex::Complex32>;
+	fn mul(self, rhs: LuminousFlux<num_complex::Complex32>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = LuminousFlux<num_complex::Complex32>;
+	fn mul(self, rhs: LuminousFlux<num_complex::Complex32>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = LuminousFlux<num_complex::Complex32>;
+	fn mul(self, rhs: &LuminousFlux<num_complex::Complex32>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = LuminousFlux<num_complex::Complex32>;
+	fn mul(self, rhs: &LuminousFlux<num_complex::Complex32>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = LuminousFlux<num_complex::Complex64>;
+	fn mul(self, rhs: LuminousFlux<num_complex::Complex64>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = LuminousFlux<num_complex::Complex64>;
+	fn mul(self, rhs: LuminousFlux<num_complex::Complex64>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = LuminousFlux<num_complex::Complex64>;
+	fn mul(self, rhs: &LuminousFlux<num_complex::Complex64>) -> Self::Output {
+		LuminousFlux{lm: self * rhs.lm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = LuminousFlux<num_complex::Complex64>;
+	fn mul(self, rhs: &LuminousFlux<num_complex::Complex64>) -> Self::Output {
+		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
+	}
+}
+
+
+
 
 // LuminousFlux / Luminosity -> SolidAngle
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
@@ -2208,6 +2815,107 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = MagneticFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = MagneticFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = MagneticFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = MagneticFlux<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = MagneticFlux<num_complex::Complex32>;
+	fn mul(self, rhs: MagneticFlux<num_complex::Complex32>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = MagneticFlux<num_complex::Complex32>;
+	fn mul(self, rhs: MagneticFlux<num_complex::Complex32>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = MagneticFlux<num_complex::Complex32>;
+	fn mul(self, rhs: &MagneticFlux<num_complex::Complex32>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = MagneticFlux<num_complex::Complex32>;
+	fn mul(self, rhs: &MagneticFlux<num_complex::Complex32>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = MagneticFlux<num_complex::Complex64>;
+	fn mul(self, rhs: MagneticFlux<num_complex::Complex64>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = MagneticFlux<num_complex::Complex64>;
+	fn mul(self, rhs: MagneticFlux<num_complex::Complex64>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = MagneticFlux<num_complex::Complex64>;
+	fn mul(self, rhs: &MagneticFlux<num_complex::Complex64>) -> Self::Output {
+		MagneticFlux{Wb: self * rhs.Wb.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = MagneticFlux<num_complex::Complex64>;
+	fn mul(self, rhs: &MagneticFlux<num_complex::Complex64>) -> Self::Output {
+		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
+	}
+}
+
 
 
 /// Converts a MagneticFlux into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFlux](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFlux.html)
@@ -2698,6 +3406,107 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 }
 
 
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = MagneticFluxDensity<num_complex::Complex32>;
+	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = MagneticFluxDensity<num_complex::Complex32>;
+	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = MagneticFluxDensity<num_complex::Complex32>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = MagneticFluxDensity<num_complex::Complex32>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = MagneticFluxDensity<num_complex::Complex64>;
+	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = MagneticFluxDensity<num_complex::Complex64>;
+	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = MagneticFluxDensity<num_complex::Complex64>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
+		MagneticFluxDensity{T: self * rhs.T.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = MagneticFluxDensity<num_complex::Complex64>;
+	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
+		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
+	}
+}
+
+
+
 /// Converts a MagneticFluxDensity into the equivalent [uom](https://crates.io/crates/uom) type [MagneticFluxDensity](https://docs.rs/uom/0.34.0/uom/si/f32/type.MagneticFluxDensity.html)
 #[cfg(feature = "uom")]
 impl<T> Into<uom::si::f32::MagneticFluxDensity> for MagneticFluxDensity<T> where T: NumLike+Into<f32> {
@@ -2884,6 +3693,107 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Resistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Resistance<num_bigfloat::BigFloat>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Resistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Resistance<num_bigfloat::BigFloat>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Resistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Resistance<num_bigfloat::BigFloat>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Resistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Resistance<num_bigfloat::BigFloat>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Resistance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Resistance<num_complex::Complex32>;
+	fn mul(self, rhs: Resistance<num_complex::Complex32>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Resistance<num_complex::Complex32>;
+	fn mul(self, rhs: Resistance<num_complex::Complex32>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Resistance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Resistance<num_complex::Complex32>;
+	fn mul(self, rhs: &Resistance<num_complex::Complex32>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Resistance<num_complex::Complex32>;
+	fn mul(self, rhs: &Resistance<num_complex::Complex32>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Resistance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Resistance<num_complex::Complex64>;
+	fn mul(self, rhs: Resistance<num_complex::Complex64>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Resistance<num_complex::Complex64>;
+	fn mul(self, rhs: Resistance<num_complex::Complex64>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Resistance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Resistance<num_complex::Complex64>;
+	fn mul(self, rhs: &Resistance<num_complex::Complex64>) -> Self::Output {
+		Resistance{Ohm: self * rhs.Ohm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Resistance<num_complex::Complex64>;
+	fn mul(self, rhs: &Resistance<num_complex::Complex64>) -> Self::Output {
+		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
+	}
+}
+
 
 
 /// Converts a Resistance into the equivalent [uom](https://crates.io/crates/uom) type [ElectricalResistance](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricalResistance.html)
@@ -3444,6 +4354,107 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 }
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Voltage<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Voltage<num_bigfloat::BigFloat>) -> Self::Output {
+		Voltage{V: self * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Voltage<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: Voltage<num_bigfloat::BigFloat>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = Voltage<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Voltage<num_bigfloat::BigFloat>) -> Self::Output {
+		Voltage{V: self * rhs.V.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = Voltage<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &Voltage<num_bigfloat::BigFloat>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Voltage<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Voltage<num_complex::Complex32>;
+	fn mul(self, rhs: Voltage<num_complex::Complex32>) -> Self::Output {
+		Voltage{V: self * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Voltage<num_complex::Complex32>;
+	fn mul(self, rhs: Voltage<num_complex::Complex32>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Voltage<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = Voltage<num_complex::Complex32>;
+	fn mul(self, rhs: &Voltage<num_complex::Complex32>) -> Self::Output {
+		Voltage{V: self * rhs.V.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = Voltage<num_complex::Complex32>;
+	fn mul(self, rhs: &Voltage<num_complex::Complex32>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Voltage<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Voltage<num_complex::Complex64>;
+	fn mul(self, rhs: Voltage<num_complex::Complex64>) -> Self::Output {
+		Voltage{V: self * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Voltage<num_complex::Complex64>;
+	fn mul(self, rhs: Voltage<num_complex::Complex64>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Voltage<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = Voltage<num_complex::Complex64>;
+	fn mul(self, rhs: &Voltage<num_complex::Complex64>) -> Self::Output {
+		Voltage{V: self * rhs.V.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl std::ops::Mul<&Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = Voltage<num_complex::Complex64>;
+	fn mul(self, rhs: &Voltage<num_complex::Complex64>) -> Self::Output {
+		Voltage{V: self.clone() * rhs.V.clone()}
+	}
+}
+
 
 
 /// Converts a Voltage into the equivalent [uom](https://crates.io/crates/uom) type [ElectricPotential](https://docs.rs/uom/0.34.0/uom/si/f32/type.ElectricPotential.html)
