@@ -64,7 +64,7 @@ to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)
 
 ## Quickstart guide
 ### Basic usage
-To use **simple-si-units**, just add `simple-si-units = "1"` to the `[dependencies]` 
+To use **simple-si-units**, just add `simple-si-units = "1.0"` to the `[dependencies]` 
 section of your `Cargo.toml` file, then import the units you need like this:
 ```rust
 use simple_si_units::base::*;
