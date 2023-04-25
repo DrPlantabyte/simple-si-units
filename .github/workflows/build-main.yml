@@ -1,14 +1,16 @@
 name: Build
 
 on:
-  push:
+  pull_request_review:
+    types: [submitted]
     branches: [ "main" ]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  approved:
+    if: github.event.review.state == 'approved'
 
     runs-on: ubuntu-latest
 
