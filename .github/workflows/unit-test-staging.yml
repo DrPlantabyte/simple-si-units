@@ -1,0 +1,27 @@
+name: Test-Staging
+
+on:
+  workflow_run:
+    workflows: ["Build-Staging"]
+    types:
+      - completed
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests for core
+      working-directory: ./simple-si-units-core
+      run: cargo test --verbose
+    - name: Run tests for macros
+      working-directory: ./simple-si-units-macros
+      run: cargo test --verbose
+    - name: Run tests
+      working-directory: ./simple-si-units
+      run: cargo test --verbose --all-features
