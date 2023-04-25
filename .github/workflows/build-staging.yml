@@ -1,10 +1,10 @@
-name: Build
+name: Build-Staging
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "staging" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "staging" ]
 
 env:
   CARGO_TERM_COLOR: always
