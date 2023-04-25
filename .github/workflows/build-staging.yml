@@ -1,8 +1,8 @@
-name: Build-Staging
+name: Build-Test
 
 on:
-  pull_request:
-    branches: [ "staging", "main" ]
+  push:
+    branches: [ "*", "!main" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -17,9 +17,18 @@ jobs:
     - name: Build core
       working-directory: ./simple-si-units-core
       run: cargo build --verbose
+    - name: Run tests for core
+      working-directory: ./simple-si-units-core
+      run: cargo test --verbose
     - name: Build macros
       working-directory: ./simple-si-units-macros
       run: cargo build --verbose
-    - name: Build
+    - name: Run tests for macros
+      working-directory: ./simple-si-units-macros
+      run: cargo test --verbose
+    - name: Build main library
       working-directory: ./simple-si-units
       run: cargo build --verbose --all-features
+    - name: Run main library tests
+      working-directory: ./simple-si-units
+      run: cargo test --verbose --all-features
