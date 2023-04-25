@@ -182,39 +182,6 @@ for that type (eg meters for Distance), and numerous to_* and from_* methods
 for converting to/from basic number types with a given unit of measure (eg 
 `Distance::from_km(1.72)`).
 
-### Roadmap
-The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
-
-* **V0.1.0** - Finish README and claim [crates.io](https://crates.io/) namespace
-* **V0.2.0** - Scope declaration
-* **V0.3.0** - Design API
-* **V0.4.0** - Unit and API tests
-* **V0.5.0** - Base SI units (length, mass, time, temperature, amount, electric current, luminosity)
-* **V0.6.0** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0** - Full coverage of all types of units
-* **V0.8.0** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
-* **V0.9.0** - Full documentation coverage
-* **V1.0.0** - Done
-
-
-## Roadmap
-The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
-
-* **V0.1.0 (Done!)** - Finish README and claim [crates.io](https://crates.io/) 
-  namespace
-* **V0.2.0 (Done!)** - Scope declaration
-* **V0.3.0 (Done!)** - Design API
-* **V0.4.0 (Done!)** - Unit and API tests
-* **V0.5.0 (Done!)** - Base SI units (distance, mass, time, temperature, amount, 
-  electric current, luminosity)
-* **V0.6.0 (Done!)** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0 (Done!)** - Full test coverage of all types of units
-* **V0.8.0 (Done!)** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
-* **V0.9.0 (In progress...)** - Full documentation coverage
-* **V1.0.0** - Done
-* **V1.1.0** - Add inverse of all provided units that don't already have an 
-  inverse equivalent (eg InverseArea = 1/Area)
-
 ## How it works
 For each type of unit (eg Distance), Simple SI Units provides a generic struct 
 to represent the unit and which implements common type conversion. For example, 
@@ -356,7 +323,7 @@ fn my_fn() -> Density<MyNumber>{
   return m / v;
 }
 ```
-It's higly recommended that you also implement the `std::ops::*` operators for 
+It's highly recommended that you also implement the `std::ops::*` operators for 
 all combinations of values and reference types (eg `X + X`, `X + &X`, `&X + X`, and `&X + &X`),
 as this will make your number type much easier to use and integrate with **simple-si-units**.
 

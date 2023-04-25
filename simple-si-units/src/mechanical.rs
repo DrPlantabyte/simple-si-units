@@ -65,11 +65,15 @@ impl<T> fmt::Display for Acceleration<T> where T: NumLike {
 impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this acceleration value in millimeters per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmps2(&self) -> T {
 		return self.mps2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new acceleration value from the given number of millimeters per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmps2` - Any number-like type, representing a quantity of millimeters per second squared
@@ -78,11 +82,15 @@ impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this acceleration value in kilometers per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kilometers_per_hour_squared(&self) -> T {
 		return self.mps2.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new acceleration value from the given number of kilometers per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kilometers_per_hour_squared` - Any number-like type, representing a quantity of kilometers per hour squared
@@ -91,11 +99,15 @@ impl<T> Acceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this acceleration value in kilometers per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kph2(&self) -> T {
 		return self.mps2.clone() * T::from(12960.0_f64);
 	}
 
 	/// Returns a new acceleration value from the given number of kilometers per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kph2` - Any number-like type, representing a quantity of kilometers per hour squared
@@ -465,11 +477,15 @@ impl<T> fmt::Display for AngularAcceleration<T> where T: NumLike {
 impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular acceleration value in degrees per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_degrees_per_second_squared(&self) -> T {
 		return self.radps2.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angular acceleration value from the given number of degrees per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `degrees_per_second_squared` - Any number-like type, representing a quantity of degrees per second squared
@@ -478,11 +494,15 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rps2(&self) -> T {
 		return self.radps2.clone() * T::from(0.159154943091895_f64);
 	}
 
 	/// Returns a new angular acceleration value from the given number of revolutions per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rps2` - Any number-like type, representing a quantity of revolutions per second squared
@@ -491,11 +511,15 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per minute squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rpm2(&self) -> T {
 		return self.radps2.clone() * T::from(572.957795130823_f64);
 	}
 
 	/// Returns a new angular acceleration value from the given number of revolutions per minute squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rpm2` - Any number-like type, representing a quantity of revolutions per minute squared
@@ -504,11 +528,15 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in degrees per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_degps2(&self) -> T {
 		return self.radps2.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angular acceleration value from the given number of degrees per second squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `degps2` - Any number-like type, representing a quantity of degrees per second squared
@@ -517,11 +545,15 @@ impl<T> AngularAcceleration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular acceleration value in revolutions per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rph2(&self) -> T {
 		return self.radps2.clone() * T::from(2062648.06247096_f64);
 	}
 
 	/// Returns a new angular acceleration value from the given number of revolutions per hour squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rph2` - Any number-like type, representing a quantity of revolutions per hour squared
@@ -801,11 +833,15 @@ impl<T> fmt::Display for AngularMomentum<T> where T: NumLike {
 impl<T> AngularMomentum<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular momentum value in gram cm squared radians per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gcm2radps(&self) -> T {
 		return self.kgm2radps.clone() * T::from(10000000.0_f64);
 	}
 
 	/// Returns a new angular momentum value from the given number of gram cm squared radians per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gcm2radps` - Any number-like type, representing a quantity of gram cm squared radians per second
@@ -993,11 +1029,15 @@ impl<T> fmt::Display for AngularVelocity<T> where T: NumLike {
 impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angular velocity value in degrees per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_degrees_per_second(&self) -> T {
 		return self.radps.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angular velocity value from the given number of degrees per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `degrees_per_second` - Any number-like type, representing a quantity of degrees per second
@@ -1006,11 +1046,15 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in degrees per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_degps(&self) -> T {
 		return self.radps.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angular velocity value from the given number of degrees per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `degps` - Any number-like type, representing a quantity of degrees per second
@@ -1019,11 +1063,15 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rps(&self) -> T {
 		return self.radps.clone() * T::from(0.159154943091895_f64);
 	}
 
 	/// Returns a new angular velocity value from the given number of revolutions per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rps` - Any number-like type, representing a quantity of revolutions per second
@@ -1032,11 +1080,15 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per minute
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rpm(&self) -> T {
 		return self.radps.clone() * T::from(9.54929658551372_f64);
 	}
 
 	/// Returns a new angular velocity value from the given number of revolutions per minute
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rpm` - Any number-like type, representing a quantity of revolutions per minute
@@ -1045,11 +1097,15 @@ impl<T> AngularVelocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angular velocity value in revolutions per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rph(&self) -> T {
 		return self.radps.clone() * T::from(572.957795130823_f64);
 	}
 
 	/// Returns a new angular velocity value from the given number of revolutions per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rph` - Any number-like type, representing a quantity of revolutions per hour
@@ -1449,11 +1505,15 @@ impl<T> fmt::Display for AreaDensity<T> where T: NumLike {
 impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this area density value in grams per square meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gpm2(&self) -> T {
 		return self.kgpm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gpm2` - Any number-like type, representing a quantity of grams per square meter
@@ -1462,11 +1522,15 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area density value in grams per square meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_grams_per_square_meter(&self) -> T {
 		return self.kgpm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `grams_per_square_meter` - Any number-like type, representing a quantity of grams per square meter
@@ -1475,11 +1539,15 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area density value in grams per square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gpcm2(&self) -> T {
 		return self.kgpm2.clone() * T::from(0.1_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gpcm2` - Any number-like type, representing a quantity of grams per square cm
@@ -1488,11 +1556,15 @@ impl<T> AreaDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area density value in grams per square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_grams_per_square_cm(&self) -> T {
 		return self.kgpm2.clone() * T::from(0.1_f64);
 	}
 
 	/// Returns a new area density value from the given number of grams per square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `grams_per_square_cm` - Any number-like type, representing a quantity of grams per square cm
@@ -1802,11 +1874,15 @@ impl<T> fmt::Display for Density<T> where T: NumLike {
 impl<T> Density<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this density value in kilograms per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kgpL(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new density value from the given number of kilograms per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kgpL` - Any number-like type, representing a quantity of kilograms per liter
@@ -1815,11 +1891,15 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in kilograms per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kilograms_per_liter(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new density value from the given number of kilograms per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kilograms_per_liter` - Any number-like type, representing a quantity of kilograms per liter
@@ -1828,11 +1908,15 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cc
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gpcc(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new density value from the given number of grams per cc
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gpcc` - Any number-like type, representing a quantity of grams per cc
@@ -1841,11 +1925,15 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cc
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_grams_per_cubic_centimeter(&self) -> T {
 		return self.kgpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new density value from the given number of grams per cc
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `grams_per_cubic_centimeter` - Any number-like type, representing a quantity of grams per cc
@@ -1854,11 +1942,15 @@ impl<T> Density<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this density value in grams per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gpm3(&self) -> T {
 		return self.kgpm3.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new density value from the given number of grams per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gpm3` - Any number-like type, representing a quantity of grams per cubic meter
@@ -2108,11 +2200,15 @@ impl<T> fmt::Display for Energy<T> where T: NumLike {
 impl<T> Energy<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this energy value in millijoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mJ(&self) -> T {
 		return self.J.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new energy value from the given number of millijoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mJ` - Any number-like type, representing a quantity of millijoules
@@ -2121,11 +2217,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in microjoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uJ(&self) -> T {
 		return self.J.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new energy value from the given number of microjoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uJ` - Any number-like type, representing a quantity of microjoules
@@ -2134,11 +2234,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in nanojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nJ(&self) -> T {
 		return self.J.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new energy value from the given number of nanojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nJ` - Any number-like type, representing a quantity of nanojoules
@@ -2147,11 +2251,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kJ(&self) -> T {
 		return self.J.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new energy value from the given number of kilojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kJ` - Any number-like type, representing a quantity of kilojoules
@@ -2160,11 +2268,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in megajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MJ(&self) -> T {
 		return self.J.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new energy value from the given number of megajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MJ` - Any number-like type, representing a quantity of megajoules
@@ -2173,11 +2285,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in gigajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GJ(&self) -> T {
 		return self.J.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new energy value from the given number of gigajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GJ` - Any number-like type, representing a quantity of gigajoules
@@ -2186,11 +2302,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in calories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_cal(&self) -> T {
 		return self.J.clone() * T::from(0.239005736137667_f64);
 	}
 
 	/// Returns a new energy value from the given number of calories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `cal` - Any number-like type, representing a quantity of calories
@@ -2199,11 +2319,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilocalories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kcal(&self) -> T {
 		return self.J.clone() * T::from(0.0002390057361376_f64);
 	}
 
 	/// Returns a new energy value from the given number of kilocalories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kcal` - Any number-like type, representing a quantity of kilocalories
@@ -2212,11 +2336,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in watt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Whr(&self) -> T {
 		return self.J.clone() * T::from(0.0002777777777777_f64);
 	}
 
 	/// Returns a new energy value from the given number of watt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Whr` - Any number-like type, representing a quantity of watt-hours
@@ -2225,11 +2353,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in kilowatt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kWhr(&self) -> T {
 		return self.J.clone() * T::from(2.77777777777778e-07_f64);
 	}
 
 	/// Returns a new energy value from the given number of kilowatt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kWhr` - Any number-like type, representing a quantity of kilowatt-hours
@@ -2238,11 +2370,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in electron-volts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_eV(&self) -> T {
 		return self.J.clone() * T::from(6.24150907446076e+18_f64);
 	}
 
 	/// Returns a new energy value from the given number of electron-volts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `eV` - Any number-like type, representing a quantity of electron-volts
@@ -2251,11 +2387,15 @@ impl<T> Energy<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this energy value in british thermal units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_BTU(&self) -> T {
 		return self.J.clone() * T::from(0.0009478672985781_f64);
 	}
 
 	/// Returns a new energy value from the given number of british thermal units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `BTU` - Any number-like type, representing a quantity of british thermal units
@@ -2895,11 +3035,15 @@ impl<T> fmt::Display for Force<T> where T: NumLike {
 impl<T> Force<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this force value in pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_lb(&self) -> T {
 		return self.N.clone() * T::from(0.224337566199999_f64);
 	}
 
 	/// Returns a new force value from the given number of pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `lb` - Any number-like type, representing a quantity of pounds
@@ -2908,11 +3052,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in kilogram-force
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kgG(&self) -> T {
 		return self.N.clone() * T::from(0.101971620999999_f64);
 	}
 
 	/// Returns a new force value from the given number of kilogram-force
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kgG` - Any number-like type, representing a quantity of kilogram-force
@@ -2921,11 +3069,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in millinewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mN(&self) -> T {
 		return self.N.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new force value from the given number of millinewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mN` - Any number-like type, representing a quantity of millinewtons
@@ -2934,11 +3086,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in micronewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uN(&self) -> T {
 		return self.N.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new force value from the given number of micronewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uN` - Any number-like type, representing a quantity of micronewtons
@@ -2947,11 +3103,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in nanonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nN(&self) -> T {
 		return self.N.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new force value from the given number of nanonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nN` - Any number-like type, representing a quantity of nanonewtons
@@ -2960,11 +3120,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in kilonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kN(&self) -> T {
 		return self.N.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new force value from the given number of kilonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kN` - Any number-like type, representing a quantity of kilonewtons
@@ -2973,11 +3137,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in meganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MN(&self) -> T {
 		return self.N.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new force value from the given number of meganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MN` - Any number-like type, representing a quantity of meganewtons
@@ -2986,11 +3154,15 @@ impl<T> Force<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this force value in giganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GN(&self) -> T {
 		return self.N.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new force value from the given number of giganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GN` - Any number-like type, representing a quantity of giganewtons
@@ -3450,11 +3622,15 @@ impl<T> fmt::Display for Frequency<T> where T: NumLike {
 impl<T> Frequency<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this frequency value in kilohertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kHz(&self) -> T {
 		return self.Hz.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new frequency value from the given number of kilohertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kHz` - Any number-like type, representing a quantity of kilohertz
@@ -3463,11 +3639,15 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in megahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MHz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new frequency value from the given number of megahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MHz` - Any number-like type, representing a quantity of megahertz
@@ -3476,11 +3656,15 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in gigahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GHz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new frequency value from the given number of gigahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GHz` - Any number-like type, representing a quantity of gigahertz
@@ -3489,11 +3673,15 @@ impl<T> Frequency<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this frequency value in terahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_THz(&self) -> T {
 		return self.Hz.clone() * T::from(1e-12_f64);
 	}
 
 	/// Returns a new frequency value from the given number of terahertz
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `THz` - Any number-like type, representing a quantity of terahertz
@@ -4265,11 +4453,15 @@ impl<T> fmt::Display for MomentOfInertia<T> where T: NumLike {
 impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this moment of inertia value in gram cm squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gcm2(&self) -> T {
 		return self.kgm2.clone() * T::from(0.1_f64);
 	}
 
 	/// Returns a new moment of inertia value from the given number of gram cm squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gcm2` - Any number-like type, representing a quantity of gram cm squared
@@ -4278,11 +4470,15 @@ impl<T> MomentOfInertia<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this moment of inertia value in gram meters squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gm2(&self) -> T {
 		return self.kgm2.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new moment of inertia value from the given number of gram meters squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gm2` - Any number-like type, representing a quantity of gram meters squared
@@ -4562,11 +4758,15 @@ impl<T> fmt::Display for Momentum<T> where T: NumLike {
 impl<T> Momentum<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this momentum value in gram centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gram_centimeters_per_second(&self) -> T {
 		return self.kgmps.clone() * T::from(100000.0_f64);
 	}
 
 	/// Returns a new momentum value from the given number of gram centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gram_centimeters_per_second` - Any number-like type, representing a quantity of gram centimeters per second
@@ -4575,11 +4775,15 @@ impl<T> Momentum<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this momentum value in gram centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_gcmps(&self) -> T {
 		return self.kgmps.clone() * T::from(100000.0_f64);
 	}
 
 	/// Returns a new momentum value from the given number of gram centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `gcmps` - Any number-like type, representing a quantity of gram centimeters per second
@@ -4979,11 +5183,15 @@ impl<T> fmt::Display for Power<T> where T: NumLike {
 impl<T> Power<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this power value in milliwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mW(&self) -> T {
 		return self.W.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new power value from the given number of milliwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mW` - Any number-like type, representing a quantity of milliwatts
@@ -4992,11 +5200,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in microwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uW(&self) -> T {
 		return self.W.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new power value from the given number of microwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uW` - Any number-like type, representing a quantity of microwatts
@@ -5005,11 +5217,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in nanowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nW(&self) -> T {
 		return self.W.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new power value from the given number of nanowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nW` - Any number-like type, representing a quantity of nanowatts
@@ -5018,11 +5234,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in kilowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kW(&self) -> T {
 		return self.W.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new power value from the given number of kilowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kW` - Any number-like type, representing a quantity of kilowatts
@@ -5031,11 +5251,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in megawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MW(&self) -> T {
 		return self.W.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new power value from the given number of megawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MW` - Any number-like type, representing a quantity of megawatts
@@ -5044,11 +5268,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in gigawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GW(&self) -> T {
 		return self.W.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new power value from the given number of gigawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GW` - Any number-like type, representing a quantity of gigawatts
@@ -5057,11 +5285,15 @@ impl<T> Power<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this power value in horse power
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_horsepower(&self) -> T {
 		return self.W.clone() * T::from(0.0013410218586563_f64);
 	}
 
 	/// Returns a new power value from the given number of horse power
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `horsepower` - Any number-like type, representing a quantity of horse power
@@ -5551,11 +5783,15 @@ impl<T> fmt::Display for Pressure<T> where T: NumLike {
 impl<T> Pressure<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this pressure value in pounds per square inch
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_psi(&self) -> T {
 		return self.Pa.clone() * T::from(0.00014503773773_f64);
 	}
 
 	/// Returns a new pressure value from the given number of pounds per square inch
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `psi` - Any number-like type, representing a quantity of pounds per square inch
@@ -5564,11 +5800,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in millipascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new pressure value from the given number of millipascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mPa` - Any number-like type, representing a quantity of millipascals
@@ -5577,11 +5817,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in micropascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new pressure value from the given number of micropascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uPa` - Any number-like type, representing a quantity of micropascals
@@ -5590,11 +5834,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in nanopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nPa(&self) -> T {
 		return self.Pa.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new pressure value from the given number of nanopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nPa` - Any number-like type, representing a quantity of nanopascals
@@ -5603,11 +5851,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in kilopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kPa(&self) -> T {
 		return self.Pa.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new pressure value from the given number of kilopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kPa` - Any number-like type, representing a quantity of kilopascals
@@ -5616,11 +5868,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in megapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MPa(&self) -> T {
 		return self.Pa.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new pressure value from the given number of megapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MPa` - Any number-like type, representing a quantity of megapascals
@@ -5629,11 +5885,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in gigapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GPa(&self) -> T {
 		return self.Pa.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new pressure value from the given number of gigapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GPa` - Any number-like type, representing a quantity of gigapascals
@@ -5642,11 +5902,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in hectopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_hPa(&self) -> T {
 		return self.Pa.clone() * T::from(0.01_f64);
 	}
 
 	/// Returns a new pressure value from the given number of hectopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `hPa` - Any number-like type, representing a quantity of hectopascals
@@ -5655,11 +5919,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in bar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_bar(&self) -> T {
 		return self.Pa.clone() * T::from(1e-05_f64);
 	}
 
 	/// Returns a new pressure value from the given number of bar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `bar` - Any number-like type, representing a quantity of bar
@@ -5668,11 +5936,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in millibar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mbar(&self) -> T {
 		return self.Pa.clone() * T::from(0.01_f64);
 	}
 
 	/// Returns a new pressure value from the given number of millibar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mbar` - Any number-like type, representing a quantity of millibar
@@ -5681,11 +5953,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in atmospheres
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_atm(&self) -> T {
 		return self.Pa.clone() * T::from(9.86923266716013e-06_f64);
 	}
 
 	/// Returns a new pressure value from the given number of atmospheres
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `atm` - Any number-like type, representing a quantity of atmospheres
@@ -5694,11 +5970,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in torr
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_torr(&self) -> T {
 		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
 	/// Returns a new pressure value from the given number of torr
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `torr` - Any number-like type, representing a quantity of torr
@@ -5707,11 +5987,15 @@ impl<T> Pressure<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this pressure value in mm Hg
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmHg(&self) -> T {
 		return self.Pa.clone() * T::from(0.007500616827039_f64);
 	}
 
 	/// Returns a new pressure value from the given number of mm Hg
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmHg` - Any number-like type, representing a quantity of mm Hg
@@ -6021,11 +6305,15 @@ impl<T> fmt::Display for Torque<T> where T: NumLike {
 impl<T> Torque<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this torque value in foot-pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ftlb(&self) -> T {
 		return self.Nm.clone() * T::from(0.73756214927727_f64);
 	}
 
 	/// Returns a new torque value from the given number of foot-pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ftlb` - Any number-like type, representing a quantity of foot-pounds
@@ -6605,11 +6893,15 @@ impl<T> fmt::Display for Velocity<T> where T: NumLike {
 impl<T> Velocity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this velocity value in centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_cmps(&self) -> T {
 		return self.mps.clone() * T::from(100.0_f64);
 	}
 
 	/// Returns a new velocity value from the given number of centimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `cmps` - Any number-like type, representing a quantity of centimeters per second
@@ -6618,11 +6910,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in millimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmps(&self) -> T {
 		return self.mps.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new velocity value from the given number of millimeters per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmps` - Any number-like type, representing a quantity of millimeters per second
@@ -6631,11 +6927,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in millimeters per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmph(&self) -> T {
 		return self.mps.clone() * T::from(3600000.0_f64);
 	}
 
 	/// Returns a new velocity value from the given number of millimeters per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmph` - Any number-like type, representing a quantity of millimeters per hour
@@ -6644,11 +6944,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in kilometers per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kph(&self) -> T {
 		return self.mps.clone() * T::from(3.6_f64);
 	}
 
 	/// Returns a new velocity value from the given number of kilometers per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kph` - Any number-like type, representing a quantity of kilometers per hour
@@ -6657,11 +6961,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in miles per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mph(&self) -> T {
 		return self.mps.clone() * T::from(2.2369362920544_f64);
 	}
 
 	/// Returns a new velocity value from the given number of miles per hour
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mph` - Any number-like type, representing a quantity of miles per hour
@@ -6670,11 +6978,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in kilometers per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kmps(&self) -> T {
 		return self.mps.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new velocity value from the given number of kilometers per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kmps` - Any number-like type, representing a quantity of kilometers per second
@@ -6683,11 +6995,15 @@ impl<T> Velocity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this velocity value in light speed
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_c(&self) -> T {
 		return self.mps.clone() * T::from(3.3356409519815204e-09_f64);
 	}
 
 	/// Returns a new velocity value from the given number of light speed
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `c` - Any number-like type, representing a quantity of light speed

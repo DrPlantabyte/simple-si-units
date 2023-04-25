@@ -68,11 +68,15 @@ NON_COEFFICIENT_TO_FROM_TEMPLATE = '''
 
 TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_%(unit symbol)s(&self) -> T {
 		return (self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64)) - T::from(%(offset)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s
@@ -83,11 +87,15 @@ TO_FROM_SLOPE_OFFSET_TEMPLATE = '''
 
 TO_FROM_SLOPE_TEMPLATE = '''
 	/// Returns a copy of this %(desc name)s value in %(unit name)s
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_%(unit symbol)s(&self) -> T {
 		return self.%(si unit symbol)s.clone() * T::from(%(inverse slope)s_f64);
 	}
 
 	/// Returns a new %(desc name)s value from the given number of %(unit name)s
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `%(unit symbol)s` - Any number-like type, representing a quantity of %(unit name)s

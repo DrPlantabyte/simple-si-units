@@ -62,11 +62,15 @@ impl<T> fmt::Display for AbsorbedDose<T> where T: NumLike {
 impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this absorbed dose value in milligrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of milligrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mGy` - Any number-like type, representing a quantity of milligrays
@@ -75,11 +79,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in micrograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of micrograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uGy` - Any number-like type, representing a quantity of micrograys
@@ -88,11 +96,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in nanograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nGy(&self) -> T {
 		return self.Gy.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of nanograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nGy` - Any number-like type, representing a quantity of nanograys
@@ -101,11 +113,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in kilograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kGy(&self) -> T {
 		return self.Gy.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of kilograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kGy` - Any number-like type, representing a quantity of kilograys
@@ -114,11 +130,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in megagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MGy(&self) -> T {
 		return self.Gy.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of megagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MGy` - Any number-like type, representing a quantity of megagrays
@@ -127,11 +147,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in gigagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GGy(&self) -> T {
 		return self.Gy.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of gigagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GGy` - Any number-like type, representing a quantity of gigagrays
@@ -140,11 +164,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in rads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rad(&self) -> T {
 		return self.Gy.clone() * T::from(100.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of rads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rad` - Any number-like type, representing a quantity of rads
@@ -153,11 +181,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in kilorads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_krad(&self) -> T {
 		return self.Gy.clone() * T::from(0.1_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of kilorads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `krad` - Any number-like type, representing a quantity of kilorads
@@ -166,11 +198,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in millirads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mrad(&self) -> T {
 		return self.Gy.clone() * T::from(100000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of millirads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mrad` - Any number-like type, representing a quantity of millirads
@@ -179,11 +215,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in microrads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_urad(&self) -> T {
 		return self.Gy.clone() * T::from(100000000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of microrads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `urad` - Any number-like type, representing a quantity of microrads
@@ -192,11 +232,15 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this absorbed dose value in ergs per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_erg(&self) -> T {
 		return self.Gy.clone() * T::from(10000.0_f64);
 	}
 
 	/// Returns a new absorbed dose value from the given number of ergs per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `erg` - Any number-like type, representing a quantity of ergs per gram
@@ -384,11 +428,15 @@ impl<T> fmt::Display for DoseEquivalent<T> where T: NumLike {
 impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this dose equivalent value in millisieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of millisieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mSv` - Any number-like type, representing a quantity of millisieverts
@@ -397,11 +445,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in microsieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of microsieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uSv` - Any number-like type, representing a quantity of microsieverts
@@ -410,11 +462,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in nanosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nSv(&self) -> T {
 		return self.Sv.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of nanosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nSv` - Any number-like type, representing a quantity of nanosieverts
@@ -423,11 +479,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in kilosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kSv(&self) -> T {
 		return self.Sv.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of kilosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kSv` - Any number-like type, representing a quantity of kilosieverts
@@ -436,11 +496,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in megasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MSv(&self) -> T {
 		return self.Sv.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of megasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MSv` - Any number-like type, representing a quantity of megasieverts
@@ -449,11 +513,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in gigasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GSv(&self) -> T {
 		return self.Sv.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of gigasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GSv` - Any number-like type, representing a quantity of gigasieverts
@@ -462,11 +530,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in roentgen equivalent man
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_rem(&self) -> T {
 		return self.Sv.clone() * T::from(100.0_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of roentgen equivalent man
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `rem` - Any number-like type, representing a quantity of roentgen equivalent man
@@ -475,11 +547,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in milli-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mrem(&self) -> T {
 		return self.Sv.clone() * T::from(100000.0_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of milli-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mrem` - Any number-like type, representing a quantity of milli-roentgen equivalents
@@ -488,11 +564,15 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this dose equivalent value in kilo-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_krem(&self) -> T {
 		return self.Sv.clone() * T::from(0.1_f64);
 	}
 
 	/// Returns a new dose equivalent value from the given number of kilo-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `krem` - Any number-like type, representing a quantity of kilo-roentgen equivalents
@@ -680,11 +760,15 @@ impl<T> fmt::Display for Radioactivity<T> where T: NumLike {
 impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this radioactivity value in millibecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of millibecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mBq` - Any number-like type, representing a quantity of millibecquerels
@@ -693,11 +777,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in microbecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of microbecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uBq` - Any number-like type, representing a quantity of microbecquerels
@@ -706,11 +794,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in nanobecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nBq(&self) -> T {
 		return self.Bq.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of nanobecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nBq` - Any number-like type, representing a quantity of nanobecquerels
@@ -719,11 +811,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in kilobecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kBq(&self) -> T {
 		return self.Bq.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of kilobecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kBq` - Any number-like type, representing a quantity of kilobecquerels
@@ -732,11 +828,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in megabecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MBq(&self) -> T {
 		return self.Bq.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of megabecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MBq` - Any number-like type, representing a quantity of megabecquerels
@@ -745,11 +845,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in gigabecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GBq(&self) -> T {
 		return self.Bq.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of gigabecquerels
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GBq` - Any number-like type, representing a quantity of gigabecquerels
@@ -758,11 +862,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in curies
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Ci(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-11_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of curies
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Ci` - Any number-like type, representing a quantity of curies
@@ -771,11 +879,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in millicuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mCi(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-08_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of millicuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mCi` - Any number-like type, representing a quantity of millicuries
@@ -784,11 +896,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in microcuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uCi(&self) -> T {
 		return self.Bq.clone() * T::from(2.7027027027027e-05_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of microcuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uCi` - Any number-like type, representing a quantity of microcuries
@@ -797,11 +913,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in nanocuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nCi(&self) -> T {
 		return self.Bq.clone() * T::from(0.027027027027027_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of nanocuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nCi` - Any number-like type, representing a quantity of nanocuries
@@ -810,11 +930,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in picocuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pCi(&self) -> T {
 		return self.Bq.clone() * T::from(27.027027027027_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of picocuries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pCi` - Any number-like type, representing a quantity of picocuries
@@ -823,11 +947,15 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this radioactivity value in rutherfords
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Rd(&self) -> T {
 		return self.Bq.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new radioactivity value from the given number of rutherfords
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Rd` - Any number-like type, representing a quantity of rutherfords

@@ -17,10 +17,9 @@ This is an ergonomic trait bundle that combines the following:
 * std::ops::Div
 * std::ops::DivAssign
 * std::ops::Neg
-* Sized
 * Clone
-* Debug
-* Display
+* std::fmt::Debug
+* std::fmt::Display
 
 Thus you can use this trait as part of a struct or function template definition, like this:
 
@@ -30,14 +29,14 @@ pub struct MyUnit<DT: NumLike> {
     v: DT,
 }
 
-impl<DT: simple_si_units_core::NumLike> std::ops::Add<Self> for MyUnit<DT> {
+impl<DT: NumLike> std::ops::Add<Self> for MyUnit<DT> {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {
         return Self { v: self.v + rhs.v };
     }
 }
 
-impl<DT: simple_si_units_core::NumLike> std::ops::Sub<Self> for MyUnit<DT> {
+impl<DT: NumLike> std::ops::Sub<Self> for MyUnit<DT> {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self::Output {
         return Self { v: self.v - rhs.v };
