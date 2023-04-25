@@ -206,24 +206,6 @@ mod uom_version {
 }
 ```
 
-## Roadmap
-The version of this library will be incremented to reflect progress through the various milestones. The goal is to reach version 1.0 (API stable) as quickly as practical.
-
-* **V0.1.0 (Done!)** - Finish README and claim [crates.io](https://crates.io/) 
-  namespace
-* **V0.2.0 (Done!)** - Scope declaration
-* **V0.3.0 (Done!)** - Design API
-* **V0.4.0 (Done!)** - Unit and API tests
-* **V0.5.0 (Done!)** - Base SI units (distance, mass, time, temperature, amount, 
-  electric current, luminosity)
-* **V0.6.0 (Done!)** - Common secondary units (velocity, acceleration, energy, etc.)
-* **V0.7.0 (Done!)** - Full test coverage of all types of units
-* **V0.8.0 (Done!)** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
-* **V0.9.0 (Done!)** - Full documentation coverage
-* **V1.0.0** (Release coming soon...) - Done
-* **V1.1.0** - Add inverse of all provided units that don't already have an 
-  inverse equivalent (eg InverseArea = 1/Area)
-
 ## How it works
 For each type of unit (eg Distance), Simple SI Units provides a generic struct 
 to represent the unit and which implements common type conversion. For example, 
