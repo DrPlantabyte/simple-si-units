@@ -219,8 +219,8 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.6.0 (Done!)** - Common secondary units (velocity, acceleration, energy, etc.)
 * **V0.7.0 (Done!)** - Full test coverage of all types of units
 * **V0.8.0 (Done!)** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
-* **V0.9.0 (In progress...)** - Full documentation coverage
-* **V1.0.0** - Done
+* **V0.9.0 (Done!)** - Full documentation coverage
+* **V1.0.0** (Release coming soon...) - Done
 * **V1.1.0** - Add inverse of all provided units that don't already have an 
   inverse equivalent (eg InverseArea = 1/Area)
 
