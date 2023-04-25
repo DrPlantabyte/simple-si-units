@@ -1,7 +1,46 @@
 #![allow(non_snake_case)]
 #![warn(missing_docs)]
 #![ doc = include_str!("../README.md")]
+
+/// This derive macro automatically 
+/// derives all of the relevant mathematical operators for the derived struct,
+/// so long as that struct contains only a single named field. 
+/// 
+/// For example:
+/// 
+/// ```rust
+/// use simple_si_units::{UnitStruct, NumLike};
+/// 
+/// #[derive(UnitStruct, Debug, Clone)]
+/// struct HyperVelocity<T: NumLike>{
+///   square_meters_per_second: T
+/// }
+/// 
+/// fn weighted_hypervel_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T>
+///   where T:NumLike + From<f64>
+/// {
+///   return weight*a + (1.-weight)*b;
+/// }
+/// ```
 pub use simple_si_units_macros::UnitStruct;
+/// The `NumLike` trait is just a shorthand definition for any "number-like" 
+/// type in Rust. "Number-like" means that a type implements the traits for 
+/// standard arithmatic (Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, 
+/// DivAssign, and Neg), plus Clone, Debug, and Display. Most number types also
+/// implement the Copy marker trait, but that is not required (for example, an 
+/// arbitrary-precision number type must dynamically allocate memory and thus 
+/// cannot implement Copy).
+/// 
+/// This trait is not meant to be implemented, just for making generic type 
+/// templates more ergonomic. E.g.
+/// ```rust
+/// use simple_si_units::NumLike;
+/// 
+/// fn delta_squared<T>(a: T, b: T) -> T where T: NumLike {
+///   let delta = b - a;
+///   return delta.clone() * delta;
+/// }
+/// ```
 pub use simple_si_units_core::NumLike;
 // NOTE: test with: RUST_BACKTRACE=full cargo clean && cargo test --all-features
 

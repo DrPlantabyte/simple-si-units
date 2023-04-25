@@ -63,11 +63,15 @@ impl<T> fmt::Display for Capacitance<T> where T: NumLike {
 impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical capacitance value in millifarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mF(&self) -> T {
 		return self.F.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of millifarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mF` - Any number-like type, representing a quantity of millifarads
@@ -76,11 +80,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in microfarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uF(&self) -> T {
 		return self.F.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of microfarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uF` - Any number-like type, representing a quantity of microfarads
@@ -89,11 +97,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in nanofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nF(&self) -> T {
 		return self.F.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of nanofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nF` - Any number-like type, representing a quantity of nanofarads
@@ -102,11 +114,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in picofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pF(&self) -> T {
 		return self.F.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of picofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pF` - Any number-like type, representing a quantity of picofarads
@@ -115,11 +131,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in kilofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kF(&self) -> T {
 		return self.F.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of kilofarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kF` - Any number-like type, representing a quantity of kilofarads
@@ -128,11 +148,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in megafarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MF(&self) -> T {
 		return self.F.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of megafarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MF` - Any number-like type, representing a quantity of megafarads
@@ -141,11 +165,15 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical capacitance value in gigafarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GF(&self) -> T {
 		return self.F.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical capacitance value from the given number of gigafarads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GF` - Any number-like type, representing a quantity of gigafarads
@@ -485,11 +513,15 @@ impl<T> fmt::Display for Charge<T> where T: NumLike {
 impl<T> Charge<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electric charge value in millicoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mC(&self) -> T {
 		return self.C.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of millicoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mC` - Any number-like type, representing a quantity of millicoulombs
@@ -498,11 +530,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in microcoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uC(&self) -> T {
 		return self.C.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of microcoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uC` - Any number-like type, representing a quantity of microcoulombs
@@ -511,11 +547,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in nanocoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nC(&self) -> T {
 		return self.C.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of nanocoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nC` - Any number-like type, representing a quantity of nanocoulombs
@@ -524,11 +564,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in kilocoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kC(&self) -> T {
 		return self.C.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of kilocoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kC` - Any number-like type, representing a quantity of kilocoulombs
@@ -537,11 +581,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in megacoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MC(&self) -> T {
 		return self.C.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of megacoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MC` - Any number-like type, representing a quantity of megacoulombs
@@ -550,11 +598,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in gigacoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GC(&self) -> T {
 		return self.C.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of gigacoulombs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GC` - Any number-like type, representing a quantity of gigacoulombs
@@ -563,11 +615,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in proton
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_p(&self) -> T {
 		return self.C.clone() * T::from(6.24150907446076e+18_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of proton
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `p` - Any number-like type, representing a quantity of proton
@@ -576,11 +632,15 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electric charge value in electron
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_e(&self) -> T {
 		return self.C.clone() * T::from(-6.24150907446076e+18_f64);
 	}
 
 	/// Returns a new electric charge value from the given number of electron
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `e` - Any number-like type, representing a quantity of electron
@@ -1040,11 +1100,15 @@ impl<T> fmt::Display for Conductance<T> where T: NumLike {
 impl<T> Conductance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical conductance value in millisiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mS(&self) -> T {
 		return self.S.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of millisiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mS` - Any number-like type, representing a quantity of millisiemens
@@ -1053,11 +1117,15 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in microsiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uS(&self) -> T {
 		return self.S.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of microsiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uS` - Any number-like type, representing a quantity of microsiemens
@@ -1066,11 +1134,15 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in nanosiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nS(&self) -> T {
 		return self.S.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of nanosiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nS` - Any number-like type, representing a quantity of nanosiemens
@@ -1079,11 +1151,15 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in kilosiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kS(&self) -> T {
 		return self.S.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of kilosiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kS` - Any number-like type, representing a quantity of kilosiemens
@@ -1092,11 +1168,15 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in megasiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MS(&self) -> T {
 		return self.S.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of megasiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MS` - Any number-like type, representing a quantity of megasiemens
@@ -1105,11 +1185,15 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical conductance value in gigasiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GS(&self) -> T {
 		return self.S.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical conductance value from the given number of gigasiemens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GS` - Any number-like type, representing a quantity of gigasiemens
@@ -1692,11 +1776,15 @@ impl<T> fmt::Display for Illuminance<T> where T: NumLike {
 impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this illuminance value in millilux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mlux(&self) -> T {
 		return self.lux.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of millilux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mlux` - Any number-like type, representing a quantity of millilux
@@ -1705,11 +1793,15 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in microlux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ulux(&self) -> T {
 		return self.lux.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of microlux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ulux` - Any number-like type, representing a quantity of microlux
@@ -1718,11 +1810,15 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in nanolux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nlux(&self) -> T {
 		return self.lux.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of nanolux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nlux` - Any number-like type, representing a quantity of nanolux
@@ -1731,11 +1827,15 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in kilolux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_klux(&self) -> T {
 		return self.lux.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of kilolux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `klux` - Any number-like type, representing a quantity of kilolux
@@ -1744,11 +1844,15 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in megalux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Mlux(&self) -> T {
 		return self.lux.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of megalux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Mlux` - Any number-like type, representing a quantity of megalux
@@ -1757,11 +1861,15 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this illuminance value in gigalux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Glux(&self) -> T {
 		return self.lux.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new illuminance value from the given number of gigalux
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Glux` - Any number-like type, representing a quantity of gigalux
@@ -1981,11 +2089,15 @@ impl<T> fmt::Display for Inductance<T> where T: NumLike {
 impl<T> Inductance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this inductance value in millihenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mH(&self) -> T {
 		return self.H.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new inductance value from the given number of millihenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mH` - Any number-like type, representing a quantity of millihenries
@@ -1994,11 +2106,15 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in microhenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uH(&self) -> T {
 		return self.H.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new inductance value from the given number of microhenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uH` - Any number-like type, representing a quantity of microhenries
@@ -2007,11 +2123,15 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in nanohenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nH(&self) -> T {
 		return self.H.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new inductance value from the given number of nanohenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nH` - Any number-like type, representing a quantity of nanohenries
@@ -2020,11 +2140,15 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in kilohenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kH(&self) -> T {
 		return self.H.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new inductance value from the given number of kilohenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kH` - Any number-like type, representing a quantity of kilohenries
@@ -2033,11 +2157,15 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in megahenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MH(&self) -> T {
 		return self.H.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new inductance value from the given number of megahenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MH` - Any number-like type, representing a quantity of megahenries
@@ -2046,11 +2174,15 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this inductance value in gigahenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GH(&self) -> T {
 		return self.H.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new inductance value from the given number of gigahenries
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GH` - Any number-like type, representing a quantity of gigahenries
@@ -2390,11 +2522,15 @@ impl<T> fmt::Display for LuminousFlux<T> where T: NumLike {
 impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this luminous flux value in millilumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mlm(&self) -> T {
 		return self.lm.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of millilumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mlm` - Any number-like type, representing a quantity of millilumens
@@ -2403,11 +2539,15 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in microlumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ulm(&self) -> T {
 		return self.lm.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of microlumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ulm` - Any number-like type, representing a quantity of microlumens
@@ -2416,11 +2556,15 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in nanolumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nlm(&self) -> T {
 		return self.lm.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of nanolumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nlm` - Any number-like type, representing a quantity of nanolumens
@@ -2429,11 +2573,15 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in kilolumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_klm(&self) -> T {
 		return self.lm.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of kilolumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `klm` - Any number-like type, representing a quantity of kilolumens
@@ -2442,11 +2590,15 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in megalumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Mlm(&self) -> T {
 		return self.lm.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of megalumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Mlm` - Any number-like type, representing a quantity of megalumens
@@ -2455,11 +2607,15 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminous flux value in gigalumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Glm(&self) -> T {
 		return self.lm.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new luminous flux value from the given number of gigalumens
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Glm` - Any number-like type, representing a quantity of gigalumens
@@ -2737,11 +2893,15 @@ impl<T> fmt::Display for MagneticFlux<T> where T: NumLike {
 impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this magnetic flux value in milliwebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of milliwebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mWb` - Any number-like type, representing a quantity of milliwebers
@@ -2750,11 +2910,15 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in microwebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of microwebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uWb` - Any number-like type, representing a quantity of microwebers
@@ -2763,11 +2927,15 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in nanowebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nWb(&self) -> T {
 		return self.Wb.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of nanowebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nWb` - Any number-like type, representing a quantity of nanowebers
@@ -2776,11 +2944,15 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in kilowebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kWb(&self) -> T {
 		return self.Wb.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of kilowebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kWb` - Any number-like type, representing a quantity of kilowebers
@@ -2789,11 +2961,15 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in megawebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MWb(&self) -> T {
 		return self.Wb.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of megawebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MWb` - Any number-like type, representing a quantity of megawebers
@@ -2802,11 +2978,15 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux value in gigawebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GWb(&self) -> T {
 		return self.Wb.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new magnetic flux value from the given number of gigawebers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GWb` - Any number-like type, representing a quantity of gigawebers
@@ -3326,11 +3506,15 @@ impl<T> fmt::Display for MagneticFluxDensity<T> where T: NumLike {
 impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this magnetic flux density value in milliteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mT(&self) -> T {
 		return self.T.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of milliteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mT` - Any number-like type, representing a quantity of milliteslas
@@ -3339,11 +3523,15 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in microteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uT(&self) -> T {
 		return self.T.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of microteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uT` - Any number-like type, representing a quantity of microteslas
@@ -3352,11 +3540,15 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in nanoteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nT(&self) -> T {
 		return self.T.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of nanoteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nT` - Any number-like type, representing a quantity of nanoteslas
@@ -3365,11 +3557,15 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in kiloteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kT(&self) -> T {
 		return self.T.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of kiloteslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kT` - Any number-like type, representing a quantity of kiloteslas
@@ -3378,11 +3574,15 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in megateslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MT(&self) -> T {
 		return self.T.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of megateslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MT` - Any number-like type, representing a quantity of megateslas
@@ -3391,11 +3591,15 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this magnetic flux density value in gigateslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GT(&self) -> T {
 		return self.T.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new magnetic flux density value from the given number of gigateslas
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GT` - Any number-like type, representing a quantity of gigateslas
@@ -3615,11 +3819,15 @@ impl<T> fmt::Display for Resistance<T> where T: NumLike {
 impl<T> Resistance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical resistance value in milliohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of milliohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mOhm` - Any number-like type, representing a quantity of milliohms
@@ -3628,11 +3836,15 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in microohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of microohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uOhm` - Any number-like type, representing a quantity of microohms
@@ -3641,11 +3853,15 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in nanoohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of nanoohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nOhm` - Any number-like type, representing a quantity of nanoohms
@@ -3654,11 +3870,15 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in kiloohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of kiloohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kOhm` - Any number-like type, representing a quantity of kiloohms
@@ -3667,11 +3887,15 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in megaohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of megaohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MOhm` - Any number-like type, representing a quantity of megaohms
@@ -3680,11 +3904,15 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical resistance value in gigaohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GOhm(&self) -> T {
 		return self.Ohm.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical resistance value from the given number of gigaohms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GOhm` - Any number-like type, representing a quantity of gigaohms
@@ -4276,11 +4504,15 @@ impl<T> fmt::Display for Voltage<T> where T: NumLike {
 impl<T> Voltage<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this voltage value in millivolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mV(&self) -> T {
 		return self.V.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new voltage value from the given number of millivolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mV` - Any number-like type, representing a quantity of millivolts
@@ -4289,11 +4521,15 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in microvolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uV(&self) -> T {
 		return self.V.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new voltage value from the given number of microvolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uV` - Any number-like type, representing a quantity of microvolts
@@ -4302,11 +4538,15 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in nanovolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nV(&self) -> T {
 		return self.V.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new voltage value from the given number of nanovolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nV` - Any number-like type, representing a quantity of nanovolts
@@ -4315,11 +4555,15 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in kilovolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kV(&self) -> T {
 		return self.V.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new voltage value from the given number of kilovolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kV` - Any number-like type, representing a quantity of kilovolts
@@ -4328,11 +4572,15 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in megavolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MV(&self) -> T {
 		return self.V.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new voltage value from the given number of megavolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MV` - Any number-like type, representing a quantity of megavolts
@@ -4341,11 +4589,15 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this voltage value in gigavolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GV(&self) -> T {
 		return self.V.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new voltage value from the given number of gigavolts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GV` - Any number-like type, representing a quantity of gigavolts

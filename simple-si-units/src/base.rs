@@ -65,11 +65,15 @@ impl<T> fmt::Display for Amount<T> where T: NumLike {
 impl<T> Amount<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this amount value in count
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_count(&self) -> T {
 		return self.mol.clone() * T::from(6.02214076e+23_f64);
 	}
 
 	/// Returns a new amount value from the given number of count
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `count` - Any number-like type, representing a quantity of count
@@ -78,11 +82,15 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this amount value in millimoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmol(&self) -> T {
 		return self.mol.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of millimoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmol` - Any number-like type, representing a quantity of millimoles
@@ -91,11 +99,15 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this amount value in micromoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_umol(&self) -> T {
 		return self.mol.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of micromoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `umol` - Any number-like type, representing a quantity of micromoles
@@ -104,11 +116,15 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this amount value in nanomoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nmol(&self) -> T {
 		return self.mol.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of nanomoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nmol` - Any number-like type, representing a quantity of nanomoles
@@ -117,11 +133,15 @@ impl<T> Amount<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this amount value in picomoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pmol(&self) -> T {
 		return self.mol.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new amount value from the given number of picomoles
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pmol` - Any number-like type, representing a quantity of picomoles
@@ -461,11 +481,15 @@ impl<T> fmt::Display for Current<T> where T: NumLike {
 impl<T> Current<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this electrical current value in milliamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mA(&self) -> T {
 		return self.A.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of milliamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mA` - Any number-like type, representing a quantity of milliamperes
@@ -474,11 +498,15 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical current value in microamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uA(&self) -> T {
 		return self.A.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of microamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uA` - Any number-like type, representing a quantity of microamperes
@@ -487,11 +515,15 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical current value in nanoamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nA(&self) -> T {
 		return self.A.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of nanoamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nA` - Any number-like type, representing a quantity of nanoamperes
@@ -500,11 +532,15 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical current value in kiloamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kA(&self) -> T {
 		return self.A.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of kiloamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kA` - Any number-like type, representing a quantity of kiloamperes
@@ -513,11 +549,15 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical current value in megaamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_MA(&self) -> T {
 		return self.A.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of megaamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `MA` - Any number-like type, representing a quantity of megaamperes
@@ -526,11 +566,15 @@ impl<T> Current<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this electrical current value in gigaamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GA(&self) -> T {
 		return self.A.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new electrical current value from the given number of gigaamperes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GA` - Any number-like type, representing a quantity of gigaamperes
@@ -990,11 +1034,15 @@ impl<T> fmt::Display for Distance<T> where T: NumLike {
 impl<T> Distance<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this distance value in millimeters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_cm(&self) -> T {
 		return self.m.clone() * T::from(100.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of millimeters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `cm` - Any number-like type, representing a quantity of millimeters
@@ -1003,11 +1051,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in millimeters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mm(&self) -> T {
 		return self.m.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of millimeters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mm` - Any number-like type, representing a quantity of millimeters
@@ -1016,11 +1068,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in micrometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_um(&self) -> T {
 		return self.m.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of micrometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `um` - Any number-like type, representing a quantity of micrometers
@@ -1029,11 +1085,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in nanometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nm(&self) -> T {
 		return self.m.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of nanometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nm` - Any number-like type, representing a quantity of nanometers
@@ -1042,11 +1102,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in picometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pm(&self) -> T {
 		return self.m.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new distance value from the given number of picometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pm` - Any number-like type, representing a quantity of picometers
@@ -1055,11 +1119,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in kilometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_km(&self) -> T {
 		return self.m.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new distance value from the given number of kilometers
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `km` - Any number-like type, representing a quantity of kilometers
@@ -1068,11 +1136,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in astronomical units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_au(&self) -> T {
 		return self.m.clone() * T::from(6.68458712226845e-12_f64);
 	}
 
 	/// Returns a new distance value from the given number of astronomical units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `au` - Any number-like type, representing a quantity of astronomical units
@@ -1081,11 +1153,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in parsecs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_parsec(&self) -> T {
 		return self.m.clone() * T::from(3.24077624525171e-17_f64);
 	}
 
 	/// Returns a new distance value from the given number of parsecs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `parsec` - Any number-like type, representing a quantity of parsecs
@@ -1094,11 +1170,15 @@ impl<T> Distance<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this distance value in light-years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_lyr(&self) -> T {
 		return self.m.clone() * T::from(1.05702343681763e-16_f64);
 	}
 
 	/// Returns a new distance value from the given number of light-years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `lyr` - Any number-like type, representing a quantity of light-years
@@ -1498,11 +1578,15 @@ impl<T> fmt::Display for Luminosity<T> where T: NumLike {
 impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this luminosity value in millicandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mcd(&self) -> T {
 		return self.cd.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of millicandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mcd` - Any number-like type, representing a quantity of millicandela
@@ -1511,11 +1595,15 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminosity value in microcandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ucd(&self) -> T {
 		return self.cd.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of microcandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ucd` - Any number-like type, representing a quantity of microcandela
@@ -1524,11 +1612,15 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminosity value in nanocandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ncd(&self) -> T {
 		return self.cd.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of nanocandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ncd` - Any number-like type, representing a quantity of nanocandela
@@ -1537,11 +1629,15 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminosity value in kilocandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kcd(&self) -> T {
 		return self.cd.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of kilocandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kcd` - Any number-like type, representing a quantity of kilocandela
@@ -1550,11 +1646,15 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminosity value in megacandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Mcd(&self) -> T {
 		return self.cd.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of megacandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Mcd` - Any number-like type, representing a quantity of megacandela
@@ -1563,11 +1663,15 @@ impl<T> Luminosity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this luminosity value in gigacandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Gcd(&self) -> T {
 		return self.cd.clone() * T::from(1e-09_f64);
 	}
 
 	/// Returns a new luminosity value from the given number of gigacandela
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Gcd` - Any number-like type, representing a quantity of gigacandela
@@ -1787,11 +1891,15 @@ impl<T> fmt::Display for Mass<T> where T: NumLike {
 impl<T> Mass<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this mass value in grams
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_g(&self) -> T {
 		return self.kg.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of grams
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `g` - Any number-like type, representing a quantity of grams
@@ -1800,11 +1908,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in milligrams
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mg(&self) -> T {
 		return self.kg.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of milligrams
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mg` - Any number-like type, representing a quantity of milligrams
@@ -1813,11 +1925,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in micrograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ug(&self) -> T {
 		return self.kg.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of micrograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ug` - Any number-like type, representing a quantity of micrograms
@@ -1826,11 +1942,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in nanograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ng(&self) -> T {
 		return self.kg.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of nanograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ng` - Any number-like type, representing a quantity of nanograms
@@ -1839,11 +1959,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in picograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pg(&self) -> T {
 		return self.kg.clone() * T::from(1000000000000000.0_f64);
 	}
 
 	/// Returns a new mass value from the given number of picograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pg` - Any number-like type, representing a quantity of picograms
@@ -1852,11 +1976,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in tons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_tons(&self) -> T {
 		return self.kg.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new mass value from the given number of tons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `tons` - Any number-like type, representing a quantity of tons
@@ -1865,11 +1993,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in earth masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_earth_mass(&self) -> T {
 		return self.kg.clone() * T::from(1.6744248350691502e-25_f64);
 	}
 
 	/// Returns a new mass value from the given number of earth masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `earth_mass` - Any number-like type, representing a quantity of earth masses
@@ -1878,11 +2010,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in jupiter masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_jupiter_mass(&self) -> T {
 		return self.kg.clone() * T::from(5.26703887074687e-28_f64);
 	}
 
 	/// Returns a new mass value from the given number of jupiter masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `jupiter_mass` - Any number-like type, representing a quantity of jupiter masses
@@ -1891,11 +2027,15 @@ impl<T> Mass<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this mass value in solar masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_solar_mass(&self) -> T {
 		return self.kg.clone() * T::from(5.0287898217294e-31_f64);
 	}
 
 	/// Returns a new mass value from the given number of solar masses
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `solar_mass` - Any number-like type, representing a quantity of solar masses
@@ -2316,11 +2456,15 @@ impl<T> fmt::Display for Temperature<T> where T: NumLike {
 impl<T> Temperature<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this temperature value in degrees celsius
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_C(&self) -> T {
 		return (self.K.clone() * T::from(1.0_f64)) - T::from(273.15_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees celsius
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `C` - Any number-like type, representing a quantity of degrees celsius
@@ -2329,11 +2473,15 @@ impl<T> Temperature<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this temperature value in degrees celsius
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_celsius(&self) -> T {
 		return (self.K.clone() * T::from(1.0_f64)) - T::from(273.15_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees celsius
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `celsius` - Any number-like type, representing a quantity of degrees celsius
@@ -2342,11 +2490,15 @@ impl<T> Temperature<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this temperature value in degrees fahrenheit
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_F(&self) -> T {
 		return (self.K.clone() * T::from(1.8_f64)) - T::from(459.67_f64);
 	}
 
 	/// Returns a new temperature value from the given number of degrees fahrenheit
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `F` - Any number-like type, representing a quantity of degrees fahrenheit
@@ -2536,11 +2688,15 @@ impl<T> fmt::Display for Time<T> where T: NumLike {
 impl<T> Time<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this time value in milliseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ms(&self) -> T {
 		return self.s.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of milliseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ms` - Any number-like type, representing a quantity of milliseconds
@@ -2549,11 +2705,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in microseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_us(&self) -> T {
 		return self.s.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of microseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `us` - Any number-like type, representing a quantity of microseconds
@@ -2562,11 +2722,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in nanoseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ns(&self) -> T {
 		return self.s.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of nanoseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ns` - Any number-like type, representing a quantity of nanoseconds
@@ -2575,11 +2739,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in picoseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ps(&self) -> T {
 		return self.s.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new time value from the given number of picoseconds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ps` - Any number-like type, representing a quantity of picoseconds
@@ -2588,11 +2756,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in minutes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_min(&self) -> T {
 		return self.s.clone() * T::from(0.0166666666666667_f64);
 	}
 
 	/// Returns a new time value from the given number of minutes
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `min` - Any number-like type, representing a quantity of minutes
@@ -2601,11 +2773,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_hr(&self) -> T {
 		return self.s.clone() * T::from(0.0002777777777777_f64);
 	}
 
 	/// Returns a new time value from the given number of hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `hr` - Any number-like type, representing a quantity of hours
@@ -2614,11 +2790,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in days
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_days(&self) -> T {
 		return self.s.clone() * T::from(1.15740740740741e-05_f64);
 	}
 
 	/// Returns a new time value from the given number of days
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `days` - Any number-like type, representing a quantity of days
@@ -2627,11 +2807,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in weeks
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_weeks(&self) -> T {
 		return self.s.clone() * T::from(1.65343915343915e-06_f64);
 	}
 
 	/// Returns a new time value from the given number of weeks
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `weeks` - Any number-like type, representing a quantity of weeks
@@ -2640,11 +2824,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_yr(&self) -> T {
 		return self.s.clone() * T::from(3.16887654287165e-08_f64);
 	}
 
 	/// Returns a new time value from the given number of years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `yr` - Any number-like type, representing a quantity of years
@@ -2653,11 +2841,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in millennia
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_kyr(&self) -> T {
 		return self.s.clone() * T::from(3.16887654287165e-11_f64);
 	}
 
 	/// Returns a new time value from the given number of millennia
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `kyr` - Any number-like type, representing a quantity of millennia
@@ -2666,11 +2858,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in million years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Myr(&self) -> T {
 		return self.s.clone() * T::from(3.16887654287165e-14_f64);
 	}
 
 	/// Returns a new time value from the given number of million years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Myr` - Any number-like type, representing a quantity of million years
@@ -2679,11 +2875,15 @@ impl<T> Time<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this time value in billion years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Gyr(&self) -> T {
 		return self.s.clone() * T::from(3.16887654287165e-17_f64);
 	}
 
 	/// Returns a new time value from the given number of billion years
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Gyr` - Any number-like type, representing a quantity of billion years

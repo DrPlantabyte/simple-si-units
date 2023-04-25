@@ -365,7 +365,7 @@ fn my_fn() -> Density<MyNumber>{
   return m / v;
 }
 ```
-It's higly recommended that you also implement the `std::ops::*` operators for 
+It's highly recommended that you also implement the `std::ops::*` operators for 
 all combinations of values and reference types (eg `X + X`, `X + &X`, `&X + X`, and `&X + &X`),
 as this will make your number type much easier to use and integrate with **simple-si-units**.
 

@@ -10,18 +10,18 @@ Crate [simple-si-units-macros](https://crates.io/crates/simple-si-units-macros) 
 This macro uses the `NumLike` trait from [simple-si-units-core](https://crates.io/crates/simple-si-units-core) to derive all of the relevant mathematical operators for the derived struct, so long as that struct contains only a single named field. For example:
 
 ```rust
-use simple_si_units_macros::Unit;
+use simple_si_units_macros::UnitStruct;
 use simple_si_units_core::NumLike;
 
 #[derive(UnitStruct, Debug, Clone)]
-struct Velocity<T: NumLike>{
-	pub meters_per_second: T
+struct HyperVelocity<T: NumLike>{
+  square_meters_per_second: T
 }
 
-fn weighted_sum<T: NumLike>(a: Velocity<T>, b: Velocity<T>, weight: f64) -> Velocity<T> where
-	T:NumLike + From<f64>
+fn weighted_hypervel_sum<T: NumLike>(a: HyperVelocity<T>, b: HyperVelocity<T>, weight: f64) -> HyperVelocity<T>
+  where T:NumLike + From<f64>
 {
-	return weight*a + (1.-weight)*b;
+  return weight*a + (1.-weight)*b;
 }
 ```
 

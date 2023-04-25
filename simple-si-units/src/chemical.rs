@@ -63,11 +63,15 @@ impl<T> fmt::Display for CatalyticActivity<T> where T: NumLike {
 impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this catalytic activity value in count per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Nps(&self) -> T {
 		return self.molps.clone() * T::from(6.02214076e+23_f64);
 	}
 
 	/// Returns a new catalytic activity value from the given number of count per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Nps` - Any number-like type, representing a quantity of count per second
@@ -76,11 +80,15 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this catalytic activity value in millimoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mmolps(&self) -> T {
 		return self.molps.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new catalytic activity value from the given number of millimoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mmolps` - Any number-like type, representing a quantity of millimoles per second
@@ -89,11 +97,15 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this catalytic activity value in micromoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_umolps(&self) -> T {
 		return self.molps.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new catalytic activity value from the given number of micromoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `umolps` - Any number-like type, representing a quantity of micromoles per second
@@ -102,11 +114,15 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this catalytic activity value in nanomoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nmolps(&self) -> T {
 		return self.molps.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new catalytic activity value from the given number of nanomoles per second
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nmolps` - Any number-like type, representing a quantity of nanomoles per second
@@ -395,11 +411,15 @@ impl<T> fmt::Display for Concentration<T> where T: NumLike {
 impl<T> Concentration<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this chemical concentration value in count per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Npm3(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+23_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Npm3` - Any number-like type, representing a quantity of count per cubic meter
@@ -408,11 +428,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_count_per_cubic_meter(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+23_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per cubic meter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `count_per_cubic_meter` - Any number-like type, representing a quantity of count per cubic meter
@@ -421,11 +445,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_NpL(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+26_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `NpL` - Any number-like type, representing a quantity of count per liter
@@ -434,11 +462,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_count_per_L(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+26_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `count_per_L` - Any number-like type, representing a quantity of count per liter
@@ -447,11 +479,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_Npcc(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+29_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per cubic centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `Npcc` - Any number-like type, representing a quantity of count per cubic centimeter
@@ -460,11 +496,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in count per cubic centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_count_per_cc(&self) -> T {
 		return self.molpm3.clone() * T::from(6.02214076e+29_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of count per cubic centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `count_per_cc` - Any number-like type, representing a quantity of count per cubic centimeter
@@ -473,11 +513,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in moles per L
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_M(&self) -> T {
 		return self.molpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of moles per L
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `M` - Any number-like type, representing a quantity of moles per L
@@ -486,11 +530,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in moles per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_molarity(&self) -> T {
 		return self.molpm3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of moles per liter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `molarity` - Any number-like type, representing a quantity of moles per liter
@@ -499,11 +547,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in micromolar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uM(&self) -> T {
 		return self.molpm3.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of micromolar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uM` - Any number-like type, representing a quantity of micromolar
@@ -512,11 +564,15 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this chemical concentration value in nanomolar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nM(&self) -> T {
 		return self.molpm3.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new chemical concentration value from the given number of nanomolar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nM` - Any number-like type, representing a quantity of nanomolar

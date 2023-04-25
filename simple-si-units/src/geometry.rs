@@ -64,11 +64,15 @@ impl<T> fmt::Display for Angle<T> where T: NumLike {
 impl<T> Angle<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this angle value in degrees
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_degrees(&self) -> T {
 		return self.rad.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angle value from the given number of degrees
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `degrees` - Any number-like type, representing a quantity of degrees
@@ -77,11 +81,15 @@ impl<T> Angle<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this angle value in degrees
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_deg(&self) -> T {
 		return self.rad.clone() * T::from(57.2957795130823_f64);
 	}
 
 	/// Returns a new angle value from the given number of degrees
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `deg` - Any number-like type, representing a quantity of degrees
@@ -361,11 +369,15 @@ impl<T> fmt::Display for Area<T> where T: NumLike {
 impl<T> Area<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this area value in square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_cm2(&self) -> T {
 		return self.m2.clone() * T::from(10000.0_f64);
 	}
 
 	/// Returns a new area value from the given number of square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `cm2` - Any number-like type, representing a quantity of square cm
@@ -374,11 +386,15 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_square_cm(&self) -> T {
 		return self.m2.clone() * T::from(10000.0_f64);
 	}
 
 	/// Returns a new area value from the given number of square cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `square_cm` - Any number-like type, representing a quantity of square cm
@@ -387,11 +403,15 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square mm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mm2(&self) -> T {
 		return self.m2.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new area value from the given number of square mm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mm2` - Any number-like type, representing a quantity of square mm
@@ -400,11 +420,15 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square um
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_um2(&self) -> T {
 		return self.m2.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new area value from the given number of square um
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `um2` - Any number-like type, representing a quantity of square um
@@ -413,11 +437,15 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square nm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nm2(&self) -> T {
 		return self.m2.clone() * T::from(1e+18_f64);
 	}
 
 	/// Returns a new area value from the given number of square nm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nm2` - Any number-like type, representing a quantity of square nm
@@ -426,11 +454,15 @@ impl<T> Area<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this area value in square km
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_km2(&self) -> T {
 		return self.m2.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new area value from the given number of square km
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `km2` - Any number-like type, representing a quantity of square km
@@ -988,11 +1020,15 @@ impl<T> fmt::Display for Volume<T> where T: NumLike {
 impl<T> Volume<T> where T: NumLike+From<f64> {
 	
 	/// Returns a copy of this volume value in cubic cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_cc(&self) -> T {
 		return self.m3.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of cubic cm
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `cc` - Any number-like type, representing a quantity of cubic cm
@@ -1001,11 +1037,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in liters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_L(&self) -> T {
 		return self.m3.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of liters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `L` - Any number-like type, representing a quantity of liters
@@ -1014,11 +1054,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in liters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_liters(&self) -> T {
 		return self.m3.clone() * T::from(1000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of liters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `liters` - Any number-like type, representing a quantity of liters
@@ -1027,11 +1071,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in milliliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_mL(&self) -> T {
 		return self.m3.clone() * T::from(1000000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of milliliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `mL` - Any number-like type, representing a quantity of milliliters
@@ -1040,11 +1088,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in microliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_uL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of microliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `uL` - Any number-like type, representing a quantity of microliters
@@ -1053,11 +1105,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in nanoliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_nL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of nanoliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `nL` - Any number-like type, representing a quantity of nanoliters
@@ -1066,11 +1122,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in picoliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_pL(&self) -> T {
 		return self.m3.clone() * T::from(1000000000000000.0_f64);
 	}
 
 	/// Returns a new volume value from the given number of picoliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `pL` - Any number-like type, representing a quantity of picoliters
@@ -1079,11 +1139,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in megaliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_ML(&self) -> T {
 		return self.m3.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new volume value from the given number of megaliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `ML` - Any number-like type, representing a quantity of megaliters
@@ -1092,11 +1156,15 @@ impl<T> Volume<T> where T: NumLike+From<f64> {
 	}
 
 	/// Returns a copy of this volume value in gigaliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_GL(&self) -> T {
 		return self.m3.clone() * T::from(1e-06_f64);
 	}
 
 	/// Returns a new volume value from the given number of gigaliters
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	///
 	/// # Arguments
 	/// * `GL` - Any number-like type, representing a quantity of gigaliters
