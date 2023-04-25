@@ -1,7 +1,7 @@
 name: Build
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 env:
@@ -9,8 +9,6 @@ env:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
-
     runs-on: ubuntu-latest
 
     steps:
