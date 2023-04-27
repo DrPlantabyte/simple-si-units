@@ -43,6 +43,7 @@ def main(*args):
 	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
 	data.sort_values(by=['category', 'name'], axis=0, ascending=[True, True], inplace=True)
+	inverse_check(data)
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data)
@@ -239,6 +240,33 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 			# only use first found unit
 			break
 	return out_buf, used_mods
+
+def inverse_check(data: DataFrame):
+	# check for and suggest inverse units
+	unit_lut = {}
+	unit_reverse_lut = defaultdict(lambda: [])
+	missing_inverses = []
+	for _, row in data.iterrows():
+		name = row['name']
+		units = SIUnits.from_str(row['si units'])
+		unit_lut[name] = units
+		unit_reverse_lut[units].append(name)
+	for _, row in data.iterrows():
+		name = row['name']
+		units = unit_lut[name]
+		inverse_unit = units.inverse()
+		if inverse_unit in unit_reverse_lut:
+			for inverse_name in unit_reverse_lut[inverse_unit]:
+				print('1/%s = %s' % (name, inverse_name))
+		else:
+			print('No inverse unit found for %s' % name)
+			missing_inverses.append(name)
+	print('Suggested inverse units:')
+	for no_inverse in missing_inverses:
+		row = data[data['name'] == no_inverse].iloc[0]
+		print(row['category'], 'inverse '+row['name'], row['desc first name'], sep='\t')
+	raise Exception('WIP')
+
 
 def find_unit_conversions(data: DataFrame) -> DataFrame:
 	# make a look-up table of SI units and the measures with those units (there can be more than one measure with same units)
