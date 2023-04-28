@@ -1,7 +1,7 @@
 
 //! This module provides electromagnetic SI units, such as electrical capacitance 
 //! and magnetic flux.
-use std::fmt;
+use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
 use super::base::*;
@@ -186,7 +186,7 @@ impl<T> Capacitance<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Capacitance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
 		Capacitance{F: self * rhs.F}
@@ -194,7 +194,7 @@ impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Capacitance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F}
@@ -202,7 +202,7 @@ impl std::ops::Mul<Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Capacitance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
 		Capacitance{F: self * rhs.F.clone()}
@@ -210,7 +210,7 @@ impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Capacitance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Capacitance<num_bigfloat::BigFloat>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F.clone()}
@@ -219,7 +219,7 @@ impl std::ops::Mul<&Capacitance<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Capacitance<num_complex::Complex32>;
 	fn mul(self, rhs: Capacitance<num_complex::Complex32>) -> Self::Output {
 		Capacitance{F: self * rhs.F}
@@ -227,7 +227,7 @@ impl std::ops::Mul<Capacitance<num_complex::Complex32>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Capacitance<num_complex::Complex32>;
 	fn mul(self, rhs: Capacitance<num_complex::Complex32>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F}
@@ -235,7 +235,7 @@ impl std::ops::Mul<Capacitance<num_complex::Complex32>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Capacitance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Capacitance<num_complex::Complex32>;
 	fn mul(self, rhs: &Capacitance<num_complex::Complex32>) -> Self::Output {
 		Capacitance{F: self * rhs.F.clone()}
@@ -243,7 +243,7 @@ impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Capacitance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Capacitance<num_complex::Complex32>;
 	fn mul(self, rhs: &Capacitance<num_complex::Complex32>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F.clone()}
@@ -252,7 +252,7 @@ impl std::ops::Mul<&Capacitance<num_complex::Complex32>> for &num_complex::Compl
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Capacitance<num_complex::Complex64>;
 	fn mul(self, rhs: Capacitance<num_complex::Complex64>) -> Self::Output {
 		Capacitance{F: self * rhs.F}
@@ -260,7 +260,7 @@ impl std::ops::Mul<Capacitance<num_complex::Complex64>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Capacitance<num_complex::Complex64>;
 	fn mul(self, rhs: Capacitance<num_complex::Complex64>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F}
@@ -268,7 +268,7 @@ impl std::ops::Mul<Capacitance<num_complex::Complex64>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Capacitance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Capacitance<num_complex::Complex64>;
 	fn mul(self, rhs: &Capacitance<num_complex::Complex64>) -> Self::Output {
 		Capacitance{F: self * rhs.F.clone()}
@@ -276,7 +276,7 @@ impl std::ops::Mul<&Capacitance<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Capacitance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Capacitance<num_complex::Complex64>;
 	fn mul(self, rhs: &Capacitance<num_complex::Complex64>) -> Self::Output {
 		Capacitance{F: self.clone() * rhs.F.clone()}
@@ -320,28 +320,28 @@ impl<T> From<uom::si::f64::Capacitance> for Capacitance<T> where T: NumLike+From
 
 // Capacitance / Time -> Conductance
 /// Dividing a Capacitance by a Time returns a value of type Conductance
-impl<T> std::ops::Div<Time<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Conductance{S: self.F / rhs.s}
 	}
 }
 /// Dividing a Capacitance by a Time returns a value of type Conductance
-impl<T> std::ops::Div<Time<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Conductance{S: self.F.clone() / rhs.s}
 	}
 }
 /// Dividing a Capacitance by a Time returns a value of type Conductance
-impl<T> std::ops::Div<&Time<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Conductance{S: self.F / rhs.s.clone()}
 	}
 }
 /// Dividing a Capacitance by a Time returns a value of type Conductance
-impl<T> std::ops::Div<&Time<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Conductance{S: self.F.clone() / rhs.s.clone()}
@@ -350,28 +350,28 @@ impl<T> std::ops::Div<&Time<T>> for &Capacitance<T> where T: NumLike {
 
 // Capacitance / Conductance -> Time
 /// Dividing a Capacitance by a Conductance returns a value of type Time
-impl<T> std::ops::Div<Conductance<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<Conductance<T>> for Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Time{s: self.F / rhs.S}
 	}
 }
 /// Dividing a Capacitance by a Conductance returns a value of type Time
-impl<T> std::ops::Div<Conductance<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<Conductance<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Time{s: self.F.clone() / rhs.S}
 	}
 }
 /// Dividing a Capacitance by a Conductance returns a value of type Time
-impl<T> std::ops::Div<&Conductance<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<&Conductance<T>> for Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Time{s: self.F / rhs.S.clone()}
 	}
 }
 /// Dividing a Capacitance by a Conductance returns a value of type Time
-impl<T> std::ops::Div<&Conductance<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Div<&Conductance<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Time{s: self.F.clone() / rhs.S.clone()}
@@ -380,28 +380,28 @@ impl<T> std::ops::Div<&Conductance<T>> for &Capacitance<T> where T: NumLike {
 
 // Capacitance * Resistance -> Time
 /// Multiplying a Capacitance by a Resistance returns a value of type Time
-impl<T> std::ops::Mul<Resistance<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Resistance<T>> for Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Resistance<T>) -> Self::Output {
 		Time{s: self.F * rhs.Ohm}
 	}
 }
 /// Multiplying a Capacitance by a Resistance returns a value of type Time
-impl<T> std::ops::Mul<Resistance<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Resistance<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Resistance<T>) -> Self::Output {
 		Time{s: self.F.clone() * rhs.Ohm}
 	}
 }
 /// Multiplying a Capacitance by a Resistance returns a value of type Time
-impl<T> std::ops::Mul<&Resistance<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Resistance<T>> for Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
 		Time{s: self.F * rhs.Ohm.clone()}
 	}
 }
 /// Multiplying a Capacitance by a Resistance returns a value of type Time
-impl<T> std::ops::Mul<&Resistance<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Resistance<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
 		Time{s: self.F.clone() * rhs.Ohm.clone()}
@@ -410,28 +410,28 @@ impl<T> std::ops::Mul<&Resistance<T>> for &Capacitance<T> where T: NumLike {
 
 // Capacitance * Voltage -> Charge
 /// Multiplying a Capacitance by a Voltage returns a value of type Charge
-impl<T> std::ops::Mul<Voltage<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for Capacitance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Charge{C: self.F * rhs.V}
 	}
 }
 /// Multiplying a Capacitance by a Voltage returns a value of type Charge
-impl<T> std::ops::Mul<Voltage<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Charge{C: self.F.clone() * rhs.V}
 	}
 }
 /// Multiplying a Capacitance by a Voltage returns a value of type Charge
-impl<T> std::ops::Mul<&Voltage<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for Capacitance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Charge{C: self.F * rhs.V.clone()}
 	}
 }
 /// Multiplying a Capacitance by a Voltage returns a value of type Charge
-impl<T> std::ops::Mul<&Voltage<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Charge{C: self.F.clone() * rhs.V.clone()}
@@ -440,28 +440,28 @@ impl<T> std::ops::Mul<&Voltage<T>> for &Capacitance<T> where T: NumLike {
 
 // Capacitance * Frequency -> Conductance
 /// Multiplying a Capacitance by a Frequency returns a value of type Conductance
-impl<T> std::ops::Mul<Frequency<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Conductance{S: self.F * rhs.Hz}
 	}
 }
 /// Multiplying a Capacitance by a Frequency returns a value of type Conductance
-impl<T> std::ops::Mul<Frequency<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Conductance{S: self.F.clone() * rhs.Hz}
 	}
 }
 /// Multiplying a Capacitance by a Frequency returns a value of type Conductance
-impl<T> std::ops::Mul<&Frequency<T>> for Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Conductance{S: self.F * rhs.Hz.clone()}
 	}
 }
 /// Multiplying a Capacitance by a Frequency returns a value of type Conductance
-impl<T> std::ops::Mul<&Frequency<T>> for &Capacitance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for &Capacitance<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Conductance{S: self.F.clone() * rhs.Hz.clone()}
@@ -653,7 +653,7 @@ impl<T> Charge<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Charge<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Charge<num_bigfloat::BigFloat>) -> Self::Output {
 		Charge{C: self * rhs.C}
@@ -661,7 +661,7 @@ impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Charge<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Charge<num_bigfloat::BigFloat>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C}
@@ -669,7 +669,7 @@ impl std::ops::Mul<Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Charge<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Charge<num_bigfloat::BigFloat>) -> Self::Output {
 		Charge{C: self * rhs.C.clone()}
@@ -677,7 +677,7 @@ impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Charge<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Charge<num_bigfloat::BigFloat>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C.clone()}
@@ -686,7 +686,7 @@ impl std::ops::Mul<&Charge<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat 
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Charge<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Charge<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Charge<num_complex::Complex32>;
 	fn mul(self, rhs: Charge<num_complex::Complex32>) -> Self::Output {
 		Charge{C: self * rhs.C}
@@ -694,7 +694,7 @@ impl std::ops::Mul<Charge<num_complex::Complex32>> for num_complex::Complex32 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Charge<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Charge<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Charge<num_complex::Complex32>;
 	fn mul(self, rhs: Charge<num_complex::Complex32>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C}
@@ -702,7 +702,7 @@ impl std::ops::Mul<Charge<num_complex::Complex32>> for &num_complex::Complex32 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Charge<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Charge<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Charge<num_complex::Complex32>;
 	fn mul(self, rhs: &Charge<num_complex::Complex32>) -> Self::Output {
 		Charge{C: self * rhs.C.clone()}
@@ -710,7 +710,7 @@ impl std::ops::Mul<&Charge<num_complex::Complex32>> for num_complex::Complex32 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Charge<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Charge<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Charge<num_complex::Complex32>;
 	fn mul(self, rhs: &Charge<num_complex::Complex32>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C.clone()}
@@ -719,7 +719,7 @@ impl std::ops::Mul<&Charge<num_complex::Complex32>> for &num_complex::Complex32 
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Charge<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Charge<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Charge<num_complex::Complex64>;
 	fn mul(self, rhs: Charge<num_complex::Complex64>) -> Self::Output {
 		Charge{C: self * rhs.C}
@@ -727,7 +727,7 @@ impl std::ops::Mul<Charge<num_complex::Complex64>> for num_complex::Complex64 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Charge<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Charge<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Charge<num_complex::Complex64>;
 	fn mul(self, rhs: Charge<num_complex::Complex64>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C}
@@ -735,7 +735,7 @@ impl std::ops::Mul<Charge<num_complex::Complex64>> for &num_complex::Complex64 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Charge<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Charge<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Charge<num_complex::Complex64>;
 	fn mul(self, rhs: &Charge<num_complex::Complex64>) -> Self::Output {
 		Charge{C: self * rhs.C.clone()}
@@ -743,7 +743,7 @@ impl std::ops::Mul<&Charge<num_complex::Complex64>> for num_complex::Complex64 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Charge<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Charge<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Charge<num_complex::Complex64>;
 	fn mul(self, rhs: &Charge<num_complex::Complex64>) -> Self::Output {
 		Charge{C: self.clone() * rhs.C.clone()}
@@ -787,28 +787,28 @@ impl<T> From<uom::si::f64::ElectricCharge> for Charge<T> where T: NumLike+From<f
 
 // Charge / Current -> Time
 /// Dividing a Charge by a Current returns a value of type Time
-impl<T> std::ops::Div<Current<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for Charge<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Time{s: self.C / rhs.A}
 	}
 }
 /// Dividing a Charge by a Current returns a value of type Time
-impl<T> std::ops::Div<Current<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for &Charge<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Time{s: self.C.clone() / rhs.A}
 	}
 }
 /// Dividing a Charge by a Current returns a value of type Time
-impl<T> std::ops::Div<&Current<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for Charge<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Time{s: self.C / rhs.A.clone()}
 	}
 }
 /// Dividing a Charge by a Current returns a value of type Time
-impl<T> std::ops::Div<&Current<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for &Charge<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Time{s: self.C.clone() / rhs.A.clone()}
@@ -817,28 +817,28 @@ impl<T> std::ops::Div<&Current<T>> for &Charge<T> where T: NumLike {
 
 // Charge / Time -> Current
 /// Dividing a Charge by a Time returns a value of type Current
-impl<T> std::ops::Div<Time<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Current{A: self.C / rhs.s}
 	}
 }
 /// Dividing a Charge by a Time returns a value of type Current
-impl<T> std::ops::Div<Time<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for &Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Current{A: self.C.clone() / rhs.s}
 	}
 }
 /// Dividing a Charge by a Time returns a value of type Current
-impl<T> std::ops::Div<&Time<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Current{A: self.C / rhs.s.clone()}
 	}
 }
 /// Dividing a Charge by a Time returns a value of type Current
-impl<T> std::ops::Div<&Time<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for &Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Current{A: self.C.clone() / rhs.s.clone()}
@@ -847,28 +847,28 @@ impl<T> std::ops::Div<&Time<T>> for &Charge<T> where T: NumLike {
 
 // Charge / Capacitance -> Voltage
 /// Dividing a Charge by a Capacitance returns a value of type Voltage
-impl<T> std::ops::Div<Capacitance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Capacitance<T>> for Charge<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: Capacitance<T>) -> Self::Output {
 		Voltage{V: self.C / rhs.F}
 	}
 }
 /// Dividing a Charge by a Capacitance returns a value of type Voltage
-impl<T> std::ops::Div<Capacitance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Capacitance<T>> for &Charge<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: Capacitance<T>) -> Self::Output {
 		Voltage{V: self.C.clone() / rhs.F}
 	}
 }
 /// Dividing a Charge by a Capacitance returns a value of type Voltage
-impl<T> std::ops::Div<&Capacitance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Capacitance<T>> for Charge<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: &Capacitance<T>) -> Self::Output {
 		Voltage{V: self.C / rhs.F.clone()}
 	}
 }
 /// Dividing a Charge by a Capacitance returns a value of type Voltage
-impl<T> std::ops::Div<&Capacitance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Capacitance<T>> for &Charge<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: &Capacitance<T>) -> Self::Output {
 		Voltage{V: self.C.clone() / rhs.F.clone()}
@@ -877,28 +877,28 @@ impl<T> std::ops::Div<&Capacitance<T>> for &Charge<T> where T: NumLike {
 
 // Charge / Conductance -> MagneticFlux
 /// Dividing a Charge by a Conductance returns a value of type MagneticFlux
-impl<T> std::ops::Div<Conductance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Conductance<T>> for Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C / rhs.S}
 	}
 }
 /// Dividing a Charge by a Conductance returns a value of type MagneticFlux
-impl<T> std::ops::Div<Conductance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Conductance<T>> for &Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C.clone() / rhs.S}
 	}
 }
 /// Dividing a Charge by a Conductance returns a value of type MagneticFlux
-impl<T> std::ops::Div<&Conductance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Conductance<T>> for Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C / rhs.S.clone()}
 	}
 }
 /// Dividing a Charge by a Conductance returns a value of type MagneticFlux
-impl<T> std::ops::Div<&Conductance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Conductance<T>> for &Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C.clone() / rhs.S.clone()}
@@ -907,28 +907,28 @@ impl<T> std::ops::Div<&Conductance<T>> for &Charge<T> where T: NumLike {
 
 // Charge / MagneticFlux -> Conductance
 /// Dividing a Charge by a MagneticFlux returns a value of type Conductance
-impl<T> std::ops::Div<MagneticFlux<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFlux<T>> for Charge<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Conductance{S: self.C / rhs.Wb}
 	}
 }
 /// Dividing a Charge by a MagneticFlux returns a value of type Conductance
-impl<T> std::ops::Div<MagneticFlux<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFlux<T>> for &Charge<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Conductance{S: self.C.clone() / rhs.Wb}
 	}
 }
 /// Dividing a Charge by a MagneticFlux returns a value of type Conductance
-impl<T> std::ops::Div<&MagneticFlux<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFlux<T>> for Charge<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Conductance{S: self.C / rhs.Wb.clone()}
 	}
 }
 /// Dividing a Charge by a MagneticFlux returns a value of type Conductance
-impl<T> std::ops::Div<&MagneticFlux<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFlux<T>> for &Charge<T> where T: NumLike {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Conductance{S: self.C.clone() / rhs.Wb.clone()}
@@ -937,28 +937,28 @@ impl<T> std::ops::Div<&MagneticFlux<T>> for &Charge<T> where T: NumLike {
 
 // Charge * Resistance -> MagneticFlux
 /// Multiplying a Charge by a Resistance returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Resistance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Resistance<T>> for Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Resistance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C * rhs.Ohm}
 	}
 }
 /// Multiplying a Charge by a Resistance returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Resistance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Resistance<T>> for &Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Resistance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C.clone() * rhs.Ohm}
 	}
 }
 /// Multiplying a Charge by a Resistance returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Resistance<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Resistance<T>> for Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C * rhs.Ohm.clone()}
 	}
 }
 /// Multiplying a Charge by a Resistance returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Resistance<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Resistance<T>> for &Charge<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
 		MagneticFlux{Wb: self.C.clone() * rhs.Ohm.clone()}
@@ -967,28 +967,28 @@ impl<T> std::ops::Mul<&Resistance<T>> for &Charge<T> where T: NumLike {
 
 // Charge * Voltage -> Energy
 /// Multiplying a Charge by a Voltage returns a value of type Energy
-impl<T> std::ops::Mul<Voltage<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for Charge<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Energy{J: self.C * rhs.V}
 	}
 }
 /// Multiplying a Charge by a Voltage returns a value of type Energy
-impl<T> std::ops::Mul<Voltage<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for &Charge<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Energy{J: self.C.clone() * rhs.V}
 	}
 }
 /// Multiplying a Charge by a Voltage returns a value of type Energy
-impl<T> std::ops::Mul<&Voltage<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for Charge<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Energy{J: self.C * rhs.V.clone()}
 	}
 }
 /// Multiplying a Charge by a Voltage returns a value of type Energy
-impl<T> std::ops::Mul<&Voltage<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for &Charge<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Energy{J: self.C.clone() * rhs.V.clone()}
@@ -997,28 +997,28 @@ impl<T> std::ops::Mul<&Voltage<T>> for &Charge<T> where T: NumLike {
 
 // Charge / Voltage -> Capacitance
 /// Dividing a Charge by a Voltage returns a value of type Capacitance
-impl<T> std::ops::Div<Voltage<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Voltage<T>> for Charge<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: Voltage<T>) -> Self::Output {
 		Capacitance{F: self.C / rhs.V}
 	}
 }
 /// Dividing a Charge by a Voltage returns a value of type Capacitance
-impl<T> std::ops::Div<Voltage<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<Voltage<T>> for &Charge<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: Voltage<T>) -> Self::Output {
 		Capacitance{F: self.C.clone() / rhs.V}
 	}
 }
 /// Dividing a Charge by a Voltage returns a value of type Capacitance
-impl<T> std::ops::Div<&Voltage<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Voltage<T>> for Charge<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Capacitance{F: self.C / rhs.V.clone()}
 	}
 }
 /// Dividing a Charge by a Voltage returns a value of type Capacitance
-impl<T> std::ops::Div<&Voltage<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Div<&Voltage<T>> for &Charge<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Capacitance{F: self.C.clone() / rhs.V.clone()}
@@ -1027,28 +1027,28 @@ impl<T> std::ops::Div<&Voltage<T>> for &Charge<T> where T: NumLike {
 
 // Charge * Frequency -> Current
 /// Multiplying a Charge by a Frequency returns a value of type Current
-impl<T> std::ops::Mul<Frequency<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Current{A: self.C * rhs.Hz}
 	}
 }
 /// Multiplying a Charge by a Frequency returns a value of type Current
-impl<T> std::ops::Mul<Frequency<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for &Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Current{A: self.C.clone() * rhs.Hz}
 	}
 }
 /// Multiplying a Charge by a Frequency returns a value of type Current
-impl<T> std::ops::Mul<&Frequency<T>> for Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Current{A: self.C * rhs.Hz.clone()}
 	}
 }
 /// Multiplying a Charge by a Frequency returns a value of type Current
-impl<T> std::ops::Mul<&Frequency<T>> for &Charge<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for &Charge<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Current{A: self.C.clone() * rhs.Hz.clone()}
@@ -1206,7 +1206,7 @@ impl<T> Conductance<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Conductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Conductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Conductance{S: self * rhs.S}
@@ -1214,7 +1214,7 @@ impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Conductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Conductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S}
@@ -1222,7 +1222,7 @@ impl std::ops::Mul<Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Conductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Conductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Conductance{S: self * rhs.S.clone()}
@@ -1230,7 +1230,7 @@ impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Conductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Conductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S.clone()}
@@ -1239,7 +1239,7 @@ impl std::ops::Mul<&Conductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Conductance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Conductance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Conductance<num_complex::Complex32>;
 	fn mul(self, rhs: Conductance<num_complex::Complex32>) -> Self::Output {
 		Conductance{S: self * rhs.S}
@@ -1247,7 +1247,7 @@ impl std::ops::Mul<Conductance<num_complex::Complex32>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Conductance<num_complex::Complex32>;
 	fn mul(self, rhs: Conductance<num_complex::Complex32>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S}
@@ -1255,7 +1255,7 @@ impl std::ops::Mul<Conductance<num_complex::Complex32>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Conductance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Conductance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Conductance<num_complex::Complex32>;
 	fn mul(self, rhs: &Conductance<num_complex::Complex32>) -> Self::Output {
 		Conductance{S: self * rhs.S.clone()}
@@ -1263,7 +1263,7 @@ impl std::ops::Mul<&Conductance<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Conductance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Conductance<num_complex::Complex32>;
 	fn mul(self, rhs: &Conductance<num_complex::Complex32>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S.clone()}
@@ -1272,7 +1272,7 @@ impl std::ops::Mul<&Conductance<num_complex::Complex32>> for &num_complex::Compl
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Conductance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Conductance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Conductance<num_complex::Complex64>;
 	fn mul(self, rhs: Conductance<num_complex::Complex64>) -> Self::Output {
 		Conductance{S: self * rhs.S}
@@ -1280,7 +1280,7 @@ impl std::ops::Mul<Conductance<num_complex::Complex64>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Conductance<num_complex::Complex64>;
 	fn mul(self, rhs: Conductance<num_complex::Complex64>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S}
@@ -1288,7 +1288,7 @@ impl std::ops::Mul<Conductance<num_complex::Complex64>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Conductance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Conductance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Conductance<num_complex::Complex64>;
 	fn mul(self, rhs: &Conductance<num_complex::Complex64>) -> Self::Output {
 		Conductance{S: self * rhs.S.clone()}
@@ -1296,7 +1296,7 @@ impl std::ops::Mul<&Conductance<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Conductance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Conductance<num_complex::Complex64>;
 	fn mul(self, rhs: &Conductance<num_complex::Complex64>) -> Self::Output {
 		Conductance{S: self.clone() * rhs.S.clone()}
@@ -1340,28 +1340,28 @@ impl<T> From<uom::si::f64::ElectricalConductance> for Conductance<T> where T: Nu
 
 // Conductance * Time -> Capacitance
 /// Multiplying a Conductance by a Time returns a value of type Capacitance
-impl<T> std::ops::Mul<Time<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Capacitance{F: self.S * rhs.s}
 	}
 }
 /// Multiplying a Conductance by a Time returns a value of type Capacitance
-impl<T> std::ops::Mul<Time<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for &Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Capacitance{F: self.S.clone() * rhs.s}
 	}
 }
 /// Multiplying a Conductance by a Time returns a value of type Capacitance
-impl<T> std::ops::Mul<&Time<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Capacitance{F: self.S * rhs.s.clone()}
 	}
 }
 /// Multiplying a Conductance by a Time returns a value of type Capacitance
-impl<T> std::ops::Mul<&Time<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for &Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Capacitance{F: self.S.clone() * rhs.s.clone()}
@@ -1370,28 +1370,28 @@ impl<T> std::ops::Mul<&Time<T>> for &Conductance<T> where T: NumLike {
 
 // Conductance / Capacitance -> Frequency
 /// Dividing a Conductance by a Capacitance returns a value of type Frequency
-impl<T> std::ops::Div<Capacitance<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<Capacitance<T>> for Conductance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Capacitance<T>) -> Self::Output {
 		Frequency{Hz: self.S / rhs.F}
 	}
 }
 /// Dividing a Conductance by a Capacitance returns a value of type Frequency
-impl<T> std::ops::Div<Capacitance<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<Capacitance<T>> for &Conductance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Capacitance<T>) -> Self::Output {
 		Frequency{Hz: self.S.clone() / rhs.F}
 	}
 }
 /// Dividing a Conductance by a Capacitance returns a value of type Frequency
-impl<T> std::ops::Div<&Capacitance<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Capacitance<T>> for Conductance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Capacitance<T>) -> Self::Output {
 		Frequency{Hz: self.S / rhs.F.clone()}
 	}
 }
 /// Dividing a Conductance by a Capacitance returns a value of type Frequency
-impl<T> std::ops::Div<&Capacitance<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Capacitance<T>> for &Conductance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Capacitance<T>) -> Self::Output {
 		Frequency{Hz: self.S.clone() / rhs.F.clone()}
@@ -1400,28 +1400,28 @@ impl<T> std::ops::Div<&Capacitance<T>> for &Conductance<T> where T: NumLike {
 
 // Conductance * Inductance -> Time
 /// Multiplying a Conductance by a Inductance returns a value of type Time
-impl<T> std::ops::Mul<Inductance<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Inductance<T>> for Conductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Inductance<T>) -> Self::Output {
 		Time{s: self.S * rhs.H}
 	}
 }
 /// Multiplying a Conductance by a Inductance returns a value of type Time
-impl<T> std::ops::Mul<Inductance<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Inductance<T>> for &Conductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Inductance<T>) -> Self::Output {
 		Time{s: self.S.clone() * rhs.H}
 	}
 }
 /// Multiplying a Conductance by a Inductance returns a value of type Time
-impl<T> std::ops::Mul<&Inductance<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Inductance<T>> for Conductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Inductance<T>) -> Self::Output {
 		Time{s: self.S * rhs.H.clone()}
 	}
 }
 /// Multiplying a Conductance by a Inductance returns a value of type Time
-impl<T> std::ops::Mul<&Inductance<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Inductance<T>> for &Conductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Inductance<T>) -> Self::Output {
 		Time{s: self.S.clone() * rhs.H.clone()}
@@ -1430,28 +1430,28 @@ impl<T> std::ops::Mul<&Inductance<T>> for &Conductance<T> where T: NumLike {
 
 // Conductance * MagneticFlux -> Charge
 /// Multiplying a Conductance by a MagneticFlux returns a value of type Charge
-impl<T> std::ops::Mul<MagneticFlux<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<MagneticFlux<T>> for Conductance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Charge{C: self.S * rhs.Wb}
 	}
 }
 /// Multiplying a Conductance by a MagneticFlux returns a value of type Charge
-impl<T> std::ops::Mul<MagneticFlux<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<MagneticFlux<T>> for &Conductance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Charge{C: self.S.clone() * rhs.Wb}
 	}
 }
 /// Multiplying a Conductance by a MagneticFlux returns a value of type Charge
-impl<T> std::ops::Mul<&MagneticFlux<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&MagneticFlux<T>> for Conductance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Charge{C: self.S * rhs.Wb.clone()}
 	}
 }
 /// Multiplying a Conductance by a MagneticFlux returns a value of type Charge
-impl<T> std::ops::Mul<&MagneticFlux<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&MagneticFlux<T>> for &Conductance<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Charge{C: self.S.clone() * rhs.Wb.clone()}
@@ -1460,28 +1460,28 @@ impl<T> std::ops::Mul<&MagneticFlux<T>> for &Conductance<T> where T: NumLike {
 
 // Conductance * Voltage -> Current
 /// Multiplying a Conductance by a Voltage returns a value of type Current
-impl<T> std::ops::Mul<Voltage<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for Conductance<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Current{A: self.S * rhs.V}
 	}
 }
 /// Multiplying a Conductance by a Voltage returns a value of type Current
-impl<T> std::ops::Mul<Voltage<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Voltage<T>> for &Conductance<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Voltage<T>) -> Self::Output {
 		Current{A: self.S.clone() * rhs.V}
 	}
 }
 /// Multiplying a Conductance by a Voltage returns a value of type Current
-impl<T> std::ops::Mul<&Voltage<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for Conductance<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Current{A: self.S * rhs.V.clone()}
 	}
 }
 /// Multiplying a Conductance by a Voltage returns a value of type Current
-impl<T> std::ops::Mul<&Voltage<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Voltage<T>> for &Conductance<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
 		Current{A: self.S.clone() * rhs.V.clone()}
@@ -1490,28 +1490,28 @@ impl<T> std::ops::Mul<&Voltage<T>> for &Conductance<T> where T: NumLike {
 
 // Conductance / Frequency -> Capacitance
 /// Dividing a Conductance by a Frequency returns a value of type Capacitance
-impl<T> std::ops::Div<Frequency<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Capacitance{F: self.S / rhs.Hz}
 	}
 }
 /// Dividing a Conductance by a Frequency returns a value of type Capacitance
-impl<T> std::ops::Div<Frequency<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for &Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Capacitance{F: self.S.clone() / rhs.Hz}
 	}
 }
 /// Dividing a Conductance by a Frequency returns a value of type Capacitance
-impl<T> std::ops::Div<&Frequency<T>> for Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Capacitance{F: self.S / rhs.Hz.clone()}
 	}
 }
 /// Dividing a Conductance by a Frequency returns a value of type Capacitance
-impl<T> std::ops::Div<&Frequency<T>> for &Conductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for &Conductance<T> where T: NumLike {
 	type Output = Capacitance<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Capacitance{F: self.S.clone() / rhs.Hz.clone()}
@@ -1520,28 +1520,28 @@ impl<T> std::ops::Div<&Frequency<T>> for &Conductance<T> where T: NumLike {
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Conductance<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Conductance<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Conductance<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Conductance<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1550,28 +1550,28 @@ impl<T> std::ops::Div<&Conductance<T>> for &f64 where T: NumLike+From<f64> {
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Conductance<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Conductance<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Conductance<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Conductance<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1580,28 +1580,28 @@ impl<T> std::ops::Div<&Conductance<T>> for &f32 where T: NumLike+From<f32> {
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Conductance<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Conductance<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Conductance<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Conductance<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1610,28 +1610,28 @@ impl<T> std::ops::Div<&Conductance<T>> for &i64 where T: NumLike+From<i64> {
 
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Conductance<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<Conductance<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Conductance<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Conductance<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
 	}
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
-impl<T> std::ops::Div<&Conductance<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Conductance<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1641,7 +1641,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &i32 where T: NumLike+From<i32> {
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
@@ -1649,7 +1649,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_bigfloat::BigFloat where T: NumLik
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
@@ -1657,7 +1657,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_bigfloat::BigFloat where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
@@ -1665,7 +1665,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_bigfloat::BigFloat where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1675,7 +1675,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &num_bigfloat::BigFloat where T: NumL
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
@@ -1683,7 +1683,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex32 where T: NumLik
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
@@ -1691,7 +1691,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex32 where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
@@ -1699,7 +1699,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex32 where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1709,7 +1709,7 @@ impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex32 where T: NumL
 // 1/Conductance -> Resistance
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S}
@@ -1717,7 +1717,7 @@ impl<T> std::ops::Div<Conductance<T>> for num_complex::Complex64 where T: NumLik
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S}
@@ -1725,7 +1725,7 @@ impl<T> std::ops::Div<Conductance<T>> for &num_complex::Complex64 where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self) / rhs.S.clone()}
@@ -1733,7 +1733,7 @@ impl<T> std::ops::Div<&Conductance<T>> for num_complex::Complex64 where T: NumLi
 }
 /// Dividing a scalar value by a Conductance unit value returns a value of type Resistance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Conductance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Conductance<T>) -> Self::Output {
 		Resistance{Ohm: T::from(self.clone()) / rhs.S.clone()}
@@ -1882,7 +1882,7 @@ impl<T> Illuminance<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Illuminance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux}
@@ -1890,7 +1890,7 @@ impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Illuminance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux}
@@ -1898,7 +1898,7 @@ impl std::ops::Mul<Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Illuminance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux.clone()}
@@ -1906,7 +1906,7 @@ impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Illuminance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Illuminance<num_bigfloat::BigFloat>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux.clone()}
@@ -1915,7 +1915,7 @@ impl std::ops::Mul<&Illuminance<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Illuminance<num_complex::Complex32>;
 	fn mul(self, rhs: Illuminance<num_complex::Complex32>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux}
@@ -1923,7 +1923,7 @@ impl std::ops::Mul<Illuminance<num_complex::Complex32>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Illuminance<num_complex::Complex32>;
 	fn mul(self, rhs: Illuminance<num_complex::Complex32>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux}
@@ -1931,7 +1931,7 @@ impl std::ops::Mul<Illuminance<num_complex::Complex32>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Illuminance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Illuminance<num_complex::Complex32>;
 	fn mul(self, rhs: &Illuminance<num_complex::Complex32>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux.clone()}
@@ -1939,7 +1939,7 @@ impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Illuminance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Illuminance<num_complex::Complex32>;
 	fn mul(self, rhs: &Illuminance<num_complex::Complex32>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux.clone()}
@@ -1948,7 +1948,7 @@ impl std::ops::Mul<&Illuminance<num_complex::Complex32>> for &num_complex::Compl
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Illuminance<num_complex::Complex64>;
 	fn mul(self, rhs: Illuminance<num_complex::Complex64>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux}
@@ -1956,7 +1956,7 @@ impl std::ops::Mul<Illuminance<num_complex::Complex64>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Illuminance<num_complex::Complex64>;
 	fn mul(self, rhs: Illuminance<num_complex::Complex64>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux}
@@ -1964,7 +1964,7 @@ impl std::ops::Mul<Illuminance<num_complex::Complex64>> for &num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Illuminance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Illuminance<num_complex::Complex64>;
 	fn mul(self, rhs: &Illuminance<num_complex::Complex64>) -> Self::Output {
 		Illuminance{lux: self * rhs.lux.clone()}
@@ -1972,7 +1972,7 @@ impl std::ops::Mul<&Illuminance<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Illuminance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Illuminance<num_complex::Complex64>;
 	fn mul(self, rhs: &Illuminance<num_complex::Complex64>) -> Self::Output {
 		Illuminance{lux: self.clone() * rhs.lux.clone()}
@@ -2016,28 +2016,28 @@ impl<T> From<uom::si::f64::Luminance> for Illuminance<T> where T: NumLike+From<f
 
 // Illuminance * Area -> LuminousFlux
 /// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
-impl<T> std::ops::Mul<Area<T>> for Illuminance<T> where T: NumLike {
+impl<T> core::ops::Mul<Area<T>> for Illuminance<T> where T: NumLike {
 	type Output = LuminousFlux<T>;
 	fn mul(self, rhs: Area<T>) -> Self::Output {
 		LuminousFlux{lm: self.lux * rhs.m2}
 	}
 }
 /// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
-impl<T> std::ops::Mul<Area<T>> for &Illuminance<T> where T: NumLike {
+impl<T> core::ops::Mul<Area<T>> for &Illuminance<T> where T: NumLike {
 	type Output = LuminousFlux<T>;
 	fn mul(self, rhs: Area<T>) -> Self::Output {
 		LuminousFlux{lm: self.lux.clone() * rhs.m2}
 	}
 }
 /// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
-impl<T> std::ops::Mul<&Area<T>> for Illuminance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Area<T>> for Illuminance<T> where T: NumLike {
 	type Output = LuminousFlux<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		LuminousFlux{lm: self.lux * rhs.m2.clone()}
 	}
 }
 /// Multiplying a Illuminance by a Area returns a value of type LuminousFlux
-impl<T> std::ops::Mul<&Area<T>> for &Illuminance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Area<T>> for &Illuminance<T> where T: NumLike {
 	type Output = LuminousFlux<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		LuminousFlux{lm: self.lux.clone() * rhs.m2.clone()}
@@ -2195,7 +2195,7 @@ impl<T> Inductance<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Inductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Inductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Inductance{H: self * rhs.H}
@@ -2203,7 +2203,7 @@ impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloa
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Inductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Inductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H}
@@ -2211,7 +2211,7 @@ impl std::ops::Mul<Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Inductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Inductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Inductance{H: self * rhs.H.clone()}
@@ -2219,7 +2219,7 @@ impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Inductance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Inductance<num_bigfloat::BigFloat>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H.clone()}
@@ -2228,7 +2228,7 @@ impl std::ops::Mul<&Inductance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFl
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Inductance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Inductance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Inductance<num_complex::Complex32>;
 	fn mul(self, rhs: Inductance<num_complex::Complex32>) -> Self::Output {
 		Inductance{H: self * rhs.H}
@@ -2236,7 +2236,7 @@ impl std::ops::Mul<Inductance<num_complex::Complex32>> for num_complex::Complex3
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Inductance<num_complex::Complex32>;
 	fn mul(self, rhs: Inductance<num_complex::Complex32>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H}
@@ -2244,7 +2244,7 @@ impl std::ops::Mul<Inductance<num_complex::Complex32>> for &num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Inductance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Inductance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Inductance<num_complex::Complex32>;
 	fn mul(self, rhs: &Inductance<num_complex::Complex32>) -> Self::Output {
 		Inductance{H: self * rhs.H.clone()}
@@ -2252,7 +2252,7 @@ impl std::ops::Mul<&Inductance<num_complex::Complex32>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Inductance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Inductance<num_complex::Complex32>;
 	fn mul(self, rhs: &Inductance<num_complex::Complex32>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H.clone()}
@@ -2261,7 +2261,7 @@ impl std::ops::Mul<&Inductance<num_complex::Complex32>> for &num_complex::Comple
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Inductance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Inductance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Inductance<num_complex::Complex64>;
 	fn mul(self, rhs: Inductance<num_complex::Complex64>) -> Self::Output {
 		Inductance{H: self * rhs.H}
@@ -2269,7 +2269,7 @@ impl std::ops::Mul<Inductance<num_complex::Complex64>> for num_complex::Complex6
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Inductance<num_complex::Complex64>;
 	fn mul(self, rhs: Inductance<num_complex::Complex64>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H}
@@ -2277,7 +2277,7 @@ impl std::ops::Mul<Inductance<num_complex::Complex64>> for &num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Inductance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Inductance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Inductance<num_complex::Complex64>;
 	fn mul(self, rhs: &Inductance<num_complex::Complex64>) -> Self::Output {
 		Inductance{H: self * rhs.H.clone()}
@@ -2285,7 +2285,7 @@ impl std::ops::Mul<&Inductance<num_complex::Complex64>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Inductance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Inductance<num_complex::Complex64>;
 	fn mul(self, rhs: &Inductance<num_complex::Complex64>) -> Self::Output {
 		Inductance{H: self.clone() * rhs.H.clone()}
@@ -2329,28 +2329,28 @@ impl<T> From<uom::si::f64::Inductance> for Inductance<T> where T: NumLike+From<f
 
 // Inductance * Current -> MagneticFlux
 /// Multiplying a Inductance by a Current returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Current<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for Inductance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		MagneticFlux{Wb: self.H * rhs.A}
 	}
 }
 /// Multiplying a Inductance by a Current returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Current<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for &Inductance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		MagneticFlux{Wb: self.H.clone() * rhs.A}
 	}
 }
 /// Multiplying a Inductance by a Current returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Current<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for Inductance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		MagneticFlux{Wb: self.H * rhs.A.clone()}
 	}
 }
 /// Multiplying a Inductance by a Current returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Current<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for &Inductance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		MagneticFlux{Wb: self.H.clone() * rhs.A.clone()}
@@ -2359,28 +2359,28 @@ impl<T> std::ops::Mul<&Current<T>> for &Inductance<T> where T: NumLike {
 
 // Inductance / Time -> Resistance
 /// Dividing a Inductance by a Time returns a value of type Resistance
-impl<T> std::ops::Div<Time<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Resistance{Ohm: self.H / rhs.s}
 	}
 }
 /// Dividing a Inductance by a Time returns a value of type Resistance
-impl<T> std::ops::Div<Time<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for &Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Resistance{Ohm: self.H.clone() / rhs.s}
 	}
 }
 /// Dividing a Inductance by a Time returns a value of type Resistance
-impl<T> std::ops::Div<&Time<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Resistance{Ohm: self.H / rhs.s.clone()}
 	}
 }
 /// Dividing a Inductance by a Time returns a value of type Resistance
-impl<T> std::ops::Div<&Time<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for &Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Resistance{Ohm: self.H.clone() / rhs.s.clone()}
@@ -2389,28 +2389,28 @@ impl<T> std::ops::Div<&Time<T>> for &Inductance<T> where T: NumLike {
 
 // Inductance * Conductance -> Time
 /// Multiplying a Inductance by a Conductance returns a value of type Time
-impl<T> std::ops::Mul<Conductance<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Time{s: self.H * rhs.S}
 	}
 }
 /// Multiplying a Inductance by a Conductance returns a value of type Time
-impl<T> std::ops::Mul<Conductance<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for &Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Time{s: self.H.clone() * rhs.S}
 	}
 }
 /// Multiplying a Inductance by a Conductance returns a value of type Time
-impl<T> std::ops::Mul<&Conductance<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Time{s: self.H * rhs.S.clone()}
 	}
 }
 /// Multiplying a Inductance by a Conductance returns a value of type Time
-impl<T> std::ops::Mul<&Conductance<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for &Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Time{s: self.H.clone() * rhs.S.clone()}
@@ -2419,28 +2419,28 @@ impl<T> std::ops::Mul<&Conductance<T>> for &Inductance<T> where T: NumLike {
 
 // Inductance / Resistance -> Time
 /// Dividing a Inductance by a Resistance returns a value of type Time
-impl<T> std::ops::Div<Resistance<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Time{s: self.H / rhs.Ohm}
 	}
 }
 /// Dividing a Inductance by a Resistance returns a value of type Time
-impl<T> std::ops::Div<Resistance<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for &Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Time{s: self.H.clone() / rhs.Ohm}
 	}
 }
 /// Dividing a Inductance by a Resistance returns a value of type Time
-impl<T> std::ops::Div<&Resistance<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Time{s: self.H / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a Inductance by a Resistance returns a value of type Time
-impl<T> std::ops::Div<&Resistance<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for &Inductance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Time{s: self.H.clone() / rhs.Ohm.clone()}
@@ -2449,28 +2449,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &Inductance<T> where T: NumLike {
 
 // Inductance * Frequency -> Resistance
 /// Multiplying a Inductance by a Frequency returns a value of type Resistance
-impl<T> std::ops::Mul<Frequency<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Resistance{Ohm: self.H * rhs.Hz}
 	}
 }
 /// Multiplying a Inductance by a Frequency returns a value of type Resistance
-impl<T> std::ops::Mul<Frequency<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for &Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Resistance{Ohm: self.H.clone() * rhs.Hz}
 	}
 }
 /// Multiplying a Inductance by a Frequency returns a value of type Resistance
-impl<T> std::ops::Mul<&Frequency<T>> for Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Resistance{Ohm: self.H * rhs.Hz.clone()}
 	}
 }
 /// Multiplying a Inductance by a Frequency returns a value of type Resistance
-impl<T> std::ops::Mul<&Frequency<T>> for &Inductance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for &Inductance<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Resistance{Ohm: self.H.clone() * rhs.Hz.clone()}
@@ -2628,7 +2628,7 @@ impl<T> LuminousFlux<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = LuminousFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm}
@@ -2636,7 +2636,7 @@ impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = LuminousFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm}
@@ -2644,7 +2644,7 @@ impl std::ops::Mul<LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = LuminousFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm.clone()}
@@ -2652,7 +2652,7 @@ impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = LuminousFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &LuminousFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
@@ -2661,7 +2661,7 @@ impl std::ops::Mul<&LuminousFlux<num_bigfloat::BigFloat>> for &num_bigfloat::Big
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = LuminousFlux<num_complex::Complex32>;
 	fn mul(self, rhs: LuminousFlux<num_complex::Complex32>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm}
@@ -2669,7 +2669,7 @@ impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = LuminousFlux<num_complex::Complex32>;
 	fn mul(self, rhs: LuminousFlux<num_complex::Complex32>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm}
@@ -2677,7 +2677,7 @@ impl std::ops::Mul<LuminousFlux<num_complex::Complex32>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&LuminousFlux<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = LuminousFlux<num_complex::Complex32>;
 	fn mul(self, rhs: &LuminousFlux<num_complex::Complex32>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm.clone()}
@@ -2685,7 +2685,7 @@ impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&LuminousFlux<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = LuminousFlux<num_complex::Complex32>;
 	fn mul(self, rhs: &LuminousFlux<num_complex::Complex32>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
@@ -2694,7 +2694,7 @@ impl std::ops::Mul<&LuminousFlux<num_complex::Complex32>> for &num_complex::Comp
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = LuminousFlux<num_complex::Complex64>;
 	fn mul(self, rhs: LuminousFlux<num_complex::Complex64>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm}
@@ -2702,7 +2702,7 @@ impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = LuminousFlux<num_complex::Complex64>;
 	fn mul(self, rhs: LuminousFlux<num_complex::Complex64>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm}
@@ -2710,7 +2710,7 @@ impl std::ops::Mul<LuminousFlux<num_complex::Complex64>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&LuminousFlux<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = LuminousFlux<num_complex::Complex64>;
 	fn mul(self, rhs: &LuminousFlux<num_complex::Complex64>) -> Self::Output {
 		LuminousFlux{lm: self * rhs.lm.clone()}
@@ -2718,7 +2718,7 @@ impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&LuminousFlux<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = LuminousFlux<num_complex::Complex64>;
 	fn mul(self, rhs: &LuminousFlux<num_complex::Complex64>) -> Self::Output {
 		LuminousFlux{lm: self.clone() * rhs.lm.clone()}
@@ -2730,28 +2730,28 @@ impl std::ops::Mul<&LuminousFlux<num_complex::Complex64>> for &num_complex::Comp
 
 // LuminousFlux / Luminosity -> SolidAngle
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
-impl<T> std::ops::Div<Luminosity<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Luminosity<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = SolidAngle<T>;
 	fn div(self, rhs: Luminosity<T>) -> Self::Output {
 		SolidAngle{sr: self.lm / rhs.cd}
 	}
 }
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
-impl<T> std::ops::Div<Luminosity<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Luminosity<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = SolidAngle<T>;
 	fn div(self, rhs: Luminosity<T>) -> Self::Output {
 		SolidAngle{sr: self.lm.clone() / rhs.cd}
 	}
 }
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
-impl<T> std::ops::Div<&Luminosity<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Luminosity<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = SolidAngle<T>;
 	fn div(self, rhs: &Luminosity<T>) -> Self::Output {
 		SolidAngle{sr: self.lm / rhs.cd.clone()}
 	}
 }
 /// Dividing a LuminousFlux by a Luminosity returns a value of type SolidAngle
-impl<T> std::ops::Div<&Luminosity<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Luminosity<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = SolidAngle<T>;
 	fn div(self, rhs: &Luminosity<T>) -> Self::Output {
 		SolidAngle{sr: self.lm.clone() / rhs.cd.clone()}
@@ -2760,28 +2760,28 @@ impl<T> std::ops::Div<&Luminosity<T>> for &LuminousFlux<T> where T: NumLike {
 
 // LuminousFlux / Illuminance -> Area
 /// Dividing a LuminousFlux by a Illuminance returns a value of type Area
-impl<T> std::ops::Div<Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Illuminance<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: Illuminance<T>) -> Self::Output {
 		Area{m2: self.lm / rhs.lux}
 	}
 }
 /// Dividing a LuminousFlux by a Illuminance returns a value of type Area
-impl<T> std::ops::Div<Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: Illuminance<T>) -> Self::Output {
 		Area{m2: self.lm.clone() / rhs.lux}
 	}
 }
 /// Dividing a LuminousFlux by a Illuminance returns a value of type Area
-impl<T> std::ops::Div<&Illuminance<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Illuminance<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
 		Area{m2: self.lm / rhs.lux.clone()}
 	}
 }
 /// Dividing a LuminousFlux by a Illuminance returns a value of type Area
-impl<T> std::ops::Div<&Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: &Illuminance<T>) -> Self::Output {
 		Area{m2: self.lm.clone() / rhs.lux.clone()}
@@ -2790,28 +2790,28 @@ impl<T> std::ops::Div<&Illuminance<T>> for &LuminousFlux<T> where T: NumLike {
 
 // LuminousFlux / Area -> Illuminance
 /// Dividing a LuminousFlux by a Area returns a value of type Illuminance
-impl<T> std::ops::Div<Area<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Area<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Illuminance<T>;
 	fn div(self, rhs: Area<T>) -> Self::Output {
 		Illuminance{lux: self.lm / rhs.m2}
 	}
 }
 /// Dividing a LuminousFlux by a Area returns a value of type Illuminance
-impl<T> std::ops::Div<Area<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Area<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Illuminance<T>;
 	fn div(self, rhs: Area<T>) -> Self::Output {
 		Illuminance{lux: self.lm.clone() / rhs.m2}
 	}
 }
 /// Dividing a LuminousFlux by a Area returns a value of type Illuminance
-impl<T> std::ops::Div<&Area<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Area<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Illuminance<T>;
 	fn div(self, rhs: &Area<T>) -> Self::Output {
 		Illuminance{lux: self.lm / rhs.m2.clone()}
 	}
 }
 /// Dividing a LuminousFlux by a Area returns a value of type Illuminance
-impl<T> std::ops::Div<&Area<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Area<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Illuminance<T>;
 	fn div(self, rhs: &Area<T>) -> Self::Output {
 		Illuminance{lux: self.lm.clone() / rhs.m2.clone()}
@@ -2820,28 +2820,28 @@ impl<T> std::ops::Div<&Area<T>> for &LuminousFlux<T> where T: NumLike {
 
 // LuminousFlux / SolidAngle -> Luminosity
 /// Dividing a LuminousFlux by a SolidAngle returns a value of type Luminosity
-impl<T> std::ops::Div<SolidAngle<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<SolidAngle<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Luminosity<T>;
 	fn div(self, rhs: SolidAngle<T>) -> Self::Output {
 		Luminosity{cd: self.lm / rhs.sr}
 	}
 }
 /// Dividing a LuminousFlux by a SolidAngle returns a value of type Luminosity
-impl<T> std::ops::Div<SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Luminosity<T>;
 	fn div(self, rhs: SolidAngle<T>) -> Self::Output {
 		Luminosity{cd: self.lm.clone() / rhs.sr}
 	}
 }
 /// Dividing a LuminousFlux by a SolidAngle returns a value of type Luminosity
-impl<T> std::ops::Div<&SolidAngle<T>> for LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&SolidAngle<T>> for LuminousFlux<T> where T: NumLike {
 	type Output = Luminosity<T>;
 	fn div(self, rhs: &SolidAngle<T>) -> Self::Output {
 		Luminosity{cd: self.lm / rhs.sr.clone()}
 	}
 }
 /// Dividing a LuminousFlux by a SolidAngle returns a value of type Luminosity
-impl<T> std::ops::Div<&SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&SolidAngle<T>> for &LuminousFlux<T> where T: NumLike {
 	type Output = Luminosity<T>;
 	fn div(self, rhs: &SolidAngle<T>) -> Self::Output {
 		Luminosity{cd: self.lm.clone() / rhs.sr.clone()}
@@ -2999,7 +2999,7 @@ impl<T> MagneticFlux<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = MagneticFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb}
@@ -3007,7 +3007,7 @@ impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = MagneticFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb}
@@ -3015,7 +3015,7 @@ impl std::ops::Mul<MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = MagneticFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb.clone()}
@@ -3023,7 +3023,7 @@ impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = MagneticFlux<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &MagneticFlux<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
@@ -3032,7 +3032,7 @@ impl std::ops::Mul<&MagneticFlux<num_bigfloat::BigFloat>> for &num_bigfloat::Big
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = MagneticFlux<num_complex::Complex32>;
 	fn mul(self, rhs: MagneticFlux<num_complex::Complex32>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb}
@@ -3040,7 +3040,7 @@ impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = MagneticFlux<num_complex::Complex32>;
 	fn mul(self, rhs: MagneticFlux<num_complex::Complex32>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb}
@@ -3048,7 +3048,7 @@ impl std::ops::Mul<MagneticFlux<num_complex::Complex32>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&MagneticFlux<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = MagneticFlux<num_complex::Complex32>;
 	fn mul(self, rhs: &MagneticFlux<num_complex::Complex32>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb.clone()}
@@ -3056,7 +3056,7 @@ impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&MagneticFlux<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = MagneticFlux<num_complex::Complex32>;
 	fn mul(self, rhs: &MagneticFlux<num_complex::Complex32>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
@@ -3065,7 +3065,7 @@ impl std::ops::Mul<&MagneticFlux<num_complex::Complex32>> for &num_complex::Comp
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = MagneticFlux<num_complex::Complex64>;
 	fn mul(self, rhs: MagneticFlux<num_complex::Complex64>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb}
@@ -3073,7 +3073,7 @@ impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = MagneticFlux<num_complex::Complex64>;
 	fn mul(self, rhs: MagneticFlux<num_complex::Complex64>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb}
@@ -3081,7 +3081,7 @@ impl std::ops::Mul<MagneticFlux<num_complex::Complex64>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&MagneticFlux<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = MagneticFlux<num_complex::Complex64>;
 	fn mul(self, rhs: &MagneticFlux<num_complex::Complex64>) -> Self::Output {
 		MagneticFlux{Wb: self * rhs.Wb.clone()}
@@ -3089,7 +3089,7 @@ impl std::ops::Mul<&MagneticFlux<num_complex::Complex64>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&MagneticFlux<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = MagneticFlux<num_complex::Complex64>;
 	fn mul(self, rhs: &MagneticFlux<num_complex::Complex64>) -> Self::Output {
 		MagneticFlux{Wb: self.clone() * rhs.Wb.clone()}
@@ -3133,28 +3133,28 @@ impl<T> From<uom::si::f64::MagneticFlux> for MagneticFlux<T> where T: NumLike+Fr
 
 // MagneticFlux * Current -> Energy
 /// Multiplying a MagneticFlux by a Current returns a value of type Energy
-impl<T> std::ops::Mul<Current<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Energy{J: self.Wb * rhs.A}
 	}
 }
 /// Multiplying a MagneticFlux by a Current returns a value of type Energy
-impl<T> std::ops::Mul<Current<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Energy{J: self.Wb.clone() * rhs.A}
 	}
 }
 /// Multiplying a MagneticFlux by a Current returns a value of type Energy
-impl<T> std::ops::Mul<&Current<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Energy{J: self.Wb * rhs.A.clone()}
 	}
 }
 /// Multiplying a MagneticFlux by a Current returns a value of type Energy
-impl<T> std::ops::Mul<&Current<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Energy{J: self.Wb.clone() * rhs.A.clone()}
@@ -3163,28 +3163,28 @@ impl<T> std::ops::Mul<&Current<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Current -> Inductance
 /// Dividing a MagneticFlux by a Current returns a value of type Inductance
-impl<T> std::ops::Div<Current<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Inductance{H: self.Wb / rhs.A}
 	}
 }
 /// Dividing a MagneticFlux by a Current returns a value of type Inductance
-impl<T> std::ops::Div<Current<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Inductance{H: self.Wb.clone() / rhs.A}
 	}
 }
 /// Dividing a MagneticFlux by a Current returns a value of type Inductance
-impl<T> std::ops::Div<&Current<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Inductance{H: self.Wb / rhs.A.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Current returns a value of type Inductance
-impl<T> std::ops::Div<&Current<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Inductance{H: self.Wb.clone() / rhs.A.clone()}
@@ -3193,28 +3193,28 @@ impl<T> std::ops::Div<&Current<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Time -> Voltage
 /// Dividing a MagneticFlux by a Time returns a value of type Voltage
-impl<T> std::ops::Div<Time<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Voltage{V: self.Wb / rhs.s}
 	}
 }
 /// Dividing a MagneticFlux by a Time returns a value of type Voltage
-impl<T> std::ops::Div<Time<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Time<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: Time<T>) -> Self::Output {
 		Voltage{V: self.Wb.clone() / rhs.s}
 	}
 }
 /// Dividing a MagneticFlux by a Time returns a value of type Voltage
-impl<T> std::ops::Div<&Time<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Voltage{V: self.Wb / rhs.s.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Time returns a value of type Voltage
-impl<T> std::ops::Div<&Time<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Time<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn div(self, rhs: &Time<T>) -> Self::Output {
 		Voltage{V: self.Wb.clone() / rhs.s.clone()}
@@ -3223,28 +3223,28 @@ impl<T> std::ops::Div<&Time<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Charge -> Resistance
 /// Dividing a MagneticFlux by a Charge returns a value of type Resistance
-impl<T> std::ops::Div<Charge<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Charge<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Charge<T>) -> Self::Output {
 		Resistance{Ohm: self.Wb / rhs.C}
 	}
 }
 /// Dividing a MagneticFlux by a Charge returns a value of type Resistance
-impl<T> std::ops::Div<Charge<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Charge<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Charge<T>) -> Self::Output {
 		Resistance{Ohm: self.Wb.clone() / rhs.C}
 	}
 }
 /// Dividing a MagneticFlux by a Charge returns a value of type Resistance
-impl<T> std::ops::Div<&Charge<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Charge<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Charge<T>) -> Self::Output {
 		Resistance{Ohm: self.Wb / rhs.C.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Charge returns a value of type Resistance
-impl<T> std::ops::Div<&Charge<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Charge<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Charge<T>) -> Self::Output {
 		Resistance{Ohm: self.Wb.clone() / rhs.C.clone()}
@@ -3253,28 +3253,28 @@ impl<T> std::ops::Div<&Charge<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux * Conductance -> Charge
 /// Multiplying a MagneticFlux by a Conductance returns a value of type Charge
-impl<T> std::ops::Mul<Conductance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Charge{C: self.Wb * rhs.S}
 	}
 }
 /// Multiplying a MagneticFlux by a Conductance returns a value of type Charge
-impl<T> std::ops::Mul<Conductance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Charge{C: self.Wb.clone() * rhs.S}
 	}
 }
 /// Multiplying a MagneticFlux by a Conductance returns a value of type Charge
-impl<T> std::ops::Mul<&Conductance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Charge{C: self.Wb * rhs.S.clone()}
 	}
 }
 /// Multiplying a MagneticFlux by a Conductance returns a value of type Charge
-impl<T> std::ops::Mul<&Conductance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Charge{C: self.Wb.clone() * rhs.S.clone()}
@@ -3283,28 +3283,28 @@ impl<T> std::ops::Mul<&Conductance<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Inductance -> Current
 /// Dividing a MagneticFlux by a Inductance returns a value of type Current
-impl<T> std::ops::Div<Inductance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Inductance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Inductance<T>) -> Self::Output {
 		Current{A: self.Wb / rhs.H}
 	}
 }
 /// Dividing a MagneticFlux by a Inductance returns a value of type Current
-impl<T> std::ops::Div<Inductance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Inductance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Inductance<T>) -> Self::Output {
 		Current{A: self.Wb.clone() / rhs.H}
 	}
 }
 /// Dividing a MagneticFlux by a Inductance returns a value of type Current
-impl<T> std::ops::Div<&Inductance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Inductance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Inductance<T>) -> Self::Output {
 		Current{A: self.Wb / rhs.H.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Inductance returns a value of type Current
-impl<T> std::ops::Div<&Inductance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Inductance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Inductance<T>) -> Self::Output {
 		Current{A: self.Wb.clone() / rhs.H.clone()}
@@ -3313,28 +3313,28 @@ impl<T> std::ops::Div<&Inductance<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / MagneticFluxDensity -> Area
 /// Dividing a MagneticFlux by a MagneticFluxDensity returns a value of type Area
-impl<T> std::ops::Div<MagneticFluxDensity<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFluxDensity<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
 		Area{m2: self.Wb / rhs.T}
 	}
 }
 /// Dividing a MagneticFlux by a MagneticFluxDensity returns a value of type Area
-impl<T> std::ops::Div<MagneticFluxDensity<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFluxDensity<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: MagneticFluxDensity<T>) -> Self::Output {
 		Area{m2: self.Wb.clone() / rhs.T}
 	}
 }
 /// Dividing a MagneticFlux by a MagneticFluxDensity returns a value of type Area
-impl<T> std::ops::Div<&MagneticFluxDensity<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFluxDensity<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: &MagneticFluxDensity<T>) -> Self::Output {
 		Area{m2: self.Wb / rhs.T.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a MagneticFluxDensity returns a value of type Area
-impl<T> std::ops::Div<&MagneticFluxDensity<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFluxDensity<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Area<T>;
 	fn div(self, rhs: &MagneticFluxDensity<T>) -> Self::Output {
 		Area{m2: self.Wb.clone() / rhs.T.clone()}
@@ -3343,28 +3343,28 @@ impl<T> std::ops::Div<&MagneticFluxDensity<T>> for &MagneticFlux<T> where T: Num
 
 // MagneticFlux / Resistance -> Charge
 /// Dividing a MagneticFlux by a Resistance returns a value of type Charge
-impl<T> std::ops::Div<Resistance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Charge{C: self.Wb / rhs.Ohm}
 	}
 }
 /// Dividing a MagneticFlux by a Resistance returns a value of type Charge
-impl<T> std::ops::Div<Resistance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Charge{C: self.Wb.clone() / rhs.Ohm}
 	}
 }
 /// Dividing a MagneticFlux by a Resistance returns a value of type Charge
-impl<T> std::ops::Div<&Resistance<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Charge{C: self.Wb / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Resistance returns a value of type Charge
-impl<T> std::ops::Div<&Resistance<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Charge{C: self.Wb.clone() / rhs.Ohm.clone()}
@@ -3373,28 +3373,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Voltage -> Time
 /// Dividing a MagneticFlux by a Voltage returns a value of type Time
-impl<T> std::ops::Div<Voltage<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Voltage<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Voltage<T>) -> Self::Output {
 		Time{s: self.Wb / rhs.V}
 	}
 }
 /// Dividing a MagneticFlux by a Voltage returns a value of type Time
-impl<T> std::ops::Div<Voltage<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Voltage<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: Voltage<T>) -> Self::Output {
 		Time{s: self.Wb.clone() / rhs.V}
 	}
 }
 /// Dividing a MagneticFlux by a Voltage returns a value of type Time
-impl<T> std::ops::Div<&Voltage<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Voltage<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Time{s: self.Wb / rhs.V.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Voltage returns a value of type Time
-impl<T> std::ops::Div<&Voltage<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Voltage<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Time<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Time{s: self.Wb.clone() / rhs.V.clone()}
@@ -3403,28 +3403,28 @@ impl<T> std::ops::Div<&Voltage<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux / Area -> MagneticFluxDensity
 /// Dividing a MagneticFlux by a Area returns a value of type MagneticFluxDensity
-impl<T> std::ops::Div<Area<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Area<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = MagneticFluxDensity<T>;
 	fn div(self, rhs: Area<T>) -> Self::Output {
 		MagneticFluxDensity{T: self.Wb / rhs.m2}
 	}
 }
 /// Dividing a MagneticFlux by a Area returns a value of type MagneticFluxDensity
-impl<T> std::ops::Div<Area<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<Area<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = MagneticFluxDensity<T>;
 	fn div(self, rhs: Area<T>) -> Self::Output {
 		MagneticFluxDensity{T: self.Wb.clone() / rhs.m2}
 	}
 }
 /// Dividing a MagneticFlux by a Area returns a value of type MagneticFluxDensity
-impl<T> std::ops::Div<&Area<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Area<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = MagneticFluxDensity<T>;
 	fn div(self, rhs: &Area<T>) -> Self::Output {
 		MagneticFluxDensity{T: self.Wb / rhs.m2.clone()}
 	}
 }
 /// Dividing a MagneticFlux by a Area returns a value of type MagneticFluxDensity
-impl<T> std::ops::Div<&Area<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Div<&Area<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = MagneticFluxDensity<T>;
 	fn div(self, rhs: &Area<T>) -> Self::Output {
 		MagneticFluxDensity{T: self.Wb.clone() / rhs.m2.clone()}
@@ -3433,28 +3433,28 @@ impl<T> std::ops::Div<&Area<T>> for &MagneticFlux<T> where T: NumLike {
 
 // MagneticFlux * Frequency -> Voltage
 /// Multiplying a MagneticFlux by a Frequency returns a value of type Voltage
-impl<T> std::ops::Mul<Frequency<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Voltage{V: self.Wb * rhs.Hz}
 	}
 }
 /// Multiplying a MagneticFlux by a Frequency returns a value of type Voltage
-impl<T> std::ops::Mul<Frequency<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<Frequency<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: Frequency<T>) -> Self::Output {
 		Voltage{V: self.Wb.clone() * rhs.Hz}
 	}
 }
 /// Multiplying a MagneticFlux by a Frequency returns a value of type Voltage
-impl<T> std::ops::Mul<&Frequency<T>> for MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Voltage{V: self.Wb * rhs.Hz.clone()}
 	}
 }
 /// Multiplying a MagneticFlux by a Frequency returns a value of type Voltage
-impl<T> std::ops::Mul<&Frequency<T>> for &MagneticFlux<T> where T: NumLike {
+impl<T> core::ops::Mul<&Frequency<T>> for &MagneticFlux<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
 		Voltage{V: self.Wb.clone() * rhs.Hz.clone()}
@@ -3612,7 +3612,7 @@ impl<T> MagneticFluxDensity<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T}
@@ -3620,7 +3620,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T}
@@ -3628,7 +3628,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloa
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T.clone()}
@@ -3636,7 +3636,7 @@ impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for num_bigfloa
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = MagneticFluxDensity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_bigfloat::BigFloat>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
@@ -3645,7 +3645,7 @@ impl std::ops::Mul<&MagneticFluxDensity<num_bigfloat::BigFloat>> for &num_bigflo
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = MagneticFluxDensity<num_complex::Complex32>;
 	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T}
@@ -3653,7 +3653,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for num_complex:
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = MagneticFluxDensity<num_complex::Complex32>;
 	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T}
@@ -3661,7 +3661,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex32>> for &num_complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = MagneticFluxDensity<num_complex::Complex32>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T.clone()}
@@ -3669,7 +3669,7 @@ impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for num_complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = MagneticFluxDensity<num_complex::Complex32>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex32>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
@@ -3678,7 +3678,7 @@ impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex32>> for &num_comple
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = MagneticFluxDensity<num_complex::Complex64>;
 	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T}
@@ -3686,7 +3686,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for num_complex:
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = MagneticFluxDensity<num_complex::Complex64>;
 	fn mul(self, rhs: MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T}
@@ -3694,7 +3694,7 @@ impl std::ops::Mul<MagneticFluxDensity<num_complex::Complex64>> for &num_complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = MagneticFluxDensity<num_complex::Complex64>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
 		MagneticFluxDensity{T: self * rhs.T.clone()}
@@ -3702,7 +3702,7 @@ impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for num_complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&MagneticFluxDensity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = MagneticFluxDensity<num_complex::Complex64>;
 	fn mul(self, rhs: &MagneticFluxDensity<num_complex::Complex64>) -> Self::Output {
 		MagneticFluxDensity{T: self.clone() * rhs.T.clone()}
@@ -3746,28 +3746,28 @@ impl<T> From<uom::si::f64::MagneticFluxDensity> for MagneticFluxDensity<T> where
 
 // MagneticFluxDensity * Area -> MagneticFlux
 /// Multiplying a MagneticFluxDensity by a Area returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Area<T>> for MagneticFluxDensity<T> where T: NumLike {
+impl<T> core::ops::Mul<Area<T>> for MagneticFluxDensity<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Area<T>) -> Self::Output {
 		MagneticFlux{Wb: self.T * rhs.m2}
 	}
 }
 /// Multiplying a MagneticFluxDensity by a Area returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Area<T>> for &MagneticFluxDensity<T> where T: NumLike {
+impl<T> core::ops::Mul<Area<T>> for &MagneticFluxDensity<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Area<T>) -> Self::Output {
 		MagneticFlux{Wb: self.T.clone() * rhs.m2}
 	}
 }
 /// Multiplying a MagneticFluxDensity by a Area returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Area<T>> for MagneticFluxDensity<T> where T: NumLike {
+impl<T> core::ops::Mul<&Area<T>> for MagneticFluxDensity<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		MagneticFlux{Wb: self.T * rhs.m2.clone()}
 	}
 }
 /// Multiplying a MagneticFluxDensity by a Area returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Area<T>> for &MagneticFluxDensity<T> where T: NumLike {
+impl<T> core::ops::Mul<&Area<T>> for &MagneticFluxDensity<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		MagneticFlux{Wb: self.T.clone() * rhs.m2.clone()}
@@ -3925,7 +3925,7 @@ impl<T> Resistance<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Resistance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Resistance<num_bigfloat::BigFloat>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm}
@@ -3933,7 +3933,7 @@ impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloa
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Resistance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Resistance<num_bigfloat::BigFloat>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm}
@@ -3941,7 +3941,7 @@ impl std::ops::Mul<Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Resistance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Resistance<num_bigfloat::BigFloat>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm.clone()}
@@ -3949,7 +3949,7 @@ impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFlo
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Resistance<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Resistance<num_bigfloat::BigFloat>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
@@ -3958,7 +3958,7 @@ impl std::ops::Mul<&Resistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFl
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Resistance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Resistance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Resistance<num_complex::Complex32>;
 	fn mul(self, rhs: Resistance<num_complex::Complex32>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm}
@@ -3966,7 +3966,7 @@ impl std::ops::Mul<Resistance<num_complex::Complex32>> for num_complex::Complex3
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Resistance<num_complex::Complex32>;
 	fn mul(self, rhs: Resistance<num_complex::Complex32>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm}
@@ -3974,7 +3974,7 @@ impl std::ops::Mul<Resistance<num_complex::Complex32>> for &num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Resistance<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Resistance<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Resistance<num_complex::Complex32>;
 	fn mul(self, rhs: &Resistance<num_complex::Complex32>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm.clone()}
@@ -3982,7 +3982,7 @@ impl std::ops::Mul<&Resistance<num_complex::Complex32>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Resistance<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Resistance<num_complex::Complex32>;
 	fn mul(self, rhs: &Resistance<num_complex::Complex32>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
@@ -3991,7 +3991,7 @@ impl std::ops::Mul<&Resistance<num_complex::Complex32>> for &num_complex::Comple
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Resistance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Resistance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Resistance<num_complex::Complex64>;
 	fn mul(self, rhs: Resistance<num_complex::Complex64>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm}
@@ -3999,7 +3999,7 @@ impl std::ops::Mul<Resistance<num_complex::Complex64>> for num_complex::Complex6
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Resistance<num_complex::Complex64>;
 	fn mul(self, rhs: Resistance<num_complex::Complex64>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm}
@@ -4007,7 +4007,7 @@ impl std::ops::Mul<Resistance<num_complex::Complex64>> for &num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Resistance<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Resistance<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Resistance<num_complex::Complex64>;
 	fn mul(self, rhs: &Resistance<num_complex::Complex64>) -> Self::Output {
 		Resistance{Ohm: self * rhs.Ohm.clone()}
@@ -4015,7 +4015,7 @@ impl std::ops::Mul<&Resistance<num_complex::Complex64>> for num_complex::Complex
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Resistance<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Resistance<num_complex::Complex64>;
 	fn mul(self, rhs: &Resistance<num_complex::Complex64>) -> Self::Output {
 		Resistance{Ohm: self.clone() * rhs.Ohm.clone()}
@@ -4059,28 +4059,28 @@ impl<T> From<uom::si::f64::ElectricalResistance> for Resistance<T> where T: NumL
 
 // Resistance * Current -> Voltage
 /// Multiplying a Resistance by a Current returns a value of type Voltage
-impl<T> std::ops::Mul<Current<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for Resistance<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Voltage{V: self.Ohm * rhs.A}
 	}
 }
 /// Multiplying a Resistance by a Current returns a value of type Voltage
-impl<T> std::ops::Mul<Current<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for &Resistance<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Voltage{V: self.Ohm.clone() * rhs.A}
 	}
 }
 /// Multiplying a Resistance by a Current returns a value of type Voltage
-impl<T> std::ops::Mul<&Current<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for Resistance<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Voltage{V: self.Ohm * rhs.A.clone()}
 	}
 }
 /// Multiplying a Resistance by a Current returns a value of type Voltage
-impl<T> std::ops::Mul<&Current<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for &Resistance<T> where T: NumLike {
 	type Output = Voltage<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Voltage{V: self.Ohm.clone() * rhs.A.clone()}
@@ -4089,28 +4089,28 @@ impl<T> std::ops::Mul<&Current<T>> for &Resistance<T> where T: NumLike {
 
 // Resistance * Time -> Inductance
 /// Multiplying a Resistance by a Time returns a value of type Inductance
-impl<T> std::ops::Mul<Time<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Inductance{H: self.Ohm * rhs.s}
 	}
 }
 /// Multiplying a Resistance by a Time returns a value of type Inductance
-impl<T> std::ops::Mul<Time<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for &Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Inductance{H: self.Ohm.clone() * rhs.s}
 	}
 }
 /// Multiplying a Resistance by a Time returns a value of type Inductance
-impl<T> std::ops::Mul<&Time<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Inductance{H: self.Ohm * rhs.s.clone()}
 	}
 }
 /// Multiplying a Resistance by a Time returns a value of type Inductance
-impl<T> std::ops::Mul<&Time<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for &Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Inductance{H: self.Ohm.clone() * rhs.s.clone()}
@@ -4119,28 +4119,28 @@ impl<T> std::ops::Mul<&Time<T>> for &Resistance<T> where T: NumLike {
 
 // Resistance * Capacitance -> Time
 /// Multiplying a Resistance by a Capacitance returns a value of type Time
-impl<T> std::ops::Mul<Capacitance<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Capacitance<T>> for Resistance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Capacitance<T>) -> Self::Output {
 		Time{s: self.Ohm * rhs.F}
 	}
 }
 /// Multiplying a Resistance by a Capacitance returns a value of type Time
-impl<T> std::ops::Mul<Capacitance<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Capacitance<T>> for &Resistance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: Capacitance<T>) -> Self::Output {
 		Time{s: self.Ohm.clone() * rhs.F}
 	}
 }
 /// Multiplying a Resistance by a Capacitance returns a value of type Time
-impl<T> std::ops::Mul<&Capacitance<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Capacitance<T>> for Resistance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Capacitance<T>) -> Self::Output {
 		Time{s: self.Ohm * rhs.F.clone()}
 	}
 }
 /// Multiplying a Resistance by a Capacitance returns a value of type Time
-impl<T> std::ops::Mul<&Capacitance<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Capacitance<T>> for &Resistance<T> where T: NumLike {
 	type Output = Time<T>;
 	fn mul(self, rhs: &Capacitance<T>) -> Self::Output {
 		Time{s: self.Ohm.clone() * rhs.F.clone()}
@@ -4149,28 +4149,28 @@ impl<T> std::ops::Mul<&Capacitance<T>> for &Resistance<T> where T: NumLike {
 
 // Resistance * Charge -> MagneticFlux
 /// Multiplying a Resistance by a Charge returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Charge<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Charge<T>> for Resistance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Charge<T>) -> Self::Output {
 		MagneticFlux{Wb: self.Ohm * rhs.C}
 	}
 }
 /// Multiplying a Resistance by a Charge returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Charge<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<Charge<T>> for &Resistance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Charge<T>) -> Self::Output {
 		MagneticFlux{Wb: self.Ohm.clone() * rhs.C}
 	}
 }
 /// Multiplying a Resistance by a Charge returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Charge<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Charge<T>> for Resistance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Charge<T>) -> Self::Output {
 		MagneticFlux{Wb: self.Ohm * rhs.C.clone()}
 	}
 }
 /// Multiplying a Resistance by a Charge returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Charge<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Mul<&Charge<T>> for &Resistance<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Charge<T>) -> Self::Output {
 		MagneticFlux{Wb: self.Ohm.clone() * rhs.C.clone()}
@@ -4179,28 +4179,28 @@ impl<T> std::ops::Mul<&Charge<T>> for &Resistance<T> where T: NumLike {
 
 // Resistance / Inductance -> Frequency
 /// Dividing a Resistance by a Inductance returns a value of type Frequency
-impl<T> std::ops::Div<Inductance<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<Inductance<T>> for Resistance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Inductance<T>) -> Self::Output {
 		Frequency{Hz: self.Ohm / rhs.H}
 	}
 }
 /// Dividing a Resistance by a Inductance returns a value of type Frequency
-impl<T> std::ops::Div<Inductance<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<Inductance<T>> for &Resistance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Inductance<T>) -> Self::Output {
 		Frequency{Hz: self.Ohm.clone() / rhs.H}
 	}
 }
 /// Dividing a Resistance by a Inductance returns a value of type Frequency
-impl<T> std::ops::Div<&Inductance<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<&Inductance<T>> for Resistance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Inductance<T>) -> Self::Output {
 		Frequency{Hz: self.Ohm / rhs.H.clone()}
 	}
 }
 /// Dividing a Resistance by a Inductance returns a value of type Frequency
-impl<T> std::ops::Div<&Inductance<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<&Inductance<T>> for &Resistance<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Inductance<T>) -> Self::Output {
 		Frequency{Hz: self.Ohm.clone() / rhs.H.clone()}
@@ -4209,28 +4209,28 @@ impl<T> std::ops::Div<&Inductance<T>> for &Resistance<T> where T: NumLike {
 
 // Resistance / Frequency -> Inductance
 /// Dividing a Resistance by a Frequency returns a value of type Inductance
-impl<T> std::ops::Div<Frequency<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Inductance{H: self.Ohm / rhs.Hz}
 	}
 }
 /// Dividing a Resistance by a Frequency returns a value of type Inductance
-impl<T> std::ops::Div<Frequency<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for &Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Inductance{H: self.Ohm.clone() / rhs.Hz}
 	}
 }
 /// Dividing a Resistance by a Frequency returns a value of type Inductance
-impl<T> std::ops::Div<&Frequency<T>> for Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Inductance{H: self.Ohm / rhs.Hz.clone()}
 	}
 }
 /// Dividing a Resistance by a Frequency returns a value of type Inductance
-impl<T> std::ops::Div<&Frequency<T>> for &Resistance<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for &Resistance<T> where T: NumLike {
 	type Output = Inductance<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Inductance{H: self.Ohm.clone() / rhs.Hz.clone()}
@@ -4239,28 +4239,28 @@ impl<T> std::ops::Div<&Frequency<T>> for &Resistance<T> where T: NumLike {
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Resistance<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Resistance<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Resistance<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Resistance<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4269,28 +4269,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &f64 where T: NumLike+From<f64> {
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Resistance<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Resistance<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Resistance<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Resistance<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4299,28 +4299,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &f32 where T: NumLike+From<f32> {
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Resistance<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Resistance<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Resistance<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Resistance<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4329,28 +4329,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &i64 where T: NumLike+From<i64> {
 
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Resistance<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<Resistance<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Resistance<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Resistance<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
-impl<T> std::ops::Div<&Resistance<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Resistance<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4360,7 +4360,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &i32 where T: NumLike+From<i32> {
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
@@ -4368,7 +4368,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_bigfloat::BigFloat where T: NumLike
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
@@ -4376,7 +4376,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_bigfloat::BigFloat where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
@@ -4384,7 +4384,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_bigfloat::BigFloat where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4394,7 +4394,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &num_bigfloat::BigFloat where T: NumLi
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
@@ -4402,7 +4402,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex32 where T: NumLike
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
@@ -4410,7 +4410,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex32 where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
@@ -4418,7 +4418,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex32 where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4428,7 +4428,7 @@ impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex32 where T: NumLi
 // 1/Resistance -> Conductance
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm}
@@ -4436,7 +4436,7 @@ impl<T> std::ops::Div<Resistance<T>> for num_complex::Complex64 where T: NumLike
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm}
@@ -4444,7 +4444,7 @@ impl<T> std::ops::Div<Resistance<T>> for &num_complex::Complex64 where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self) / rhs.Ohm.clone()}
@@ -4452,7 +4452,7 @@ impl<T> std::ops::Div<&Resistance<T>> for num_complex::Complex64 where T: NumLik
 }
 /// Dividing a scalar value by a Resistance unit value returns a value of type Conductance
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Resistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Conductance<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Conductance{S: T::from(self.clone()) / rhs.Ohm.clone()}
@@ -4610,7 +4610,7 @@ impl<T> Voltage<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Voltage<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Voltage<num_bigfloat::BigFloat>) -> Self::Output {
 		Voltage{V: self * rhs.V}
@@ -4618,7 +4618,7 @@ impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Voltage<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Voltage<num_bigfloat::BigFloat>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V}
@@ -4626,7 +4626,7 @@ impl std::ops::Mul<Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Voltage<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Voltage<num_bigfloat::BigFloat>) -> Self::Output {
 		Voltage{V: self * rhs.V.clone()}
@@ -4634,7 +4634,7 @@ impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Voltage<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Voltage<num_bigfloat::BigFloat>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V.clone()}
@@ -4643,7 +4643,7 @@ impl std::ops::Mul<&Voltage<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Voltage<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Voltage<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Voltage<num_complex::Complex32>;
 	fn mul(self, rhs: Voltage<num_complex::Complex32>) -> Self::Output {
 		Voltage{V: self * rhs.V}
@@ -4651,7 +4651,7 @@ impl std::ops::Mul<Voltage<num_complex::Complex32>> for num_complex::Complex32 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Voltage<num_complex::Complex32>;
 	fn mul(self, rhs: Voltage<num_complex::Complex32>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V}
@@ -4659,7 +4659,7 @@ impl std::ops::Mul<Voltage<num_complex::Complex32>> for &num_complex::Complex32 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Voltage<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Voltage<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Voltage<num_complex::Complex32>;
 	fn mul(self, rhs: &Voltage<num_complex::Complex32>) -> Self::Output {
 		Voltage{V: self * rhs.V.clone()}
@@ -4667,7 +4667,7 @@ impl std::ops::Mul<&Voltage<num_complex::Complex32>> for num_complex::Complex32 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Voltage<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Voltage<num_complex::Complex32>;
 	fn mul(self, rhs: &Voltage<num_complex::Complex32>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V.clone()}
@@ -4676,7 +4676,7 @@ impl std::ops::Mul<&Voltage<num_complex::Complex32>> for &num_complex::Complex32
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Voltage<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Voltage<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Voltage<num_complex::Complex64>;
 	fn mul(self, rhs: Voltage<num_complex::Complex64>) -> Self::Output {
 		Voltage{V: self * rhs.V}
@@ -4684,7 +4684,7 @@ impl std::ops::Mul<Voltage<num_complex::Complex64>> for num_complex::Complex64 {
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Voltage<num_complex::Complex64>;
 	fn mul(self, rhs: Voltage<num_complex::Complex64>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V}
@@ -4692,7 +4692,7 @@ impl std::ops::Mul<Voltage<num_complex::Complex64>> for &num_complex::Complex64 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Voltage<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Voltage<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Voltage<num_complex::Complex64>;
 	fn mul(self, rhs: &Voltage<num_complex::Complex64>) -> Self::Output {
 		Voltage{V: self * rhs.V.clone()}
@@ -4700,7 +4700,7 @@ impl std::ops::Mul<&Voltage<num_complex::Complex64>> for num_complex::Complex64 
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Voltage<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Voltage<num_complex::Complex64>;
 	fn mul(self, rhs: &Voltage<num_complex::Complex64>) -> Self::Output {
 		Voltage{V: self.clone() * rhs.V.clone()}
@@ -4744,28 +4744,28 @@ impl<T> From<uom::si::f64::ElectricPotential> for Voltage<T> where T: NumLike+Fr
 
 // Voltage * Current -> Power
 /// Multiplying a Voltage by a Current returns a value of type Power
-impl<T> std::ops::Mul<Current<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for Voltage<T> where T: NumLike {
 	type Output = Power<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Power{W: self.V * rhs.A}
 	}
 }
 /// Multiplying a Voltage by a Current returns a value of type Power
-impl<T> std::ops::Mul<Current<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Current<T>> for &Voltage<T> where T: NumLike {
 	type Output = Power<T>;
 	fn mul(self, rhs: Current<T>) -> Self::Output {
 		Power{W: self.V.clone() * rhs.A}
 	}
 }
 /// Multiplying a Voltage by a Current returns a value of type Power
-impl<T> std::ops::Mul<&Current<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for Voltage<T> where T: NumLike {
 	type Output = Power<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Power{W: self.V * rhs.A.clone()}
 	}
 }
 /// Multiplying a Voltage by a Current returns a value of type Power
-impl<T> std::ops::Mul<&Current<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Current<T>> for &Voltage<T> where T: NumLike {
 	type Output = Power<T>;
 	fn mul(self, rhs: &Current<T>) -> Self::Output {
 		Power{W: self.V.clone() * rhs.A.clone()}
@@ -4774,28 +4774,28 @@ impl<T> std::ops::Mul<&Current<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage / Current -> Resistance
 /// Dividing a Voltage by a Current returns a value of type Resistance
-impl<T> std::ops::Div<Current<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for Voltage<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Resistance{Ohm: self.V / rhs.A}
 	}
 }
 /// Dividing a Voltage by a Current returns a value of type Resistance
-impl<T> std::ops::Div<Current<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Current<T>> for &Voltage<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: Current<T>) -> Self::Output {
 		Resistance{Ohm: self.V.clone() / rhs.A}
 	}
 }
 /// Dividing a Voltage by a Current returns a value of type Resistance
-impl<T> std::ops::Div<&Current<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for Voltage<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Resistance{Ohm: self.V / rhs.A.clone()}
 	}
 }
 /// Dividing a Voltage by a Current returns a value of type Resistance
-impl<T> std::ops::Div<&Current<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Current<T>> for &Voltage<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn div(self, rhs: &Current<T>) -> Self::Output {
 		Resistance{Ohm: self.V.clone() / rhs.A.clone()}
@@ -4804,28 +4804,28 @@ impl<T> std::ops::Div<&Current<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage * Time -> MagneticFlux
 /// Multiplying a Voltage by a Time returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Time<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V * rhs.s}
 	}
 }
 /// Multiplying a Voltage by a Time returns a value of type MagneticFlux
-impl<T> std::ops::Mul<Time<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for &Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V.clone() * rhs.s}
 	}
 }
 /// Multiplying a Voltage by a Time returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Time<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V * rhs.s.clone()}
 	}
 }
 /// Multiplying a Voltage by a Time returns a value of type MagneticFlux
-impl<T> std::ops::Mul<&Time<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for &Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V.clone() * rhs.s.clone()}
@@ -4834,28 +4834,28 @@ impl<T> std::ops::Mul<&Time<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage * Capacitance -> Charge
 /// Multiplying a Voltage by a Capacitance returns a value of type Charge
-impl<T> std::ops::Mul<Capacitance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Capacitance<T>> for Voltage<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Capacitance<T>) -> Self::Output {
 		Charge{C: self.V * rhs.F}
 	}
 }
 /// Multiplying a Voltage by a Capacitance returns a value of type Charge
-impl<T> std::ops::Mul<Capacitance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Capacitance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: Capacitance<T>) -> Self::Output {
 		Charge{C: self.V.clone() * rhs.F}
 	}
 }
 /// Multiplying a Voltage by a Capacitance returns a value of type Charge
-impl<T> std::ops::Mul<&Capacitance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Capacitance<T>> for Voltage<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Capacitance<T>) -> Self::Output {
 		Charge{C: self.V * rhs.F.clone()}
 	}
 }
 /// Multiplying a Voltage by a Capacitance returns a value of type Charge
-impl<T> std::ops::Mul<&Capacitance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Capacitance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn mul(self, rhs: &Capacitance<T>) -> Self::Output {
 		Charge{C: self.V.clone() * rhs.F.clone()}
@@ -4864,28 +4864,28 @@ impl<T> std::ops::Mul<&Capacitance<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage * Charge -> Energy
 /// Multiplying a Voltage by a Charge returns a value of type Energy
-impl<T> std::ops::Mul<Charge<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Charge<T>> for Voltage<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Charge<T>) -> Self::Output {
 		Energy{J: self.V * rhs.C}
 	}
 }
 /// Multiplying a Voltage by a Charge returns a value of type Energy
-impl<T> std::ops::Mul<Charge<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Charge<T>> for &Voltage<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Charge<T>) -> Self::Output {
 		Energy{J: self.V.clone() * rhs.C}
 	}
 }
 /// Multiplying a Voltage by a Charge returns a value of type Energy
-impl<T> std::ops::Mul<&Charge<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Charge<T>> for Voltage<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Charge<T>) -> Self::Output {
 		Energy{J: self.V * rhs.C.clone()}
 	}
 }
 /// Multiplying a Voltage by a Charge returns a value of type Energy
-impl<T> std::ops::Mul<&Charge<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Charge<T>> for &Voltage<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Charge<T>) -> Self::Output {
 		Energy{J: self.V.clone() * rhs.C.clone()}
@@ -4894,28 +4894,28 @@ impl<T> std::ops::Mul<&Charge<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage * Conductance -> Current
 /// Multiplying a Voltage by a Conductance returns a value of type Current
-impl<T> std::ops::Mul<Conductance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Current{A: self.V * rhs.S}
 	}
 }
 /// Multiplying a Voltage by a Conductance returns a value of type Current
-impl<T> std::ops::Mul<Conductance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<Conductance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: Conductance<T>) -> Self::Output {
 		Current{A: self.V.clone() * rhs.S}
 	}
 }
 /// Multiplying a Voltage by a Conductance returns a value of type Current
-impl<T> std::ops::Mul<&Conductance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Current{A: self.V * rhs.S.clone()}
 	}
 }
 /// Multiplying a Voltage by a Conductance returns a value of type Current
-impl<T> std::ops::Mul<&Conductance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Mul<&Conductance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
 		Current{A: self.V.clone() * rhs.S.clone()}
@@ -4924,28 +4924,28 @@ impl<T> std::ops::Mul<&Conductance<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage / MagneticFlux -> Frequency
 /// Dividing a Voltage by a MagneticFlux returns a value of type Frequency
-impl<T> std::ops::Div<MagneticFlux<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFlux<T>> for Voltage<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Frequency{Hz: self.V / rhs.Wb}
 	}
 }
 /// Dividing a Voltage by a MagneticFlux returns a value of type Frequency
-impl<T> std::ops::Div<MagneticFlux<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<MagneticFlux<T>> for &Voltage<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: MagneticFlux<T>) -> Self::Output {
 		Frequency{Hz: self.V.clone() / rhs.Wb}
 	}
 }
 /// Dividing a Voltage by a MagneticFlux returns a value of type Frequency
-impl<T> std::ops::Div<&MagneticFlux<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFlux<T>> for Voltage<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Frequency{Hz: self.V / rhs.Wb.clone()}
 	}
 }
 /// Dividing a Voltage by a MagneticFlux returns a value of type Frequency
-impl<T> std::ops::Div<&MagneticFlux<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&MagneticFlux<T>> for &Voltage<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &MagneticFlux<T>) -> Self::Output {
 		Frequency{Hz: self.V.clone() / rhs.Wb.clone()}
@@ -4954,28 +4954,28 @@ impl<T> std::ops::Div<&MagneticFlux<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage / Resistance -> Current
 /// Dividing a Voltage by a Resistance returns a value of type Current
-impl<T> std::ops::Div<Resistance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Current{A: self.V / rhs.Ohm}
 	}
 }
 /// Dividing a Voltage by a Resistance returns a value of type Current
-impl<T> std::ops::Div<Resistance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Resistance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: Resistance<T>) -> Self::Output {
 		Current{A: self.V.clone() / rhs.Ohm}
 	}
 }
 /// Dividing a Voltage by a Resistance returns a value of type Current
-impl<T> std::ops::Div<&Resistance<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Current{A: self.V / rhs.Ohm.clone()}
 	}
 }
 /// Dividing a Voltage by a Resistance returns a value of type Current
-impl<T> std::ops::Div<&Resistance<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Resistance<T>> for &Voltage<T> where T: NumLike {
 	type Output = Current<T>;
 	fn div(self, rhs: &Resistance<T>) -> Self::Output {
 		Current{A: self.V.clone() / rhs.Ohm.clone()}
@@ -4984,28 +4984,28 @@ impl<T> std::ops::Div<&Resistance<T>> for &Voltage<T> where T: NumLike {
 
 // Voltage / Frequency -> MagneticFlux
 /// Dividing a Voltage by a Frequency returns a value of type MagneticFlux
-impl<T> std::ops::Div<Frequency<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V / rhs.Hz}
 	}
 }
 /// Dividing a Voltage by a Frequency returns a value of type MagneticFlux
-impl<T> std::ops::Div<Frequency<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for &Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V.clone() / rhs.Hz}
 	}
 }
 /// Dividing a Voltage by a Frequency returns a value of type MagneticFlux
-impl<T> std::ops::Div<&Frequency<T>> for Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V / rhs.Hz.clone()}
 	}
 }
 /// Dividing a Voltage by a Frequency returns a value of type MagneticFlux
-impl<T> std::ops::Div<&Frequency<T>> for &Voltage<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for &Voltage<T> where T: NumLike {
 	type Output = MagneticFlux<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		MagneticFlux{Wb: self.V.clone() / rhs.Hz.clone()}

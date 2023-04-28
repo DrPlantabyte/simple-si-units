@@ -1,7 +1,7 @@
 
 //! This module provides chemical SI units, such as catalytic activity 
 //! and chemical concentration.
-use std::fmt;
+use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
 use super::base::*;
@@ -135,7 +135,7 @@ impl<T> CatalyticActivity<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = CatalyticActivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: CatalyticActivity<num_bigfloat::BigFloat>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps}
@@ -143,7 +143,7 @@ impl std::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat::
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = CatalyticActivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: CatalyticActivity<num_bigfloat::BigFloat>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps}
@@ -151,7 +151,7 @@ impl std::ops::Mul<CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat:
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = CatalyticActivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &CatalyticActivity<num_bigfloat::BigFloat>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps.clone()}
@@ -159,7 +159,7 @@ impl std::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for num_bigfloat:
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = CatalyticActivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &CatalyticActivity<num_bigfloat::BigFloat>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps.clone()}
@@ -168,7 +168,7 @@ impl std::ops::Mul<&CatalyticActivity<num_bigfloat::BigFloat>> for &num_bigfloat
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<CatalyticActivity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<CatalyticActivity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = CatalyticActivity<num_complex::Complex32>;
 	fn mul(self, rhs: CatalyticActivity<num_complex::Complex32>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps}
@@ -176,7 +176,7 @@ impl std::ops::Mul<CatalyticActivity<num_complex::Complex32>> for num_complex::C
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<CatalyticActivity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<CatalyticActivity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = CatalyticActivity<num_complex::Complex32>;
 	fn mul(self, rhs: CatalyticActivity<num_complex::Complex32>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps}
@@ -184,7 +184,7 @@ impl std::ops::Mul<CatalyticActivity<num_complex::Complex32>> for &num_complex::
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = CatalyticActivity<num_complex::Complex32>;
 	fn mul(self, rhs: &CatalyticActivity<num_complex::Complex32>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps.clone()}
@@ -192,7 +192,7 @@ impl std::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for num_complex::
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = CatalyticActivity<num_complex::Complex32>;
 	fn mul(self, rhs: &CatalyticActivity<num_complex::Complex32>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps.clone()}
@@ -201,7 +201,7 @@ impl std::ops::Mul<&CatalyticActivity<num_complex::Complex32>> for &num_complex:
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<CatalyticActivity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<CatalyticActivity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = CatalyticActivity<num_complex::Complex64>;
 	fn mul(self, rhs: CatalyticActivity<num_complex::Complex64>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps}
@@ -209,7 +209,7 @@ impl std::ops::Mul<CatalyticActivity<num_complex::Complex64>> for num_complex::C
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<CatalyticActivity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<CatalyticActivity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = CatalyticActivity<num_complex::Complex64>;
 	fn mul(self, rhs: CatalyticActivity<num_complex::Complex64>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps}
@@ -217,7 +217,7 @@ impl std::ops::Mul<CatalyticActivity<num_complex::Complex64>> for &num_complex::
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&CatalyticActivity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&CatalyticActivity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = CatalyticActivity<num_complex::Complex64>;
 	fn mul(self, rhs: &CatalyticActivity<num_complex::Complex64>) -> Self::Output {
 		CatalyticActivity{molps: self * rhs.molps.clone()}
@@ -225,7 +225,7 @@ impl std::ops::Mul<&CatalyticActivity<num_complex::Complex64>> for num_complex::
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&CatalyticActivity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&CatalyticActivity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = CatalyticActivity<num_complex::Complex64>;
 	fn mul(self, rhs: &CatalyticActivity<num_complex::Complex64>) -> Self::Output {
 		CatalyticActivity{molps: self.clone() * rhs.molps.clone()}
@@ -269,28 +269,28 @@ impl<T> From<uom::si::f64::CatalyticActivity> for CatalyticActivity<T> where T: 
 
 // CatalyticActivity / Amount -> Frequency
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
-impl<T> std::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<Amount<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps / rhs.mol}
 	}
 }
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
-impl<T> std::ops::Div<Amount<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<Amount<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps.clone() / rhs.mol}
 	}
 }
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
-impl<T> std::ops::Div<&Amount<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<&Amount<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps / rhs.mol.clone()}
 	}
 }
 /// Dividing a CatalyticActivity by a Amount returns a value of type Frequency
-impl<T> std::ops::Div<&Amount<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<&Amount<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Amount<T>) -> Self::Output {
 		Frequency{Hz: self.molps.clone() / rhs.mol.clone()}
@@ -299,28 +299,28 @@ impl<T> std::ops::Div<&Amount<T>> for &CatalyticActivity<T> where T: NumLike {
 
 // CatalyticActivity * Time -> Amount
 /// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Amount{mol: self.molps * rhs.s}
 	}
 }
 /// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Mul<Time<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: Time<T>) -> Self::Output {
 		Amount{mol: self.molps.clone() * rhs.s}
 	}
 }
 /// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Amount{mol: self.molps * rhs.s.clone()}
 	}
 }
 /// Multiplying a CatalyticActivity by a Time returns a value of type Amount
-impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Amount{mol: self.molps.clone() * rhs.s.clone()}
@@ -329,28 +329,28 @@ impl<T> std::ops::Mul<&Time<T>> for &CatalyticActivity<T> where T: NumLike {
 
 // CatalyticActivity / Frequency -> Amount
 /// Dividing a CatalyticActivity by a Frequency returns a value of type Amount
-impl<T> std::ops::Div<Frequency<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Amount{mol: self.molps / rhs.Hz}
 	}
 }
 /// Dividing a CatalyticActivity by a Frequency returns a value of type Amount
-impl<T> std::ops::Div<Frequency<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<Frequency<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn div(self, rhs: Frequency<T>) -> Self::Output {
 		Amount{mol: self.molps.clone() / rhs.Hz}
 	}
 }
 /// Dividing a CatalyticActivity by a Frequency returns a value of type Amount
-impl<T> std::ops::Div<&Frequency<T>> for CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Amount{mol: self.molps / rhs.Hz.clone()}
 	}
 }
 /// Dividing a CatalyticActivity by a Frequency returns a value of type Amount
-impl<T> std::ops::Div<&Frequency<T>> for &CatalyticActivity<T> where T: NumLike {
+impl<T> core::ops::Div<&Frequency<T>> for &CatalyticActivity<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Amount{mol: self.molps.clone() / rhs.Hz.clone()}
@@ -585,7 +585,7 @@ impl<T> Concentration<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Concentration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Concentration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Concentration<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Concentration<num_bigfloat::BigFloat>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3}
@@ -593,7 +593,7 @@ impl std::ops::Mul<Concentration<num_bigfloat::BigFloat>> for num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Concentration<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Concentration<num_bigfloat::BigFloat>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3}
@@ -601,7 +601,7 @@ impl std::ops::Mul<Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::Big
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Concentration<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Concentration<num_bigfloat::BigFloat>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3.clone()}
@@ -609,7 +609,7 @@ impl std::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for num_bigfloat::Big
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Concentration<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Concentration<num_bigfloat::BigFloat>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3.clone()}
@@ -618,7 +618,7 @@ impl std::ops::Mul<&Concentration<num_bigfloat::BigFloat>> for &num_bigfloat::Bi
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Concentration<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Concentration<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Concentration<num_complex::Complex32>;
 	fn mul(self, rhs: Concentration<num_complex::Complex32>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3}
@@ -626,7 +626,7 @@ impl std::ops::Mul<Concentration<num_complex::Complex32>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Concentration<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Concentration<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Concentration<num_complex::Complex32>;
 	fn mul(self, rhs: Concentration<num_complex::Complex32>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3}
@@ -634,7 +634,7 @@ impl std::ops::Mul<Concentration<num_complex::Complex32>> for &num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Concentration<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Concentration<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Concentration<num_complex::Complex32>;
 	fn mul(self, rhs: &Concentration<num_complex::Complex32>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3.clone()}
@@ -642,7 +642,7 @@ impl std::ops::Mul<&Concentration<num_complex::Complex32>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Concentration<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Concentration<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Concentration<num_complex::Complex32>;
 	fn mul(self, rhs: &Concentration<num_complex::Complex32>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3.clone()}
@@ -651,7 +651,7 @@ impl std::ops::Mul<&Concentration<num_complex::Complex32>> for &num_complex::Com
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Concentration<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Concentration<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Concentration<num_complex::Complex64>;
 	fn mul(self, rhs: Concentration<num_complex::Complex64>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3}
@@ -659,7 +659,7 @@ impl std::ops::Mul<Concentration<num_complex::Complex64>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Concentration<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Concentration<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Concentration<num_complex::Complex64>;
 	fn mul(self, rhs: Concentration<num_complex::Complex64>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3}
@@ -667,7 +667,7 @@ impl std::ops::Mul<Concentration<num_complex::Complex64>> for &num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Concentration<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Concentration<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Concentration<num_complex::Complex64>;
 	fn mul(self, rhs: &Concentration<num_complex::Complex64>) -> Self::Output {
 		Concentration{molpm3: self * rhs.molpm3.clone()}
@@ -675,7 +675,7 @@ impl std::ops::Mul<&Concentration<num_complex::Complex64>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Concentration<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Concentration<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Concentration<num_complex::Complex64>;
 	fn mul(self, rhs: &Concentration<num_complex::Complex64>) -> Self::Output {
 		Concentration{molpm3: self.clone() * rhs.molpm3.clone()}
@@ -719,28 +719,28 @@ impl<T> From<uom::si::f64::MolarConcentration> for Concentration<T> where T: Num
 
 // Concentration * Volume -> Amount
 /// Multiplying a Concentration by a Volume returns a value of type Amount
-impl<T> std::ops::Mul<Volume<T>> for Concentration<T> where T: NumLike {
+impl<T> core::ops::Mul<Volume<T>> for Concentration<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: Volume<T>) -> Self::Output {
 		Amount{mol: self.molpm3 * rhs.m3}
 	}
 }
 /// Multiplying a Concentration by a Volume returns a value of type Amount
-impl<T> std::ops::Mul<Volume<T>> for &Concentration<T> where T: NumLike {
+impl<T> core::ops::Mul<Volume<T>> for &Concentration<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: Volume<T>) -> Self::Output {
 		Amount{mol: self.molpm3.clone() * rhs.m3}
 	}
 }
 /// Multiplying a Concentration by a Volume returns a value of type Amount
-impl<T> std::ops::Mul<&Volume<T>> for Concentration<T> where T: NumLike {
+impl<T> core::ops::Mul<&Volume<T>> for Concentration<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: &Volume<T>) -> Self::Output {
 		Amount{mol: self.molpm3 * rhs.m3.clone()}
 	}
 }
 /// Multiplying a Concentration by a Volume returns a value of type Amount
-impl<T> std::ops::Mul<&Volume<T>> for &Concentration<T> where T: NumLike {
+impl<T> core::ops::Mul<&Volume<T>> for &Concentration<T> where T: NumLike {
 	type Output = Amount<T>;
 	fn mul(self, rhs: &Volume<T>) -> Self::Output {
 		Amount{mol: self.molpm3.clone() * rhs.m3.clone()}
