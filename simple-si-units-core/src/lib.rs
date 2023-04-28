@@ -1,6 +1,7 @@
+#![no_std]
 #![warn(missing_docs)]
 #![ doc = include_str!("../README.md")]
-use std::fmt::{Debug, Display};
+use core::fmt::{Debug, Display};
 
 /// The `NumLike` trait is just a shorthand definition for any "number-like" 
 /// type in Rust. "Number-like" means that a type implements the traits for 
@@ -20,28 +21,28 @@ use std::fmt::{Debug, Display};
 ///   return delta.clone() * delta;
 /// }
 /// ```
-pub trait NumLike: std::ops::Add<Output=Self>
-+ std::ops::AddAssign
-+ std::ops::Sub<Output=Self>
-+ std::ops::SubAssign
-+ std::ops::Mul<Output=Self>
-+ std::ops::MulAssign
-+ std::ops::Div<Output=Self>
-+ std::ops::DivAssign
-+ std::ops::Neg<Output=Self>
+pub trait NumLike: core::ops::Add<Output=Self>
++ core::ops::AddAssign
++ core::ops::Sub<Output=Self>
++ core::ops::SubAssign
++ core::ops::Mul<Output=Self>
++ core::ops::MulAssign
++ core::ops::Div<Output=Self>
++ core::ops::DivAssign
++ core::ops::Neg<Output=Self>
 + Clone
 + Debug
 + Display
 {}
-impl<T> NumLike for T where T: std::ops::Add<Output=Self>
-+ std::ops::AddAssign
-+ std::ops::Sub<Output=Self>
-+ std::ops::SubAssign
-+ std::ops::Mul<Output=Self>
-+ std::ops::MulAssign
-+ std::ops::Div<Output=Self>
-+ std::ops::DivAssign
-+ std::ops::Neg<Output=Self>
+impl<T> NumLike for T where T: core::ops::Add<Output=Self>
++ core::ops::AddAssign
++ core::ops::Sub<Output=Self>
++ core::ops::SubAssign
++ core::ops::Mul<Output=Self>
++ core::ops::MulAssign
++ core::ops::Div<Output=Self>
++ core::ops::DivAssign
++ core::ops::Neg<Output=Self>
 + Clone
 + Debug
 + Display

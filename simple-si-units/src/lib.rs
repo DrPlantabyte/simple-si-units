@@ -1,3 +1,4 @@
+#![no_std]
 #![allow(non_snake_case)]
 #![warn(missing_docs)]
 #![ doc = include_str!("../README.md")]
@@ -62,6 +63,10 @@ pub mod electromagnetic;
 pub mod geometry;
 pub mod mechanical;
 pub mod nuclear;
+
+#[cfg(test)]
+#[macro_use]
+extern crate std; // import std lib only in test mode
 
 /// Unit tests
 #[cfg(test)]
