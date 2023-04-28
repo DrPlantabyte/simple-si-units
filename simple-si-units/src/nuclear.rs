@@ -1,7 +1,7 @@
 
 //! This module provides nuclear SI units, such as absorbed radiation dose 
 //! and radioactivity.
-use std::fmt;
+use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
 use super::base::*;
@@ -253,7 +253,7 @@ impl<T> AbsorbedDose<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy}
@@ -261,7 +261,7 @@ impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy}
@@ -269,7 +269,7 @@ impl std::ops::Mul<AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy.clone()}
@@ -277,7 +277,7 @@ impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = AbsorbedDose<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &AbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
@@ -286,7 +286,7 @@ impl std::ops::Mul<&AbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::Big
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = AbsorbedDose<num_complex::Complex32>;
 	fn mul(self, rhs: AbsorbedDose<num_complex::Complex32>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy}
@@ -294,7 +294,7 @@ impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = AbsorbedDose<num_complex::Complex32>;
 	fn mul(self, rhs: AbsorbedDose<num_complex::Complex32>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy}
@@ -302,7 +302,7 @@ impl std::ops::Mul<AbsorbedDose<num_complex::Complex32>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = AbsorbedDose<num_complex::Complex32>;
 	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex32>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy.clone()}
@@ -310,7 +310,7 @@ impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = AbsorbedDose<num_complex::Complex32>;
 	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex32>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
@@ -319,7 +319,7 @@ impl std::ops::Mul<&AbsorbedDose<num_complex::Complex32>> for &num_complex::Comp
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = AbsorbedDose<num_complex::Complex64>;
 	fn mul(self, rhs: AbsorbedDose<num_complex::Complex64>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy}
@@ -327,7 +327,7 @@ impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for num_complex::Comple
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = AbsorbedDose<num_complex::Complex64>;
 	fn mul(self, rhs: AbsorbedDose<num_complex::Complex64>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy}
@@ -335,7 +335,7 @@ impl std::ops::Mul<AbsorbedDose<num_complex::Complex64>> for &num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = AbsorbedDose<num_complex::Complex64>;
 	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex64>) -> Self::Output {
 		AbsorbedDose{Gy: self * rhs.Gy.clone()}
@@ -343,7 +343,7 @@ impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = AbsorbedDose<num_complex::Complex64>;
 	fn mul(self, rhs: &AbsorbedDose<num_complex::Complex64>) -> Self::Output {
 		AbsorbedDose{Gy: self.clone() * rhs.Gy.clone()}
@@ -355,28 +355,28 @@ impl std::ops::Mul<&AbsorbedDose<num_complex::Complex64>> for &num_complex::Comp
 
 // AbsorbedDose * Mass -> Energy
 /// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
+impl<T> core::ops::Mul<Mass<T>> for AbsorbedDose<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Mass<T>) -> Self::Output {
 		Energy{J: self.Gy * rhs.kg}
 	}
 }
 /// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<Mass<T>> for &AbsorbedDose<T> where T: NumLike {
+impl<T> core::ops::Mul<Mass<T>> for &AbsorbedDose<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Mass<T>) -> Self::Output {
 		Energy{J: self.Gy.clone() * rhs.kg}
 	}
 }
 /// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<&Mass<T>> for AbsorbedDose<T> where T: NumLike {
+impl<T> core::ops::Mul<&Mass<T>> for AbsorbedDose<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Mass<T>) -> Self::Output {
 		Energy{J: self.Gy * rhs.kg.clone()}
 	}
 }
 /// Multiplying a AbsorbedDose by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<&Mass<T>> for &AbsorbedDose<T> where T: NumLike {
+impl<T> core::ops::Mul<&Mass<T>> for &AbsorbedDose<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Mass<T>) -> Self::Output {
 		Energy{J: self.Gy.clone() * rhs.kg.clone()}
@@ -585,7 +585,7 @@ impl<T> DoseEquivalent<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv}
@@ -593,7 +593,7 @@ impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::Big
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv}
@@ -601,7 +601,7 @@ impl std::ops::Mul<DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::Bi
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv.clone()}
@@ -609,7 +609,7 @@ impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::Bi
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = DoseEquivalent<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &DoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
@@ -618,7 +618,7 @@ impl std::ops::Mul<&DoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::B
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = DoseEquivalent<num_complex::Complex32>;
 	fn mul(self, rhs: DoseEquivalent<num_complex::Complex32>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv}
@@ -626,7 +626,7 @@ impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = DoseEquivalent<num_complex::Complex32>;
 	fn mul(self, rhs: DoseEquivalent<num_complex::Complex32>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv}
@@ -634,7 +634,7 @@ impl std::ops::Mul<DoseEquivalent<num_complex::Complex32>> for &num_complex::Com
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = DoseEquivalent<num_complex::Complex32>;
 	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex32>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv.clone()}
@@ -642,7 +642,7 @@ impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for num_complex::Com
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = DoseEquivalent<num_complex::Complex32>;
 	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex32>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
@@ -651,7 +651,7 @@ impl std::ops::Mul<&DoseEquivalent<num_complex::Complex32>> for &num_complex::Co
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = DoseEquivalent<num_complex::Complex64>;
 	fn mul(self, rhs: DoseEquivalent<num_complex::Complex64>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv}
@@ -659,7 +659,7 @@ impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = DoseEquivalent<num_complex::Complex64>;
 	fn mul(self, rhs: DoseEquivalent<num_complex::Complex64>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv}
@@ -667,7 +667,7 @@ impl std::ops::Mul<DoseEquivalent<num_complex::Complex64>> for &num_complex::Com
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = DoseEquivalent<num_complex::Complex64>;
 	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex64>) -> Self::Output {
 		DoseEquivalent{Sv: self * rhs.Sv.clone()}
@@ -675,7 +675,7 @@ impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for num_complex::Com
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = DoseEquivalent<num_complex::Complex64>;
 	fn mul(self, rhs: &DoseEquivalent<num_complex::Complex64>) -> Self::Output {
 		DoseEquivalent{Sv: self.clone() * rhs.Sv.clone()}
@@ -687,28 +687,28 @@ impl std::ops::Mul<&DoseEquivalent<num_complex::Complex64>> for &num_complex::Co
 
 // DoseEquivalent * Mass -> Energy
 /// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<Mass<T>> for DoseEquivalent<T> where T: NumLike {
+impl<T> core::ops::Mul<Mass<T>> for DoseEquivalent<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Mass<T>) -> Self::Output {
 		Energy{J: self.Sv * rhs.kg}
 	}
 }
 /// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<Mass<T>> for &DoseEquivalent<T> where T: NumLike {
+impl<T> core::ops::Mul<Mass<T>> for &DoseEquivalent<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: Mass<T>) -> Self::Output {
 		Energy{J: self.Sv.clone() * rhs.kg}
 	}
 }
 /// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<&Mass<T>> for DoseEquivalent<T> where T: NumLike {
+impl<T> core::ops::Mul<&Mass<T>> for DoseEquivalent<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Mass<T>) -> Self::Output {
 		Energy{J: self.Sv * rhs.kg.clone()}
 	}
 }
 /// Multiplying a DoseEquivalent by a Mass returns a value of type Energy
-impl<T> std::ops::Mul<&Mass<T>> for &DoseEquivalent<T> where T: NumLike {
+impl<T> core::ops::Mul<&Mass<T>> for &DoseEquivalent<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Mass<T>) -> Self::Output {
 		Energy{J: self.Sv.clone() * rhs.kg.clone()}
@@ -968,7 +968,7 @@ impl<T> Radioactivity<T> where T: NumLike+From<f64> {
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Radioactivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq}
@@ -976,7 +976,7 @@ impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigF
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Radioactivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq}
@@ -984,7 +984,7 @@ impl std::ops::Mul<Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::Big
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+impl core::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = Radioactivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq.clone()}
@@ -992,7 +992,7 @@ impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for num_bigfloat::Big
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-bigfloat")]
-impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+impl core::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = Radioactivity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &Radioactivity<num_bigfloat::BigFloat>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
@@ -1001,7 +1001,7 @@ impl std::ops::Mul<&Radioactivity<num_bigfloat::BigFloat>> for &num_bigfloat::Bi
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Radioactivity<num_complex::Complex32>;
 	fn mul(self, rhs: Radioactivity<num_complex::Complex32>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq}
@@ -1009,7 +1009,7 @@ impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Radioactivity<num_complex::Complex32>;
 	fn mul(self, rhs: Radioactivity<num_complex::Complex32>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq}
@@ -1017,7 +1017,7 @@ impl std::ops::Mul<Radioactivity<num_complex::Complex32>> for &num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
+impl core::ops::Mul<&Radioactivity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = Radioactivity<num_complex::Complex32>;
 	fn mul(self, rhs: &Radioactivity<num_complex::Complex32>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq.clone()}
@@ -1025,7 +1025,7 @@ impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
+impl core::ops::Mul<&Radioactivity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = Radioactivity<num_complex::Complex32>;
 	fn mul(self, rhs: &Radioactivity<num_complex::Complex32>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
@@ -1034,7 +1034,7 @@ impl std::ops::Mul<&Radioactivity<num_complex::Complex32>> for &num_complex::Com
 
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Radioactivity<num_complex::Complex64>;
 	fn mul(self, rhs: Radioactivity<num_complex::Complex64>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq}
@@ -1042,7 +1042,7 @@ impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for num_complex::Compl
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Radioactivity<num_complex::Complex64>;
 	fn mul(self, rhs: Radioactivity<num_complex::Complex64>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq}
@@ -1050,7 +1050,7 @@ impl std::ops::Mul<Radioactivity<num_complex::Complex64>> for &num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
+impl core::ops::Mul<&Radioactivity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = Radioactivity<num_complex::Complex64>;
 	fn mul(self, rhs: &Radioactivity<num_complex::Complex64>) -> Self::Output {
 		Radioactivity{Bq: self * rhs.Bq.clone()}
@@ -1058,7 +1058,7 @@ impl std::ops::Mul<&Radioactivity<num_complex::Complex64>> for num_complex::Comp
 }
 /// Multiplying a unit value by a scalar value returns a unit value
 #[cfg(feature="num-complex")]
-impl std::ops::Mul<&Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
+impl core::ops::Mul<&Radioactivity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = Radioactivity<num_complex::Complex64>;
 	fn mul(self, rhs: &Radioactivity<num_complex::Complex64>) -> Self::Output {
 		Radioactivity{Bq: self.clone() * rhs.Bq.clone()}
@@ -1102,28 +1102,28 @@ impl<T> From<uom::si::f64::Radioactivity> for Radioactivity<T> where T: NumLike+
 
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Radioactivity<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1132,28 +1132,28 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &f64 where T: NumLike+From<f64> {
 
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Radioactivity<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for f32 where T: NumLike+From<f32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1162,28 +1162,28 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &f32 where T: NumLike+From<f32> {
 
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Radioactivity<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for i64 where T: NumLike+From<i64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1192,28 +1192,28 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &i64 where T: NumLike+From<i64> {
 
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Radioactivity<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for i32 where T: NumLike+From<i32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
 	}
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
-impl<T> std::ops::Div<&Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1223,7 +1223,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &i32 where T: NumLike+From<i32> {
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
@@ -1231,7 +1231,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for num_bigfloat::BigFloat where T: NumL
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
@@ -1239,7 +1239,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for &num_bigfloat::BigFloat where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Radioactivity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
@@ -1247,7 +1247,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for num_bigfloat::BigFloat where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-bigfloat")]
-impl<T> std::ops::Div<&Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1257,7 +1257,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &num_bigfloat::BigFloat where T: Nu
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
@@ -1265,7 +1265,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex32 where T: NumL
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
@@ -1273,7 +1273,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex32 where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
@@ -1281,7 +1281,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex32 where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
@@ -1291,7 +1291,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for &num_complex::Complex32 where T: Nu
 // 1/Radioactivity -> Time
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq}
@@ -1299,7 +1299,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for num_complex::Complex64 where T: NumL
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Time<T>;
 	fn div(self, rhs: Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq}
@@ -1307,7 +1307,7 @@ impl<T> std::ops::Div<Radioactivity<T>> for &num_complex::Complex64 where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self) / rhs.Bq.clone()}
@@ -1315,7 +1315,7 @@ impl<T> std::ops::Div<&Radioactivity<T>> for num_complex::Complex64 where T: Num
 }
 /// Dividing a scalar value by a Radioactivity unit value returns a value of type Time
 #[cfg(feature="num-complex")]
-impl<T> std::ops::Div<&Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+impl<T> core::ops::Div<&Radioactivity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
 	type Output = Time<T>;
 	fn div(self, rhs: &Radioactivity<T>) -> Self::Output {
 		Time{s: T::from(self.clone()) / rhs.Bq.clone()}
