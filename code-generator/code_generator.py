@@ -390,8 +390,22 @@ def recommend_unit_tests(test_recs: defaultdict, test_filepath: str):
 	for test_fn in test_recs:
 		print('\t#[test]')
 		print('\tfn %s() {' % test_fn)
+		if test_fn.startswith('test_complex'):
+			# add import
+			print('\t\tuse num_complex::{Complex32, Complex64};')
+		if test_fn.startswith('test_bigfloat'):
+			# add import
+			print('\t\tuse num_bigfloat::BigFloat;')
+		if (
+				': x}' in test_recs[test_fn][0] and ': y}' in test_recs[test_fn][0]
+		) or (
+			'(x)' in test_recs[test_fn][0] and '(y)' in test_recs[test_fn][0]
+		):
+			# add x and y
+			print('\t\tlet x = 4.5f64;\n\t\tlet y = 2.5f64;')
 		print('\t\t// ...')
 		for unit_test in test_recs[test_fn]:
+			unit_test = unit_test.replace('Complex32::from(x)', 'Complex32::from(x as f32)').replace('Complex32::from(y)', 'Complex32::from(y as f32)')
 			if unit_test.strip() not in test_file_content:
 				print(unit_test)
 		print('}\n')
