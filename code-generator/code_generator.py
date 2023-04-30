@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, re
 from os import path
 from collections import defaultdict
 from typing import *
@@ -41,11 +41,24 @@ def main(*args):
 	this_dir = path.dirname(path.abspath(__file__))
 	project_root_dir= path.dirname(this_dir)
 	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
+	recommended_unit_tests = defaultdict(lambda: [])
+	#
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
 	data.sort_values(by=['category', 'name'], axis=0, ascending=[True, True], inplace=True)
+	inverse_check(data)
+	for i, row in data.iterrows():
+		recommended_unit_tests['unit_names_and_symbols_test'].append(UNIT_NAME_TEST_TEMPLATE % {
+			'struct': to_code_name(row['name']),
+			'unit name': row['unit name'],
+			'symbol': row['unit symbol human']
+		})
+		recommended_unit_tests['unit_print_display_test'].append(DISPLAY_TEST_TEMPLATE % {
+			'struct': to_code_name(row['name']),
+			'symbol': row['unit symbol']
+		})
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	print('Loaded units: %s' % ', '.join(data['name'].values))
-	conversions = find_unit_conversions(data)
+	conversions = find_unit_conversions(data, test_recs=recommended_unit_tests)
 	#
 	data = add_capital_names(data, columns='category,name,desc first name,desc name,unit name'.split(','))
 	data.insert(0, 'code name', data['name'].apply(to_code_name))
@@ -56,11 +69,13 @@ def main(*args):
 	modules.sort()
 	for module_name in modules:
 		module_file = path.join(main_proj_dir, 'src', '%s.rs' % module_name)
-		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions)
+		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions, test_recs=recommended_unit_tests)
 		generated_code = post_gen_patching(generated_code)
 		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
 		with open(module_file, 'w', newline='\n') as fout:
 			fout.write(generated_code)
+	#
+	recommend_unit_tests(recommended_unit_tests, path.join(main_proj_dir, 'src', 'lib.rs'))
 	# done!
 def post_gen_patching(code: str) -> str:
 	if '#[cfg(feature="num-bigfloat")]\nimpl' not in code:
@@ -71,16 +86,16 @@ def post_gen_patching(code: str) -> str:
 		code = code.replace('#[cfg(feature="num-rational")]\nuse num_rational;', '')
 	return code
 
-def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame) -> str:
+def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame, test_recs: defaultdict) -> str:
 	out_buf = ''
 	mod_units = data[data['category'] == module]
 	print(mod_units)
 	out_buf += MODULE_TEMPLATE % {
 		'category': module,
-		'crate imports': generate_local_imports(module, data, conversions),
+		'crate imports': generate_local_imports(module, data, conversions, test_recs),
 		'example1': mod_units['desc first name'].iloc[0],
 		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
-		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy()),
+		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy(), test_recs=test_recs),
 		'appendix': get_appendix_for_module(module)
 	}
 	return out_buf
@@ -89,7 +104,7 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_
 def get_appendix_for_module(module: str) -> str:
 	return ''
 
-def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame) -> str:
+def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame, test_recs: defaultdict) -> str:
 	other_modules = set()
 	these_units = set(data[data['category'] == module]['name'].values)
 	unit_module_lut = {row['name']: row['category'] for i, row in data.iterrows()}
@@ -98,21 +113,21 @@ def generate_local_imports(module: str, data: DataFrame, conversions: DataFrame)
 			other_modules.add(unit_module_lut[row['right-side']])
 			other_modules.add(unit_module_lut[row['result']])
 	for i, row in data[data['category'] == module].iterrows():
-		_, inversion_mods = generate_inverse_unit_conversions(row, data)
+		_, inversion_mods = generate_inverse_unit_conversions(row, data, test_recs)
 		other_modules = other_modules.union(inversion_mods)
 	if module in other_modules: other_modules.discard(module)
 	ilist = list(['use super::%s::*;' % m for m in other_modules])
 	ilist.sort()
 	return '\n'.join(ilist)
 
-def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame, all_units: DataFrame) -> str:
+def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_conversions: DataFrame, all_units: DataFrame, test_recs: defaultdict) -> str:
 	out_buf = ''
 	for i, row in data.iterrows():
-		inversions, _ = generate_inverse_unit_conversions(row, all_units)
+		inversions, _ = generate_inverse_unit_conversions(row, all_units, test_recs)
 		out_buf += UNIT_STRUCT_DEFINITION_TEMPLATE % {
 			**row.to_dict(),
-			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions),
-			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions),
+			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions, test_recs),
+			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions, test_recs),
 			'extended scalar ops': generate_extended_scalar_ops(row),
 			'uom integration': generate_uom_conversions(row)
 		}
@@ -131,7 +146,7 @@ def generate_uom_conversions(data_row: Series):
 		output += FROM_UOM_TEMPLATE % dd
 	return output
 
-def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
+def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame, test_recs: defaultdict) -> str:
 	unit_name = data_row['name']
 	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
 	local_to_from = local_to_from[numpy.logical_or(local_to_from['offset'] == 0, numpy.isnan(local_to_from['offset']))]
@@ -146,7 +161,7 @@ def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_co
 		}
 	return out_buf
 
-def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame) -> str:
+def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame, test_recs: defaultdict) -> str:
 	unit_name = data_row['name']
 	local_to_from = from_to_unit_conversions[from_to_unit_conversions['name'] == unit_name]
 	out_buf = ''
@@ -161,12 +176,31 @@ def generate_from_to_conversions(data_row: Series, from_to_unit_conversions: Dat
 				**data_row,
 				**row
 			}
+			test_recs['%s_units' % data_row['name'].replace(' ', '_')].append(
+				MEASUREMENT_UNIT_TEST % {
+					'struct': data_row['code name'],
+					'symbol1': data_row['unit symbol'],
+					'symbol2': row['unit symbol'],
+					'u2 per u1': '%.13f' % (float(row['inverse slope']) - float(row['offset'])),
+					'u1 per u2': '%.13f' % ((1.0 + float(row['offset'])) * float(row['slope']))
+				}
+			)
 		else:
 			out_buf += TO_FROM_SLOPE_TEMPLATE % {
 				'si unit symbol': data_row['unit symbol'],
 				**data_row,
 				**row
 			}
+			if data_row['unit symbol'] != row['unit symbol']:
+				test_recs['%s_units' % data_row['name'].replace(' ', '_')].append(
+					MEASUREMENT_UNIT_TEST % {
+						'struct': data_row['code name'],
+						'symbol1': data_row['unit symbol'],
+						'symbol2': row['unit symbol'],
+						'u2 per u1': row['inverse slope'],
+						'u1 per u2': row['slope']
+					}
+				)
 	return out_buf
 
 
@@ -202,7 +236,7 @@ def generate_extended_scalar_ops(data_row: Series):
 		}
 	return output
 
-def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tuple[str, Set[str]]:
+def generate_inverse_unit_conversions(data_row: Series, data: DataFrame, test_recs: defaultdict) -> Tuple[str, Set[str]]:
 	out_buf = ''
 	used_mods = set()
 	src_unit_name = data_row['name']
@@ -235,12 +269,57 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame) -> Tupl
 					'right-side symbol': data_row['unit symbol'],
 					'result symbol': row['unit symbol']
 				}
+				if 'num' in stype:
+					test_name = 'test_%s_unit_conversions' % stype.replace('num_', '').split('::')[0]
+					test_recs[test_name].append(SPECIAL_UNIT_INVERSE_CONVERSION_TEST_TEMPLATE % {
+						'scalar type': re.sub('.+\\:\\:', '', stype),
+						'code right-side': to_code_name(src_unit_name),
+						'code result': to_code_name(row['name']),
+						'right-side symbol': data_row['unit symbol'],
+						'result symbol': row['unit symbol']
+					})
+				else:
+					test_recs['test_unit_converions'].append(UNIT_INVERSE_CONVERSION_TEST_TEMPLATE % {
+						'scalar type': stype,
+						'code right-side': to_code_name(src_unit_name),
+						'code result': to_code_name(row['name']),
+						'right-side symbol': data_row['unit symbol'],
+						'result symbol': row['unit symbol']
+					})
 			used_mods.add(row['category'])
 			# only use first found unit
 			break
 	return out_buf, used_mods
 
-def find_unit_conversions(data: DataFrame) -> DataFrame:
+def inverse_check(data: DataFrame):
+	if True: return '' # TODO: remove
+	# check for and suggest inverse units
+	unit_lut = {}
+	unit_reverse_lut = defaultdict(lambda: [])
+	missing_inverses = []
+	for _, row in data.iterrows():
+		name = row['name']
+		units = SIUnits.from_str(row['si units'])
+		unit_lut[name] = units
+		unit_reverse_lut[units].append(name)
+	for _, row in data.iterrows():
+		name = row['name']
+		units = unit_lut[name]
+		inverse_unit = units.inverse()
+		if inverse_unit in unit_reverse_lut:
+			for inverse_name in unit_reverse_lut[inverse_unit]:
+				print('1/%s = %s' % (name, inverse_name))
+		else:
+			print('No inverse unit found for %s' % name)
+			missing_inverses.append(name)
+	print('Suggested inverse units:')
+	for no_inverse in missing_inverses:
+		row = data[data['name'] == no_inverse].iloc[0]
+		print(row['category'], 'inverse '+row['name'], row['desc first name'], sep='\t')
+	raise Exception('WIP')
+
+
+def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 	# make a look-up table of SI units and the measures with those units (there can be more than one measure with same units)
 	siunit_measure_lut: Dict[SIUnits, List[str]] = defaultdict(lambda: [])
 	for i, row in data.iterrows():
@@ -270,6 +349,15 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							output_name, mul_unit
 						))
 						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '*', 'multiplying', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+						test_recs['test_unit_converions'].append(UNIT_CONVERSION_TEST_TEMPLATE % {
+							'op': 'mul', 'op symbol': '*',
+							'left struct': to_code_name(this_name),
+							'left symbol': siunit_symbol_lut[this_name],
+							'right struct': to_code_name(other_name),
+							'right symbol': siunit_symbol_lut[other_name],
+							'out struct': to_code_name(output_name),
+							'out symbol': siunit_symbol_lut[output_name]
+						})
 			div_unit = this_unit / other_unit
 			if div_unit in siunit_measure_lut:
 				for other_name in siunit_measure_lut[other_unit]:
@@ -283,7 +371,44 @@ def find_unit_conversions(data: DataFrame) -> DataFrame:
 							output_name, div_unit
 						))
 						unit_conversions.append((this_name, siunit_symbol_lut[this_name], '/', 'dividing', other_name, siunit_symbol_lut[other_name], output_name, siunit_symbol_lut[output_name], to_code_name(this_name), to_code_name(other_name), to_code_name(output_name)))
+						test_recs['test_unit_converions'].append(UNIT_CONVERSION_TEST_TEMPLATE % {
+							'op': 'div', 'op symbol': '/',
+							'left struct': to_code_name(this_name),
+							'left symbol': siunit_symbol_lut[this_name],
+							'right struct': to_code_name(other_name),
+							'right symbol': siunit_symbol_lut[other_name],
+							'out struct': to_code_name(output_name),
+							'out symbol': siunit_symbol_lut[output_name]
+						})
 	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'verbing', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
+
+def recommend_unit_tests(test_recs: defaultdict, test_filepath: str):
+	with open(test_filepath, 'r') as fin:
+		test_file_content = fin.read()
+	print()
+	print('================  RECOMMENDED UNIT TESTS ================')
+	for test_fn in test_recs:
+		print('\t#[test]')
+		print('\tfn %s() {' % test_fn)
+		if test_fn.startswith('test_complex'):
+			# add import
+			print('\t\tuse num_complex::{Complex32, Complex64};')
+		if test_fn.startswith('test_bigfloat'):
+			# add import
+			print('\t\tuse num_bigfloat::BigFloat;')
+		if (
+				': x}' in test_recs[test_fn][0] and ': y}' in test_recs[test_fn][0]
+		) or (
+			'(x)' in test_recs[test_fn][0] and '(y)' in test_recs[test_fn][0]
+		):
+			# add x and y
+			print('\t\tlet x = 4.5f64;\n\t\tlet y = 2.5f64;')
+		print('\t\t// ...')
+		for unit_test in test_recs[test_fn]:
+			unit_test = unit_test.replace('Complex32::from(x)', 'Complex32::from(x as f32)').replace('Complex32::from(y)', 'Complex32::from(y as f32)')
+			if unit_test.strip() not in test_file_content:
+				print(unit_test)
+		print('}\n')
 
 class SIUnits:
 	def __init__(self, numerator: List[str], denominator: List[str]):

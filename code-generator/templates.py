@@ -218,3 +218,26 @@ impl<T> From<uom::si::%(uom data type)s::%(uom name)s> for %(code name)s<T> wher
 	}
 }
 '''
+
+UNIT_NAME_TEST_TEMPLATE = '''		assert!(%(struct)s::<f64>::unit_name().eq("%(unit name)s"));
+		assert!(%(struct)s::<f64>::unit_symbol().eq("%(symbol)s"));'''
+
+UNIT_CONVERSION_TEST_TEMPLATE='\t\tassert_eq!(%(op)s_check(&%(left struct)s{%(left symbol)s: x}, &%(right struct)s{%(right symbol)s: y}), %(out struct)s{%(out symbol)s: x%(op symbol)sy});'
+
+UNIT_INVERSE_CONVERSION_TEST_TEMPLATE='\t\tassert_eq!(div_check(&(x as %(scalar type)s), &%(code right-side)s{%(right-side symbol)s: y as %(scalar type)s}), %(code result)s{%(result symbol)s: x as %(scalar type)s/y as %(scalar type)s});'
+
+SPECIAL_UNIT_INVERSE_CONVERSION_TEST_TEMPLATE='''		assert_eq!(div_check(
+			&%(scalar type)s::from(x), &%(code right-side)s{%(right-side symbol)s: %(scalar type)s::from(y)}),
+				   %(code result)s{%(result symbol)s: %(scalar type)s::from(x)/%(scalar type)s::from(y)}
+		);'''
+
+DISPLAY_TEST_TEMPLATE='\t\tprintln!("{}", %(struct)s{%(symbol)s: 1});'
+
+MEASUREMENT_UNIT_TEST='''		assert_approx_equal(
+			%(struct)s::from_%(symbol1)s(%(u1 per u2)s_f64).to_%(symbol1)s(),
+			%(struct)s::from_%(symbol2)s(1.0_f64).to_%(symbol1)s(), 9
+		);
+		assert_approx_equal(
+			%(struct)s::from_%(symbol1)s(1.0_f64).to_%(symbol1)s() * %(u2 per u1)s,
+			%(struct)s::from_%(symbol1)s(1.0_f64).to_%(symbol2)s(), 9
+		);'''
