@@ -315,10 +315,14 @@ def inverse_check(data: DataFrame):
 	for no_inverse in missing_inverses:
 		row = data[data['name'] == no_inverse].iloc[0]
 		# category, name, desc first name, desc name, unit name, unit symbol, si units, unit symbol human, uom name, uom module, uom type
-		if str(row['unit name']).count(' per ') == 1:
-			inverted_unit_name = row['unit name'].split(' per ')[1] + ' per ' + row['unit name'].split(' per ')[0]
-		else:
-			inverted_unit_name = 'per ' + row['unit name']
+		inverted_unit_name = rotate_string(row['unit name'], ' per ')
+		inverted_symbol = rotate_string(row['unit symbol'], 'p')
+		inverse_unit_label = rotate_string(row['si units'], '/')
+		if inverse_unit_label.startswith('/'):
+			inverse_unit_label = '1'+inverse_unit_label
+		inverse_human_symbol = rotate_string(row['unit symbol human'], '/')
+		if inverse_human_symbol.startswith('/'):
+			inverse_human_symbol = '1'+inverse_human_symbol
 		print(row['category'], 'inverse '+row['name'], 'inverse of '+row['desc first name'],
 			'inverse '+row['desc name'], inverted_unit_name, inverted_symbol,
 			inverse_unit_label, inverse_human_symbol,
@@ -326,6 +330,12 @@ def inverse_check(data: DataFrame):
 			sep='\t')
 	raise Exception('WIP')
 
+def rotate_string(text, pivot_key):
+	if pivot_key in text:
+		split = text.split(pivot_key, maxsplit=1)
+		return '%s%s%s' % (split[1], pivot_key, split[0])
+	else:
+		return '%s%s' % (pivot_key, text)
 
 def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 	# make a look-up table of SI units and the measures with those units (there can be more than one measure with same units)
