@@ -388,27 +388,32 @@ def recommend_unit_tests(test_recs: defaultdict, test_filepath: str):
 	print()
 	print('================  RECOMMENDED UNIT TESTS ================')
 	for test_fn in test_recs:
-		print('\t#[test]')
-		print('\tfn %s() {' % test_fn)
+		count = 0
+		print_buffer = []
+		print_buffer.append('\t#[test]')
+		print_buffer.append('\tfn %s() {' % test_fn)
 		if test_fn.startswith('test_complex'):
 			# add import
-			print('\t\tuse num_complex::{Complex32, Complex64};')
+			print_buffer.append('\t\tuse num_complex::{Complex32, Complex64};')
 		if test_fn.startswith('test_bigfloat'):
 			# add import
-			print('\t\tuse num_bigfloat::BigFloat;')
+			print_buffer.append('\t\tuse num_bigfloat::BigFloat;')
 		if (
 				': x}' in test_recs[test_fn][0] and ': y}' in test_recs[test_fn][0]
 		) or (
 			'(x)' in test_recs[test_fn][0] and '(y)' in test_recs[test_fn][0]
 		):
 			# add x and y
-			print('\t\tlet x = 4.5f64;\n\t\tlet y = 2.5f64;')
-		print('\t\t// ...')
+			print_buffer.append('\t\tlet x = 4.5f64;\n\t\tlet y = 2.5f64;')
+		print_buffer.append('\t\t// ...')
 		for unit_test in test_recs[test_fn]:
 			unit_test = unit_test.replace('Complex32::from(x)', 'Complex32::from(x as f32)').replace('Complex32::from(y)', 'Complex32::from(y as f32)')
 			if unit_test.strip() not in test_file_content:
-				print(unit_test)
-		print('}\n')
+				print_buffer.append(unit_test)
+				count += 1
+		print_buffer.append('}\n')
+		if count != 0:
+			print('\n'.join(print_buffer))
 
 class SIUnits:
 	def __init__(self, numerator: List[str], denominator: List[str]):
