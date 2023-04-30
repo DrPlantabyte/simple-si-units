@@ -292,7 +292,6 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame, test_re
 	return out_buf, used_mods
 
 def inverse_check(data: DataFrame):
-	if True: return '' # TODO: remove
 	# check for and suggest inverse units
 	unit_lut = {}
 	unit_reverse_lut = defaultdict(lambda: [])
@@ -315,7 +314,16 @@ def inverse_check(data: DataFrame):
 	print('Suggested inverse units:')
 	for no_inverse in missing_inverses:
 		row = data[data['name'] == no_inverse].iloc[0]
-		print(row['category'], 'inverse '+row['name'], row['desc first name'], sep='\t')
+		# category, name, desc first name, desc name, unit name, unit symbol, si units, unit symbol human, uom name, uom module, uom type
+		if str(row['unit name']).count(' per ') == 1:
+			inverted_unit_name = row['unit name'].split(' per ')[1] + ' per ' + row['unit name'].split(' per ')[0]
+		else:
+			inverted_unit_name = 'per ' + row['unit name']
+		print(row['category'], 'inverse '+row['name'], 'inverse of '+row['desc first name'],
+			'inverse '+row['desc name'], inverted_unit_name, inverted_symbol,
+			inverse_unit_label, inverse_human_symbol,
+			'', '', '', # can't auto-detect uom units (and they don't have inverted units defined in their SI module anyways)
+			sep='\t')
 	raise Exception('WIP')
 
 
