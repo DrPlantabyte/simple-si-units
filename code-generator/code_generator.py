@@ -45,7 +45,6 @@ def main(*args):
 	#
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
 	data.sort_values(by=['category', 'name'], axis=0, ascending=[True, True], inplace=True)
-	inverse_check(data)
 	for i, row in data.iterrows():
 		recommended_unit_tests['unit_names_and_symbols_test'].append(UNIT_NAME_TEST_TEMPLATE % {
 			'struct': to_code_name(row['name']),
@@ -57,6 +56,7 @@ def main(*args):
 			'symbol': row['unit symbol']
 		})
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
+	inverse_check(data, from_to_unit_conversions)
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data, test_recs=recommended_unit_tests)
 	#
@@ -291,7 +291,7 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame, test_re
 			break
 	return out_buf, used_mods
 
-def inverse_check(data: DataFrame):
+def inverse_check(data: DataFrame, measurement_units: DataFrame):
 	# check for and suggest inverse units
 	unit_lut = {}
 	unit_reverse_lut = defaultdict(lambda: [])
@@ -312,26 +312,54 @@ def inverse_check(data: DataFrame):
 			print('No inverse unit found for %s' % name)
 			missing_inverses.append(name)
 	print('Suggested inverse units:')
+	inverse_defs_buffer = []
+	inverse_meas_buffer = []
 	for no_inverse in missing_inverses:
 		row = data[data['name'] == no_inverse].iloc[0]
+		inverse_name = 'inverse '+row['name']
 		# category, name, desc first name, desc name, unit name, unit symbol, si units, unit symbol human, uom name, uom module, uom type
-		inverted_unit_name = rotate_string(row['unit name'], ' per ')
-		inverted_symbol = rotate_string(row['unit symbol'], 'p')
+		if ' per ' in row['unit name']:
+			inverted_unit_name = rotate_string(row['unit name'], ' per ')
+		else:
+			inverted_unit_name = 'inverse '+row['unit name']
+		if 'p' in row['unit symbol'][1:]:
+			inverted_symbol = rotate_string(row['unit symbol'], 'p')
+		else:
+			inverted_symbol = 'per_'+row['unit symbol']
 		inverse_unit_label = rotate_string(row['si units'], '/')
 		if inverse_unit_label.startswith('/'):
 			inverse_unit_label = '1'+inverse_unit_label
 		inverse_human_symbol = rotate_string(row['unit symbol human'], '/')
 		if inverse_human_symbol.startswith('/'):
 			inverse_human_symbol = '1'+inverse_human_symbol
-		print(row['category'], 'inverse '+row['name'], 'inverse of '+row['desc first name'],
+		inverse_defs_buffer.append('\t'.join([row['category'], inverse_name, 'inverse of '+row['desc first name'],
 			'inverse '+row['desc name'], inverted_unit_name, inverted_symbol,
 			inverse_unit_label, inverse_human_symbol,
 			'', '', '', # can't auto-detect uom units (and they don't have inverted units defined in their SI module anyways)
-			sep='\t')
-	raise Exception('WIP')
+			]))
+		for _, measures in measurement_units[measurement_units['name'] == row['name']].iterrows():
+			# inverse units of measure
+			# name, unit name, unit symbol, slope, offset, inverse slope
+			## cannot inverse linear offsets!
+			if measures['offset'] is not None and numpy.isfinite(float(measures['offset'])) and float(measures['offset']) != 0:
+				continue
+			inverse_meas_buffer.append('\t'.join([str(x) for x in [
+				inverse_name,
+				rotate_string(measures['unit name'], ' per ') if ' per ' in measures['unit name'] else 'inverse '+measures['unit name'],
+				rotate_string(measures['unit symbol'], ' p ') if 'p' in measures['unit symbol'][1:] else 'per_' + measures['unit symbol'],
+				measures['inverse slope'],
+				'',
+				measures['slope']
+			]]))
+
+	print('\n\tunit type definitions')
+	print('\n'.join(inverse_defs_buffer))
+	print('\n\tunit measurement definitions')
+	print('\n'.join(inverse_meas_buffer))
+	print('\n')
 
 def rotate_string(text, pivot_key):
-	if pivot_key in text:
+	if pivot_key in text and not text.startswith(pivot_key):
 		split = text.split(pivot_key, maxsplit=1)
 		return '%s%s%s' % (split[1], pivot_key, split[0])
 	else:
