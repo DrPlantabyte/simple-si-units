@@ -8,18 +8,18 @@ Crate [simple-si-units-core](https://crates.io/crates/simple-si-units-core) expo
 
 #### NumLike
 This is an ergonomic trait bundle that combines the following:
-* std::ops::Add
-* std::ops::AddAssign
-* std::ops::Sub
-* std::ops::SubAssign
-* std::ops::Mul
-* std::ops::MulAssign
-* std::ops::Div
-* std::ops::DivAssign
-* std::ops::Neg
+* core::ops::Add
+* core::ops::AddAssign
+* core::ops::Sub
+* core::ops::SubAssign
+* core::ops::Mul
+* core::ops::MulAssign
+* core::ops::Div
+* core::ops::DivAssign
+* core::ops::Neg
 * Clone
-* std::fmt::Debug
-* std::fmt::Display
+* core::fmt::Debug
+* core::fmt::Display
 
 Thus you can use this trait as part of a struct or function template definition, like this:
 
@@ -29,14 +29,14 @@ pub struct MyUnit<DT: NumLike> {
     v: DT,
 }
 
-impl<DT: NumLike> std::ops::Add<Self> for MyUnit<DT> {
+impl<DT: NumLike> core::ops::Add<Self> for MyUnit<DT> {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {
         return Self { v: self.v + rhs.v };
     }
 }
 
-impl<DT: NumLike> std::ops::Sub<Self> for MyUnit<DT> {
+impl<DT: NumLike> core::ops::Sub<Self> for MyUnit<DT> {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self::Output {
         return Self { v: self.v - rhs.v };

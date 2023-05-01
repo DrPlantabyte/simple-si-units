@@ -231,6 +231,8 @@ SPECIAL_UNIT_INVERSE_CONVERSION_TEST_TEMPLATE='''		assert_eq!(div_check(
 				   %(code result)s{%(result symbol)s: %(scalar type)s::from(x)/%(scalar type)s::from(y)}
 		);'''
 
+SCALAR_MUL_DIV_TEST_TEMPLATE='\t\tmul_div_check!(%(struct)s{%(symbol)s: x.clone()}, y.clone(), %(struct)s{%(symbol)s: xy.clone()}, %(struct)s{%(symbol)s: xovery.clone()});'
+
 DISPLAY_TEST_TEMPLATE='\t\tprintln!("{}", %(struct)s{%(symbol)s: 1});'
 
 MEASUREMENT_UNIT_TEST='''		assert_approx_equal(

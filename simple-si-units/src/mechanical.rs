@@ -2125,6 +2125,96 @@ impl<T> core::ops::Mul<&Distance<T>> for &Density<T> where T: NumLike {
 	}
 }
 
+// Density / Concentration -> MolarMass
+/// Dividing a Density by a Concentration returns a value of type MolarMass
+impl<T> core::ops::Div<Concentration<T>> for Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: Concentration<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3 / rhs.molpm3}
+	}
+}
+/// Dividing a Density by a Concentration returns a value of type MolarMass
+impl<T> core::ops::Div<Concentration<T>> for &Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: Concentration<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3.clone() / rhs.molpm3}
+	}
+}
+/// Dividing a Density by a Concentration returns a value of type MolarMass
+impl<T> core::ops::Div<&Concentration<T>> for Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: &Concentration<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3 / rhs.molpm3.clone()}
+	}
+}
+/// Dividing a Density by a Concentration returns a value of type MolarMass
+impl<T> core::ops::Div<&Concentration<T>> for &Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: &Concentration<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3.clone() / rhs.molpm3.clone()}
+	}
+}
+
+// Density * Molality -> Concentration
+/// Multiplying a Density by a Molality returns a value of type Concentration
+impl<T> core::ops::Mul<Molality<T>> for Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn mul(self, rhs: Molality<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3 * rhs.molpkg}
+	}
+}
+/// Multiplying a Density by a Molality returns a value of type Concentration
+impl<T> core::ops::Mul<Molality<T>> for &Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn mul(self, rhs: Molality<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3.clone() * rhs.molpkg}
+	}
+}
+/// Multiplying a Density by a Molality returns a value of type Concentration
+impl<T> core::ops::Mul<&Molality<T>> for Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn mul(self, rhs: &Molality<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3 * rhs.molpkg.clone()}
+	}
+}
+/// Multiplying a Density by a Molality returns a value of type Concentration
+impl<T> core::ops::Mul<&Molality<T>> for &Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn mul(self, rhs: &Molality<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3.clone() * rhs.molpkg.clone()}
+	}
+}
+
+// Density / MolarMass -> Concentration
+/// Dividing a Density by a MolarMass returns a value of type Concentration
+impl<T> core::ops::Div<MolarMass<T>> for Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn div(self, rhs: MolarMass<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3 / rhs.kgpmol}
+	}
+}
+/// Dividing a Density by a MolarMass returns a value of type Concentration
+impl<T> core::ops::Div<MolarMass<T>> for &Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn div(self, rhs: MolarMass<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3.clone() / rhs.kgpmol}
+	}
+}
+/// Dividing a Density by a MolarMass returns a value of type Concentration
+impl<T> core::ops::Div<&MolarMass<T>> for Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn div(self, rhs: &MolarMass<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3 / rhs.kgpmol.clone()}
+	}
+}
+/// Dividing a Density by a MolarMass returns a value of type Concentration
+impl<T> core::ops::Div<&MolarMass<T>> for &Density<T> where T: NumLike {
+	type Output = Concentration<T>;
+	fn div(self, rhs: &MolarMass<T>) -> Self::Output {
+		Concentration{molpm3: self.kgpm3.clone() / rhs.kgpmol.clone()}
+	}
+}
+
 // Density * Volume -> Mass
 /// Multiplying a Density by a Volume returns a value of type Mass
 impl<T> core::ops::Mul<Volume<T>> for Density<T> where T: NumLike {

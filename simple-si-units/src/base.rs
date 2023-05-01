@@ -286,6 +286,36 @@ impl<T> From<uom::si::f64::AmountOfSubstance> for Amount<T> where T: NumLike+Fro
 }
 
 
+// Amount / Mass -> Molality
+/// Dividing a Amount by a Mass returns a value of type Molality
+impl<T> core::ops::Div<Mass<T>> for Amount<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		Molality{molpkg: self.mol / rhs.kg}
+	}
+}
+/// Dividing a Amount by a Mass returns a value of type Molality
+impl<T> core::ops::Div<Mass<T>> for &Amount<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		Molality{molpkg: self.mol.clone() / rhs.kg}
+	}
+}
+/// Dividing a Amount by a Mass returns a value of type Molality
+impl<T> core::ops::Div<&Mass<T>> for Amount<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		Molality{molpkg: self.mol / rhs.kg.clone()}
+	}
+}
+/// Dividing a Amount by a Mass returns a value of type Molality
+impl<T> core::ops::Div<&Mass<T>> for &Amount<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		Molality{molpkg: self.mol.clone() / rhs.kg.clone()}
+	}
+}
+
 // Amount / Time -> CatalyticActivity
 /// Dividing a Amount by a Time returns a value of type CatalyticActivity
 impl<T> core::ops::Div<Time<T>> for Amount<T> where T: NumLike {
@@ -373,6 +403,66 @@ impl<T> core::ops::Div<&Concentration<T>> for &Amount<T> where T: NumLike {
 	type Output = Volume<T>;
 	fn div(self, rhs: &Concentration<T>) -> Self::Output {
 		Volume{m3: self.mol.clone() / rhs.molpm3.clone()}
+	}
+}
+
+// Amount / Molality -> Mass
+/// Dividing a Amount by a Molality returns a value of type Mass
+impl<T> core::ops::Div<Molality<T>> for Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: Molality<T>) -> Self::Output {
+		Mass{kg: self.mol / rhs.molpkg}
+	}
+}
+/// Dividing a Amount by a Molality returns a value of type Mass
+impl<T> core::ops::Div<Molality<T>> for &Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: Molality<T>) -> Self::Output {
+		Mass{kg: self.mol.clone() / rhs.molpkg}
+	}
+}
+/// Dividing a Amount by a Molality returns a value of type Mass
+impl<T> core::ops::Div<&Molality<T>> for Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &Molality<T>) -> Self::Output {
+		Mass{kg: self.mol / rhs.molpkg.clone()}
+	}
+}
+/// Dividing a Amount by a Molality returns a value of type Mass
+impl<T> core::ops::Div<&Molality<T>> for &Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &Molality<T>) -> Self::Output {
+		Mass{kg: self.mol.clone() / rhs.molpkg.clone()}
+	}
+}
+
+// Amount * MolarMass -> Mass
+/// Multiplying a Amount by a MolarMass returns a value of type Mass
+impl<T> core::ops::Mul<MolarMass<T>> for Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: MolarMass<T>) -> Self::Output {
+		Mass{kg: self.mol * rhs.kgpmol}
+	}
+}
+/// Multiplying a Amount by a MolarMass returns a value of type Mass
+impl<T> core::ops::Mul<MolarMass<T>> for &Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: MolarMass<T>) -> Self::Output {
+		Mass{kg: self.mol.clone() * rhs.kgpmol}
+	}
+}
+/// Multiplying a Amount by a MolarMass returns a value of type Mass
+impl<T> core::ops::Mul<&MolarMass<T>> for Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &MolarMass<T>) -> Self::Output {
+		Mass{kg: self.mol * rhs.kgpmol.clone()}
+	}
+}
+/// Multiplying a Amount by a MolarMass returns a value of type Mass
+impl<T> core::ops::Mul<&MolarMass<T>> for &Amount<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &MolarMass<T>) -> Self::Output {
+		Mass{kg: self.mol.clone() * rhs.kgpmol.clone()}
 	}
 }
 
@@ -2179,6 +2269,96 @@ impl<T> From<uom::si::f64::Mass> for Mass<T> where T: NumLike+From<f64> {
 	}
 }
 
+
+// Mass / Amount -> MolarMass
+/// Dividing a Mass by a Amount returns a value of type MolarMass
+impl<T> core::ops::Div<Amount<T>> for Mass<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: Amount<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kg / rhs.mol}
+	}
+}
+/// Dividing a Mass by a Amount returns a value of type MolarMass
+impl<T> core::ops::Div<Amount<T>> for &Mass<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: Amount<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kg.clone() / rhs.mol}
+	}
+}
+/// Dividing a Mass by a Amount returns a value of type MolarMass
+impl<T> core::ops::Div<&Amount<T>> for Mass<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: &Amount<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kg / rhs.mol.clone()}
+	}
+}
+/// Dividing a Mass by a Amount returns a value of type MolarMass
+impl<T> core::ops::Div<&Amount<T>> for &Mass<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn div(self, rhs: &Amount<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kg.clone() / rhs.mol.clone()}
+	}
+}
+
+// Mass * Molality -> Amount
+/// Multiplying a Mass by a Molality returns a value of type Amount
+impl<T> core::ops::Mul<Molality<T>> for Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Molality<T>) -> Self::Output {
+		Amount{mol: self.kg * rhs.molpkg}
+	}
+}
+/// Multiplying a Mass by a Molality returns a value of type Amount
+impl<T> core::ops::Mul<Molality<T>> for &Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: Molality<T>) -> Self::Output {
+		Amount{mol: self.kg.clone() * rhs.molpkg}
+	}
+}
+/// Multiplying a Mass by a Molality returns a value of type Amount
+impl<T> core::ops::Mul<&Molality<T>> for Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Molality<T>) -> Self::Output {
+		Amount{mol: self.kg * rhs.molpkg.clone()}
+	}
+}
+/// Multiplying a Mass by a Molality returns a value of type Amount
+impl<T> core::ops::Mul<&Molality<T>> for &Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn mul(self, rhs: &Molality<T>) -> Self::Output {
+		Amount{mol: self.kg.clone() * rhs.molpkg.clone()}
+	}
+}
+
+// Mass / MolarMass -> Amount
+/// Dividing a Mass by a MolarMass returns a value of type Amount
+impl<T> core::ops::Div<MolarMass<T>> for Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn div(self, rhs: MolarMass<T>) -> Self::Output {
+		Amount{mol: self.kg / rhs.kgpmol}
+	}
+}
+/// Dividing a Mass by a MolarMass returns a value of type Amount
+impl<T> core::ops::Div<MolarMass<T>> for &Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn div(self, rhs: MolarMass<T>) -> Self::Output {
+		Amount{mol: self.kg.clone() / rhs.kgpmol}
+	}
+}
+/// Dividing a Mass by a MolarMass returns a value of type Amount
+impl<T> core::ops::Div<&MolarMass<T>> for Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn div(self, rhs: &MolarMass<T>) -> Self::Output {
+		Amount{mol: self.kg / rhs.kgpmol.clone()}
+	}
+}
+/// Dividing a Mass by a MolarMass returns a value of type Amount
+impl<T> core::ops::Div<&MolarMass<T>> for &Mass<T> where T: NumLike {
+	type Output = Amount<T>;
+	fn div(self, rhs: &MolarMass<T>) -> Self::Output {
+		Amount{mol: self.kg.clone() / rhs.kgpmol.clone()}
+	}
+}
 
 // Mass / Area -> AreaDensity
 /// Dividing a Mass by a Area returns a value of type AreaDensity
