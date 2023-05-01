@@ -213,6 +213,9 @@ mod unit_tests {
 			mul_div_check!(Time{s: x.clone()}, y.clone(), Time{s: xy.clone()}, Time{s: xovery.clone()});
 			mul_div_check!(CatalyticActivity{molps: x.clone()}, y.clone(), CatalyticActivity{molps: xy.clone()}, CatalyticActivity{molps: xovery.clone()});
 			mul_div_check!(Concentration{molpm3: x.clone()}, y.clone(), Concentration{molpm3: xy.clone()}, Concentration{molpm3: xovery.clone()});
+			mul_div_check!(Molality{molpkg: x.clone()}, y.clone(), Molality{molpkg: xy.clone()}, Molality{molpkg: xovery.clone()});
+			mul_div_check!(MolarMass{kgpmol: x.clone()}, y.clone(), MolarMass{kgpmol: xy.clone()}, MolarMass{kgpmol: xovery.clone()});
+			mul_div_check!(SpecificHeatCapacity{JpkgK: x.clone()}, y.clone(), SpecificHeatCapacity{JpkgK: xy.clone()}, SpecificHeatCapacity{JpkgK: xovery.clone()});
 			mul_div_check!(Capacitance{F: x.clone()}, y.clone(), Capacitance{F: xy.clone()}, Capacitance{F: xovery.clone()});
 			mul_div_check!(Charge{C: x.clone()}, y.clone(), Charge{C: xy.clone()}, Charge{C: xovery.clone()});
 			mul_div_check!(Conductance{S: x.clone()}, y.clone(), Conductance{S: xy.clone()}, Conductance{S: xovery.clone()});
@@ -291,6 +294,12 @@ mod unit_tests {
 		assert!(CatalyticActivity::<f64>::unit_symbol().eq("mol/s"));
 		assert!(Concentration::<f64>::unit_name().eq("moles per cubic meter"));
 		assert!(Concentration::<f64>::unit_symbol().eq("mol/m³"));
+		assert!(Molality::<f64>::unit_name().eq("moles per kilogram"));
+		assert!(Molality::<f64>::unit_symbol().eq("mol/kg"));
+		assert!(MolarMass::<f64>::unit_name().eq("kilograms per mole"));
+		assert!(MolarMass::<f64>::unit_symbol().eq("kg/mol"));
+		assert!(SpecificHeatCapacity::<f64>::unit_name().eq("joules per kilogram per kelvin"));
+		assert!(SpecificHeatCapacity::<f64>::unit_symbol().eq("J/kg·K"));
 		assert!(Capacitance::<f64>::unit_name().eq("farads"));
 		assert!(Capacitance::<f64>::unit_symbol().eq("F"));
 		assert!(Charge::<f64>::unit_name().eq("coulombs"));
@@ -368,6 +377,9 @@ mod unit_tests {
 		println!("{}", Time{s: 1});
 		println!("{}", CatalyticActivity{molps: 1});
 		println!("{}", Concentration{molpm3: 1});
+		println!("{}", Molality{molpkg: 1});
+		println!("{}", MolarMass{kgpmol: 1});
+		println!("{}", SpecificHeatCapacity{JpkgK: 1});
 		println!("{}", Capacitance{F: 1});
 		println!("{}", Charge{C: 1});
 		println!("{}", Conductance{S: 1});
@@ -674,6 +686,30 @@ mod unit_tests {
 		assert_eq!(div_check(&(x as f32), &Radioactivity{Bq: y as f32}), Time{s: x as f32/y as f32});
 		assert_eq!(div_check(&(x as i64), &Radioactivity{Bq: y as i64}), Time{s: x as i64/y as i64});
 		assert_eq!(div_check(&(x as i32), &Radioactivity{Bq: y as i32}), Time{s: x as i32/y as i32});
+		assert_eq!(div_check(&Amount{mol: x}, &Mass{kg: y}), Molality{molpkg: x/y});
+		assert_eq!(div_check(&Amount{mol: x}, &Molality{molpkg: y}), Mass{kg: x/y});
+		assert_eq!(mul_check(&Amount{mol: x}, &MolarMass{kgpmol: y}), Mass{kg: x*y});
+		assert_eq!(div_check(&Mass{kg: x}, &Amount{mol: y}), MolarMass{kgpmol: x/y});
+		assert_eq!(mul_check(&Mass{kg: x}, &Molality{molpkg: y}), Amount{mol: x*y});
+		assert_eq!(div_check(&Mass{kg: x}, &MolarMass{kgpmol: y}), Amount{mol: x/y});
+		assert_eq!(div_check(&Concentration{molpm3: x}, &Molality{molpkg: y}), Density{kgpm3: x/y});
+		assert_eq!(mul_check(&Concentration{molpm3: x}, &MolarMass{kgpmol: y}), Density{kgpm3: x*y});
+		assert_eq!(div_check(&Concentration{molpm3: x}, &Density{kgpm3: y}), Molality{molpkg: x/y});
+		assert_eq!(mul_check(&Molality{molpkg: x}, &Mass{kg: y}), Amount{mol: x*y});
+		assert_eq!(mul_check(&Molality{molpkg: x}, &Density{kgpm3: y}), Concentration{molpm3: x*y});
+		assert_eq!(mul_check(&MolarMass{kgpmol: x}, &Amount{mol: y}), Mass{kg: x*y});
+		assert_eq!(mul_check(&MolarMass{kgpmol: x}, &Concentration{molpm3: y}), Density{kgpm3: x*y});
+		assert_eq!(div_check(&Density{kgpm3: x}, &Concentration{molpm3: y}), MolarMass{kgpmol: x/y});
+		assert_eq!(mul_check(&Density{kgpm3: x}, &Molality{molpkg: y}), Concentration{molpm3: x*y});
+		assert_eq!(div_check(&Density{kgpm3: x}, &MolarMass{kgpmol: y}), Concentration{molpm3: x/y});
+		assert_eq!(div_check(&(x as f64), &Molality{molpkg: y as f64}), MolarMass{kgpmol: x as f64/y as f64});
+		assert_eq!(div_check(&(x as f32), &Molality{molpkg: y as f32}), MolarMass{kgpmol: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i64), &Molality{molpkg: y as i64}), MolarMass{kgpmol: x as i64/y as i64});
+		assert_eq!(div_check(&(x as i32), &Molality{molpkg: y as i32}), MolarMass{kgpmol: x as i32/y as i32});
+		assert_eq!(div_check(&(x as f64), &MolarMass{kgpmol: y as f64}), Molality{molpkg: x as f64/y as f64});
+		assert_eq!(div_check(&(x as f32), &MolarMass{kgpmol: y as f32}), Molality{molpkg: x as f32/y as f32});
+		assert_eq!(div_check(&(x as i64), &MolarMass{kgpmol: y as i64}), Molality{molpkg: x as i64/y as i64});
+		assert_eq!(div_check(&(x as i32), &MolarMass{kgpmol: y as i32}), Molality{molpkg: x as i32/y as i32});
 	}
 
 	#[test]
@@ -720,6 +756,22 @@ mod unit_tests {
 		assert_eq!(div_check(
 			&BigFloat::from(x), &Radioactivity{Bq: BigFloat::from(y)}),
 				   Time{s: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Molality{molpkg: BigFloat::from(y)}),
+				   MolarMass{kgpmol: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &MolarMass{kgpmol: BigFloat::from(y)}),
+				   Molality{molpkg: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &Molality{molpkg: BigFloat::from(y)}),
+				   MolarMass{kgpmol: BigFloat::from(x)/BigFloat::from(y)}
+		);
+		assert_eq!(div_check(
+			&BigFloat::from(x), &MolarMass{kgpmol: BigFloat::from(y)}),
+				   Molality{molpkg: BigFloat::from(x)/BigFloat::from(y)}
 		);
 	}
 
@@ -807,6 +859,38 @@ mod unit_tests {
 		assert_eq!(div_check(
 			&Complex64::from(x), &Radioactivity{Bq: Complex64::from(y)}),
 				   Time{s: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x as f32), &Molality{molpkg: Complex32::from(y as f32)}),
+				   MolarMass{kgpmol: Complex32::from(x as f32)/Complex32::from(y as f32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Molality{molpkg: Complex64::from(y)}),
+				   MolarMass{kgpmol: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x as f32), &MolarMass{kgpmol: Complex32::from(y as f32)}),
+				   Molality{molpkg: Complex32::from(x as f32)/Complex32::from(y as f32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &MolarMass{kgpmol: Complex64::from(y)}),
+				   Molality{molpkg: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x as f32), &Molality{molpkg: Complex32::from(y as f32)}),
+				   MolarMass{kgpmol: Complex32::from(x as f32)/Complex32::from(y as f32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &Molality{molpkg: Complex64::from(y)}),
+				   MolarMass{kgpmol: Complex64::from(x)/Complex64::from(y)}
+		);
+		assert_eq!(div_check(
+			&Complex32::from(x as f32), &MolarMass{kgpmol: Complex32::from(y as f32)}),
+				   Molality{molpkg: Complex32::from(x as f32)/Complex32::from(y as f32)}
+		);
+		assert_eq!(div_check(
+			&Complex64::from(x), &MolarMass{kgpmol: Complex64::from(y)}),
+				   Molality{molpkg: Complex64::from(x)/Complex64::from(y)}
 		);
 	}
 
@@ -1355,6 +1439,90 @@ mod unit_tests {
 		assert_approx_equal(
 			Concentration::from_molpm3(1.0_f64).to_molpm3() * 1000000.0,
 			Concentration::from_molpm3(1.0_f64).to_nM(), 9
+		);
+	}
+
+	#[test]
+	fn molality_units() {
+		assert_approx_equal(
+			Molality::from_molpkg(0.001_f64).to_molpkg(),
+			Molality::from_mmolpkg(1.0_f64).to_molpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1.0_f64).to_molpkg() * 1000.0,
+			Molality::from_molpkg(1.0_f64).to_mmolpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1e-06_f64).to_molpkg(),
+			Molality::from_umolpkg(1.0_f64).to_molpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1.0_f64).to_molpkg() * 1000000.0,
+			Molality::from_molpkg(1.0_f64).to_umolpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1e-09_f64).to_molpkg(),
+			Molality::from_nmolpkg(1.0_f64).to_molpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1.0_f64).to_molpkg() * 1000000000.0,
+			Molality::from_molpkg(1.0_f64).to_nmolpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(0.001_f64).to_molpkg(),
+			Molality::from_umolpg(1.0_f64).to_molpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1.0_f64).to_molpkg() * 1000.0,
+			Molality::from_molpkg(1.0_f64).to_umolpg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1e-06_f64).to_molpkg(),
+			Molality::from_nmolpg(1.0_f64).to_molpkg(), 9
+		);
+		assert_approx_equal(
+			Molality::from_molpkg(1.0_f64).to_molpkg() * 1000000.0,
+			Molality::from_molpkg(1.0_f64).to_nmolpg(), 9
+		);
+	}
+
+	#[test]
+	fn molar_mass_units() {
+		assert_approx_equal(
+			MolarMass::from_kgpmol(0.001_f64).to_kgpmol(),
+			MolarMass::from_gpmol(1.0_f64).to_kgpmol(), 9
+		);
+		assert_approx_equal(
+			MolarMass::from_kgpmol(1.0_f64).to_kgpmol() * 1000.0,
+			MolarMass::from_kgpmol(1.0_f64).to_gpmol(), 9
+		);
+		assert_approx_equal(
+			MolarMass::from_kgpmol(0.001_f64).to_kgpmol(),
+			MolarMass::from_grams_per_mole(1.0_f64).to_kgpmol(), 9
+		);
+		assert_approx_equal(
+			MolarMass::from_kgpmol(1.0_f64).to_kgpmol() * 1000.0,
+			MolarMass::from_kgpmol(1.0_f64).to_grams_per_mole(), 9
+		);
+	}
+
+	#[test]
+	fn specific_heat_capacity_units() {
+		assert_approx_equal(
+			SpecificHeatCapacity::from_JpkgK(1000.0_f64).to_JpkgK(),
+			SpecificHeatCapacity::from_joules_per_gram_kelvin(1.0_f64).to_JpkgK(), 9
+		);
+		assert_approx_equal(
+			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpkgK() * 0.001,
+			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_joules_per_gram_kelvin(), 9
+		);
+		assert_approx_equal(
+			SpecificHeatCapacity::from_JpkgK(0.0_f64).to_JpkgK(),
+			SpecificHeatCapacity::from_JpgK (1.0_f64).to_JpkgK(), 9
+		);
+		assert_approx_equal(
+			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpkgK() * 0.001,
+			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpgK (), 9
 		);
 	}
 

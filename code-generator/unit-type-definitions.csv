@@ -8,6 +8,9 @@ base,temperature,temperature,temperature,degrees kelvin,K,K,K,ThermodynamicTempe
 base,time,time,time,seconds,s,s,s,Time,time,second
 chemical,catalytic activity,catalytic activity,catalytic activity,moles per second,molps,mol/s,mol/s,CatalyticActivity,catalytic_activity,mole_per_second
 chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3,mol/m³,MolarConcentration,molar_concentration,mole_per_cubic_meter
+chemical,molar mass,molar mass,molar mass,kilograms per mole,kgpmol,kg/mol,kg/mol,MolarMass,molar_mass,kilogram_per_mole
+chemical,molality,molality,molality,moles per kilogram,molpkg,mol/kg,mol/kg,Molality,molality,mole_per_kilogram
+chemical,specific heat capacity,specific heat capacity,specific heat capacity,joules per kilogram per kelvin,JpkgK,m^2/s^2.K,J/kg·K,SpecificHeatCapacity,specific_heat_capacity,joule_per_kilogram_kelvin
 electromagnetic,capacitance,electrical capacitance,electrical capacitance,farads,F,s^4.A^2/kg.m^2,F,Capacitance,capacitance,farad
 electromagnetic,charge,electric charge (aka coulombs),electric charge,coulombs,C,A.s,C,ElectricCharge,electric_charge,coulomb
 electromagnetic,conductance,electrical conductance,electrical conductance,siemens,S,A^2.s^3/kg.m^2,S,ElectricalConductance,electrical_conductance,siemens

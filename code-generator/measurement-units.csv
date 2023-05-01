@@ -88,7 +88,7 @@ moment of inertia,gram cm squared,gcm2,10,,0.1
 moment of inertia,gram meters squared,gm2,0.001,,1000
 angular momentum,kilogram meters squared radians per second,kgm2radps,1,,1
 angular momentum,kilogram meters squared radians per second,kilogram_meters_squared_radians_per_second,1,,1
-angular momentum,gram cm squared radians per second,gcm2radps,1.000000000000000E-07,,1.000000000000000E+07
+angular momentum,gram cm squared radians per second,gcm2radps,0.0000001,,10000000
 torque,newton meters,Nm,1,,1
 torque,newton meters,newton_meters,1,,1
 torque,foot-pounds,ftlb,1.35581794833139,,0.73756214927727
@@ -283,6 +283,22 @@ concentration,moles per liter,molarity,1000,,0.001
 concentration,millimolar,mM,1,,1
 concentration,micromolar,uM,0.001,,1000
 concentration,nanomolar,nM,0.000001,,1000000
+molality,moles per kilogram,molpkg,1,,1
+molality,moles per kilogram,moles_per_kilogram,1,,1
+molality,millimoles per kilogram,mmolpkg,0.001,,1000
+molality,micromoles per kilogram,umolpkg,0.000001,,1000000
+molality,nanomoles per kilogram,nmolpkg,1.00E-09,,1.00E+09
+molality,millimoles per gram,mmolpg,1,,1
+molality,micromoles per gram,umolpg,0.001,,1000
+molality,nanomoles per gram,nmolpg,0.000001,,1000000
+molar mass,kilograms per mole,kgpmol,1,,1
+molar mass,kilograms per mole,kilograms_per_mole,1,,1
+molar mass,grams per mole,gpmol,0.001,,1000
+molar mass,grams per mole,grams_per_mole,0.001,,1000
+specific heat capacity,joules per kilogram per kelvin,joules_per_kilogram_kelvin,1,,1
+specific heat capacity,joules per kilogram per kelvin,JpkgK ,1,,1
+specific heat capacity,joules per gram per kelvin,joules_per_gram_kelvin,1000,,0.001
+specific heat capacity,joules per gram per kelvin,JpgK ,0,,0.001
 luminous flux,lumens,lm,1,,1
 luminous flux,lumens,lumens,1,,1
 luminous flux,millilumens,mlm,0.001,,1000

@@ -55,6 +55,10 @@ def main(*args):
 			'struct': to_code_name(row['name']),
 			'symbol': row['unit symbol']
 		})
+		recommended_unit_tests['check_scalar_mul_div'].append(SCALAR_MUL_DIV_TEST_TEMPLATE % {
+			'struct': to_code_name(row['name']),
+			'symbol': row['unit symbol']
+		})
 	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
 	inverse_check(data, from_to_unit_conversions)
 	print('Loaded units: %s' % ', '.join(data['name'].values))

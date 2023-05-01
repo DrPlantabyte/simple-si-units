@@ -73,7 +73,7 @@ fn main() {
   println!("Your box has a weight of {}", box_weight);
 }
 ```
-Note that **simple-si-units** structs all implement `std::ops::{Add,Sub,Mul,Div}` 
+Note that **simple-si-units** structs all implement `core::ops::{Add,Sub,Mul,Div}` 
 for both values and references, which is useful for number type which do not 
 implement the `Copy` trait.
 
@@ -245,7 +245,7 @@ pub fn calc_gravity_generic<T>(mass: Mass<T>, dist: Distance<T>) -> Acceleration
 Simple SI Units does not provide an exhaustive list of possible units of 
 measure. To create your own units, use the `UnitStruct` procedural macro and 
 `NumLike` trait bundle (`NumLike` is just shorthand for 
-`std::ops::*<Output=Self>+Clone+Debug+Display`, you could instead use the `Num`
+`core::ops::*<Output=Self>+Clone+Debug+Display`, you could instead use the `Num`
 trait from the [num-traits crate](https://crates.io/crates/num-traits) if you 
 prefer):
 
