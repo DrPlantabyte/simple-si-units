@@ -243,3 +243,13 @@ MEASUREMENT_UNIT_TEST='''		assert_approx_equal(
 			%(struct)s::from_%(symbol1)s(1.0_f64).to_%(symbol1)s() * %(u2 per u1)s,
 			%(struct)s::from_%(symbol1)s(1.0_f64).to_%(symbol2)s(), 9
 		);'''
+
+UOM_EQUIV_TEST_TEMPLATE='''		assert_eq!(simple_si_units::%(category)s::%(code name)s{%(unit symbol)s: x}.%(unit symbol)s,
+			uom::si::f64::%(uom name)s::new::<uom::si::%(uom module)s::%(uom type)s>(x).value);'''
+
+UOM_INTO_TEST_TEMPLATE='''		assert!(uom::si::%(data type)s::%(uom name)s::new::<uom::si::%(uom module)s::%(uom type)s>(x)
+			== simple_si_units::%(category)s::%(code name)s{%(unit symbol)s: x}.into());'''
+
+UOM_FROM_TEST_TEMPLATE='''		assert!(simple_si_units::%(category)s::%(code name)s::from(
+				uom::si::%(data type)s::%(uom name)s::new::<uom::si::%(uom module)s::%(uom type)s>(x)
+			) == simple_si_units::%(category)s::%(code name)s{%(unit symbol)s: x});'''
