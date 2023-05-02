@@ -79,7 +79,8 @@ def main(*args):
 		with open(module_file, 'w', newline='\n') as fout:
 			fout.write(generated_code)
 	#
-	recommend_unit_tests(recommended_unit_tests, path.join(main_proj_dir, 'src', 'lib.rs'))
+	recommend_unit_tests(recommended_unit_tests, path.join(main_proj_dir, 'src', 'lib.rs'),
+						 path.join(main_proj_dir, 'tests', 'uom_integration_tests.rs'))
 	# done!
 def post_gen_patching(code: str) -> str:
 	if '#[cfg(feature="num-bigfloat")]\nimpl' not in code:
@@ -133,13 +134,13 @@ def generate_unit_structs(data: DataFrame, conversions: DataFrame, from_to_unit_
 			'non-converting methods': generate_nonconverting_from_to_conversions(row, from_to_unit_conversions, test_recs),
 			'to-and-from': generate_from_to_conversions(row, from_to_unit_conversions, test_recs),
 			'extended scalar ops': generate_extended_scalar_ops(row),
-			'uom integration': generate_uom_conversions(row)
+			'uom integration': generate_uom_conversions(row, test_recs)
 		}
 		out_buf += generate_unit_conversions(row, conversions)
 		out_buf += inversions
 	return out_buf
 
-def generate_uom_conversions(data_row: Series):
+def generate_uom_conversions(data_row: Series, test_recs: defaultdict):
 	if data_row['uom name'] is None or str(data_row['uom name']).lower() == 'nan':
 		# no uom equivalent
 		return ''
@@ -148,6 +149,15 @@ def generate_uom_conversions(data_row: Series):
 		dd = {**data_row, 'data type': dt, 'uom data type': dt}
 		output += INTO_UOM_TEMPLATE % dd
 		output += FROM_UOM_TEMPLATE % dd
+		test_recs['into_uom_test_%s' % dt].append(UOM_INTO_TEST_TEMPLATE % {
+			'data type': dt, **data_row
+		})
+		test_recs['from_uom_test_%s' % dt].append(UOM_FROM_TEST_TEMPLATE % {
+			'data type': dt, **data_row
+		})
+	test_recs['uom_equivalence_test'].append(UOM_EQUIV_TEST_TEMPLATE % {
+		**data_row
+	})
 	return output
 
 def generate_nonconverting_from_to_conversions(data_row: Series, from_to_unit_conversions: DataFrame, test_recs: defaultdict) -> str:
@@ -432,9 +442,13 @@ def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 						})
 	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'verbing', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
 
-def recommend_unit_tests(test_recs: defaultdict, test_filepath: str):
-	with open(test_filepath, 'r') as fin:
-		test_file_content = fin.read()
+def reduce_spaces(text: str) -> str: return re.sub(r'\s+', ' ', text)
+
+def recommend_unit_tests(test_recs: defaultdict, lib_filepath: str, uom_test_filepath: str):
+	with open(lib_filepath, 'r') as fin:
+		test_file_content = reduce_spaces(fin.read())
+	with open(uom_test_filepath, 'r') as fin:
+		test_file_content += reduce_spaces(fin.read())
 	print()
 	print('================  RECOMMENDED UNIT TESTS ================')
 	for test_fn in test_recs:
@@ -458,7 +472,7 @@ def recommend_unit_tests(test_recs: defaultdict, test_filepath: str):
 		print_buffer.append('\t\t// ...')
 		for unit_test in test_recs[test_fn]:
 			unit_test = unit_test.replace('Complex32::from(x)', 'Complex32::from(x as f32)').replace('Complex32::from(y)', 'Complex32::from(y as f32)')
-			if unit_test.strip() not in test_file_content:
+			if reduce_spaces(unit_test) not in test_file_content:
 				print_buffer.append(unit_test)
 				count += 1
 		print_buffer.append('}\n')
