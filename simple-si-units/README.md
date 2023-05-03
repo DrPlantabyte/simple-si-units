@@ -146,16 +146,17 @@ Here's a table comparing **simple-si-units** v1.0 and
 **[uom](https://crates.io/crates/uom)** v0.34 to help you decide which to use:
 
 | Feature                                                           | [simple-si-units](https://crates.io/crates/simple-si-units) | [uom](https://crates.io/crates/uom) |
-|-------------------------------------------------------------------|-------------------------------------------------------------|------------------------------------|
-| Zero-cost measurement unit type safety                            | ✅                                                           | ✅                                  |
-| All primary and secondary SI units as defined by NIST             | ✅                                                           | ✅                                  |
-| Support for standard decimal types (eg f64)                       | ✅                                                           | ✅                                  |
+|-------------------------------------------------------------------|-------------------------------------------------------------|-------------------------------------|
+| Zero-cost measurement unit type safety                            | ✅                                                           | ✅                                   |
+| All primary and secondary SI units as defined by NIST             | ✅                                                           | ✅                                   |
+| Inverse (aka reciprical) of SI units                              | ✅                                                           | partial                             |
+| Support for standard decimal types (eg f64)                       | ✅                                                           | ✅                                   |
 | Support for standard integer types (eg i32)                       | partial**                                                   | partial**                           |
-| Support for [num-bigfloat](https://crates.io/crates/num-bigfloat) | ✅                                                           | ❌                                  |
-| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                  |
-| Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                  |
-| Support for user-defined and other number types                   | ✅                                                           | ❌                                  |
-| Compile-time dimensional analysis                                 | ❌                                                           | ✅                                  |
+| Support for [num-bigfloat](https://crates.io/crates/num-bigfloat) | ✅                                                           | ❌                                   |
+| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                   |
+| Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                   |
+| Support for user-defined and other number types                   | ✅                                                           | ❌                                   |
+| Compile-time dimensional analysis                                 | ❌                                                           | ✅                                   |
 
 ** *integer types and int-based number types are not fully supported in simple-si-units*
 

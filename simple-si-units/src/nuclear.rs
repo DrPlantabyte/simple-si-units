@@ -1,10 +1,11 @@
 
 //! This module provides nuclear SI units, such as absorbed radiation dose 
-//! and radioactivity.
+//! and inverse of radiation dose equivalent.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
 use super::base::*;
+use super::chemical::*;
 use super::mechanical::*;
 
 // optional supports
@@ -712,6 +713,1844 @@ impl<T> core::ops::Mul<&Mass<T>> for &DoseEquivalent<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Mass<T>) -> Self::Output {
 		Energy{J: self.Sv.clone() * rhs.kg.clone()}
+	}
+}
+
+/// The inverse of absorbed radiation dose unit type, defined as inverse grays in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseAbsorbedDose<T: NumLike>{
+	/// The value of this Inverse absorbed dose in inverse grays
+	pub per_Gy: T
+}
+
+impl<T> InverseAbsorbedDose<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse absorbed dose: "inverse grays"
+	pub fn unit_name() -> &'static str { "inverse grays" }
+	
+	/// Returns the abbreviated name or symbol of inverse absorbed dose: "1/Gy" for inverse grays
+	pub fn unit_symbol() -> &'static str { "1/Gy" }
+	
+	/// Returns a new inverse absorbed dose value from the given number of inverse grays
+	///
+	/// # Arguments
+	/// * `per_Gy` - Any number-like type, representing a quantity of inverse grays
+	pub fn from_per_Gy(per_Gy: T) -> Self { InverseAbsorbedDose{per_Gy: per_Gy} }
+	
+	/// Returns a copy of this inverse absorbed dose value in inverse grays
+	pub fn to_per_Gy(&self) -> T { self.per_Gy.clone() }
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse grays
+	///
+	/// # Arguments
+	/// * `per_grays` - Any number-like type, representing a quantity of inverse grays
+	pub fn from_per_grays(per_grays: T) -> Self { InverseAbsorbedDose{per_Gy: per_grays} }
+	
+	/// Returns a copy of this inverse absorbed dose value in inverse grays
+	pub fn to_per_grays(&self) -> T { self.per_Gy.clone() }
+
+}
+
+impl<T> fmt::Display for InverseAbsorbedDose<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_Gy, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseAbsorbedDose<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse absorbed dose value in inverse milligrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse milligrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mGy` - Any number-like type, representing a quantity of inverse milligrays
+	pub fn from_per_mGy(per_mGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_mGy * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse micrograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse micrograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uGy` - Any number-like type, representing a quantity of inverse micrograys
+	pub fn from_per_uGy(per_uGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_uGy * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse nanograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse nanograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nGy` - Any number-like type, representing a quantity of inverse nanograys
+	pub fn from_per_nGy(per_nGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_nGy * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse kilograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse kilograys
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kGy` - Any number-like type, representing a quantity of inverse kilograys
+	pub fn from_per_kGy(per_kGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_kGy * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse megagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse megagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MGy` - Any number-like type, representing a quantity of inverse megagrays
+	pub fn from_per_MGy(per_MGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_MGy * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse gigagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GGy(&self) -> T {
+		return self.per_Gy.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse gigagrays
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GGy` - Any number-like type, representing a quantity of inverse gigagrays
+	pub fn from_per_GGy(per_GGy: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_GGy * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse rads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_rad(&self) -> T {
+		return self.per_Gy.clone() * T::from(0.01_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse rads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_rad` - Any number-like type, representing a quantity of inverse rads
+	pub fn from_per_rad(per_rad: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_rad * T::from(100.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse kilorads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_krad(&self) -> T {
+		return self.per_Gy.clone() * T::from(10.0_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse kilorads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_krad` - Any number-like type, representing a quantity of inverse kilorads
+	pub fn from_per_krad(per_krad: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_krad * T::from(0.1_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse millirads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mrad(&self) -> T {
+		return self.per_Gy.clone() * T::from(1e-05_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse millirads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mrad` - Any number-like type, representing a quantity of inverse millirads
+	pub fn from_per_mrad(per_mrad: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_mrad * T::from(100000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in inverse microrads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_urad(&self) -> T {
+		return self.per_Gy.clone() * T::from(1e-08_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of inverse microrads
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_urad` - Any number-like type, representing a quantity of inverse microrads
+	pub fn from_per_urad(per_urad: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_urad * T::from(100000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse absorbed dose value in gram per ergs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_erg(&self) -> T {
+		return self.per_Gy.clone() * T::from(0.0001_f64);
+	}
+
+	/// Returns a new inverse absorbed dose value from the given number of gram per ergs
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_erg` - Any number-like type, representing a quantity of gram per ergs
+	pub fn from_per_erg(per_erg: T) -> Self {
+		InverseAbsorbedDose{per_Gy: per_erg * T::from(10000.0_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAbsorbedDose<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAbsorbedDose<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_complex::Complex32>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAbsorbedDose<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAbsorbedDose<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAbsorbedDose<num_complex::Complex64>) -> Self::Output {
+		InverseAbsorbedDose{per_Gy: self.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+
+
+
+// InverseAbsorbedDose * Distance -> InverseAcceleration
+/// Multiplying a InverseAbsorbedDose by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Distance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy * rhs.m}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Distance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy.clone() * rhs.m}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Distance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy * rhs.m.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Distance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy.clone() * rhs.m.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseDistance -> InverseAcceleration
+/// Dividing a InverseAbsorbedDose by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseDistance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy / rhs.per_m}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseDistance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy.clone() / rhs.per_m}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseDistance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy / rhs.per_m.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseDistance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Gy.clone() / rhs.per_m.clone()}
+	}
+}
+
+// InverseAbsorbedDose * InverseMass -> InverseEnergy
+/// Multiplying a InverseAbsorbedDose by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseTemperature -> InverseSpecificHeatCapacity
+/// Dividing a InverseAbsorbedDose by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<InverseTemperature<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy / rhs.per_K}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<InverseTemperature<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy.clone() / rhs.per_K}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<&InverseTemperature<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: &InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy / rhs.per_K.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<&InverseTemperature<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: &InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy.clone() / rhs.per_K.clone()}
+	}
+}
+
+// InverseAbsorbedDose / Mass -> InverseEnergy
+/// Dividing a InverseAbsorbedDose by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<Mass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy / rhs.kg}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<Mass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy.clone() / rhs.kg}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Mass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy / rhs.kg.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Mass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Gy.clone() / rhs.kg.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Temperature -> InverseSpecificHeatCapacity
+/// Multiplying a InverseAbsorbedDose by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<Temperature<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy * rhs.K}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<Temperature<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy.clone() * rhs.K}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<&Temperature<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: &Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy * rhs.K.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<&Temperature<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: &Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Gy.clone() * rhs.K.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseSpecificHeatCapacity -> InverseTemperature
+/// Dividing a InverseAbsorbedDose by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<InverseSpecificHeatCapacity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy / rhs.kgK_per_J}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<InverseSpecificHeatCapacity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy.clone() / rhs.kgK_per_J}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<&InverseSpecificHeatCapacity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: &InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy / rhs.kgK_per_J.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<&InverseSpecificHeatCapacity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: &InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy.clone() / rhs.kgK_per_J.clone()}
+	}
+}
+
+// InverseAbsorbedDose * SpecificHeatCapacity -> InverseTemperature
+/// Multiplying a InverseAbsorbedDose by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<SpecificHeatCapacity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy * rhs.J_per_kgK}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<SpecificHeatCapacity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy.clone() * rhs.J_per_kgK}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<&SpecificHeatCapacity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: &SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy * rhs.J_per_kgK.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<&SpecificHeatCapacity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: &SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Gy.clone() * rhs.J_per_kgK.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Acceleration -> InverseDistance
+/// Multiplying a InverseAbsorbedDose by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<Acceleration<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy * rhs.mps2}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<Acceleration<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Acceleration<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Acceleration<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy.clone() * rhs.mps2.clone()}
+	}
+}
+
+// InverseAbsorbedDose / Density -> InversePressure
+/// Dividing a InverseAbsorbedDose by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<Density<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy / rhs.kgpm3}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<Density<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy.clone() / rhs.kgpm3}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<&Density<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<&Density<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy.clone() / rhs.kgpm3.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Energy -> Mass
+/// Multiplying a InverseAbsorbedDose by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<Energy<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy * rhs.J}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<Energy<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() * rhs.J}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<&Energy<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy * rhs.J.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<&Energy<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() * rhs.J.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Torque -> Mass
+/// Multiplying a InverseAbsorbedDose by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<Torque<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy * rhs.Nm}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<Torque<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<&Torque<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<&Torque<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseAcceleration -> InverseDistance
+/// Dividing a InverseAbsorbedDose by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseAcceleration<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy / rhs.s2pm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseAcceleration<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseAcceleration<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Gy.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseEnergy -> Mass
+/// Dividing a InverseAbsorbedDose by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<InverseEnergy<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy / rhs.per_J}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<InverseEnergy<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<&InverseEnergy<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InverseTorque -> Mass
+/// Dividing a InverseAbsorbedDose by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<InverseTorque<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<InverseTorque<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<&InverseTorque<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<&InverseTorque<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Gy.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InverseAbsorbedDose / InversePressure -> Density
+/// Dividing a InverseAbsorbedDose by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<InversePressure<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<InversePressure<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<&InversePressure<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Pressure -> Density
+/// Multiplying a InverseAbsorbedDose by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<Pressure<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy * rhs.Pa}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<Pressure<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<&Pressure<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Gy.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseAbsorbedDose / TimePerDistance -> TimePerDistance
+/// Dividing a InverseAbsorbedDose by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy / rhs.spm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseAbsorbedDose by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseAbsorbedDose * Velocity -> TimePerDistance
+/// Multiplying a InverseAbsorbedDose by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Velocity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy * rhs.mps}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Velocity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Velocity<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Gy.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseAbsorbedDose * VolumePerMass -> InversePressure
+/// Multiplying a InverseAbsorbedDose by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<VolumePerMass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<VolumePerMass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&VolumePerMass<T>> for InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a InverseAbsorbedDose by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&VolumePerMass<T>> for &InverseAbsorbedDose<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Gy.clone() * rhs.m3_per_kg.clone()}
+	}
+}
+
+/// The inverse of radiation dose equivalent unit type, defined as inverse sieverts in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseDoseEquivalent<T: NumLike>{
+	/// The value of this Inverse dose equivalent in inverse sieverts
+	pub per_Sv: T
+}
+
+impl<T> InverseDoseEquivalent<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse dose equivalent: "inverse sieverts"
+	pub fn unit_name() -> &'static str { "inverse sieverts" }
+	
+	/// Returns the abbreviated name or symbol of inverse dose equivalent: "1/Sv" for inverse sieverts
+	pub fn unit_symbol() -> &'static str { "1/Sv" }
+	
+	/// Returns a new inverse dose equivalent value from the given number of inverse sieverts
+	///
+	/// # Arguments
+	/// * `per_Sv` - Any number-like type, representing a quantity of inverse sieverts
+	pub fn from_per_Sv(per_Sv: T) -> Self { InverseDoseEquivalent{per_Sv: per_Sv} }
+	
+	/// Returns a copy of this inverse dose equivalent value in inverse sieverts
+	pub fn to_per_Sv(&self) -> T { self.per_Sv.clone() }
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse sieverts
+	///
+	/// # Arguments
+	/// * `per_sieverts` - Any number-like type, representing a quantity of inverse sieverts
+	pub fn from_per_sieverts(per_sieverts: T) -> Self { InverseDoseEquivalent{per_Sv: per_sieverts} }
+	
+	/// Returns a copy of this inverse dose equivalent value in inverse sieverts
+	pub fn to_per_sieverts(&self) -> T { self.per_Sv.clone() }
+
+}
+
+impl<T> fmt::Display for InverseDoseEquivalent<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_Sv, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseDoseEquivalent<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse dose equivalent value in inverse millisieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse millisieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mSv` - Any number-like type, representing a quantity of inverse millisieverts
+	pub fn from_per_mSv(per_mSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_mSv * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse microsieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse microsieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uSv` - Any number-like type, representing a quantity of inverse microsieverts
+	pub fn from_per_uSv(per_uSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_uSv * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse nanosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse nanosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nSv` - Any number-like type, representing a quantity of inverse nanosieverts
+	pub fn from_per_nSv(per_nSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_nSv * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse kilosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse kilosieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kSv` - Any number-like type, representing a quantity of inverse kilosieverts
+	pub fn from_per_kSv(per_kSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_kSv * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse megasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse megasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MSv` - Any number-like type, representing a quantity of inverse megasieverts
+	pub fn from_per_MSv(per_MSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_MSv * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse gigasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GSv(&self) -> T {
+		return self.per_Sv.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse gigasieverts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GSv` - Any number-like type, representing a quantity of inverse gigasieverts
+	pub fn from_per_GSv(per_GSv: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_GSv * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse roentgen equivalent man
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_rem(&self) -> T {
+		return self.per_Sv.clone() * T::from(0.01_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse roentgen equivalent man
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_rem` - Any number-like type, representing a quantity of inverse roentgen equivalent man
+	pub fn from_per_rem(per_rem: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_rem * T::from(100.0_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse milli-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mrem(&self) -> T {
+		return self.per_Sv.clone() * T::from(1e-05_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse milli-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mrem` - Any number-like type, representing a quantity of inverse milli-roentgen equivalents
+	pub fn from_per_mrem(per_mrem: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_mrem * T::from(100000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse dose equivalent value in inverse kilo-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_krem(&self) -> T {
+		return self.per_Sv.clone() * T::from(10.0_f64);
+	}
+
+	/// Returns a new inverse dose equivalent value from the given number of inverse kilo-roentgen equivalents
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_krem` - Any number-like type, representing a quantity of inverse kilo-roentgen equivalents
+	pub fn from_per_krem(per_krem: T) -> Self {
+		InverseDoseEquivalent{per_Sv: per_krem * T::from(0.1_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseDoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseDoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseDoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseDoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseDoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseDoseEquivalent<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseDoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseDoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseDoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseDoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseDoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseDoseEquivalent<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_complex::Complex32>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseDoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseDoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseDoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseDoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: InverseDoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseDoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseDoseEquivalent<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseDoseEquivalent<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseDoseEquivalent<num_complex::Complex64>) -> Self::Output {
+		InverseDoseEquivalent{per_Sv: self.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+
+
+
+// InverseDoseEquivalent * Distance -> InverseAcceleration
+/// Multiplying a InverseDoseEquivalent by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Distance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv * rhs.m}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Distance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv.clone() * rhs.m}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Distance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv * rhs.m.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Distance returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Distance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv.clone() * rhs.m.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseDistance -> InverseAcceleration
+/// Dividing a InverseDoseEquivalent by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseDistance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv / rhs.per_m}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseDistance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv.clone() / rhs.per_m}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseDistance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv / rhs.per_m.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseDistance returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseDistance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Sv.clone() / rhs.per_m.clone()}
+	}
+}
+
+// InverseDoseEquivalent * InverseMass -> InverseEnergy
+/// Multiplying a InverseDoseEquivalent by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a InverseMass returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseTemperature -> InverseSpecificHeatCapacity
+/// Dividing a InverseDoseEquivalent by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<InverseTemperature<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv / rhs.per_K}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<InverseTemperature<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv.clone() / rhs.per_K}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<&InverseTemperature<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: &InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv / rhs.per_K.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTemperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Div<&InverseTemperature<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn div(self, rhs: &InverseTemperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv.clone() / rhs.per_K.clone()}
+	}
+}
+
+// InverseDoseEquivalent / Mass -> InverseEnergy
+/// Dividing a InverseDoseEquivalent by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<Mass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv / rhs.kg}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<Mass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv.clone() / rhs.kg}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Mass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv / rhs.kg.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Mass returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Mass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Sv.clone() / rhs.kg.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Temperature -> InverseSpecificHeatCapacity
+/// Multiplying a InverseDoseEquivalent by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<Temperature<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv * rhs.K}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<Temperature<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv.clone() * rhs.K}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<&Temperature<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: &Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv * rhs.K.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Temperature returns a value of type InverseSpecificHeatCapacity
+impl<T> core::ops::Mul<&Temperature<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseSpecificHeatCapacity<T>;
+	fn mul(self, rhs: &Temperature<T>) -> Self::Output {
+		InverseSpecificHeatCapacity{kgK_per_J: self.per_Sv.clone() * rhs.K.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseSpecificHeatCapacity -> InverseTemperature
+/// Dividing a InverseDoseEquivalent by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<InverseSpecificHeatCapacity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv / rhs.kgK_per_J}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<InverseSpecificHeatCapacity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv.clone() / rhs.kgK_per_J}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<&InverseSpecificHeatCapacity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: &InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv / rhs.kgK_per_J.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseSpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Div<&InverseSpecificHeatCapacity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn div(self, rhs: &InverseSpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv.clone() / rhs.kgK_per_J.clone()}
+	}
+}
+
+// InverseDoseEquivalent * SpecificHeatCapacity -> InverseTemperature
+/// Multiplying a InverseDoseEquivalent by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<SpecificHeatCapacity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv * rhs.J_per_kgK}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<SpecificHeatCapacity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv.clone() * rhs.J_per_kgK}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<&SpecificHeatCapacity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: &SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv * rhs.J_per_kgK.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a SpecificHeatCapacity returns a value of type InverseTemperature
+impl<T> core::ops::Mul<&SpecificHeatCapacity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseTemperature<T>;
+	fn mul(self, rhs: &SpecificHeatCapacity<T>) -> Self::Output {
+		InverseTemperature{per_K: self.per_Sv.clone() * rhs.J_per_kgK.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Acceleration -> InverseDistance
+/// Multiplying a InverseDoseEquivalent by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<Acceleration<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv * rhs.mps2}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<Acceleration<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Acceleration<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Acceleration returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Acceleration<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv.clone() * rhs.mps2.clone()}
+	}
+}
+
+// InverseDoseEquivalent / Density -> InversePressure
+/// Dividing a InverseDoseEquivalent by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<Density<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv / rhs.kgpm3}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<Density<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv.clone() / rhs.kgpm3}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<&Density<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a Density returns a value of type InversePressure
+impl<T> core::ops::Div<&Density<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv.clone() / rhs.kgpm3.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Energy -> Mass
+/// Multiplying a InverseDoseEquivalent by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<Energy<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv * rhs.J}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<Energy<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() * rhs.J}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<&Energy<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv * rhs.J.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Energy returns a value of type Mass
+impl<T> core::ops::Mul<&Energy<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() * rhs.J.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Torque -> Mass
+/// Multiplying a InverseDoseEquivalent by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<Torque<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv * rhs.Nm}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<Torque<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<&Torque<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Torque returns a value of type Mass
+impl<T> core::ops::Mul<&Torque<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseAcceleration -> InverseDistance
+/// Dividing a InverseDoseEquivalent by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseAcceleration<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv / rhs.s2pm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseAcceleration<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseAcceleration<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseAcceleration returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Sv.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseEnergy -> Mass
+/// Dividing a InverseDoseEquivalent by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<InverseEnergy<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv / rhs.per_J}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<InverseEnergy<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<&InverseEnergy<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseEnergy returns a value of type Mass
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InverseTorque -> Mass
+/// Dividing a InverseDoseEquivalent by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<InverseTorque<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<InverseTorque<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<&InverseTorque<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InverseTorque returns a value of type Mass
+impl<T> core::ops::Div<&InverseTorque<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Mass{kg: self.per_Sv.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InverseDoseEquivalent / InversePressure -> Density
+/// Dividing a InverseDoseEquivalent by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<InversePressure<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<InversePressure<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<&InversePressure<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a InversePressure returns a value of type Density
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Pressure -> Density
+/// Multiplying a InverseDoseEquivalent by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<Pressure<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv * rhs.Pa}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<Pressure<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<&Pressure<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Pressure returns a value of type Density
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Density{kgpm3: self.per_Sv.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseDoseEquivalent / TimePerDistance -> TimePerDistance
+/// Dividing a InverseDoseEquivalent by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv / rhs.spm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseDoseEquivalent by a TimePerDistance returns a value of type TimePerDistance
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseDoseEquivalent * Velocity -> TimePerDistance
+/// Multiplying a InverseDoseEquivalent by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Velocity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv * rhs.mps}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Velocity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Velocity<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a Velocity returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Sv.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseDoseEquivalent * VolumePerMass -> InversePressure
+/// Multiplying a InverseDoseEquivalent by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<VolumePerMass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<VolumePerMass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&VolumePerMass<T>> for InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a InverseDoseEquivalent by a VolumePerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&VolumePerMass<T>> for &InverseDoseEquivalent<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Sv.clone() * rhs.m3_per_kg.clone()}
 	}
 }
 

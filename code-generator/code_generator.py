@@ -25,12 +25,29 @@ combo_whitelist: Set[Tuple[str, str, str]] = set([
 	('angular acceleration', 'torque', 'moment of inertia'),
 	('torque', 'angular acceleration', 'moment of inertia'),
 	('torque', 'moment of inertia', 'angular acceleration'),
+	('inverse moment of inertia', 'inverse angular acceleration', 'inverse torque'),
+	('inverse angular acceleration', 'inverse moment of inertia', 'inverse torque'),
+	('inverse angular acceleration', 'inverse torque', 'inverse moment of inertia'),
+	('inverse torque', 'inverse angular acceleration', 'inverse moment of inertia'),
+	('inverse torque', 'inverse moment of inertia', 'inverse angular acceleration'),
 ])
 ## the following are blacklisted as outputs because they are dimensionally equivalent to other more commonly used units
 output_blacklist: Set[str] = set([
-	'torque', 'moment of inertia', 'radioactivity', 'absorbed dose', 'dose equivalent'
+	'torque', 'moment of inertia', 'radioactivity', 'absorbed dose', 'dose equivalent',
+	'inverse torque', 'inverse moment of inertia', 'inverse absorbed dose', 'inverse dose equivalent',
 ])
 
+# tracker to detect conflicting implementations
+implementation_tracker = {}
+
+def impl_conflict_check(left, op, right, output):
+	# check for conflicting implementations
+	impl_key = '%s%s%s' % (left, op, right)
+	impl_out = output
+	if impl_key in implementation_tracker and implementation_tracker[impl_key] != impl_out:
+		raise TypeError('Confliciting implementations: %s -> %s and %s -> %s' % (
+			impl_key, implementation_tracker[impl_key], impl_key, impl_out))
+	implementation_tracker[impl_key] = impl_out
 
 def main(*args):
 	'''
@@ -300,6 +317,8 @@ def generate_inverse_unit_conversions(data_row: Series, data: DataFrame, test_re
 						'right-side symbol': data_row['unit symbol'],
 						'result symbol': row['unit symbol']
 					})
+				# check for conflicting implementations
+				impl_conflict_check(stype, '/', to_code_name(src_unit_name), to_code_name(row['name']))
 			used_mods.add(row['category'])
 			# only use first found unit
 			break
@@ -418,6 +437,8 @@ def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 							'out struct': to_code_name(output_name),
 							'out symbol': siunit_symbol_lut[output_name]
 						})
+						# check for conflicting implementations
+						impl_conflict_check(to_code_name(this_name), '*', to_code_name(other_name), to_code_name(output_name))
 			div_unit = this_unit / other_unit
 			if div_unit in siunit_measure_lut:
 				for other_name in siunit_measure_lut[other_unit]:
@@ -440,6 +461,8 @@ def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 							'out struct': to_code_name(output_name),
 							'out symbol': siunit_symbol_lut[output_name]
 						})
+						# check for conflicting implementations
+						impl_conflict_check(to_code_name(this_name), '/', to_code_name(other_name), to_code_name(output_name))
 	return DataFrame(unit_conversions, columns=['left-side', 'left-side symbol', 'operator', 'verbing', 'right-side', 'right-side symbol', 'result', 'result symbol', 'code left-side', 'code right-side', 'code result'])
 
 def reduce_spaces(text: str) -> str: return re.sub(r'\s+', ' ', text)

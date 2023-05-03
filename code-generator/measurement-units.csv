@@ -296,9 +296,9 @@ molar mass,kilograms per mole,kilograms_per_mole,1,,1
 molar mass,grams per mole,gpmol,0.001,,1000
 molar mass,grams per mole,grams_per_mole,0.001,,1000
 specific heat capacity,joules per kilogram per kelvin,joules_per_kilogram_kelvin,1,,1
-specific heat capacity,joules per kilogram per kelvin,JpkgK ,1,,1
+specific heat capacity,joules per kilogram per kelvin,J_per_kgK,1,,1
 specific heat capacity,joules per gram per kelvin,joules_per_gram_kelvin,1000,,0.001
-specific heat capacity,joules per gram per kelvin,JpgK ,0,,0.001
+specific heat capacity,joules per gram per kelvin,J_per_gK,1000,,0.001
 luminous flux,lumens,lm,1,,1
 luminous flux,lumens,lumens,1,,1
 luminous flux,millilumens,mlm,0.001,,1000
@@ -352,3 +352,262 @@ dose equivalent,gigasieverts,GSv,1000000000,,0.000000001
 dose equivalent,roentgen equivalent man,rem,0.01,,100
 dose equivalent,milli-roentgen equivalents,mrem,0.00001,,100000
 dose equivalent,kilo-roentgen equivalents,krem,10,,0.1
+inverse amount,inverse count,per_count,6.02E+23,,1.66E-24
+inverse amount,inverse moles,per_mole,1,,1
+inverse amount,inverse moles,per_mol,1,,1
+inverse amount,inverse millimoles,per_mmol,1000,,0.001
+inverse amount,inverse micromoles,per_umol,1000000,,1.00E-06
+inverse amount,inverse nanomoles,per_nmol,1000000000,,1.00E-09
+inverse amount,inverse picomoles,per_pmol,1000000000000,,1.00E-12
+inverse current,inverse amperes,per_A,1,,1
+inverse current,inverse amperes,per_ampere,1,,1
+inverse current,inverse milliamperes,per_mA,1000,,0.001
+inverse current,inverse microamperes,per_uA,1000000,,1.00E-06
+inverse current,inverse nanoamperes,per_nA,1000000000,,1.00E-09
+inverse current,inverse kiloamperes,per_kA,0.001,,1000
+inverse current,inverse megaamperes,per_MA,1.00E-06,,1000000
+inverse current,inverse gigaamperes,per_GA,1.00E-09,,1000000000
+inverse distance,inverse meters,per_m,1,,1
+inverse distance,inverse meters,per_meter,1,,1
+inverse distance,inverse millimeters,per_cm,100,,0.01
+inverse distance,inverse millimeters,per_mm,1000,,0.001
+inverse distance,inverse micrometers,per_um,1000000,,1.00E-06
+inverse distance,inverse nanometers,per_nm,1000000000,,1.00E-09
+inverse distance,inverse picometers,per_pm,1000000000000,,1.00E-12
+inverse distance,inverse kilometers,per_km,0.001,,1000
+inverse distance,inverse astronomical units,per_au,6.68E-12,,149597870700
+inverse distance,inverse parsecs,per_parsec,3.24E-17,,3.09E+16
+inverse distance,inverse light-years,per_lyr,1.06E-16,,9.4605281696562E+015
+inverse luminosity,inverse candela,per_cd,1,,1
+inverse luminosity,inverse candela,per_candela,1,,1
+inverse luminosity,inverse millicandela,per_mcd,1000,,0.001
+inverse luminosity,inverse microcandela,per_ucd,1000000,,1.00E-06
+inverse luminosity,inverse nanocandela,per_ncd,1000000000,,1.00E-09
+inverse luminosity,inverse kilocandela,per_kcd,0.001,,1000
+inverse luminosity,inverse megacandela,per_Mcd,1.00E-06,,1000000
+inverse luminosity,inverse gigacandela,per_Gcd,1.00E-09,,1000000000
+inverse mass,inverse kilograms,per_kg,1,,1
+inverse mass,inverse kilograms,per_kilograms,1,,1
+inverse mass,inverse grams,per_g,1000,,0.001
+inverse mass,inverse milligrams,per_mg,1000000,,1.00E-06
+inverse mass,inverse micrograms,per_ug,1000000000,,1.00E-09
+inverse mass,inverse nanograms,per_ng,1000000000000,,1.00E-12
+inverse mass,inverse picograms,per_pg,1000000000000000,,1.00E-15
+inverse mass,inverse tons,per_tons,0.001,,1000
+inverse mass,inverse earth masses,per_earth_mass,1.67E-25,,5.97E+24
+inverse mass,inverse jupiter masses,per_jupiter_mass,5.27E-28,,1.90E+27
+inverse mass,inverse solar masses,per_solar_mass,5.03E-31,,1.99E+30
+inverse temperature,inverse degrees kelvin,per_K,1,,1
+inverse catalytic activity,seconds per mole,s_per_mol,1,,1
+inverse catalytic activity,seconds per mole,seconds_per_mole,1,,1
+inverse catalytic activity,minutes per mole,minutes_per_mole,6.00E+01,,1.66666666666667E-02
+inverse catalytic activity,hours per mol,hours_per_mole,3600,,2.77777777777778E-04
+molar volume,cubic meters per mole,m3_per_mol,1,,1
+molar volume,cubic meters per mole,cubic_meters_per_mole,1,,1
+molar volume,liters per mole,L_per_mol,1.00E-03,,1.00E+03
+molar volume,liters per mole,liters_per_mole,1.00E-03,,1.00E+03
+inverse specific heat capacity,kilograms kelvin per joules,kilograms_kelvin_per_joule,1,,1
+inverse specific heat capacity,kilograms kelvin per joules,kgK_per_J,1,,1
+inverse specific heat capacity,grams kelvin per joules,grams_kelvin_per_joule,0.001,,1000
+inverse specific heat capacity,grams kelvin per joules,gK_per_J,0.001,,1000
+elastance,inverse farads,per_F,1,,1
+elastance,inverse farads,per_farads,1,,1
+elastance,inverse millifarads,per_mF,1000,,0.001
+elastance,inverse microfarads,per_uF,1000000,,1.00E-06
+elastance,inverse nanofarads,per_nF,1000000000,,1.00E-09
+elastance,inverse picofarads,per_pF,1000000000000,,1.00E-12
+elastance,inverse kilofarads,per_kF,0.001,,1000
+elastance,inverse megafarads,per_MF,1.00E-06,,1000000
+elastance,inverse gigafarads,per_GF,1.00E-09,,1000000000
+inverse charge,inverse coulombs,per_C,1,,1
+inverse charge,inverse coulombs,per_coulombs,1,,1
+inverse charge,inverse millicoulombs,per_mC,1000,,0.001
+inverse charge,inverse microcoulombs,per_uC,1000000,,1.00E-06
+inverse charge,inverse nanocoulombs,per_nC,1000000000,,1.00E-09
+inverse charge,inverse kilocoulombs,per_kC,0.001,,1000
+inverse charge,inverse megacoulombs,per_MC,1.00E-06,,1000000
+inverse charge,inverse gigacoulombs,per_GC,1.00E-09,,1000000000
+area per lumen,square meters per lumen,m2_per_lm,1.00E+00,,1
+area per lumen,square meters per lumen,square_meters_per_lumen,1.00E+00,,1
+area per lumen,inverse lux,per_lux,1,,1
+inverse inductance,inverse henries,per_H,1,,1
+inverse inductance,inverse henries,per_henry,1,,1
+inverse inductance,inverse millihenries,per_mH,1000,,0.001
+inverse inductance,inverse microhenries,per_uH,1000000,,1.00E-06
+inverse inductance,inverse nanohenries,per_nH,1000000000,,1.00E-09
+inverse inductance,inverse kilohenries,per_kH,0.001,,1000
+inverse inductance,inverse megahenries,per_MH,1.00E-06,,1000000
+inverse inductance,inverse gigahenries,per_GH,1.00E-09,,1000000000
+inverse luminous flux,inverse lumens,per_lm,1,,1
+inverse luminous flux,inverse lumens,per_lumens,1,,1
+inverse luminous flux,inverse millilumens,per_mlm,1000,,0.001
+inverse luminous flux,inverse microlumens,per_ulm,1000000,,1.00E-06
+inverse luminous flux,inverse nanolumens,per_nlm,1000000000,,1.00E-09
+inverse luminous flux,inverse kilolumens,per_klm,0.001,,1000
+inverse luminous flux,inverse megalumens,per_Mlm,1.00E-06,,1000000
+inverse luminous flux,inverse gigalumens,per_Glm,1.00E-09,,1000000000
+inverse magnetic flux,inverse webers,per_Wb,1,,1
+inverse magnetic flux,inverse webers,per_weber,1,,1
+inverse magnetic flux,inverse milliwebers,per_mWb,1000,,0.001
+inverse magnetic flux,inverse microwebers,per_uWb,1000000,,1.00E-06
+inverse magnetic flux,inverse nanowebers,per_nWb,1000000000,,1.00E-09
+inverse magnetic flux,inverse kilowebers,per_kWb,0.001,,1000
+inverse magnetic flux,inverse megawebers,per_MWb,1.00E-06,,1000000
+inverse magnetic flux,inverse gigawebers,per_GWb,1.00E-09,,1000000000
+inverse magnetic flux density,square meters per weber,m2_per_Wb,1,,1
+inverse magnetic flux density,square meters per weber,square_meters_per_weber,1,,1
+inverse magnetic flux density,inverse teslas,per_T,1,,1
+inverse magnetic flux density,inverse teslas,per_tesla,1,,1
+inverse voltage,inverse volts,per_V,1,,1
+inverse voltage,inverse volts,per_volt,1,,1
+inverse voltage,inverse millivolts,per_mV,1000,,0.001
+inverse voltage,inverse microvolts,per_uV,1000000,,1.00E-06
+inverse voltage,inverse nanovolts,per_nV,1000000000,,1.00E-09
+inverse voltage,inverse kilovolts,per_kV,0.001,,1000
+inverse voltage,inverse megavolts,per_MV,1.00E-06,,1000000
+inverse voltage,inverse gigavolts,per_GV,1.00E-09,,1000000000
+inverse angle,inverse radians,per_rad,1,,1
+inverse angle,inverse radians,per_radians,1,,1
+inverse angle,inverse degrees,per_degrees,57.2957795130823,,0.0174532925199433
+inverse angle,inverse degrees,per_deg,57.2957795130823,,0.0174532925199433
+inverse area,inverse square meters,per_m2,1,,1
+inverse area,inverse square meters,per_square_meter,1,,1
+inverse area,inverse square cm,per_cm2,10000,,0.0001
+inverse area,inverse square cm,per_square_cm,10000,,0.0001
+inverse area,inverse square mm,per_mm2,1000000,,1.00E-06
+inverse area,inverse square um,per_um2,1000000000000,,1.00E-12
+inverse area,inverse square nm,per_nm2,1.00E+18,,1.00E-18
+inverse area,inverse square km,per_km2,1.00E-06,,1000000
+inverse solid angle,inverse steradians,per_sr,1,,1
+inverse solid angle,inverse steradians,per_steradians,1,,1
+inverse volume,inverse cubic meters,per_m3,1,,1
+inverse volume,inverse cubic meters,per_cubic_meter,1,,1
+inverse volume,inverse cubic cm,per_cc,1000000,,1.00E-06
+inverse volume,inverse liters,per_L,1000,,0.001
+inverse volume,inverse liters,per_liters,1000,,0.001
+inverse volume,inverse milliliters,per_mL,1000000,,1.00E-06
+inverse volume,inverse microliters,per_uL,1000000000,,1.00E-09
+inverse volume,inverse nanoliters,per_nL,1000000000000,,1.00E-12
+inverse volume,inverse picoliters,per_pL,1000000000000000,,1.00E-15
+inverse volume,inverse kiloliters,per_kL,1,,1
+inverse volume,inverse megaliters,per_ML,0.001,,1000
+inverse volume,inverse gigaliters,per_GL,1.00E-06,,1000000
+inverse acceleration,seconds squared per meter,s2pm,1,,1
+inverse acceleration,seconds squared per meter,seconds_squared_per_meter,1,,1
+inverse acceleration,seconds squared per millimeter,s2pmm,1000,,0.001
+inverse acceleration,hours squared per kilometer,hours_squared_per_kilometers,1000000,,1.00E-06
+inverse acceleration,hours squared per kilometer,hr2_per_km,12960,,7.72E-05
+inverse angular acceleration,seconds squared per radian,s2prad,1,,1
+inverse angular acceleration,seconds squared per radian,seconds_squared_per_radian,1,,1
+inverse angular acceleration,seconds squared per degree,seconds_squared_per_degree,57.2957795130823,,0.0174532925199433
+inverse angular momentum,seconds per kilogram meters squared radian,s_per_kgm2rad,1,,1
+inverse angular momentum,seconds per kilogram meters squared radian,seconds_per_kilogram_meters_squared_radian,1,,1
+inverse angular momentum,seconds per gram cm squared radian,s_per_gcm2rad,10000000,,1.00E-07
+inverse angular velocity,seconds per radian,s_per_rad,1,,1
+inverse angular velocity,seconds per radian,seconds_per_radian,1,,1
+inverse angular velocity,seconds per degree,seconds_per_degree,57.2957795130823,,0.0174532925199433
+inverse angular velocity,seconds per degree,s_per_deg,57.2957795130823,,0.0174532925199433
+inverse angular velocity,seconds per revolution,spr,0.159154943091895,,6.28318530717959
+inverse angular velocity,minutes per revolution,mpr,9.54929658551372,,0.10471975511966
+inverse angular velocity,hours per revolution,hpr,572.957795130823,,0.0017453292519943
+area per mass,square meters per kilogram,m2_per_kg,1,,1
+area per mass,square meters per kilogram,square_meters_per_kilogram,1,,1
+area per mass,square meters per gram,m2_per_g,1000,,0.001
+area per mass,square meters per gram,square_meters_per_gram,1000,,0.001
+area per mass,square cm per gram,cm2_per_g,0.1,,10
+area per mass,square cm per gram,square_centimeters_per_gram,0.1,,10
+volume per mass,liter per kilograms,L_per_kg,0.001,,1000
+volume per mass,liter per kilograms,liters_per_kilogram,0.001,,1000
+volume per mass,cc per gram,cc_per_g,0.001,,1000
+volume per mass,cc per gram,cubic_centimeters_per_gram,0.001,,1000
+volume per mass,cubic meters per kilogram,m3_per_kg,1,,1
+volume per mass,cubic meters per kilogram,cubic_meters_per_kilogram,1,,1
+inverse energy,inverse joules,per_J,1,,1
+inverse energy,inverse joules,per_joule,1,,1
+inverse energy,inverse millijoules,per_mJ,1000,,0.001
+inverse energy,inverse microjoules,per_uJ,1000000,,1.00E-06
+inverse energy,inverse nanojoules,per_nJ,1000000000,,1.00E-09
+inverse energy,inverse kilojoules,per_kJ,0.001,,1000
+inverse energy,inverse megajoules,per_MJ,1.00E-06,,1000000
+inverse energy,inverse gigajoules,per_GJ,1.00E-09,,1000000000
+inverse energy,inverse calories,per_cal,0.239005736137667,,4.184
+inverse energy,inverse kilocalories,per_kcal,0.0002390057361376,,4184
+inverse energy,inverse watt-hours,per_Whr,0.0002777777777777,,3600
+inverse energy,inverse kilowatt-hours,per_kWhr,2.78E-07,,3600000
+inverse energy,inverse electron-volts,per_eV,6.24E+18,,1.60E-19
+inverse energy,inverse british thermal units,per_BTU,0.0009478672985781,,1055
+inverse force,inverse newtons,per_N,1,,1
+inverse force,inverse newtons,per_newton,1,,1
+inverse force,inverse pounds,per_lb,0.224337566199999,,4.45756819483586
+inverse force,inverse kilogram-force,per_kgG,0.101971620999999,,9.8066500286389
+inverse force,inverse millinewtons,per_mN,1000,,0.001
+inverse force,inverse micronewtons,per_uN,1000000,,1.00E-06
+inverse force,inverse nanonewtons,per_nN,1000000000,,1.00E-09
+inverse force,inverse kilonewtons,per_kN,0.001,,1000
+inverse force,inverse meganewtons,per_MN,1.00E-06,,1000000
+inverse force,inverse giganewtons,per_GN,1.00E-09,,1000000000
+inverse moment of inertia,inverse kilogram meters squared,per_kgm2,1,,1
+inverse moment of inertia,inverse kilogram meters squared,per_kilogram_meters_squared,1,,1
+inverse moment of inertia,inverse gram cm squared,per_gcm2,0.1,,10
+inverse moment of inertia,inverse gram meters squared,per_gm2,1000,,0.001
+inverse momentum,seconds per kilogram meter,s_per_kgm,1,,1
+inverse momentum,seconds per kilogram meter,seconds_per_kilogram_meter,1,,1
+inverse momentum,seconds per gram centimeter,s_per_gcm,100000,,1.00E-05
+inverse momentum,seconds per gram centimeter,seconds_per_gram_centimeter,100000,,1.00E-05
+inverse power,inverse watts,per_W,1,,1
+inverse power,inverse watts,per_watt,1,,1
+inverse power,inverse milliwatts,per_mW,1000,,0.001
+inverse power,inverse microwatts,per_uW,1000000,,1.00E-06
+inverse power,inverse nanowatts,per_nW,1000000000,,1.00E-09
+inverse power,inverse kilowatts,per_kW,0.001,,1000
+inverse power,inverse megawatts,per_MW,1.00E-06,,1000000
+inverse power,inverse gigawatts,per_GW,1.00E-09,,1000000000
+inverse power,inverse horse power,per_horsepower,0.0013410218586563,,745.7
+inverse pressure,inverse pascals,per_Pa,1,,1
+inverse pressure,inverse pascals,per_pascal,1,,1
+inverse pressure,square inches per pound,per_psi,0.00014503773773,,6894.7572931783
+inverse pressure,inverse millipascals,per_mPa,1000,,0.001
+inverse pressure,inverse micropascals,per_uPa,1000000,,1.00E-06
+inverse pressure,inverse nanopascals,per_nPa,1000000000,,1.00E-09
+inverse pressure,inverse kilopascals,per_kPa,0.001,,1000
+inverse pressure,inverse megapascals,per_MPa,1.00E-06,,1000000
+inverse pressure,inverse gigapascals,per_GPa,1.00E-09,,1000000000
+inverse pressure,inverse hectopascals,per_hPa,0.01,,100
+inverse pressure,inverse bar,per_bar,1.00E-05,,100000
+inverse pressure,inverse millibar,per_mbar,0.01,,100
+inverse pressure,inverse atmospheres,per_atm,9.87E-06,,101325
+inverse pressure,inverse torr,per_torr,0.007500616827039,,133.3223684211
+inverse pressure,inverse mm Hg,per_mmHg,0.007500616827039,,133.3223684211
+inverse torque,inverse newton meters,per_Nm,1,,1
+inverse torque,inverse newton meters,per_newton_meter,1,,1
+inverse torque,inverse foot-pounds,per_ftlb,0.73756214927727,,1.35581794833139
+time per distance,seconds per meter,spm,1,,1
+time per distance,seconds per meter,seconds_per_meter,1,,1
+time per distance,seconds per centimeter,s_per_cm,100,,0.01
+time per distance,seconds per millimeter,s_per_mm,1000,,0.001
+time per distance,hours per kilometer,hr_per_km,3.6,,0.277777777777778
+time per distance,hours per mile,hr_per_mi,2.2369362920544,,0.44704
+inverse absorbed dose,inverse grays,per_Gy,1,,1
+inverse absorbed dose,inverse grays,per_grays,1,,1
+inverse absorbed dose,inverse milligrays,per_mGy,1000,,0.001
+inverse absorbed dose,inverse micrograys,per_uGy,1000000,,1.00E-06
+inverse absorbed dose,inverse nanograys,per_nGy,1000000000,,1.00E-09
+inverse absorbed dose,inverse kilograys,per_kGy,0.001,,1000
+inverse absorbed dose,inverse megagrays,per_MGy,1.00E-06,,1000000
+inverse absorbed dose,inverse gigagrays,per_GGy,1.00E-09,,1000000000
+inverse absorbed dose,inverse rads,per_rad,100,,0.01
+inverse absorbed dose,inverse kilorads,per_krad,0.1,,10
+inverse absorbed dose,inverse millirads,per_mrad,100000,,1.00E-05
+inverse absorbed dose,inverse microrads,per_urad,100000000,,1.00E-08
+inverse absorbed dose,gram per ergs,per_erg,10000,,0.0001
+inverse dose equivalent,inverse sieverts,per_Sv,1,,1
+inverse dose equivalent,inverse sieverts,per_sieverts,1,,1
+inverse dose equivalent,inverse millisieverts,per_mSv,1000,,0.001
+inverse dose equivalent,inverse microsieverts,per_uSv,1000000,,1.00E-06
+inverse dose equivalent,inverse nanosieverts,per_nSv,1000000000,,1.00E-09
+inverse dose equivalent,inverse kilosieverts,per_kSv,0.001,,1000
+inverse dose equivalent,inverse megasieverts,per_MSv,1.00E-06,,1000000
+inverse dose equivalent,inverse gigasieverts,per_GSv,1.00E-09,,1000000000
+inverse dose equivalent,inverse roentgen equivalent man,per_rem,100,,0.01
+inverse dose equivalent,inverse milli-roentgen equivalents,per_mrem,100000,,1.00E-05
+inverse dose equivalent,inverse kilo-roentgen equivalents,per_krem,0.1,,10
