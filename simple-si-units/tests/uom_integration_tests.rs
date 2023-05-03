@@ -117,6 +117,22 @@ mod uom_integration {
 			uom::si::f64::Velocity::new::<uom::si::velocity::meter_per_second>(x).value);
 		assert_eq!(simple_si_units::nuclear::Radioactivity{Bq: x}.Bq,
 			uom::si::f64::Radioactivity::new::<uom::si::radioactivity::becquerel>(x).value);
+		assert_eq!(simple_si_units::base::InverseDistance{per_m: x}.per_m,
+				   uom::si::f64::LinearNumberDensity::new::<uom::si::linear_number_density::per_meter>(x).value);
+		assert_eq!(simple_si_units::base::InverseTemperature{per_K: x}.per_K,
+				   uom::si::f64::TemperatureCoefficient::new::<uom::si::temperature_coefficient::per_kelvin>(x).value);
+		assert_eq!(simple_si_units::chemical::MolarVolume{m3_per_mol: x}.m3_per_mol,
+				   uom::si::f64::MolarVolume::new::<uom::si::molar_volume::cubic_meter_per_mole>(x).value);
+		assert_eq!(simple_si_units::geometry::InverseArea{per_m2: x}.per_m2,
+				   uom::si::f64::ArealNumberDensity::new::<uom::si::areal_number_density::per_square_meter>(x).value);
+		assert_eq!(simple_si_units::geometry::InverseVolume{per_m3: x}.per_m3,
+				   uom::si::f64::VolumetricNumberDensity::new::<uom::si::volumetric_number_density::per_cubic_meter>(x).value);
+		assert_eq!(simple_si_units::geometry::SolidAngle{sr: x}.sr,
+				   uom::si::f64::SolidAngle::new::<uom::si::solid_angle::steradian>(x).value);
+		assert_eq!(simple_si_units::mechanical::AreaPerMass{m2_per_kg: x}.m2_per_kg,
+				   uom::si::f64::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(x).value);
+		assert_eq!(simple_si_units::mechanical::VolumePerMass{m3_per_kg: x}.m3_per_kg,
+				   uom::si::f64::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(x).value);
 	}
 
 	#[test]
@@ -200,6 +216,22 @@ mod uom_integration {
 			== simple_si_units::mechanical::Velocity{mps: x}.into());
 		assert!(uom::si::f64::Radioactivity::new::<uom::si::radioactivity::becquerel>(x)
 			== simple_si_units::nuclear::Radioactivity{Bq: x}.into());
+		assert!(uom::si::f64::LinearNumberDensity::new::<uom::si::linear_number_density::per_meter>(x)
+			== simple_si_units::base::InverseDistance{per_m: x}.into());
+		assert!(uom::si::f64::TemperatureCoefficient::new::<uom::si::temperature_coefficient::per_kelvin>(x)
+			== simple_si_units::base::InverseTemperature{per_K: x}.into());
+		assert!(uom::si::f64::MolarVolume::new::<uom::si::molar_volume::cubic_meter_per_mole>(x)
+			== simple_si_units::chemical::MolarVolume{m3_per_mol: x}.into());
+		assert!(uom::si::f64::ArealNumberDensity::new::<uom::si::areal_number_density::per_square_meter>(x)
+			== simple_si_units::geometry::InverseArea{per_m2: x}.into());
+		assert!(uom::si::f64::VolumetricNumberDensity::new::<uom::si::volumetric_number_density::per_cubic_meter>(x)
+			== simple_si_units::geometry::InverseVolume{per_m3: x}.into());
+		assert!(uom::si::f64::SolidAngle::new::<uom::si::solid_angle::steradian>(x)
+			== simple_si_units::geometry::SolidAngle{sr: x}.into());
+		assert!(uom::si::f64::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(x)
+			== simple_si_units::mechanical::AreaPerMass{m2_per_kg: x}.into());
+		assert!(uom::si::f64::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(x)
+			== simple_si_units::mechanical::VolumePerMass{m3_per_kg: x}.into());
 	}
 
 	#[test]
@@ -283,6 +315,22 @@ mod uom_integration {
 			== simple_si_units::mechanical::Velocity{mps: x}.into());
 		assert!(uom::si::f32::Radioactivity::new::<uom::si::radioactivity::becquerel>(x)
 			== simple_si_units::nuclear::Radioactivity{Bq: x}.into());
+		assert!(uom::si::f32::LinearNumberDensity::new::<uom::si::linear_number_density::per_meter>(x)
+			== simple_si_units::base::InverseDistance{per_m: x}.into());
+		assert!(uom::si::f32::TemperatureCoefficient::new::<uom::si::temperature_coefficient::per_kelvin>(x)
+			== simple_si_units::base::InverseTemperature{per_K: x}.into());
+		assert!(uom::si::f32::MolarVolume::new::<uom::si::molar_volume::cubic_meter_per_mole>(x)
+			== simple_si_units::chemical::MolarVolume{m3_per_mol: x}.into());
+		assert!(uom::si::f32::ArealNumberDensity::new::<uom::si::areal_number_density::per_square_meter>(x)
+			== simple_si_units::geometry::InverseArea{per_m2: x}.into());
+		assert!(uom::si::f32::VolumetricNumberDensity::new::<uom::si::volumetric_number_density::per_cubic_meter>(x)
+			== simple_si_units::geometry::InverseVolume{per_m3: x}.into());
+		assert!(uom::si::f32::SolidAngle::new::<uom::si::solid_angle::steradian>(x)
+			== simple_si_units::geometry::SolidAngle{sr: x}.into());
+		assert!(uom::si::f32::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(x)
+			== simple_si_units::mechanical::AreaPerMass{m2_per_kg: x}.into());
+		assert!(uom::si::f32::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(x)
+			== simple_si_units::mechanical::VolumePerMass{m3_per_kg: x}.into());
 	}
 	#[test]
 	fn from_uom_test_f64(){
@@ -404,6 +452,30 @@ mod uom_integration {
 		assert!(simple_si_units::nuclear::Radioactivity::from(
 				uom::si::f64::Radioactivity::new::<uom::si::radioactivity::becquerel>(x)
 			) == simple_si_units::nuclear::Radioactivity{Bq: x});
+		assert!(simple_si_units::base::InverseDistance::from(
+			uom::si::f64::LinearNumberDensity::new::<uom::si::linear_number_density::per_meter>(x)
+			) == simple_si_units::base::InverseDistance{per_m: x});
+		assert!(simple_si_units::base::InverseTemperature::from(
+			uom::si::f64::TemperatureCoefficient::new::<uom::si::temperature_coefficient::per_kelvin>(x)
+			) == simple_si_units::base::InverseTemperature{per_K: x});
+		assert!(simple_si_units::chemical::MolarVolume::from(
+			uom::si::f64::MolarVolume::new::<uom::si::molar_volume::cubic_meter_per_mole>(x)
+			) == simple_si_units::chemical::MolarVolume{m3_per_mol: x});
+		assert!(simple_si_units::geometry::InverseArea::from(
+			uom::si::f64::ArealNumberDensity::new::<uom::si::areal_number_density::per_square_meter>(x)
+			) == simple_si_units::geometry::InverseArea{per_m2: x});
+		assert!(simple_si_units::geometry::InverseVolume::from(
+			uom::si::f64::VolumetricNumberDensity::new::<uom::si::volumetric_number_density::per_cubic_meter>(x)
+			) == simple_si_units::geometry::InverseVolume{per_m3: x});
+		assert!(simple_si_units::geometry::SolidAngle::from(
+			uom::si::f64::SolidAngle::new::<uom::si::solid_angle::steradian>(x)
+			) == simple_si_units::geometry::SolidAngle{sr: x});
+		assert!(simple_si_units::mechanical::AreaPerMass::from(
+			uom::si::f64::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(x)
+			) == simple_si_units::mechanical::AreaPerMass{m2_per_kg: x});
+		assert!(simple_si_units::mechanical::VolumePerMass::from(
+			uom::si::f64::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(x)
+			) == simple_si_units::mechanical::VolumePerMass{m3_per_kg: x});
 	}
 
 	#[test]
@@ -526,6 +598,30 @@ mod uom_integration {
 		assert!(simple_si_units::nuclear::Radioactivity::from(
 			uom::si::f32::Radioactivity::new::<uom::si::radioactivity::becquerel>(x)
 		) == simple_si_units::nuclear::Radioactivity{Bq: x});
+		assert!(simple_si_units::base::InverseDistance::from(
+			uom::si::f32::LinearNumberDensity::new::<uom::si::linear_number_density::per_meter>(x)
+		) == simple_si_units::base::InverseDistance{per_m: x});
+		assert!(simple_si_units::base::InverseTemperature::from(
+			uom::si::f32::TemperatureCoefficient::new::<uom::si::temperature_coefficient::per_kelvin>(x)
+		) == simple_si_units::base::InverseTemperature{per_K: x});
+		assert!(simple_si_units::chemical::MolarVolume::from(
+			uom::si::f32::MolarVolume::new::<uom::si::molar_volume::cubic_meter_per_mole>(x)
+		) == simple_si_units::chemical::MolarVolume{m3_per_mol: x});
+		assert!(simple_si_units::geometry::InverseArea::from(
+			uom::si::f32::ArealNumberDensity::new::<uom::si::areal_number_density::per_square_meter>(x)
+		) == simple_si_units::geometry::InverseArea{per_m2: x});
+		assert!(simple_si_units::geometry::InverseVolume::from(
+			uom::si::f32::VolumetricNumberDensity::new::<uom::si::volumetric_number_density::per_cubic_meter>(x)
+		) == simple_si_units::geometry::InverseVolume{per_m3: x});
+		assert!(simple_si_units::geometry::SolidAngle::from(
+			uom::si::f32::SolidAngle::new::<uom::si::solid_angle::steradian>(x)
+		) == simple_si_units::geometry::SolidAngle{sr: x});
+		assert!(simple_si_units::mechanical::AreaPerMass::from(
+			uom::si::f32::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(x)
+		) == simple_si_units::mechanical::AreaPerMass{m2_per_kg: x});
+		assert!(simple_si_units::mechanical::VolumePerMass::from(
+			uom::si::f32::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(x)
+		) == simple_si_units::mechanical::VolumePerMass{m3_per_kg: x});
 	}
 
 }
