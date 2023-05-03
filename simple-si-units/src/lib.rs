@@ -1507,22 +1507,22 @@ mod unit_tests {
 	}
 
 	#[test]
-	fn specific_heat_capacity_units() {
+	fn inverse_specific_heat_capacity_units() {
 		assert_approx_equal(
-			SpecificHeatCapacity::from_J_per_kgK(1000.0_f64).to_J_per_kgK(),
-			SpecificHeatCapacity::from_joules_per_gram_kelvin(1.0_f64).to_J_per_kgK(), 9
+			InverseSpecificHeatCapacity::from_kgK_per_J(0.001_f64).to_kgK_per_J(),
+			InverseSpecificHeatCapacity::from_grams_kelvin_per_joule(1.0_f64).to_kgK_per_J(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_J_per_kgK() * 0.001,
-			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_joules_per_gram_kelvin(), 9
+			InverseSpecificHeatCapacity::from_kgK_per_J(1.0_f64).to_kgK_per_J() * 1000.0,
+			InverseSpecificHeatCapacity::from_kgK_per_J(1.0_f64).to_grams_kelvin_per_joule(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_J_per_kgK(0.0_f64).to_J_per_kgK(),
-			SpecificHeatCapacity::from_JpgK (1.0_f64).to_J_per_kgK(), 9
+			InverseSpecificHeatCapacity::from_kgK_per_J(0.001_f64).to_kgK_per_J(),
+			InverseSpecificHeatCapacity::from_gK_per_J(1.0_f64).to_kgK_per_J(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_J_per_kgK() * 0.001,
-			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_JpgK (), 9
+			InverseSpecificHeatCapacity::from_kgK_per_J(1.0_f64).to_kgK_per_J() * 1000.0,
+			InverseSpecificHeatCapacity::from_kgK_per_J(1.0_f64).to_gK_per_J(), 9
 		);
 	}
 

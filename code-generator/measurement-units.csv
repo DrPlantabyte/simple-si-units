@@ -296,9 +296,9 @@ molar mass,kilograms per mole,kilograms_per_mole,1,,1
 molar mass,grams per mole,gpmol,0.001,,1000
 molar mass,grams per mole,grams_per_mole,0.001,,1000
 specific heat capacity,joules per kilogram per kelvin,joules_per_kilogram_kelvin,1,,1
-specific heat capacity,joules per kilogram per kelvin,JpkgK ,1,,1
+specific heat capacity,joules per kilogram per kelvin,J_per_kgK,1,,1
 specific heat capacity,joules per gram per kelvin,joules_per_gram_kelvin,1000,,0.001
-specific heat capacity,joules per gram per kelvin,JpgK ,0,,0.001
+specific heat capacity,joules per gram per kelvin,J_per_gK,1000,,0.001
 luminous flux,lumens,lm,1,,1
 luminous flux,lumens,lumens,1,,1
 luminous flux,millilumens,mlm,0.001,,1000

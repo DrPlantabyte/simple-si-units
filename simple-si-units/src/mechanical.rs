@@ -1,6 +1,6 @@
 
 //! This module provides mechanical SI units, such as acceleration 
-//! and frequency.
+//! and inverse of force.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
@@ -252,6 +252,36 @@ impl<T> From<uom::si::f64::Acceleration> for Acceleration<T> where T: NumLike+Fr
 }
 
 
+// Acceleration / InverseMass -> Force
+/// Dividing a Acceleration by a InverseMass returns a value of type Force
+impl<T> core::ops::Div<InverseMass<T>> for Acceleration<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Force{N: self.mps2 / rhs.per_kg}
+	}
+}
+/// Dividing a Acceleration by a InverseMass returns a value of type Force
+impl<T> core::ops::Div<InverseMass<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Force{N: self.mps2.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a Acceleration by a InverseMass returns a value of type Force
+impl<T> core::ops::Div<&InverseMass<T>> for Acceleration<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Force{N: self.mps2 / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a Acceleration by a InverseMass returns a value of type Force
+impl<T> core::ops::Div<&InverseMass<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Force{N: self.mps2.clone() / rhs.per_kg.clone()}
+	}
+}
+
 // Acceleration * Mass -> Force
 /// Multiplying a Acceleration by a Mass returns a value of type Force
 impl<T> core::ops::Mul<Mass<T>> for Acceleration<T> where T: NumLike {
@@ -342,6 +372,66 @@ impl<T> core::ops::Mul<&AreaDensity<T>> for &Acceleration<T> where T: NumLike {
 	}
 }
 
+// Acceleration / AreaPerMass -> Pressure
+/// Dividing a Acceleration by a AreaPerMass returns a value of type Pressure
+impl<T> core::ops::Div<AreaPerMass<T>> for Acceleration<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Pressure{Pa: self.mps2 / rhs.m2_per_kg}
+	}
+}
+/// Dividing a Acceleration by a AreaPerMass returns a value of type Pressure
+impl<T> core::ops::Div<AreaPerMass<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Pressure{Pa: self.mps2.clone() / rhs.m2_per_kg}
+	}
+}
+/// Dividing a Acceleration by a AreaPerMass returns a value of type Pressure
+impl<T> core::ops::Div<&AreaPerMass<T>> for Acceleration<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Pressure{Pa: self.mps2 / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a Acceleration by a AreaPerMass returns a value of type Pressure
+impl<T> core::ops::Div<&AreaPerMass<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Pressure{Pa: self.mps2.clone() / rhs.m2_per_kg.clone()}
+	}
+}
+
+// Acceleration / Force -> InverseMass
+/// Dividing a Acceleration by a Force returns a value of type InverseMass
+impl<T> core::ops::Div<Force<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2 / rhs.N}
+	}
+}
+/// Dividing a Acceleration by a Force returns a value of type InverseMass
+impl<T> core::ops::Div<Force<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2.clone() / rhs.N}
+	}
+}
+/// Dividing a Acceleration by a Force returns a value of type InverseMass
+impl<T> core::ops::Div<&Force<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2 / rhs.N.clone()}
+	}
+}
+/// Dividing a Acceleration by a Force returns a value of type InverseMass
+impl<T> core::ops::Div<&Force<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2.clone() / rhs.N.clone()}
+	}
+}
+
 // Acceleration / Frequency -> Velocity
 /// Dividing a Acceleration by a Frequency returns a value of type Velocity
 impl<T> core::ops::Div<Frequency<T>> for Acceleration<T> where T: NumLike {
@@ -369,6 +459,126 @@ impl<T> core::ops::Div<&Frequency<T>> for &Acceleration<T> where T: NumLike {
 	type Output = Velocity<T>;
 	fn div(self, rhs: &Frequency<T>) -> Self::Output {
 		Velocity{mps: self.mps2.clone() / rhs.Hz.clone()}
+	}
+}
+
+// Acceleration * InverseForce -> InverseMass
+/// Multiplying a Acceleration by a InverseForce returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseForce<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2 * rhs.per_N}
+	}
+}
+/// Multiplying a Acceleration by a InverseForce returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseForce<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Acceleration by a InverseForce returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseForce<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2 * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Acceleration by a InverseForce returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseForce<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps2.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Acceleration / InverseMomentum -> Power
+/// Dividing a Acceleration by a InverseMomentum returns a value of type Power
+impl<T> core::ops::Div<InverseMomentum<T>> for Acceleration<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Power{W: self.mps2 / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Acceleration by a InverseMomentum returns a value of type Power
+impl<T> core::ops::Div<InverseMomentum<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Power{W: self.mps2.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Acceleration by a InverseMomentum returns a value of type Power
+impl<T> core::ops::Div<&InverseMomentum<T>> for Acceleration<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Power{W: self.mps2 / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a Acceleration by a InverseMomentum returns a value of type Power
+impl<T> core::ops::Div<&InverseMomentum<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Power{W: self.mps2.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// Acceleration * InversePower -> InverseMomentum
+/// Multiplying a Acceleration by a InversePower returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InversePower<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2 * rhs.per_W}
+	}
+}
+/// Multiplying a Acceleration by a InversePower returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InversePower<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Acceleration by a InversePower returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InversePower<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2 * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Acceleration by a InversePower returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InversePower<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2.clone() * rhs.per_W.clone()}
+	}
+}
+
+// Acceleration * InversePressure -> AreaPerMass
+/// Multiplying a Acceleration by a InversePressure returns a value of type AreaPerMass
+impl<T> core::ops::Mul<InversePressure<T>> for Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2 * rhs.per_Pa}
+	}
+}
+/// Multiplying a Acceleration by a InversePressure returns a value of type AreaPerMass
+impl<T> core::ops::Mul<InversePressure<T>> for &Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a Acceleration by a InversePressure returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&InversePressure<T>> for Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2 * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a Acceleration by a InversePressure returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&InversePressure<T>> for &Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2.clone() * rhs.per_Pa.clone()}
 	}
 }
 
@@ -402,6 +612,96 @@ impl<T> core::ops::Mul<&Momentum<T>> for &Acceleration<T> where T: NumLike {
 	}
 }
 
+// Acceleration / Power -> InverseMomentum
+/// Dividing a Acceleration by a Power returns a value of type InverseMomentum
+impl<T> core::ops::Div<Power<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2 / rhs.W}
+	}
+}
+/// Dividing a Acceleration by a Power returns a value of type InverseMomentum
+impl<T> core::ops::Div<Power<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2.clone() / rhs.W}
+	}
+}
+/// Dividing a Acceleration by a Power returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Power<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2 / rhs.W.clone()}
+	}
+}
+/// Dividing a Acceleration by a Power returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Power<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps2.clone() / rhs.W.clone()}
+	}
+}
+
+// Acceleration / Pressure -> AreaPerMass
+/// Dividing a Acceleration by a Pressure returns a value of type AreaPerMass
+impl<T> core::ops::Div<Pressure<T>> for Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2 / rhs.Pa}
+	}
+}
+/// Dividing a Acceleration by a Pressure returns a value of type AreaPerMass
+impl<T> core::ops::Div<Pressure<T>> for &Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2.clone() / rhs.Pa}
+	}
+}
+/// Dividing a Acceleration by a Pressure returns a value of type AreaPerMass
+impl<T> core::ops::Div<&Pressure<T>> for Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2 / rhs.Pa.clone()}
+	}
+}
+/// Dividing a Acceleration by a Pressure returns a value of type AreaPerMass
+impl<T> core::ops::Div<&Pressure<T>> for &Acceleration<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.mps2.clone() / rhs.Pa.clone()}
+	}
+}
+
+// Acceleration * TimePerDistance -> Frequency
+/// Multiplying a Acceleration by a TimePerDistance returns a value of type Frequency
+impl<T> core::ops::Mul<TimePerDistance<T>> for Acceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps2 * rhs.spm}
+	}
+}
+/// Multiplying a Acceleration by a TimePerDistance returns a value of type Frequency
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps2.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Acceleration by a TimePerDistance returns a value of type Frequency
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Acceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps2 * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Acceleration by a TimePerDistance returns a value of type Frequency
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Acceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps2.clone() * rhs.spm.clone()}
+	}
+}
+
 // Acceleration / Velocity -> Frequency
 /// Dividing a Acceleration by a Velocity returns a value of type Frequency
 impl<T> core::ops::Div<Velocity<T>> for Acceleration<T> where T: NumLike {
@@ -429,6 +729,288 @@ impl<T> core::ops::Div<&Velocity<T>> for &Acceleration<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Velocity<T>) -> Self::Output {
 		Frequency{Hz: self.mps2.clone() / rhs.mps.clone()}
+	}
+}
+
+// Acceleration * InverseAbsorbedDose -> InverseDistance
+/// Multiplying a Acceleration by a InverseAbsorbedDose returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2 * rhs.per_Gy}
+	}
+}
+/// Multiplying a Acceleration by a InverseAbsorbedDose returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a Acceleration by a InverseAbsorbedDose returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2 * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a Acceleration by a InverseAbsorbedDose returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// Acceleration * InverseDoseEquivalent -> InverseDistance
+/// Multiplying a Acceleration by a InverseDoseEquivalent returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2 * rhs.per_Sv}
+	}
+}
+/// Multiplying a Acceleration by a InverseDoseEquivalent returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a Acceleration by a InverseDoseEquivalent returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2 * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a Acceleration by a InverseDoseEquivalent returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &Acceleration<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseDistance{per_m: self.mps2.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Acceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Acceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Acceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Acceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Acceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Acceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Acceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Acceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Acceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Acceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
+	}
+}
+
+// 1/Acceleration -> InverseAcceleration
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Acceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Acceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Acceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self) / rhs.mps2.clone()}
+	}
+}
+/// Dividing a scalar value by a Acceleration unit value returns a value of type InverseAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Acceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseAcceleration{s2pm: T::from(self.clone()) / rhs.mps2.clone()}
 	}
 }
 
@@ -788,6 +1370,258 @@ impl<T> core::ops::Div<&Frequency<T>> for &AngularAcceleration<T> where T: NumLi
 	}
 }
 
+// AngularAcceleration * InverseAngularVelocity -> Frequency
+/// Multiplying a AngularAcceleration by a InverseAngularVelocity returns a value of type Frequency
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for AngularAcceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		Frequency{Hz: self.radps2 * rhs.s_per_rad}
+	}
+}
+/// Multiplying a AngularAcceleration by a InverseAngularVelocity returns a value of type Frequency
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for &AngularAcceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		Frequency{Hz: self.radps2.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a AngularAcceleration by a InverseAngularVelocity returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for AngularAcceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		Frequency{Hz: self.radps2 * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a AngularAcceleration by a InverseAngularVelocity returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for &AngularAcceleration<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		Frequency{Hz: self.radps2.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<AngularAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
+// 1/AngularAcceleration -> InverseAngularAcceleration
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self) / rhs.radps2.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularAcceleration unit value returns a value of type InverseAngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: T::from(self.clone()) / rhs.radps2.clone()}
+	}
+}
+
 /// The angular momentum unit type, defined as kilogram meters squared radians per second in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -954,6 +1788,36 @@ impl core::ops::Mul<&AngularMomentum<num_complex::Complex64>> for &num_complex::
 
 
 
+// AngularMomentum * InverseMomentOfInertia -> AngularVelocity
+/// Multiplying a AngularMomentum by a InverseMomentOfInertia returns a value of type AngularVelocity
+impl<T> core::ops::Mul<InverseMomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		AngularVelocity{radps: self.kgm2radps * rhs.per_kgm2}
+	}
+}
+/// Multiplying a AngularMomentum by a InverseMomentOfInertia returns a value of type AngularVelocity
+impl<T> core::ops::Mul<InverseMomentOfInertia<T>> for &AngularMomentum<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		AngularVelocity{radps: self.kgm2radps.clone() * rhs.per_kgm2}
+	}
+}
+/// Multiplying a AngularMomentum by a InverseMomentOfInertia returns a value of type AngularVelocity
+impl<T> core::ops::Mul<&InverseMomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		AngularVelocity{radps: self.kgm2radps * rhs.per_kgm2.clone()}
+	}
+}
+/// Multiplying a AngularMomentum by a InverseMomentOfInertia returns a value of type AngularVelocity
+impl<T> core::ops::Mul<&InverseMomentOfInertia<T>> for &AngularMomentum<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		AngularVelocity{radps: self.kgm2radps.clone() * rhs.per_kgm2.clone()}
+	}
+}
+
 // AngularMomentum / MomentOfInertia -> AngularVelocity
 /// Dividing a AngularMomentum by a MomentOfInertia returns a value of type AngularVelocity
 impl<T> core::ops::Div<MomentOfInertia<T>> for AngularMomentum<T> where T: NumLike {
@@ -981,6 +1845,228 @@ impl<T> core::ops::Div<&MomentOfInertia<T>> for &AngularMomentum<T> where T: Num
 	type Output = AngularVelocity<T>;
 	fn div(self, rhs: &MomentOfInertia<T>) -> Self::Output {
 		AngularVelocity{radps: self.kgm2radps.clone() / rhs.kgm2.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
+	}
+}
+
+// 1/AngularMomentum -> InverseAngularMomentum
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self) / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularMomentum unit value returns a value of type InverseAngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: T::from(self.clone()) / rhs.kgm2radps.clone()}
 	}
 }
 
@@ -1340,6 +2426,36 @@ impl<T> core::ops::Div<&Angle<T>> for &AngularVelocity<T> where T: NumLike {
 	}
 }
 
+// AngularVelocity * InverseAngle -> Frequency
+/// Multiplying a AngularVelocity by a InverseAngle returns a value of type Frequency
+impl<T> core::ops::Mul<InverseAngle<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseAngle<T>) -> Self::Output {
+		Frequency{Hz: self.radps * rhs.per_rad}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngle returns a value of type Frequency
+impl<T> core::ops::Mul<InverseAngle<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseAngle<T>) -> Self::Output {
+		Frequency{Hz: self.radps.clone() * rhs.per_rad}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngle returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseAngle<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseAngle<T>) -> Self::Output {
+		Frequency{Hz: self.radps * rhs.per_rad.clone()}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngle returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseAngle<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseAngle<T>) -> Self::Output {
+		Frequency{Hz: self.radps.clone() * rhs.per_rad.clone()}
+	}
+}
+
 // AngularVelocity / AngularAcceleration -> Time
 /// Dividing a AngularVelocity by a AngularAcceleration returns a value of type Time
 impl<T> core::ops::Div<AngularAcceleration<T>> for AngularVelocity<T> where T: NumLike {
@@ -1430,6 +2546,66 @@ impl<T> core::ops::Div<&Frequency<T>> for &AngularVelocity<T> where T: NumLike {
 	}
 }
 
+// AngularVelocity * InverseAngularAcceleration -> Time
+/// Multiplying a AngularVelocity by a InverseAngularAcceleration returns a value of type Time
+impl<T> core::ops::Mul<InverseAngularAcceleration<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		Time{s: self.radps * rhs.s2prad}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngularAcceleration returns a value of type Time
+impl<T> core::ops::Mul<InverseAngularAcceleration<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		Time{s: self.radps.clone() * rhs.s2prad}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngularAcceleration returns a value of type Time
+impl<T> core::ops::Mul<&InverseAngularAcceleration<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		Time{s: self.radps * rhs.s2prad.clone()}
+	}
+}
+/// Multiplying a AngularVelocity by a InverseAngularAcceleration returns a value of type Time
+impl<T> core::ops::Mul<&InverseAngularAcceleration<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		Time{s: self.radps.clone() * rhs.s2prad.clone()}
+	}
+}
+
+// AngularVelocity / InverseMomentOfInertia -> AngularMomentum
+/// Dividing a AngularVelocity by a InverseMomentOfInertia returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseMomentOfInertia<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.radps / rhs.per_kgm2}
+	}
+}
+/// Dividing a AngularVelocity by a InverseMomentOfInertia returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseMomentOfInertia<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.radps.clone() / rhs.per_kgm2}
+	}
+}
+/// Dividing a AngularVelocity by a InverseMomentOfInertia returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseMomentOfInertia<T>> for AngularVelocity<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.radps / rhs.per_kgm2.clone()}
+	}
+}
+/// Dividing a AngularVelocity by a InverseMomentOfInertia returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseMomentOfInertia<T>> for &AngularVelocity<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.radps.clone() / rhs.per_kgm2.clone()}
+	}
+}
+
 // AngularVelocity * MomentOfInertia -> AngularMomentum
 /// Multiplying a AngularVelocity by a MomentOfInertia returns a value of type AngularMomentum
 impl<T> core::ops::Mul<MomentOfInertia<T>> for AngularVelocity<T> where T: NumLike {
@@ -1457,6 +2633,228 @@ impl<T> core::ops::Mul<&MomentOfInertia<T>> for &AngularVelocity<T> where T: Num
 	type Output = AngularMomentum<T>;
 	fn mul(self, rhs: &MomentOfInertia<T>) -> Self::Output {
 		AngularMomentum{kgm2radps: self.radps.clone() * rhs.kgm2.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularVelocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularVelocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularVelocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AngularVelocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularVelocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularVelocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
+	}
+}
+
+// 1/AngularVelocity -> InverseAngularVelocity
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularVelocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AngularVelocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self) / rhs.radps.clone()}
+	}
+}
+/// Dividing a scalar value by a AngularVelocity unit value returns a value of type InverseAngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AngularVelocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: T::from(self.clone()) / rhs.radps.clone()}
 	}
 }
 
@@ -1739,6 +3137,96 @@ impl<T> core::ops::Div<&Distance<T>> for &AreaDensity<T> where T: NumLike {
 	}
 }
 
+// AreaDensity * InverseDistance -> Density
+/// Multiplying a AreaDensity by a InverseDistance returns a value of type Density
+impl<T> core::ops::Mul<InverseDistance<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Density{kgpm3: self.kgpm2 * rhs.per_m}
+	}
+}
+/// Multiplying a AreaDensity by a InverseDistance returns a value of type Density
+impl<T> core::ops::Mul<InverseDistance<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Density{kgpm3: self.kgpm2.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a AreaDensity by a InverseDistance returns a value of type Density
+impl<T> core::ops::Mul<&InverseDistance<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Density{kgpm3: self.kgpm2 * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a AreaDensity by a InverseDistance returns a value of type Density
+impl<T> core::ops::Mul<&InverseDistance<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Density{kgpm3: self.kgpm2.clone() * rhs.per_m.clone()}
+	}
+}
+
+// AreaDensity * InverseMass -> InverseArea
+/// Multiplying a AreaDensity by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Mul<InverseMass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2 * rhs.per_kg}
+	}
+}
+/// Multiplying a AreaDensity by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Mul<InverseMass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a AreaDensity by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Mul<&InverseMass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2 * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a AreaDensity by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Mul<&InverseMass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// AreaDensity / Mass -> InverseArea
+/// Dividing a AreaDensity by a Mass returns a value of type InverseArea
+impl<T> core::ops::Div<Mass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2 / rhs.kg}
+	}
+}
+/// Dividing a AreaDensity by a Mass returns a value of type InverseArea
+impl<T> core::ops::Div<Mass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2.clone() / rhs.kg}
+	}
+}
+/// Dividing a AreaDensity by a Mass returns a value of type InverseArea
+impl<T> core::ops::Div<&Mass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2 / rhs.kg.clone()}
+	}
+}
+/// Dividing a AreaDensity by a Mass returns a value of type InverseArea
+impl<T> core::ops::Div<&Mass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.kgpm2.clone() / rhs.kg.clone()}
+	}
+}
+
 // AreaDensity * Area -> Mass
 /// Multiplying a AreaDensity by a Area returns a value of type Mass
 impl<T> core::ops::Mul<Area<T>> for AreaDensity<T> where T: NumLike {
@@ -1766,6 +3254,36 @@ impl<T> core::ops::Mul<&Area<T>> for &AreaDensity<T> where T: NumLike {
 	type Output = Mass<T>;
 	fn mul(self, rhs: &Area<T>) -> Self::Output {
 		Mass{kg: self.kgpm2.clone() * rhs.m2.clone()}
+	}
+}
+
+// AreaDensity / InverseArea -> Mass
+/// Dividing a AreaDensity by a InverseArea returns a value of type Mass
+impl<T> core::ops::Div<InverseArea<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgpm2 / rhs.per_m2}
+	}
+}
+/// Dividing a AreaDensity by a InverseArea returns a value of type Mass
+impl<T> core::ops::Div<InverseArea<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgpm2.clone() / rhs.per_m2}
+	}
+}
+/// Dividing a AreaDensity by a InverseArea returns a value of type Mass
+impl<T> core::ops::Div<&InverseArea<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgpm2 / rhs.per_m2.clone()}
+	}
+}
+/// Dividing a AreaDensity by a InverseArea returns a value of type Mass
+impl<T> core::ops::Div<&InverseArea<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgpm2.clone() / rhs.per_m2.clone()}
 	}
 }
 
@@ -1826,6 +3344,1179 @@ impl<T> core::ops::Div<&Density<T>> for &AreaDensity<T> where T: NumLike {
 	type Output = Distance<T>;
 	fn div(self, rhs: &Density<T>) -> Self::Output {
 		Distance{m: self.kgpm2.clone() / rhs.kgpm3.clone()}
+	}
+}
+
+// AreaDensity / InverseAcceleration -> Pressure
+/// Dividing a AreaDensity by a InverseAcceleration returns a value of type Pressure
+impl<T> core::ops::Div<InverseAcceleration<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm2 / rhs.s2pm}
+	}
+}
+/// Dividing a AreaDensity by a InverseAcceleration returns a value of type Pressure
+impl<T> core::ops::Div<InverseAcceleration<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm2.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a AreaDensity by a InverseAcceleration returns a value of type Pressure
+impl<T> core::ops::Div<&InverseAcceleration<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm2 / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a AreaDensity by a InverseAcceleration returns a value of type Pressure
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm2.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// AreaDensity * InversePressure -> InverseAcceleration
+/// Multiplying a AreaDensity by a InversePressure returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<InversePressure<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2 * rhs.per_Pa}
+	}
+}
+/// Multiplying a AreaDensity by a InversePressure returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<InversePressure<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a AreaDensity by a InversePressure returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&InversePressure<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2 * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a AreaDensity by a InversePressure returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&InversePressure<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2.clone() * rhs.per_Pa.clone()}
+	}
+}
+
+// AreaDensity / Pressure -> InverseAcceleration
+/// Dividing a AreaDensity by a Pressure returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Pressure<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2 / rhs.Pa}
+	}
+}
+/// Dividing a AreaDensity by a Pressure returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Pressure<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2.clone() / rhs.Pa}
+	}
+}
+/// Dividing a AreaDensity by a Pressure returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Pressure<T>> for AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2 / rhs.Pa.clone()}
+	}
+}
+/// Dividing a AreaDensity by a Pressure returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Pressure<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgpm2.clone() / rhs.Pa.clone()}
+	}
+}
+
+// AreaDensity * VolumePerMass -> Distance
+/// Multiplying a AreaDensity by a VolumePerMass returns a value of type Distance
+impl<T> core::ops::Mul<VolumePerMass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Distance{m: self.kgpm2 * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a AreaDensity by a VolumePerMass returns a value of type Distance
+impl<T> core::ops::Mul<VolumePerMass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Distance{m: self.kgpm2.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a AreaDensity by a VolumePerMass returns a value of type Distance
+impl<T> core::ops::Mul<&VolumePerMass<T>> for AreaDensity<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Distance{m: self.kgpm2 * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a AreaDensity by a VolumePerMass returns a value of type Distance
+impl<T> core::ops::Mul<&VolumePerMass<T>> for &AreaDensity<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Distance{m: self.kgpm2.clone() * rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<AreaDensity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+impl<T> core::ops::Div<&AreaDensity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AreaDensity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AreaDensity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AreaDensity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AreaDensity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaDensity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaDensity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaDensity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaDensity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+// 1/AreaDensity -> AreaPerMass
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaDensity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaDensity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaDensity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self) / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaDensity unit value returns a value of type AreaPerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaDensity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: T::from(self.clone()) / rhs.kgpm2.clone()}
+	}
+}
+
+/// The inverse of area density unit type, defined as square meters per kilogram in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct AreaPerMass<T: NumLike>{
+	/// The value of this Area per mass in square meters per kilogram
+	pub m2_per_kg: T
+}
+
+impl<T> AreaPerMass<T> where T: NumLike {
+
+	/// Returns the standard unit name of area per mass: "square meters per kilogram"
+	pub fn unit_name() -> &'static str { "square meters per kilogram" }
+	
+	/// Returns the abbreviated name or symbol of area per mass: "m²/kg" for square meters per kilogram
+	pub fn unit_symbol() -> &'static str { "m²/kg" }
+	
+	/// Returns a new area per mass value from the given number of square meters per kilogram
+	///
+	/// # Arguments
+	/// * `m2_per_kg` - Any number-like type, representing a quantity of square meters per kilogram
+	pub fn from_m2_per_kg(m2_per_kg: T) -> Self { AreaPerMass{m2_per_kg: m2_per_kg} }
+	
+	/// Returns a copy of this area per mass value in square meters per kilogram
+	pub fn to_m2_per_kg(&self) -> T { self.m2_per_kg.clone() }
+
+	/// Returns a new area per mass value from the given number of square meters per kilogram
+	///
+	/// # Arguments
+	/// * `square_meters_per_kilogram` - Any number-like type, representing a quantity of square meters per kilogram
+	pub fn from_square_meters_per_kilogram(square_meters_per_kilogram: T) -> Self { AreaPerMass{m2_per_kg: square_meters_per_kilogram} }
+	
+	/// Returns a copy of this area per mass value in square meters per kilogram
+	pub fn to_square_meters_per_kilogram(&self) -> T { self.m2_per_kg.clone() }
+
+}
+
+impl<T> fmt::Display for AreaPerMass<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.m2_per_kg, Self::unit_symbol())
+	}
+}
+
+impl<T> AreaPerMass<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this area per mass value in square meters per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_m2_per_g(&self) -> T {
+		return self.m2_per_kg.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new area per mass value from the given number of square meters per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `m2_per_g` - Any number-like type, representing a quantity of square meters per gram
+	pub fn from_m2_per_g(m2_per_g: T) -> Self {
+		AreaPerMass{m2_per_kg: m2_per_g * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this area per mass value in square meters per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_square_meters_per_gram(&self) -> T {
+		return self.m2_per_kg.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new area per mass value from the given number of square meters per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `square_meters_per_gram` - Any number-like type, representing a quantity of square meters per gram
+	pub fn from_square_meters_per_gram(square_meters_per_gram: T) -> Self {
+		AreaPerMass{m2_per_kg: square_meters_per_gram * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this area per mass value in square cm per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_cm2_per_g(&self) -> T {
+		return self.m2_per_kg.clone() * T::from(10.0_f64);
+	}
+
+	/// Returns a new area per mass value from the given number of square cm per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `cm2_per_g` - Any number-like type, representing a quantity of square cm per gram
+	pub fn from_cm2_per_g(cm2_per_g: T) -> Self {
+		AreaPerMass{m2_per_kg: cm2_per_g * T::from(0.1_f64)}
+	}
+
+	/// Returns a copy of this area per mass value in square cm per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_square_centimeters_per_gram(&self) -> T {
+		return self.m2_per_kg.clone() * T::from(10.0_f64);
+	}
+
+	/// Returns a new area per mass value from the given number of square cm per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `square_centimeters_per_gram` - Any number-like type, representing a quantity of square cm per gram
+	pub fn from_square_centimeters_per_gram(square_centimeters_per_gram: T) -> Self {
+		AreaPerMass{m2_per_kg: square_centimeters_per_gram * T::from(0.1_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<AreaPerMass<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = AreaPerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: AreaPerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<AreaPerMass<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = AreaPerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: AreaPerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&AreaPerMass<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = AreaPerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &AreaPerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&AreaPerMass<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = AreaPerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &AreaPerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<AreaPerMass<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = AreaPerMass<num_complex::Complex32>;
+	fn mul(self, rhs: AreaPerMass<num_complex::Complex32>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<AreaPerMass<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = AreaPerMass<num_complex::Complex32>;
+	fn mul(self, rhs: AreaPerMass<num_complex::Complex32>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&AreaPerMass<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = AreaPerMass<num_complex::Complex32>;
+	fn mul(self, rhs: &AreaPerMass<num_complex::Complex32>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&AreaPerMass<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = AreaPerMass<num_complex::Complex32>;
+	fn mul(self, rhs: &AreaPerMass<num_complex::Complex32>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<AreaPerMass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = AreaPerMass<num_complex::Complex64>;
+	fn mul(self, rhs: AreaPerMass<num_complex::Complex64>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<AreaPerMass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = AreaPerMass<num_complex::Complex64>;
+	fn mul(self, rhs: AreaPerMass<num_complex::Complex64>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&AreaPerMass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = AreaPerMass<num_complex::Complex64>;
+	fn mul(self, rhs: &AreaPerMass<num_complex::Complex64>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&AreaPerMass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = AreaPerMass<num_complex::Complex64>;
+	fn mul(self, rhs: &AreaPerMass<num_complex::Complex64>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+
+
+/// Converts a AreaPerMass into the equivalent [uom](https://crates.io/crates/uom) type [SpecificArea](https://docs.rs/uom/0.34.0/uom/si/f32/type.SpecificArea.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::SpecificArea> for AreaPerMass<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::SpecificArea {
+		uom::si::f32::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(self.m2_per_kg.into())
+	}
+}
+
+/// Creates a AreaPerMass from the equivalent [uom](https://crates.io/crates/uom) type [SpecificArea](https://docs.rs/uom/0.34.0/uom/si/f32/type.SpecificArea.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::SpecificArea> for AreaPerMass<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::SpecificArea) -> Self {
+		AreaPerMass{m2_per_kg: T::from(src.value)}
+	}
+}
+
+/// Converts a AreaPerMass into the equivalent [uom](https://crates.io/crates/uom) type [SpecificArea](https://docs.rs/uom/0.34.0/uom/si/f64/type.SpecificArea.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::SpecificArea> for AreaPerMass<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::SpecificArea {
+		uom::si::f64::SpecificArea::new::<uom::si::specific_area::square_meter_per_kilogram>(self.m2_per_kg.into())
+	}
+}
+
+/// Creates a AreaPerMass from the equivalent [uom](https://crates.io/crates/uom) type [SpecificArea](https://docs.rs/uom/0.34.0/uom/si/f64/type.SpecificArea.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::SpecificArea> for AreaPerMass<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::SpecificArea) -> Self {
+		AreaPerMass{m2_per_kg: T::from(src.value)}
+	}
+}
+
+
+// AreaPerMass * Distance -> VolumePerMass
+/// Multiplying a AreaPerMass by a Distance returns a value of type VolumePerMass
+impl<T> core::ops::Mul<Distance<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg * rhs.m}
+	}
+}
+/// Multiplying a AreaPerMass by a Distance returns a value of type VolumePerMass
+impl<T> core::ops::Mul<Distance<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg.clone() * rhs.m}
+	}
+}
+/// Multiplying a AreaPerMass by a Distance returns a value of type VolumePerMass
+impl<T> core::ops::Mul<&Distance<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg * rhs.m.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a Distance returns a value of type VolumePerMass
+impl<T> core::ops::Mul<&Distance<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg.clone() * rhs.m.clone()}
+	}
+}
+
+// AreaPerMass / InverseDistance -> VolumePerMass
+/// Dividing a AreaPerMass by a InverseDistance returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseDistance<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg / rhs.per_m}
+	}
+}
+/// Dividing a AreaPerMass by a InverseDistance returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseDistance<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg.clone() / rhs.per_m}
+	}
+}
+/// Dividing a AreaPerMass by a InverseDistance returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseDistance<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg / rhs.per_m.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a InverseDistance returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseDistance<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.m2_per_kg.clone() / rhs.per_m.clone()}
+	}
+}
+
+// AreaPerMass / InverseMass -> Area
+/// Dividing a AreaPerMass by a InverseMass returns a value of type Area
+impl<T> core::ops::Div<InverseMass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg / rhs.per_kg}
+	}
+}
+/// Dividing a AreaPerMass by a InverseMass returns a value of type Area
+impl<T> core::ops::Div<InverseMass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a AreaPerMass by a InverseMass returns a value of type Area
+impl<T> core::ops::Div<&InverseMass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a InverseMass returns a value of type Area
+impl<T> core::ops::Div<&InverseMass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg.clone() / rhs.per_kg.clone()}
+	}
+}
+
+// AreaPerMass * Mass -> Area
+/// Multiplying a AreaPerMass by a Mass returns a value of type Area
+impl<T> core::ops::Mul<Mass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg * rhs.kg}
+	}
+}
+/// Multiplying a AreaPerMass by a Mass returns a value of type Area
+impl<T> core::ops::Mul<Mass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg.clone() * rhs.kg}
+	}
+}
+/// Multiplying a AreaPerMass by a Mass returns a value of type Area
+impl<T> core::ops::Mul<&Mass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg * rhs.kg.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a Mass returns a value of type Area
+impl<T> core::ops::Mul<&Mass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Area{m2: self.m2_per_kg.clone() * rhs.kg.clone()}
+	}
+}
+
+// AreaPerMass / Area -> InverseMass
+/// Dividing a AreaPerMass by a Area returns a value of type InverseMass
+impl<T> core::ops::Div<Area<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg / rhs.m2}
+	}
+}
+/// Dividing a AreaPerMass by a Area returns a value of type InverseMass
+impl<T> core::ops::Div<Area<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg.clone() / rhs.m2}
+	}
+}
+/// Dividing a AreaPerMass by a Area returns a value of type InverseMass
+impl<T> core::ops::Div<&Area<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg / rhs.m2.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a Area returns a value of type InverseMass
+impl<T> core::ops::Div<&Area<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg.clone() / rhs.m2.clone()}
+	}
+}
+
+// AreaPerMass * InverseArea -> InverseMass
+/// Multiplying a AreaPerMass by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseArea<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg * rhs.per_m2}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseArea<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg.clone() * rhs.per_m2}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseArea<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg * rhs.per_m2.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseArea<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.m2_per_kg.clone() * rhs.per_m2.clone()}
+	}
+}
+
+// AreaPerMass / Acceleration -> InversePressure
+/// Dividing a AreaPerMass by a Acceleration returns a value of type InversePressure
+impl<T> core::ops::Div<Acceleration<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg / rhs.mps2}
+	}
+}
+/// Dividing a AreaPerMass by a Acceleration returns a value of type InversePressure
+impl<T> core::ops::Div<Acceleration<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg.clone() / rhs.mps2}
+	}
+}
+/// Dividing a AreaPerMass by a Acceleration returns a value of type InversePressure
+impl<T> core::ops::Div<&Acceleration<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg / rhs.mps2.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a Acceleration returns a value of type InversePressure
+impl<T> core::ops::Div<&Acceleration<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg.clone() / rhs.mps2.clone()}
+	}
+}
+
+// AreaPerMass * Density -> InverseDistance
+/// Multiplying a AreaPerMass by a Density returns a value of type InverseDistance
+impl<T> core::ops::Mul<Density<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Density<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg * rhs.kgpm3}
+	}
+}
+/// Multiplying a AreaPerMass by a Density returns a value of type InverseDistance
+impl<T> core::ops::Mul<Density<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Density<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg.clone() * rhs.kgpm3}
+	}
+}
+/// Multiplying a AreaPerMass by a Density returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Density<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Density<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg * rhs.kgpm3.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a Density returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Density<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Density<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg.clone() * rhs.kgpm3.clone()}
+	}
+}
+
+// AreaPerMass * InverseAcceleration -> InversePressure
+/// Multiplying a AreaPerMass by a InverseAcceleration returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseAcceleration<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg * rhs.s2pm}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseAcceleration returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseAcceleration returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a InverseAcceleration returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m2_per_kg.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// AreaPerMass / InversePressure -> Acceleration
+/// Dividing a AreaPerMass by a InversePressure returns a value of type Acceleration
+impl<T> core::ops::Div<InversePressure<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg / rhs.per_Pa}
+	}
+}
+/// Dividing a AreaPerMass by a InversePressure returns a value of type Acceleration
+impl<T> core::ops::Div<InversePressure<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a AreaPerMass by a InversePressure returns a value of type Acceleration
+impl<T> core::ops::Div<&InversePressure<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a InversePressure returns a value of type Acceleration
+impl<T> core::ops::Div<&InversePressure<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// AreaPerMass * Pressure -> Acceleration
+/// Multiplying a AreaPerMass by a Pressure returns a value of type Acceleration
+impl<T> core::ops::Mul<Pressure<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg * rhs.Pa}
+	}
+}
+/// Multiplying a AreaPerMass by a Pressure returns a value of type Acceleration
+impl<T> core::ops::Mul<Pressure<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a AreaPerMass by a Pressure returns a value of type Acceleration
+impl<T> core::ops::Mul<&Pressure<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a AreaPerMass by a Pressure returns a value of type Acceleration
+impl<T> core::ops::Mul<&Pressure<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		Acceleration{mps2: self.m2_per_kg.clone() * rhs.Pa.clone()}
+	}
+}
+
+// AreaPerMass / VolumePerMass -> InverseDistance
+/// Dividing a AreaPerMass by a VolumePerMass returns a value of type InverseDistance
+impl<T> core::ops::Div<VolumePerMass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg / rhs.m3_per_kg}
+	}
+}
+/// Dividing a AreaPerMass by a VolumePerMass returns a value of type InverseDistance
+impl<T> core::ops::Div<VolumePerMass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg.clone() / rhs.m3_per_kg}
+	}
+}
+/// Dividing a AreaPerMass by a VolumePerMass returns a value of type InverseDistance
+impl<T> core::ops::Div<&VolumePerMass<T>> for AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a AreaPerMass by a VolumePerMass returns a value of type InverseDistance
+impl<T> core::ops::Div<&VolumePerMass<T>> for &AreaPerMass<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.m2_per_kg.clone() / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<AreaPerMass<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+impl<T> core::ops::Div<&AreaPerMass<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AreaPerMass<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<AreaPerMass<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaPerMass<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaPerMass<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
+	}
+}
+
+// 1/AreaPerMass -> AreaDensity
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaPerMass<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<AreaPerMass<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self) / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a AreaPerMass unit value returns a value of type AreaDensity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&AreaPerMass<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		AreaDensity{kgpm2: T::from(self.clone()) / rhs.m2_per_kg.clone()}
 	}
 }
 
@@ -2125,6 +4816,96 @@ impl<T> core::ops::Mul<&Distance<T>> for &Density<T> where T: NumLike {
 	}
 }
 
+// Density / InverseDistance -> AreaDensity
+/// Dividing a Density by a InverseDistance returns a value of type AreaDensity
+impl<T> core::ops::Div<InverseDistance<T>> for Density<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.kgpm3 / rhs.per_m}
+	}
+}
+/// Dividing a Density by a InverseDistance returns a value of type AreaDensity
+impl<T> core::ops::Div<InverseDistance<T>> for &Density<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.kgpm3.clone() / rhs.per_m}
+	}
+}
+/// Dividing a Density by a InverseDistance returns a value of type AreaDensity
+impl<T> core::ops::Div<&InverseDistance<T>> for Density<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.kgpm3 / rhs.per_m.clone()}
+	}
+}
+/// Dividing a Density by a InverseDistance returns a value of type AreaDensity
+impl<T> core::ops::Div<&InverseDistance<T>> for &Density<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.kgpm3.clone() / rhs.per_m.clone()}
+	}
+}
+
+// Density * InverseMass -> InverseVolume
+/// Multiplying a Density by a InverseMass returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseMass<T>> for Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3 * rhs.per_kg}
+	}
+}
+/// Multiplying a Density by a InverseMass returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseMass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a Density by a InverseMass returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseMass<T>> for Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3 * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a Density by a InverseMass returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseMass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// Density / Mass -> InverseVolume
+/// Dividing a Density by a Mass returns a value of type InverseVolume
+impl<T> core::ops::Div<Mass<T>> for Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3 / rhs.kg}
+	}
+}
+/// Dividing a Density by a Mass returns a value of type InverseVolume
+impl<T> core::ops::Div<Mass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3.clone() / rhs.kg}
+	}
+}
+/// Dividing a Density by a Mass returns a value of type InverseVolume
+impl<T> core::ops::Div<&Mass<T>> for Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3 / rhs.kg.clone()}
+	}
+}
+/// Dividing a Density by a Mass returns a value of type InverseVolume
+impl<T> core::ops::Div<&Mass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseVolume{per_m3: self.kgpm3.clone() / rhs.kg.clone()}
+	}
+}
+
 // Density / Concentration -> MolarMass
 /// Dividing a Density by a Concentration returns a value of type MolarMass
 impl<T> core::ops::Div<Concentration<T>> for Density<T> where T: NumLike {
@@ -2215,6 +4996,66 @@ impl<T> core::ops::Div<&MolarMass<T>> for &Density<T> where T: NumLike {
 	}
 }
 
+// Density * MolarVolume -> MolarMass
+/// Multiplying a Density by a MolarVolume returns a value of type MolarMass
+impl<T> core::ops::Mul<MolarVolume<T>> for Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn mul(self, rhs: MolarVolume<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3 * rhs.m3_per_mol}
+	}
+}
+/// Multiplying a Density by a MolarVolume returns a value of type MolarMass
+impl<T> core::ops::Mul<MolarVolume<T>> for &Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn mul(self, rhs: MolarVolume<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3.clone() * rhs.m3_per_mol}
+	}
+}
+/// Multiplying a Density by a MolarVolume returns a value of type MolarMass
+impl<T> core::ops::Mul<&MolarVolume<T>> for Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn mul(self, rhs: &MolarVolume<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3 * rhs.m3_per_mol.clone()}
+	}
+}
+/// Multiplying a Density by a MolarVolume returns a value of type MolarMass
+impl<T> core::ops::Mul<&MolarVolume<T>> for &Density<T> where T: NumLike {
+	type Output = MolarMass<T>;
+	fn mul(self, rhs: &MolarVolume<T>) -> Self::Output {
+		MolarMass{kgpmol: self.kgpm3.clone() * rhs.m3_per_mol.clone()}
+	}
+}
+
+// Density / InverseVolume -> Mass
+/// Dividing a Density by a InverseVolume returns a value of type Mass
+impl<T> core::ops::Div<InverseVolume<T>> for Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3 / rhs.per_m3}
+	}
+}
+/// Dividing a Density by a InverseVolume returns a value of type Mass
+impl<T> core::ops::Div<InverseVolume<T>> for &Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3.clone() / rhs.per_m3}
+	}
+}
+/// Dividing a Density by a InverseVolume returns a value of type Mass
+impl<T> core::ops::Div<&InverseVolume<T>> for Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3 / rhs.per_m3.clone()}
+	}
+}
+/// Dividing a Density by a InverseVolume returns a value of type Mass
+impl<T> core::ops::Div<&InverseVolume<T>> for &Density<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Mass{kg: self.kgpm3.clone() / rhs.per_m3.clone()}
+	}
+}
+
 // Density * Volume -> Mass
 /// Multiplying a Density by a Volume returns a value of type Mass
 impl<T> core::ops::Mul<Volume<T>> for Density<T> where T: NumLike {
@@ -2242,6 +5083,348 @@ impl<T> core::ops::Mul<&Volume<T>> for &Density<T> where T: NumLike {
 	type Output = Mass<T>;
 	fn mul(self, rhs: &Volume<T>) -> Self::Output {
 		Mass{kg: self.kgpm3.clone() * rhs.m3.clone()}
+	}
+}
+
+// Density / AreaDensity -> InverseDistance
+/// Dividing a Density by a AreaDensity returns a value of type InverseDistance
+impl<T> core::ops::Div<AreaDensity<T>> for Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3 / rhs.kgpm2}
+	}
+}
+/// Dividing a Density by a AreaDensity returns a value of type InverseDistance
+impl<T> core::ops::Div<AreaDensity<T>> for &Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3.clone() / rhs.kgpm2}
+	}
+}
+/// Dividing a Density by a AreaDensity returns a value of type InverseDistance
+impl<T> core::ops::Div<&AreaDensity<T>> for Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3 / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a Density by a AreaDensity returns a value of type InverseDistance
+impl<T> core::ops::Div<&AreaDensity<T>> for &Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3.clone() / rhs.kgpm2.clone()}
+	}
+}
+
+// Density * AreaPerMass -> InverseDistance
+/// Multiplying a Density by a AreaPerMass returns a value of type InverseDistance
+impl<T> core::ops::Mul<AreaPerMass<T>> for Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3 * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a Density by a AreaPerMass returns a value of type InverseDistance
+impl<T> core::ops::Mul<AreaPerMass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a Density by a AreaPerMass returns a value of type InverseDistance
+impl<T> core::ops::Mul<&AreaPerMass<T>> for Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3 * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a Density by a AreaPerMass returns a value of type InverseDistance
+impl<T> core::ops::Mul<&AreaPerMass<T>> for &Density<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InverseDistance{per_m: self.kgpm3.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+// Density / InverseAbsorbedDose -> Pressure
+/// Dividing a Density by a InverseAbsorbedDose returns a value of type Pressure
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3 / rhs.per_Gy}
+	}
+}
+/// Dividing a Density by a InverseAbsorbedDose returns a value of type Pressure
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a Density by a InverseAbsorbedDose returns a value of type Pressure
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3 / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a Density by a InverseAbsorbedDose returns a value of type Pressure
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// Density / InverseDoseEquivalent -> Pressure
+/// Dividing a Density by a InverseDoseEquivalent returns a value of type Pressure
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3 / rhs.per_Sv}
+	}
+}
+/// Dividing a Density by a InverseDoseEquivalent returns a value of type Pressure
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a Density by a InverseDoseEquivalent returns a value of type Pressure
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3 / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a Density by a InverseDoseEquivalent returns a value of type Pressure
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &Density<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Pressure{Pa: self.kgpm3.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for f64 where T: NumLike+From<f64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for f64 where T: NumLike+From<f64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for f32 where T: NumLike+From<f32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for f32 where T: NumLike+From<f32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for i64 where T: NumLike+From<i64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for i64 where T: NumLike+From<i64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for i32 where T: NumLike+From<i32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<Density<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for i32 where T: NumLike+From<i32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+impl<T> core::ops::Div<&Density<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Density<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Density<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Density<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Density<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Density<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Density<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Density<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Density<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
+	}
+}
+
+// 1/Density -> VolumePerMass
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Density<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Density<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Density<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self) / rhs.kgpm3.clone()}
+	}
+}
+/// Dividing a scalar value by a Density unit value returns a value of type VolumePerMass
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Density<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &Density<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: T::from(self.clone()) / rhs.kgpm3.clone()}
 	}
 }
 
@@ -2690,6 +5873,66 @@ impl<T> core::ops::Div<&Distance<T>> for &Energy<T> where T: NumLike {
 	}
 }
 
+// Energy * InverseCurrent -> MagneticFlux
+/// Multiplying a Energy by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<InverseCurrent<T>> for Energy<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.J * rhs.per_A}
+	}
+}
+/// Multiplying a Energy by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<InverseCurrent<T>> for &Energy<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.J.clone() * rhs.per_A}
+	}
+}
+/// Multiplying a Energy by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<&InverseCurrent<T>> for Energy<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.J * rhs.per_A.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<&InverseCurrent<T>> for &Energy<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.J.clone() * rhs.per_A.clone()}
+	}
+}
+
+// Energy * InverseDistance -> Force
+/// Multiplying a Energy by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<InverseDistance<T>> for Energy<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Force{N: self.J * rhs.per_m}
+	}
+}
+/// Multiplying a Energy by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<InverseDistance<T>> for &Energy<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Force{N: self.J.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a Energy by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<&InverseDistance<T>> for Energy<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Force{N: self.J * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<&InverseDistance<T>> for &Energy<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Force{N: self.J.clone() * rhs.per_m.clone()}
+	}
+}
+
 // Energy / Time -> Power
 /// Dividing a Energy by a Time returns a value of type Power
 impl<T> core::ops::Div<Time<T>> for Energy<T> where T: NumLike {
@@ -2750,6 +5993,96 @@ impl<T> core::ops::Div<&Charge<T>> for &Energy<T> where T: NumLike {
 	}
 }
 
+// Energy * InverseCharge -> Voltage
+/// Multiplying a Energy by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCharge<T>> for Energy<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.J * rhs.per_C}
+	}
+}
+/// Multiplying a Energy by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCharge<T>> for &Energy<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.J.clone() * rhs.per_C}
+	}
+}
+/// Multiplying a Energy by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCharge<T>> for Energy<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.J * rhs.per_C.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCharge<T>> for &Energy<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.J.clone() * rhs.per_C.clone()}
+	}
+}
+
+// Energy * InverseMagneticFlux -> Current
+/// Multiplying a Energy by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<InverseMagneticFlux<T>> for Energy<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.J * rhs.per_Wb}
+	}
+}
+/// Multiplying a Energy by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<InverseMagneticFlux<T>> for &Energy<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.J.clone() * rhs.per_Wb}
+	}
+}
+/// Multiplying a Energy by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<&InverseMagneticFlux<T>> for Energy<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.J * rhs.per_Wb.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<&InverseMagneticFlux<T>> for &Energy<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.J.clone() * rhs.per_Wb.clone()}
+	}
+}
+
+// Energy * InverseVoltage -> Charge
+/// Multiplying a Energy by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<InverseVoltage<T>> for Energy<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.J * rhs.per_V}
+	}
+}
+/// Multiplying a Energy by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<InverseVoltage<T>> for &Energy<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.J.clone() * rhs.per_V}
+	}
+}
+/// Multiplying a Energy by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<&InverseVoltage<T>> for Energy<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.J * rhs.per_V.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<&InverseVoltage<T>> for &Energy<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.J.clone() * rhs.per_V.clone()}
+	}
+}
+
 // Energy / MagneticFlux -> Current
 /// Dividing a Energy by a MagneticFlux returns a value of type Current
 impl<T> core::ops::Div<MagneticFlux<T>> for Energy<T> where T: NumLike {
@@ -2807,6 +6140,36 @@ impl<T> core::ops::Div<&Voltage<T>> for &Energy<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Charge{C: self.J.clone() / rhs.V.clone()}
+	}
+}
+
+// Energy * InverseVolume -> Pressure
+/// Multiplying a Energy by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<InverseVolume<T>> for Energy<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.J * rhs.per_m3}
+	}
+}
+/// Multiplying a Energy by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<InverseVolume<T>> for &Energy<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.J.clone() * rhs.per_m3}
+	}
+}
+/// Multiplying a Energy by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseVolume<T>> for Energy<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.J * rhs.per_m3.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseVolume<T>> for &Energy<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.J.clone() * rhs.per_m3.clone()}
 	}
 }
 
@@ -2900,6 +6263,126 @@ impl<T> core::ops::Mul<&Frequency<T>> for &Energy<T> where T: NumLike {
 	}
 }
 
+// Energy * InverseForce -> Distance
+/// Multiplying a Energy by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<InverseForce<T>> for Energy<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Distance{m: self.J * rhs.per_N}
+	}
+}
+/// Multiplying a Energy by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<InverseForce<T>> for &Energy<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Distance{m: self.J.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Energy by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<&InverseForce<T>> for Energy<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Distance{m: self.J * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<&InverseForce<T>> for &Energy<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Distance{m: self.J.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Energy * InverseMomentum -> Velocity
+/// Multiplying a Energy by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMomentum<T>> for Energy<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.J * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Energy by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMomentum<T>> for &Energy<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.J.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Energy by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMomentum<T>> for Energy<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.J * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &Energy<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.J.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// Energy * InversePower -> Time
+/// Multiplying a Energy by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<InversePower<T>> for Energy<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		Time{s: self.J * rhs.per_W}
+	}
+}
+/// Multiplying a Energy by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<InversePower<T>> for &Energy<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		Time{s: self.J.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Energy by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<&InversePower<T>> for Energy<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		Time{s: self.J * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Energy by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<&InversePower<T>> for &Energy<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		Time{s: self.J.clone() * rhs.per_W.clone()}
+	}
+}
+
+// Energy * InversePressure -> Volume
+/// Multiplying a Energy by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<InversePressure<T>> for Energy<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Volume{m3: self.J * rhs.per_Pa}
+	}
+}
+/// Multiplying a Energy by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<InversePressure<T>> for &Energy<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Volume{m3: self.J.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a Energy by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<&InversePressure<T>> for Energy<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Volume{m3: self.J * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a Energy by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<&InversePressure<T>> for &Energy<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Volume{m3: self.J.clone() * rhs.per_Pa.clone()}
+	}
+}
+
 // Energy / Momentum -> Velocity
 /// Dividing a Energy by a Momentum returns a value of type Velocity
 impl<T> core::ops::Div<Momentum<T>> for Energy<T> where T: NumLike {
@@ -2990,6 +6473,36 @@ impl<T> core::ops::Div<&Pressure<T>> for &Energy<T> where T: NumLike {
 	}
 }
 
+// Energy * TimePerDistance -> Momentum
+/// Multiplying a Energy by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<TimePerDistance<T>> for Energy<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.J * rhs.spm}
+	}
+}
+/// Multiplying a Energy by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Energy<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.J.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Energy by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Energy<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.J * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Energy by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Energy<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.J.clone() * rhs.spm.clone()}
+	}
+}
+
 // Energy / Velocity -> Momentum
 /// Dividing a Energy by a Velocity returns a value of type Momentum
 impl<T> core::ops::Div<Velocity<T>> for Energy<T> where T: NumLike {
@@ -3077,6 +6590,288 @@ impl<T> core::ops::Div<&DoseEquivalent<T>> for &Energy<T> where T: NumLike {
 	type Output = Mass<T>;
 	fn div(self, rhs: &DoseEquivalent<T>) -> Self::Output {
 		Mass{kg: self.J.clone() / rhs.Sv.clone()}
+	}
+}
+
+// Energy * InverseAbsorbedDose -> Mass
+/// Multiplying a Energy by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.J * rhs.per_Gy}
+	}
+}
+/// Multiplying a Energy by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.J.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a Energy by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.J * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.J.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// Energy * InverseDoseEquivalent -> Mass
+/// Multiplying a Energy by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.J * rhs.per_Sv}
+	}
+}
+/// Multiplying a Energy by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.J.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a Energy by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.J * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a Energy by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &Energy<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.J.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Energy<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Energy<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Energy<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Energy<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Energy<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Energy<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Energy<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Energy<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Energy<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Energy<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
+	}
+}
+
+// 1/Energy -> InverseEnergy
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Energy<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Energy<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Energy<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.J.clone()}
+	}
+}
+/// Dividing a scalar value by a Energy unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Energy<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.J.clone()}
 	}
 }
 
@@ -3427,6 +7222,66 @@ impl<T> core::ops::Mul<&Distance<T>> for &Force<T> where T: NumLike {
 	}
 }
 
+// Force / InverseDistance -> Energy
+/// Dividing a Force by a InverseDistance returns a value of type Energy
+impl<T> core::ops::Div<InverseDistance<T>> for Force<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Energy{J: self.N / rhs.per_m}
+	}
+}
+/// Dividing a Force by a InverseDistance returns a value of type Energy
+impl<T> core::ops::Div<InverseDistance<T>> for &Force<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Energy{J: self.N.clone() / rhs.per_m}
+	}
+}
+/// Dividing a Force by a InverseDistance returns a value of type Energy
+impl<T> core::ops::Div<&InverseDistance<T>> for Force<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Energy{J: self.N / rhs.per_m.clone()}
+	}
+}
+/// Dividing a Force by a InverseDistance returns a value of type Energy
+impl<T> core::ops::Div<&InverseDistance<T>> for &Force<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Energy{J: self.N.clone() / rhs.per_m.clone()}
+	}
+}
+
+// Force * InverseMass -> Acceleration
+/// Multiplying a Force by a InverseMass returns a value of type Acceleration
+impl<T> core::ops::Mul<InverseMass<T>> for Force<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Acceleration{mps2: self.N * rhs.per_kg}
+	}
+}
+/// Multiplying a Force by a InverseMass returns a value of type Acceleration
+impl<T> core::ops::Mul<InverseMass<T>> for &Force<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Acceleration{mps2: self.N.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a Force by a InverseMass returns a value of type Acceleration
+impl<T> core::ops::Mul<&InverseMass<T>> for Force<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Acceleration{mps2: self.N * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a Force by a InverseMass returns a value of type Acceleration
+impl<T> core::ops::Mul<&InverseMass<T>> for &Force<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Acceleration{mps2: self.N.clone() * rhs.per_kg.clone()}
+	}
+}
+
 // Force / Mass -> Acceleration
 /// Dividing a Force by a Mass returns a value of type Acceleration
 impl<T> core::ops::Div<Mass<T>> for Force<T> where T: NumLike {
@@ -3517,6 +7372,36 @@ impl<T> core::ops::Div<&Area<T>> for &Force<T> where T: NumLike {
 	}
 }
 
+// Force * InverseArea -> Pressure
+/// Multiplying a Force by a InverseArea returns a value of type Pressure
+impl<T> core::ops::Mul<InverseArea<T>> for Force<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		Pressure{Pa: self.N * rhs.per_m2}
+	}
+}
+/// Multiplying a Force by a InverseArea returns a value of type Pressure
+impl<T> core::ops::Mul<InverseArea<T>> for &Force<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		Pressure{Pa: self.N.clone() * rhs.per_m2}
+	}
+}
+/// Multiplying a Force by a InverseArea returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseArea<T>> for Force<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		Pressure{Pa: self.N * rhs.per_m2.clone()}
+	}
+}
+/// Multiplying a Force by a InverseArea returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseArea<T>> for &Force<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		Pressure{Pa: self.N.clone() * rhs.per_m2.clone()}
+	}
+}
+
 // Force / Acceleration -> Mass
 /// Dividing a Force by a Acceleration returns a value of type Mass
 impl<T> core::ops::Div<Acceleration<T>> for Force<T> where T: NumLike {
@@ -3544,6 +7429,66 @@ impl<T> core::ops::Div<&Acceleration<T>> for &Force<T> where T: NumLike {
 	type Output = Mass<T>;
 	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
 		Mass{kg: self.N.clone() / rhs.mps2.clone()}
+	}
+}
+
+// Force / Energy -> InverseDistance
+/// Dividing a Force by a Energy returns a value of type InverseDistance
+impl<T> core::ops::Div<Energy<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N / rhs.J}
+	}
+}
+/// Dividing a Force by a Energy returns a value of type InverseDistance
+impl<T> core::ops::Div<Energy<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() / rhs.J}
+	}
+}
+/// Dividing a Force by a Energy returns a value of type InverseDistance
+impl<T> core::ops::Div<&Energy<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N / rhs.J.clone()}
+	}
+}
+/// Dividing a Force by a Energy returns a value of type InverseDistance
+impl<T> core::ops::Div<&Energy<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() / rhs.J.clone()}
+	}
+}
+
+// Force / Torque -> InverseDistance
+/// Dividing a Force by a Torque returns a value of type InverseDistance
+impl<T> core::ops::Div<Torque<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N / rhs.Nm}
+	}
+}
+/// Dividing a Force by a Torque returns a value of type InverseDistance
+impl<T> core::ops::Div<Torque<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() / rhs.Nm}
+	}
+}
+/// Dividing a Force by a Torque returns a value of type InverseDistance
+impl<T> core::ops::Div<&Torque<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N / rhs.Nm.clone()}
+	}
+}
+/// Dividing a Force by a Torque returns a value of type InverseDistance
+impl<T> core::ops::Div<&Torque<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() / rhs.Nm.clone()}
 	}
 }
 
@@ -3577,6 +7522,186 @@ impl<T> core::ops::Div<&Frequency<T>> for &Force<T> where T: NumLike {
 	}
 }
 
+// Force * InverseAcceleration -> Mass
+/// Multiplying a Force by a InverseAcceleration returns a value of type Mass
+impl<T> core::ops::Mul<InverseAcceleration<T>> for Force<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Mass{kg: self.N * rhs.s2pm}
+	}
+}
+/// Multiplying a Force by a InverseAcceleration returns a value of type Mass
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &Force<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Mass{kg: self.N.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a Force by a InverseAcceleration returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for Force<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Mass{kg: self.N * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a Force by a InverseAcceleration returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &Force<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Mass{kg: self.N.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// Force * InverseEnergy -> InverseDistance
+/// Multiplying a Force by a InverseEnergy returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseEnergy<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N * rhs.per_J}
+	}
+}
+/// Multiplying a Force by a InverseEnergy returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseEnergy<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a Force by a InverseEnergy returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseEnergy<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a Force by a InverseEnergy returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseEnergy<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() * rhs.per_J.clone()}
+	}
+}
+
+// Force * InverseTorque -> InverseDistance
+/// Multiplying a Force by a InverseTorque returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseTorque<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N * rhs.per_Nm}
+	}
+}
+/// Multiplying a Force by a InverseTorque returns a value of type InverseDistance
+impl<T> core::ops::Mul<InverseTorque<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a Force by a InverseTorque returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseTorque<T>> for Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a Force by a InverseTorque returns a value of type InverseDistance
+impl<T> core::ops::Mul<&InverseTorque<T>> for &Force<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseDistance{per_m: self.N.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+// Force * InverseMomentum -> Frequency
+/// Multiplying a Force by a InverseMomentum returns a value of type Frequency
+impl<T> core::ops::Mul<InverseMomentum<T>> for Force<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Frequency{Hz: self.N * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Force by a InverseMomentum returns a value of type Frequency
+impl<T> core::ops::Mul<InverseMomentum<T>> for &Force<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Frequency{Hz: self.N.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Force by a InverseMomentum returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseMomentum<T>> for Force<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Frequency{Hz: self.N * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a Force by a InverseMomentum returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &Force<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Frequency{Hz: self.N.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// Force * InversePower -> TimePerDistance
+/// Multiplying a Force by a InversePower returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InversePower<T>> for Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		TimePerDistance{spm: self.N * rhs.per_W}
+	}
+}
+/// Multiplying a Force by a InversePower returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InversePower<T>> for &Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		TimePerDistance{spm: self.N.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Force by a InversePower returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InversePower<T>> for Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		TimePerDistance{spm: self.N * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Force by a InversePower returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InversePower<T>> for &Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		TimePerDistance{spm: self.N.clone() * rhs.per_W.clone()}
+	}
+}
+
+// Force * InversePressure -> Area
+/// Multiplying a Force by a InversePressure returns a value of type Area
+impl<T> core::ops::Mul<InversePressure<T>> for Force<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Area{m2: self.N * rhs.per_Pa}
+	}
+}
+/// Multiplying a Force by a InversePressure returns a value of type Area
+impl<T> core::ops::Mul<InversePressure<T>> for &Force<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Area{m2: self.N.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a Force by a InversePressure returns a value of type Area
+impl<T> core::ops::Mul<&InversePressure<T>> for Force<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Area{m2: self.N * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a Force by a InversePressure returns a value of type Area
+impl<T> core::ops::Mul<&InversePressure<T>> for &Force<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Area{m2: self.N.clone() * rhs.per_Pa.clone()}
+	}
+}
+
 // Force / Momentum -> Frequency
 /// Dividing a Force by a Momentum returns a value of type Frequency
 impl<T> core::ops::Div<Momentum<T>> for Force<T> where T: NumLike {
@@ -3604,6 +7729,36 @@ impl<T> core::ops::Div<&Momentum<T>> for &Force<T> where T: NumLike {
 	type Output = Frequency<T>;
 	fn div(self, rhs: &Momentum<T>) -> Self::Output {
 		Frequency{Hz: self.N.clone() / rhs.kgmps.clone()}
+	}
+}
+
+// Force / Power -> TimePerDistance
+/// Dividing a Force by a Power returns a value of type TimePerDistance
+impl<T> core::ops::Div<Power<T>> for Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		TimePerDistance{spm: self.N / rhs.W}
+	}
+}
+/// Dividing a Force by a Power returns a value of type TimePerDistance
+impl<T> core::ops::Div<Power<T>> for &Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		TimePerDistance{spm: self.N.clone() / rhs.W}
+	}
+}
+/// Dividing a Force by a Power returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Power<T>> for Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		TimePerDistance{spm: self.N / rhs.W.clone()}
+	}
+}
+/// Dividing a Force by a Power returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Power<T>> for &Force<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		TimePerDistance{spm: self.N.clone() / rhs.W.clone()}
 	}
 }
 
@@ -3637,6 +7792,36 @@ impl<T> core::ops::Div<&Pressure<T>> for &Force<T> where T: NumLike {
 	}
 }
 
+// Force / TimePerDistance -> Power
+/// Dividing a Force by a TimePerDistance returns a value of type Power
+impl<T> core::ops::Div<TimePerDistance<T>> for Force<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Power{W: self.N / rhs.spm}
+	}
+}
+/// Dividing a Force by a TimePerDistance returns a value of type Power
+impl<T> core::ops::Div<TimePerDistance<T>> for &Force<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Power{W: self.N.clone() / rhs.spm}
+	}
+}
+/// Dividing a Force by a TimePerDistance returns a value of type Power
+impl<T> core::ops::Div<&TimePerDistance<T>> for Force<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Power{W: self.N / rhs.spm.clone()}
+	}
+}
+/// Dividing a Force by a TimePerDistance returns a value of type Power
+impl<T> core::ops::Div<&TimePerDistance<T>> for &Force<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Power{W: self.N.clone() / rhs.spm.clone()}
+	}
+}
+
 // Force * Velocity -> Power
 /// Multiplying a Force by a Velocity returns a value of type Power
 impl<T> core::ops::Mul<Velocity<T>> for Force<T> where T: NumLike {
@@ -3664,6 +7849,228 @@ impl<T> core::ops::Mul<&Velocity<T>> for &Force<T> where T: NumLike {
 	type Output = Power<T>;
 	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
 		Power{W: self.N.clone() * rhs.mps.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<Force<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+impl<T> core::ops::Div<&Force<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Force<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Force<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Force<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Force<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Force<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Force<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Force<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Force<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
+	}
+}
+
+// 1/Force -> InverseForce
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Force<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Force<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Force<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self) / rhs.N.clone()}
+	}
+}
+/// Dividing a scalar value by a Force unit value returns a value of type InverseForce
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Force<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseForce{per_N: T::from(self.clone()) / rhs.N.clone()}
 	}
 }
 
@@ -3946,6 +8353,36 @@ impl<T> core::ops::Mul<&Amount<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency / Current -> InverseCharge
+/// Dividing a Frequency by a Current returns a value of type InverseCharge
+impl<T> core::ops::Div<Current<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: Current<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz / rhs.A}
+	}
+}
+/// Dividing a Frequency by a Current returns a value of type InverseCharge
+impl<T> core::ops::Div<Current<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: Current<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz.clone() / rhs.A}
+	}
+}
+/// Dividing a Frequency by a Current returns a value of type InverseCharge
+impl<T> core::ops::Div<&Current<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &Current<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz / rhs.A.clone()}
+	}
+}
+/// Dividing a Frequency by a Current returns a value of type InverseCharge
+impl<T> core::ops::Div<&Current<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &Current<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz.clone() / rhs.A.clone()}
+	}
+}
+
 // Frequency * Distance -> Velocity
 /// Multiplying a Frequency by a Distance returns a value of type Velocity
 impl<T> core::ops::Mul<Distance<T>> for Frequency<T> where T: NumLike {
@@ -3973,6 +8410,156 @@ impl<T> core::ops::Mul<&Distance<T>> for &Frequency<T> where T: NumLike {
 	type Output = Velocity<T>;
 	fn mul(self, rhs: &Distance<T>) -> Self::Output {
 		Velocity{mps: self.Hz.clone() * rhs.m.clone()}
+	}
+}
+
+// Frequency / InverseAmount -> CatalyticActivity
+/// Dividing a Frequency by a InverseAmount returns a value of type CatalyticActivity
+impl<T> core::ops::Div<InverseAmount<T>> for Frequency<T> where T: NumLike {
+	type Output = CatalyticActivity<T>;
+	fn div(self, rhs: InverseAmount<T>) -> Self::Output {
+		CatalyticActivity{molps: self.Hz / rhs.per_mol}
+	}
+}
+/// Dividing a Frequency by a InverseAmount returns a value of type CatalyticActivity
+impl<T> core::ops::Div<InverseAmount<T>> for &Frequency<T> where T: NumLike {
+	type Output = CatalyticActivity<T>;
+	fn div(self, rhs: InverseAmount<T>) -> Self::Output {
+		CatalyticActivity{molps: self.Hz.clone() / rhs.per_mol}
+	}
+}
+/// Dividing a Frequency by a InverseAmount returns a value of type CatalyticActivity
+impl<T> core::ops::Div<&InverseAmount<T>> for Frequency<T> where T: NumLike {
+	type Output = CatalyticActivity<T>;
+	fn div(self, rhs: &InverseAmount<T>) -> Self::Output {
+		CatalyticActivity{molps: self.Hz / rhs.per_mol.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseAmount returns a value of type CatalyticActivity
+impl<T> core::ops::Div<&InverseAmount<T>> for &Frequency<T> where T: NumLike {
+	type Output = CatalyticActivity<T>;
+	fn div(self, rhs: &InverseAmount<T>) -> Self::Output {
+		CatalyticActivity{molps: self.Hz.clone() / rhs.per_mol.clone()}
+	}
+}
+
+// Frequency * InverseCurrent -> InverseCharge
+/// Multiplying a Frequency by a InverseCurrent returns a value of type InverseCharge
+impl<T> core::ops::Mul<InverseCurrent<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz * rhs.per_A}
+	}
+}
+/// Multiplying a Frequency by a InverseCurrent returns a value of type InverseCharge
+impl<T> core::ops::Mul<InverseCurrent<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz.clone() * rhs.per_A}
+	}
+}
+/// Multiplying a Frequency by a InverseCurrent returns a value of type InverseCharge
+impl<T> core::ops::Mul<&InverseCurrent<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz * rhs.per_A.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseCurrent returns a value of type InverseCharge
+impl<T> core::ops::Mul<&InverseCurrent<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseCharge{per_C: self.Hz.clone() * rhs.per_A.clone()}
+	}
+}
+
+// Frequency / InverseDistance -> Velocity
+/// Dividing a Frequency by a InverseDistance returns a value of type Velocity
+impl<T> core::ops::Div<InverseDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Velocity{mps: self.Hz / rhs.per_m}
+	}
+}
+/// Dividing a Frequency by a InverseDistance returns a value of type Velocity
+impl<T> core::ops::Div<InverseDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Velocity{mps: self.Hz.clone() / rhs.per_m}
+	}
+}
+/// Dividing a Frequency by a InverseDistance returns a value of type Velocity
+impl<T> core::ops::Div<&InverseDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Velocity{mps: self.Hz / rhs.per_m.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseDistance returns a value of type Velocity
+impl<T> core::ops::Div<&InverseDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Velocity{mps: self.Hz.clone() / rhs.per_m.clone()}
+	}
+}
+
+// Frequency / CatalyticActivity -> InverseAmount
+/// Dividing a Frequency by a CatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Div<CatalyticActivity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn div(self, rhs: CatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz / rhs.molps}
+	}
+}
+/// Dividing a Frequency by a CatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Div<CatalyticActivity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn div(self, rhs: CatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz.clone() / rhs.molps}
+	}
+}
+/// Dividing a Frequency by a CatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Div<&CatalyticActivity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn div(self, rhs: &CatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz / rhs.molps.clone()}
+	}
+}
+/// Dividing a Frequency by a CatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Div<&CatalyticActivity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn div(self, rhs: &CatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz.clone() / rhs.molps.clone()}
+	}
+}
+
+// Frequency * InverseCatalyticActivity -> InverseAmount
+/// Multiplying a Frequency by a InverseCatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Mul<InverseCatalyticActivity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn mul(self, rhs: InverseCatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz * rhs.s_per_mol}
+	}
+}
+/// Multiplying a Frequency by a InverseCatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Mul<InverseCatalyticActivity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn mul(self, rhs: InverseCatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz.clone() * rhs.s_per_mol}
+	}
+}
+/// Multiplying a Frequency by a InverseCatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Mul<&InverseCatalyticActivity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn mul(self, rhs: &InverseCatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz * rhs.s_per_mol.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseCatalyticActivity returns a value of type InverseAmount
+impl<T> core::ops::Mul<&InverseCatalyticActivity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAmount<T>;
+	fn mul(self, rhs: &InverseCatalyticActivity<T>) -> Self::Output {
+		InverseAmount{per_mol: self.Hz.clone() * rhs.s_per_mol.clone()}
 	}
 }
 
@@ -4036,6 +8623,96 @@ impl<T> core::ops::Mul<&Charge<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency * Conductance -> InverseInductance
+/// Multiplying a Frequency by a Conductance returns a value of type InverseInductance
+impl<T> core::ops::Mul<Conductance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn mul(self, rhs: Conductance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz * rhs.S}
+	}
+}
+/// Multiplying a Frequency by a Conductance returns a value of type InverseInductance
+impl<T> core::ops::Mul<Conductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn mul(self, rhs: Conductance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz.clone() * rhs.S}
+	}
+}
+/// Multiplying a Frequency by a Conductance returns a value of type InverseInductance
+impl<T> core::ops::Mul<&Conductance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz * rhs.S.clone()}
+	}
+}
+/// Multiplying a Frequency by a Conductance returns a value of type InverseInductance
+impl<T> core::ops::Mul<&Conductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn mul(self, rhs: &Conductance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz.clone() * rhs.S.clone()}
+	}
+}
+
+// Frequency / Conductance -> Elastance
+/// Dividing a Frequency by a Conductance returns a value of type Elastance
+impl<T> core::ops::Div<Conductance<T>> for Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz / rhs.S}
+	}
+}
+/// Dividing a Frequency by a Conductance returns a value of type Elastance
+impl<T> core::ops::Div<Conductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn div(self, rhs: Conductance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz.clone() / rhs.S}
+	}
+}
+/// Dividing a Frequency by a Conductance returns a value of type Elastance
+impl<T> core::ops::Div<&Conductance<T>> for Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz / rhs.S.clone()}
+	}
+}
+/// Dividing a Frequency by a Conductance returns a value of type Elastance
+impl<T> core::ops::Div<&Conductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn div(self, rhs: &Conductance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz.clone() / rhs.S.clone()}
+	}
+}
+
+// Frequency / Elastance -> Conductance
+/// Dividing a Frequency by a Elastance returns a value of type Conductance
+impl<T> core::ops::Div<Elastance<T>> for Frequency<T> where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Elastance<T>) -> Self::Output {
+		Conductance{S: self.Hz / rhs.per_F}
+	}
+}
+/// Dividing a Frequency by a Elastance returns a value of type Conductance
+impl<T> core::ops::Div<Elastance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: Elastance<T>) -> Self::Output {
+		Conductance{S: self.Hz.clone() / rhs.per_F}
+	}
+}
+/// Dividing a Frequency by a Elastance returns a value of type Conductance
+impl<T> core::ops::Div<&Elastance<T>> for Frequency<T> where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Elastance<T>) -> Self::Output {
+		Conductance{S: self.Hz / rhs.per_F.clone()}
+	}
+}
+/// Dividing a Frequency by a Elastance returns a value of type Conductance
+impl<T> core::ops::Div<&Elastance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Conductance<T>;
+	fn div(self, rhs: &Elastance<T>) -> Self::Output {
+		Conductance{S: self.Hz.clone() / rhs.per_F.clone()}
+	}
+}
+
 // Frequency * Inductance -> Resistance
 /// Multiplying a Frequency by a Inductance returns a value of type Resistance
 impl<T> core::ops::Mul<Inductance<T>> for Frequency<T> where T: NumLike {
@@ -4063,6 +8740,126 @@ impl<T> core::ops::Mul<&Inductance<T>> for &Frequency<T> where T: NumLike {
 	type Output = Resistance<T>;
 	fn mul(self, rhs: &Inductance<T>) -> Self::Output {
 		Resistance{Ohm: self.Hz.clone() * rhs.H.clone()}
+	}
+}
+
+// Frequency / InverseCharge -> Current
+/// Dividing a Frequency by a InverseCharge returns a value of type Current
+impl<T> core::ops::Div<InverseCharge<T>> for Frequency<T> where T: NumLike {
+	type Output = Current<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		Current{A: self.Hz / rhs.per_C}
+	}
+}
+/// Dividing a Frequency by a InverseCharge returns a value of type Current
+impl<T> core::ops::Div<InverseCharge<T>> for &Frequency<T> where T: NumLike {
+	type Output = Current<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		Current{A: self.Hz.clone() / rhs.per_C}
+	}
+}
+/// Dividing a Frequency by a InverseCharge returns a value of type Current
+impl<T> core::ops::Div<&InverseCharge<T>> for Frequency<T> where T: NumLike {
+	type Output = Current<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Current{A: self.Hz / rhs.per_C.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseCharge returns a value of type Current
+impl<T> core::ops::Div<&InverseCharge<T>> for &Frequency<T> where T: NumLike {
+	type Output = Current<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Current{A: self.Hz.clone() / rhs.per_C.clone()}
+	}
+}
+
+// Frequency / InverseInductance -> Resistance
+/// Dividing a Frequency by a InverseInductance returns a value of type Resistance
+impl<T> core::ops::Div<InverseInductance<T>> for Frequency<T> where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: InverseInductance<T>) -> Self::Output {
+		Resistance{Ohm: self.Hz / rhs.per_H}
+	}
+}
+/// Dividing a Frequency by a InverseInductance returns a value of type Resistance
+impl<T> core::ops::Div<InverseInductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: InverseInductance<T>) -> Self::Output {
+		Resistance{Ohm: self.Hz.clone() / rhs.per_H}
+	}
+}
+/// Dividing a Frequency by a InverseInductance returns a value of type Resistance
+impl<T> core::ops::Div<&InverseInductance<T>> for Frequency<T> where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &InverseInductance<T>) -> Self::Output {
+		Resistance{Ohm: self.Hz / rhs.per_H.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseInductance returns a value of type Resistance
+impl<T> core::ops::Div<&InverseInductance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Resistance<T>;
+	fn div(self, rhs: &InverseInductance<T>) -> Self::Output {
+		Resistance{Ohm: self.Hz.clone() / rhs.per_H.clone()}
+	}
+}
+
+// Frequency / InverseMagneticFlux -> Voltage
+/// Dividing a Frequency by a InverseMagneticFlux returns a value of type Voltage
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for Frequency<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Voltage{V: self.Hz / rhs.per_Wb}
+	}
+}
+/// Dividing a Frequency by a InverseMagneticFlux returns a value of type Voltage
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for &Frequency<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Voltage{V: self.Hz.clone() / rhs.per_Wb}
+	}
+}
+/// Dividing a Frequency by a InverseMagneticFlux returns a value of type Voltage
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for Frequency<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Voltage{V: self.Hz / rhs.per_Wb.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseMagneticFlux returns a value of type Voltage
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for &Frequency<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Voltage{V: self.Hz.clone() / rhs.per_Wb.clone()}
+	}
+}
+
+// Frequency * InverseVoltage -> InverseMagneticFlux
+/// Multiplying a Frequency by a InverseVoltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<InverseVoltage<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz * rhs.per_V}
+	}
+}
+/// Multiplying a Frequency by a InverseVoltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<InverseVoltage<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz.clone() * rhs.per_V}
+	}
+}
+/// Multiplying a Frequency by a InverseVoltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&InverseVoltage<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz * rhs.per_V.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseVoltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&InverseVoltage<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz.clone() * rhs.per_V.clone()}
 	}
 }
 
@@ -4096,6 +8893,96 @@ impl<T> core::ops::Mul<&MagneticFlux<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency * Resistance -> Elastance
+/// Multiplying a Frequency by a Resistance returns a value of type Elastance
+impl<T> core::ops::Mul<Resistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn mul(self, rhs: Resistance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz * rhs.Ohm}
+	}
+}
+/// Multiplying a Frequency by a Resistance returns a value of type Elastance
+impl<T> core::ops::Mul<Resistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn mul(self, rhs: Resistance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz.clone() * rhs.Ohm}
+	}
+}
+/// Multiplying a Frequency by a Resistance returns a value of type Elastance
+impl<T> core::ops::Mul<&Resistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz * rhs.Ohm.clone()}
+	}
+}
+/// Multiplying a Frequency by a Resistance returns a value of type Elastance
+impl<T> core::ops::Mul<&Resistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Elastance<T>;
+	fn mul(self, rhs: &Resistance<T>) -> Self::Output {
+		Elastance{per_F: self.Hz.clone() * rhs.Ohm.clone()}
+	}
+}
+
+// Frequency / Resistance -> InverseInductance
+/// Dividing a Frequency by a Resistance returns a value of type InverseInductance
+impl<T> core::ops::Div<Resistance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz / rhs.Ohm}
+	}
+}
+/// Dividing a Frequency by a Resistance returns a value of type InverseInductance
+impl<T> core::ops::Div<Resistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn div(self, rhs: Resistance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz.clone() / rhs.Ohm}
+	}
+}
+/// Dividing a Frequency by a Resistance returns a value of type InverseInductance
+impl<T> core::ops::Div<&Resistance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz / rhs.Ohm.clone()}
+	}
+}
+/// Dividing a Frequency by a Resistance returns a value of type InverseInductance
+impl<T> core::ops::Div<&Resistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseInductance<T>;
+	fn div(self, rhs: &Resistance<T>) -> Self::Output {
+		InverseInductance{per_H: self.Hz.clone() / rhs.Ohm.clone()}
+	}
+}
+
+// Frequency / Voltage -> InverseMagneticFlux
+/// Dividing a Frequency by a Voltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<Voltage<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: Voltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz / rhs.V}
+	}
+}
+/// Dividing a Frequency by a Voltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<Voltage<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: Voltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz.clone() / rhs.V}
+	}
+}
+/// Dividing a Frequency by a Voltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&Voltage<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz / rhs.V.clone()}
+	}
+}
+/// Dividing a Frequency by a Voltage returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&Voltage<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.Hz.clone() / rhs.V.clone()}
+	}
+}
+
 // Frequency * Angle -> AngularVelocity
 /// Multiplying a Frequency by a Angle returns a value of type AngularVelocity
 impl<T> core::ops::Mul<Angle<T>> for Frequency<T> where T: NumLike {
@@ -4126,6 +9013,96 @@ impl<T> core::ops::Mul<&Angle<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency / InverseAngle -> AngularVelocity
+/// Dividing a Frequency by a InverseAngle returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngle<T>> for Frequency<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngle<T>) -> Self::Output {
+		AngularVelocity{radps: self.Hz / rhs.per_rad}
+	}
+}
+/// Dividing a Frequency by a InverseAngle returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngle<T>> for &Frequency<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngle<T>) -> Self::Output {
+		AngularVelocity{radps: self.Hz.clone() / rhs.per_rad}
+	}
+}
+/// Dividing a Frequency by a InverseAngle returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngle<T>> for Frequency<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngle<T>) -> Self::Output {
+		AngularVelocity{radps: self.Hz / rhs.per_rad.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseAngle returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngle<T>> for &Frequency<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngle<T>) -> Self::Output {
+		AngularVelocity{radps: self.Hz.clone() / rhs.per_rad.clone()}
+	}
+}
+
+// Frequency / Acceleration -> TimePerDistance
+/// Dividing a Frequency by a Acceleration returns a value of type TimePerDistance
+impl<T> core::ops::Div<Acceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz / rhs.mps2}
+	}
+}
+/// Dividing a Frequency by a Acceleration returns a value of type TimePerDistance
+impl<T> core::ops::Div<Acceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz.clone() / rhs.mps2}
+	}
+}
+/// Dividing a Frequency by a Acceleration returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Acceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz / rhs.mps2.clone()}
+	}
+}
+/// Dividing a Frequency by a Acceleration returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Acceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz.clone() / rhs.mps2.clone()}
+	}
+}
+
+// Frequency / AngularAcceleration -> InverseAngularVelocity
+/// Dividing a Frequency by a AngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz / rhs.radps2}
+	}
+}
+/// Dividing a Frequency by a AngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz.clone() / rhs.radps2}
+	}
+}
+/// Dividing a Frequency by a AngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz / rhs.radps2.clone()}
+	}
+}
+/// Dividing a Frequency by a AngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz.clone() / rhs.radps2.clone()}
+	}
+}
+
 // Frequency * AngularVelocity -> AngularAcceleration
 /// Multiplying a Frequency by a AngularVelocity returns a value of type AngularAcceleration
 impl<T> core::ops::Mul<AngularVelocity<T>> for Frequency<T> where T: NumLike {
@@ -4153,6 +9130,36 @@ impl<T> core::ops::Mul<&AngularVelocity<T>> for &Frequency<T> where T: NumLike {
 	type Output = AngularAcceleration<T>;
 	fn mul(self, rhs: &AngularVelocity<T>) -> Self::Output {
 		AngularAcceleration{radps2: self.Hz.clone() * rhs.radps.clone()}
+	}
+}
+
+// Frequency / AngularVelocity -> InverseAngle
+/// Dividing a Frequency by a AngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Div<AngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz / rhs.radps}
+	}
+}
+/// Dividing a Frequency by a AngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Div<AngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz.clone() / rhs.radps}
+	}
+}
+/// Dividing a Frequency by a AngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Div<&AngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz / rhs.radps.clone()}
+	}
+}
+/// Dividing a Frequency by a AngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Div<&AngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz.clone() / rhs.radps.clone()}
 	}
 }
 
@@ -4216,6 +9223,306 @@ impl<T> core::ops::Mul<&Torque<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency / Force -> InverseMomentum
+/// Dividing a Frequency by a Force returns a value of type InverseMomentum
+impl<T> core::ops::Div<Force<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz / rhs.N}
+	}
+}
+/// Dividing a Frequency by a Force returns a value of type InverseMomentum
+impl<T> core::ops::Div<Force<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz.clone() / rhs.N}
+	}
+}
+/// Dividing a Frequency by a Force returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Force<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz / rhs.N.clone()}
+	}
+}
+/// Dividing a Frequency by a Force returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Force<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz.clone() / rhs.N.clone()}
+	}
+}
+
+// Frequency * InverseAcceleration -> TimePerDistance
+/// Multiplying a Frequency by a InverseAcceleration returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz * rhs.s2pm}
+	}
+}
+/// Multiplying a Frequency by a InverseAcceleration returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a Frequency by a InverseAcceleration returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseAcceleration returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		TimePerDistance{spm: self.Hz.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// Frequency * InverseAngularAcceleration -> InverseAngularVelocity
+/// Multiplying a Frequency by a InverseAngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<InverseAngularAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz * rhs.s2prad}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<InverseAngularAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz.clone() * rhs.s2prad}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&InverseAngularAcceleration<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz * rhs.s2prad.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularAcceleration returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&InverseAngularAcceleration<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.Hz.clone() * rhs.s2prad.clone()}
+	}
+}
+
+// Frequency * InverseAngularVelocity -> InverseAngle
+/// Multiplying a Frequency by a InverseAngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz * rhs.s_per_rad}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseAngularVelocity returns a value of type InverseAngle
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngle{per_rad: self.Hz.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+// Frequency / InverseAngularVelocity -> AngularAcceleration
+/// Dividing a Frequency by a InverseAngularVelocity returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularAcceleration{radps2: self.Hz / rhs.s_per_rad}
+	}
+}
+/// Dividing a Frequency by a InverseAngularVelocity returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularAcceleration{radps2: self.Hz.clone() / rhs.s_per_rad}
+	}
+}
+/// Dividing a Frequency by a InverseAngularVelocity returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for Frequency<T> where T: NumLike {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularAcceleration{radps2: self.Hz / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseAngularVelocity returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularAcceleration{radps2: self.Hz.clone() / rhs.s_per_rad.clone()}
+	}
+}
+
+// Frequency / InverseEnergy -> Power
+/// Dividing a Frequency by a InverseEnergy returns a value of type Power
+impl<T> core::ops::Div<InverseEnergy<T>> for Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Power{W: self.Hz / rhs.per_J}
+	}
+}
+/// Dividing a Frequency by a InverseEnergy returns a value of type Power
+impl<T> core::ops::Div<InverseEnergy<T>> for &Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Power{W: self.Hz.clone() / rhs.per_J}
+	}
+}
+/// Dividing a Frequency by a InverseEnergy returns a value of type Power
+impl<T> core::ops::Div<&InverseEnergy<T>> for Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Power{W: self.Hz / rhs.per_J.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseEnergy returns a value of type Power
+impl<T> core::ops::Div<&InverseEnergy<T>> for &Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Power{W: self.Hz.clone() / rhs.per_J.clone()}
+	}
+}
+
+// Frequency / InverseTorque -> Power
+/// Dividing a Frequency by a InverseTorque returns a value of type Power
+impl<T> core::ops::Div<InverseTorque<T>> for Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Power{W: self.Hz / rhs.per_Nm}
+	}
+}
+/// Dividing a Frequency by a InverseTorque returns a value of type Power
+impl<T> core::ops::Div<InverseTorque<T>> for &Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Power{W: self.Hz.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a Frequency by a InverseTorque returns a value of type Power
+impl<T> core::ops::Div<&InverseTorque<T>> for Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Power{W: self.Hz / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseTorque returns a value of type Power
+impl<T> core::ops::Div<&InverseTorque<T>> for &Frequency<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Power{W: self.Hz.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// Frequency * InverseForce -> InverseMomentum
+/// Multiplying a Frequency by a InverseForce returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseForce<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz * rhs.per_N}
+	}
+}
+/// Multiplying a Frequency by a InverseForce returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseForce<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Frequency by a InverseForce returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseForce<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Frequency by a InverseForce returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseForce<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.Hz.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Frequency / InverseMomentum -> Force
+/// Dividing a Frequency by a InverseMomentum returns a value of type Force
+impl<T> core::ops::Div<InverseMomentum<T>> for Frequency<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Force{N: self.Hz / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Frequency by a InverseMomentum returns a value of type Force
+impl<T> core::ops::Div<InverseMomentum<T>> for &Frequency<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Force{N: self.Hz.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Frequency by a InverseMomentum returns a value of type Force
+impl<T> core::ops::Div<&InverseMomentum<T>> for Frequency<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Force{N: self.Hz / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a Frequency by a InverseMomentum returns a value of type Force
+impl<T> core::ops::Div<&InverseMomentum<T>> for &Frequency<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Force{N: self.Hz.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// Frequency * InversePower -> InverseEnergy
+/// Multiplying a Frequency by a InversePower returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InversePower<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz * rhs.per_W}
+	}
+}
+/// Multiplying a Frequency by a InversePower returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InversePower<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Frequency by a InversePower returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InversePower<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Frequency by a InversePower returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InversePower<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz.clone() * rhs.per_W.clone()}
+	}
+}
+
 // Frequency * Momentum -> Force
 /// Multiplying a Frequency by a Momentum returns a value of type Force
 impl<T> core::ops::Mul<Momentum<T>> for Frequency<T> where T: NumLike {
@@ -4246,6 +9553,96 @@ impl<T> core::ops::Mul<&Momentum<T>> for &Frequency<T> where T: NumLike {
 	}
 }
 
+// Frequency / Power -> InverseEnergy
+/// Dividing a Frequency by a Power returns a value of type InverseEnergy
+impl<T> core::ops::Div<Power<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz / rhs.W}
+	}
+}
+/// Dividing a Frequency by a Power returns a value of type InverseEnergy
+impl<T> core::ops::Div<Power<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz.clone() / rhs.W}
+	}
+}
+/// Dividing a Frequency by a Power returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Power<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz / rhs.W.clone()}
+	}
+}
+/// Dividing a Frequency by a Power returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Power<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseEnergy{per_J: self.Hz.clone() / rhs.W.clone()}
+	}
+}
+
+// Frequency * TimePerDistance -> InverseDistance
+/// Multiplying a Frequency by a TimePerDistance returns a value of type InverseDistance
+impl<T> core::ops::Mul<TimePerDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz * rhs.spm}
+	}
+}
+/// Multiplying a Frequency by a TimePerDistance returns a value of type InverseDistance
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Frequency by a TimePerDistance returns a value of type InverseDistance
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Frequency by a TimePerDistance returns a value of type InverseDistance
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz.clone() * rhs.spm.clone()}
+	}
+}
+
+// Frequency / TimePerDistance -> Acceleration
+/// Dividing a Frequency by a TimePerDistance returns a value of type Acceleration
+impl<T> core::ops::Div<TimePerDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Acceleration{mps2: self.Hz / rhs.spm}
+	}
+}
+/// Dividing a Frequency by a TimePerDistance returns a value of type Acceleration
+impl<T> core::ops::Div<TimePerDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Acceleration{mps2: self.Hz.clone() / rhs.spm}
+	}
+}
+/// Dividing a Frequency by a TimePerDistance returns a value of type Acceleration
+impl<T> core::ops::Div<&TimePerDistance<T>> for Frequency<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Acceleration{mps2: self.Hz / rhs.spm.clone()}
+	}
+}
+/// Dividing a Frequency by a TimePerDistance returns a value of type Acceleration
+impl<T> core::ops::Div<&TimePerDistance<T>> for &Frequency<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Acceleration{mps2: self.Hz.clone() / rhs.spm.clone()}
+	}
+}
+
 // Frequency * Velocity -> Acceleration
 /// Multiplying a Frequency by a Velocity returns a value of type Acceleration
 impl<T> core::ops::Mul<Velocity<T>> for Frequency<T> where T: NumLike {
@@ -4273,6 +9670,36 @@ impl<T> core::ops::Mul<&Velocity<T>> for &Frequency<T> where T: NumLike {
 	type Output = Acceleration<T>;
 	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
 		Acceleration{mps2: self.Hz.clone() * rhs.mps.clone()}
+	}
+}
+
+// Frequency / Velocity -> InverseDistance
+/// Dividing a Frequency by a Velocity returns a value of type InverseDistance
+impl<T> core::ops::Div<Velocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz / rhs.mps}
+	}
+}
+/// Dividing a Frequency by a Velocity returns a value of type InverseDistance
+impl<T> core::ops::Div<Velocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz.clone() / rhs.mps}
+	}
+}
+/// Dividing a Frequency by a Velocity returns a value of type InverseDistance
+impl<T> core::ops::Div<&Velocity<T>> for Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz / rhs.mps.clone()}
+	}
+}
+/// Dividing a Frequency by a Velocity returns a value of type InverseDistance
+impl<T> core::ops::Div<&Velocity<T>> for &Frequency<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseDistance{per_m: self.Hz.clone() / rhs.mps.clone()}
 	}
 }
 
@@ -4498,6 +9925,9840 @@ impl<T> core::ops::Div<&Frequency<T>> for &num_complex::Complex64 where T: NumLi
 	}
 }
 
+/// The inverse of acceleration unit type, defined as seconds squared per meter in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseAcceleration<T: NumLike>{
+	/// The value of this Inverse acceleration in seconds squared per meter
+	pub s2pm: T
+}
+
+impl<T> InverseAcceleration<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse acceleration: "seconds squared per meter"
+	pub fn unit_name() -> &'static str { "seconds squared per meter" }
+	
+	/// Returns the abbreviated name or symbol of inverse acceleration: "s²/m" for seconds squared per meter
+	pub fn unit_symbol() -> &'static str { "s²/m" }
+	
+	/// Returns a new inverse acceleration value from the given number of seconds squared per meter
+	///
+	/// # Arguments
+	/// * `s2pm` - Any number-like type, representing a quantity of seconds squared per meter
+	pub fn from_s2pm(s2pm: T) -> Self { InverseAcceleration{s2pm: s2pm} }
+	
+	/// Returns a copy of this inverse acceleration value in seconds squared per meter
+	pub fn to_s2pm(&self) -> T { self.s2pm.clone() }
+
+	/// Returns a new inverse acceleration value from the given number of seconds squared per meter
+	///
+	/// # Arguments
+	/// * `seconds_squared_per_meter` - Any number-like type, representing a quantity of seconds squared per meter
+	pub fn from_seconds_squared_per_meter(seconds_squared_per_meter: T) -> Self { InverseAcceleration{s2pm: seconds_squared_per_meter} }
+	
+	/// Returns a copy of this inverse acceleration value in seconds squared per meter
+	pub fn to_seconds_squared_per_meter(&self) -> T { self.s2pm.clone() }
+
+}
+
+impl<T> fmt::Display for InverseAcceleration<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.s2pm, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseAcceleration<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse acceleration value in seconds squared per millimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s2pmm(&self) -> T {
+		return self.s2pm.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse acceleration value from the given number of seconds squared per millimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s2pmm` - Any number-like type, representing a quantity of seconds squared per millimeter
+	pub fn from_s2pmm(s2pmm: T) -> Self {
+		InverseAcceleration{s2pm: s2pmm * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse acceleration value in hours squared per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_hours_squared_per_kilometers(&self) -> T {
+		return self.s2pm.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse acceleration value from the given number of hours squared per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `hours_squared_per_kilometers` - Any number-like type, representing a quantity of hours squared per kilometer
+	pub fn from_hours_squared_per_kilometers(hours_squared_per_kilometers: T) -> Self {
+		InverseAcceleration{s2pm: hours_squared_per_kilometers * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse acceleration value in hours squared per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_hr2_per_km(&self) -> T {
+		return self.s2pm.clone() * T::from(7.72e-05_f64);
+	}
+
+	/// Returns a new inverse acceleration value from the given number of hours squared per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `hr2_per_km` - Any number-like type, representing a quantity of hours squared per kilometer
+	pub fn from_hr2_per_km(hr2_per_km: T) -> Self {
+		InverseAcceleration{s2pm: hr2_per_km * T::from(12960.0_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAcceleration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAcceleration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAcceleration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAcceleration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAcceleration<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAcceleration<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAcceleration<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAcceleration<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAcceleration<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAcceleration<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAcceleration<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAcceleration{s2pm: self * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAcceleration<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAcceleration{s2pm: self.clone() * rhs.s2pm.clone()}
+	}
+}
+
+
+
+
+// InverseAcceleration * InverseMass -> InverseForce
+/// Multiplying a InverseAcceleration by a InverseMass returns a value of type InverseForce
+impl<T> core::ops::Mul<InverseMass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMass returns a value of type InverseForce
+impl<T> core::ops::Mul<InverseMass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMass returns a value of type InverseForce
+impl<T> core::ops::Mul<&InverseMass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMass returns a value of type InverseForce
+impl<T> core::ops::Mul<&InverseMass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// InverseAcceleration / Mass -> InverseForce
+/// Dividing a InverseAcceleration by a Mass returns a value of type InverseForce
+impl<T> core::ops::Div<Mass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm / rhs.kg}
+	}
+}
+/// Dividing a InverseAcceleration by a Mass returns a value of type InverseForce
+impl<T> core::ops::Div<Mass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm.clone() / rhs.kg}
+	}
+}
+/// Dividing a InverseAcceleration by a Mass returns a value of type InverseForce
+impl<T> core::ops::Div<&Mass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm / rhs.kg.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a Mass returns a value of type InverseForce
+impl<T> core::ops::Div<&Mass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseForce{per_N: self.s2pm.clone() / rhs.kg.clone()}
+	}
+}
+
+// InverseAcceleration / Time -> TimePerDistance
+/// Dividing a InverseAcceleration by a Time returns a value of type TimePerDistance
+impl<T> core::ops::Div<Time<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm / rhs.s}
+	}
+}
+/// Dividing a InverseAcceleration by a Time returns a value of type TimePerDistance
+impl<T> core::ops::Div<Time<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm.clone() / rhs.s}
+	}
+}
+/// Dividing a InverseAcceleration by a Time returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Time<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm / rhs.s.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a Time returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Time<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm.clone() / rhs.s.clone()}
+	}
+}
+
+// InverseAcceleration / AreaDensity -> InversePressure
+/// Dividing a InverseAcceleration by a AreaDensity returns a value of type InversePressure
+impl<T> core::ops::Div<AreaDensity<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm / rhs.kgpm2}
+	}
+}
+/// Dividing a InverseAcceleration by a AreaDensity returns a value of type InversePressure
+impl<T> core::ops::Div<AreaDensity<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: AreaDensity<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm.clone() / rhs.kgpm2}
+	}
+}
+/// Dividing a InverseAcceleration by a AreaDensity returns a value of type InversePressure
+impl<T> core::ops::Div<&AreaDensity<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm / rhs.kgpm2.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a AreaDensity returns a value of type InversePressure
+impl<T> core::ops::Div<&AreaDensity<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm.clone() / rhs.kgpm2.clone()}
+	}
+}
+
+// InverseAcceleration * AreaPerMass -> InversePressure
+/// Multiplying a InverseAcceleration by a AreaPerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<AreaPerMass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a InverseAcceleration by a AreaPerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<AreaPerMass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a InverseAcceleration by a AreaPerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&AreaPerMass<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a AreaPerMass returns a value of type InversePressure
+impl<T> core::ops::Mul<&AreaPerMass<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InversePressure{per_Pa: self.s2pm.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+// InverseAcceleration * Force -> Mass
+/// Multiplying a InverseAcceleration by a Force returns a value of type Mass
+impl<T> core::ops::Mul<Force<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Mass{kg: self.s2pm * rhs.N}
+	}
+}
+/// Multiplying a InverseAcceleration by a Force returns a value of type Mass
+impl<T> core::ops::Mul<Force<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Mass{kg: self.s2pm.clone() * rhs.N}
+	}
+}
+/// Multiplying a InverseAcceleration by a Force returns a value of type Mass
+impl<T> core::ops::Mul<&Force<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Mass{kg: self.s2pm * rhs.N.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a Force returns a value of type Mass
+impl<T> core::ops::Mul<&Force<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Mass{kg: self.s2pm.clone() * rhs.N.clone()}
+	}
+}
+
+// InverseAcceleration * Frequency -> TimePerDistance
+/// Multiplying a InverseAcceleration by a Frequency returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Frequency<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAcceleration by a Frequency returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Frequency<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAcceleration by a Frequency returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Frequency<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a Frequency returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Frequency<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		TimePerDistance{spm: self.s2pm.clone() * rhs.Hz.clone()}
+	}
+}
+
+// InverseAcceleration / InverseForce -> Mass
+/// Dividing a InverseAcceleration by a InverseForce returns a value of type Mass
+impl<T> core::ops::Div<InverseForce<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Mass{kg: self.s2pm / rhs.per_N}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseForce returns a value of type Mass
+impl<T> core::ops::Div<InverseForce<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Mass{kg: self.s2pm.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseForce returns a value of type Mass
+impl<T> core::ops::Div<&InverseForce<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Mass{kg: self.s2pm / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseForce returns a value of type Mass
+impl<T> core::ops::Div<&InverseForce<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Mass{kg: self.s2pm.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InverseAcceleration * InverseMomentum -> InversePower
+/// Multiplying a InverseAcceleration by a InverseMomentum returns a value of type InversePower
+impl<T> core::ops::Mul<InverseMomentum<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMomentum returns a value of type InversePower
+impl<T> core::ops::Mul<InverseMomentum<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMomentum returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseMomentum<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a InverseMomentum returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// InverseAcceleration / InversePower -> Momentum
+/// Dividing a InverseAcceleration by a InversePower returns a value of type Momentum
+impl<T> core::ops::Div<InversePower<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm / rhs.per_W}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePower returns a value of type Momentum
+impl<T> core::ops::Div<InversePower<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm.clone() / rhs.per_W}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePower returns a value of type Momentum
+impl<T> core::ops::Div<&InversePower<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm / rhs.per_W.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePower returns a value of type Momentum
+impl<T> core::ops::Div<&InversePower<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm.clone() / rhs.per_W.clone()}
+	}
+}
+
+// InverseAcceleration / InversePressure -> AreaDensity
+/// Dividing a InverseAcceleration by a InversePressure returns a value of type AreaDensity
+impl<T> core::ops::Div<InversePressure<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePressure returns a value of type AreaDensity
+impl<T> core::ops::Div<InversePressure<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePressure returns a value of type AreaDensity
+impl<T> core::ops::Div<&InversePressure<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a InversePressure returns a value of type AreaDensity
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseAcceleration / Momentum -> InversePower
+/// Dividing a InverseAcceleration by a Momentum returns a value of type InversePower
+impl<T> core::ops::Div<Momentum<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm / rhs.kgmps}
+	}
+}
+/// Dividing a InverseAcceleration by a Momentum returns a value of type InversePower
+impl<T> core::ops::Div<Momentum<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm.clone() / rhs.kgmps}
+	}
+}
+/// Dividing a InverseAcceleration by a Momentum returns a value of type InversePower
+impl<T> core::ops::Div<&Momentum<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a Momentum returns a value of type InversePower
+impl<T> core::ops::Div<&Momentum<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InversePower{per_W: self.s2pm.clone() / rhs.kgmps.clone()}
+	}
+}
+
+// InverseAcceleration * Power -> Momentum
+/// Multiplying a InverseAcceleration by a Power returns a value of type Momentum
+impl<T> core::ops::Mul<Power<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm * rhs.W}
+	}
+}
+/// Multiplying a InverseAcceleration by a Power returns a value of type Momentum
+impl<T> core::ops::Mul<Power<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm.clone() * rhs.W}
+	}
+}
+/// Multiplying a InverseAcceleration by a Power returns a value of type Momentum
+impl<T> core::ops::Mul<&Power<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm * rhs.W.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a Power returns a value of type Momentum
+impl<T> core::ops::Mul<&Power<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Momentum{kgmps: self.s2pm.clone() * rhs.W.clone()}
+	}
+}
+
+// InverseAcceleration * Pressure -> AreaDensity
+/// Multiplying a InverseAcceleration by a Pressure returns a value of type AreaDensity
+impl<T> core::ops::Mul<Pressure<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm * rhs.Pa}
+	}
+}
+/// Multiplying a InverseAcceleration by a Pressure returns a value of type AreaDensity
+impl<T> core::ops::Mul<Pressure<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseAcceleration by a Pressure returns a value of type AreaDensity
+impl<T> core::ops::Mul<&Pressure<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a Pressure returns a value of type AreaDensity
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.s2pm.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseAcceleration / TimePerDistance -> Time
+/// Dividing a InverseAcceleration by a TimePerDistance returns a value of type Time
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Time{s: self.s2pm / rhs.spm}
+	}
+}
+/// Dividing a InverseAcceleration by a TimePerDistance returns a value of type Time
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Time{s: self.s2pm.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseAcceleration by a TimePerDistance returns a value of type Time
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Time{s: self.s2pm / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a TimePerDistance returns a value of type Time
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Time{s: self.s2pm.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseAcceleration * Velocity -> Time
+/// Multiplying a InverseAcceleration by a Velocity returns a value of type Time
+impl<T> core::ops::Mul<Velocity<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		Time{s: self.s2pm * rhs.mps}
+	}
+}
+/// Multiplying a InverseAcceleration by a Velocity returns a value of type Time
+impl<T> core::ops::Mul<Velocity<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		Time{s: self.s2pm.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseAcceleration by a Velocity returns a value of type Time
+impl<T> core::ops::Mul<&Velocity<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		Time{s: self.s2pm * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseAcceleration by a Velocity returns a value of type Time
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		Time{s: self.s2pm.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseAcceleration / InverseAbsorbedDose -> Distance
+/// Dividing a InverseAcceleration by a InverseAbsorbedDose returns a value of type Distance
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Distance{m: self.s2pm / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseAbsorbedDose returns a value of type Distance
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Distance{m: self.s2pm.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseAbsorbedDose returns a value of type Distance
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Distance{m: self.s2pm / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseAbsorbedDose returns a value of type Distance
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Distance{m: self.s2pm.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// InverseAcceleration / InverseDoseEquivalent -> Distance
+/// Dividing a InverseAcceleration by a InverseDoseEquivalent returns a value of type Distance
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Distance{m: self.s2pm / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseDoseEquivalent returns a value of type Distance
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Distance{m: self.s2pm.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseDoseEquivalent returns a value of type Distance
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Distance{m: self.s2pm / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a InverseAcceleration by a InverseDoseEquivalent returns a value of type Distance
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &InverseAcceleration<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Distance{m: self.s2pm.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<InverseAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+// 1/InverseAcceleration -> Acceleration
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self) / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAcceleration unit value returns a value of type Acceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Acceleration{mps2: T::from(self.clone()) / rhs.s2pm.clone()}
+	}
+}
+
+/// The inverse of angular acceleration unit type, defined as seconds squared per radian in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseAngularAcceleration<T: NumLike>{
+	/// The value of this Inverse angular acceleration in seconds squared per radian
+	pub s2prad: T
+}
+
+impl<T> InverseAngularAcceleration<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse angular acceleration: "seconds squared per radian"
+	pub fn unit_name() -> &'static str { "seconds squared per radian" }
+	
+	/// Returns the abbreviated name or symbol of inverse angular acceleration: "s²/rad" for seconds squared per radian
+	pub fn unit_symbol() -> &'static str { "s²/rad" }
+	
+	/// Returns a new inverse angular acceleration value from the given number of seconds squared per radian
+	///
+	/// # Arguments
+	/// * `s2prad` - Any number-like type, representing a quantity of seconds squared per radian
+	pub fn from_s2prad(s2prad: T) -> Self { InverseAngularAcceleration{s2prad: s2prad} }
+	
+	/// Returns a copy of this inverse angular acceleration value in seconds squared per radian
+	pub fn to_s2prad(&self) -> T { self.s2prad.clone() }
+
+	/// Returns a new inverse angular acceleration value from the given number of seconds squared per radian
+	///
+	/// # Arguments
+	/// * `seconds_squared_per_radian` - Any number-like type, representing a quantity of seconds squared per radian
+	pub fn from_seconds_squared_per_radian(seconds_squared_per_radian: T) -> Self { InverseAngularAcceleration{s2prad: seconds_squared_per_radian} }
+	
+	/// Returns a copy of this inverse angular acceleration value in seconds squared per radian
+	pub fn to_seconds_squared_per_radian(&self) -> T { self.s2prad.clone() }
+
+}
+
+impl<T> fmt::Display for InverseAngularAcceleration<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.s2prad, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseAngularAcceleration<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse angular acceleration value in seconds squared per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_seconds_squared_per_degree(&self) -> T {
+		return self.s2prad.clone() * T::from(0.0174532925199433_f64);
+	}
+
+	/// Returns a new inverse angular acceleration value from the given number of seconds squared per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `seconds_squared_per_degree` - Any number-like type, representing a quantity of seconds squared per degree
+	pub fn from_seconds_squared_per_degree(seconds_squared_per_degree: T) -> Self {
+		InverseAngularAcceleration{s2prad: seconds_squared_per_degree * T::from(57.2957795130823_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularAcceleration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularAcceleration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularAcceleration<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularAcceleration<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularAcceleration<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularAcceleration<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_complex::Complex32>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularAcceleration<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularAcceleration<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self * rhs.s2prad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularAcceleration<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularAcceleration<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularAcceleration<num_complex::Complex64>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.clone() * rhs.s2prad.clone()}
+	}
+}
+
+
+
+
+// InverseAngularAcceleration / Time -> InverseAngularVelocity
+/// Dividing a InverseAngularAcceleration by a Time returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<Time<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad / rhs.s}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a Time returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<Time<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad.clone() / rhs.s}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a Time returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&Time<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad / rhs.s.clone()}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a Time returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&Time<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad.clone() / rhs.s.clone()}
+	}
+}
+
+// InverseAngularAcceleration * AngularVelocity -> Time
+/// Multiplying a InverseAngularAcceleration by a AngularVelocity returns a value of type Time
+impl<T> core::ops::Mul<AngularVelocity<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad * rhs.radps}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a AngularVelocity returns a value of type Time
+impl<T> core::ops::Mul<AngularVelocity<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: AngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad.clone() * rhs.radps}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a AngularVelocity returns a value of type Time
+impl<T> core::ops::Mul<&AngularVelocity<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad * rhs.radps.clone()}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a AngularVelocity returns a value of type Time
+impl<T> core::ops::Mul<&AngularVelocity<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad.clone() * rhs.radps.clone()}
+	}
+}
+
+// InverseAngularAcceleration * Frequency -> InverseAngularVelocity
+/// Multiplying a InverseAngularAcceleration by a Frequency returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<Frequency<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a Frequency returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<Frequency<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a Frequency returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&Frequency<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a InverseAngularAcceleration by a Frequency returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&Frequency<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s2prad.clone() * rhs.Hz.clone()}
+	}
+}
+
+// InverseAngularAcceleration / InverseAngularVelocity -> Time
+/// Dividing a InverseAngularAcceleration by a InverseAngularVelocity returns a value of type Time
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad / rhs.s_per_rad}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a InverseAngularVelocity returns a value of type Time
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad.clone() / rhs.s_per_rad}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a InverseAngularVelocity returns a value of type Time
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a InverseAngularAcceleration by a InverseAngularVelocity returns a value of type Time
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &InverseAngularAcceleration<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		Time{s: self.s2prad.clone() / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+// 1/InverseAngularAcceleration -> AngularAcceleration
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self) / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularAcceleration unit value returns a value of type AngularAcceleration
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularAcceleration<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		AngularAcceleration{radps2: T::from(self.clone()) / rhs.s2prad.clone()}
+	}
+}
+
+/// The inverse of angular momentum unit type, defined as seconds per kilogram meters squared radian in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseAngularMomentum<T: NumLike>{
+	/// The value of this Inverse angular momentum in seconds per kilogram meters squared radian
+	pub s_per_kgm2rad: T
+}
+
+impl<T> InverseAngularMomentum<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse angular momentum: "seconds per kilogram meters squared radian"
+	pub fn unit_name() -> &'static str { "seconds per kilogram meters squared radian" }
+	
+	/// Returns the abbreviated name or symbol of inverse angular momentum: "s/kg·m²·rad" for seconds per kilogram meters squared radian
+	pub fn unit_symbol() -> &'static str { "s/kg·m²·rad" }
+	
+	/// Returns a new inverse angular momentum value from the given number of seconds per kilogram meters squared radian
+	///
+	/// # Arguments
+	/// * `s_per_kgm2rad` - Any number-like type, representing a quantity of seconds per kilogram meters squared radian
+	pub fn from_s_per_kgm2rad(s_per_kgm2rad: T) -> Self { InverseAngularMomentum{s_per_kgm2rad: s_per_kgm2rad} }
+	
+	/// Returns a copy of this inverse angular momentum value in seconds per kilogram meters squared radian
+	pub fn to_s_per_kgm2rad(&self) -> T { self.s_per_kgm2rad.clone() }
+
+	/// Returns a new inverse angular momentum value from the given number of seconds per kilogram meters squared radian
+	///
+	/// # Arguments
+	/// * `seconds_per_kilogram_meters_squared_radian` - Any number-like type, representing a quantity of seconds per kilogram meters squared radian
+	pub fn from_seconds_per_kilogram_meters_squared_radian(seconds_per_kilogram_meters_squared_radian: T) -> Self { InverseAngularMomentum{s_per_kgm2rad: seconds_per_kilogram_meters_squared_radian} }
+	
+	/// Returns a copy of this inverse angular momentum value in seconds per kilogram meters squared radian
+	pub fn to_seconds_per_kilogram_meters_squared_radian(&self) -> T { self.s_per_kgm2rad.clone() }
+
+}
+
+impl<T> fmt::Display for InverseAngularMomentum<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.s_per_kgm2rad, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseAngularMomentum<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse angular momentum value in seconds per gram cm squared radian
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s_per_gcm2rad(&self) -> T {
+		return self.s_per_kgm2rad.clone() * T::from(1e-07_f64);
+	}
+
+	/// Returns a new inverse angular momentum value from the given number of seconds per gram cm squared radian
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s_per_gcm2rad` - Any number-like type, representing a quantity of seconds per gram cm squared radian
+	pub fn from_s_per_gcm2rad(s_per_gcm2rad: T) -> Self {
+		InverseAngularMomentum{s_per_kgm2rad: s_per_gcm2rad * T::from(10000000.0_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularMomentum<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularMomentum<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularMomentum<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularMomentum<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularMomentum<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularMomentum<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularMomentum<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularMomentum<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularMomentum<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularMomentum<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularMomentum<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self * rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularMomentum<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.clone() * rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+
+
+
+// InverseAngularMomentum / InverseMomentOfInertia -> InverseAngularVelocity
+/// Dividing a InverseAngularMomentum by a InverseMomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<InverseMomentOfInertia<T>> for InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad / rhs.per_kgm2}
+	}
+}
+/// Dividing a InverseAngularMomentum by a InverseMomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<InverseMomentOfInertia<T>> for &InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad.clone() / rhs.per_kgm2}
+	}
+}
+/// Dividing a InverseAngularMomentum by a InverseMomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&InverseMomentOfInertia<T>> for InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad / rhs.per_kgm2.clone()}
+	}
+}
+/// Dividing a InverseAngularMomentum by a InverseMomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&InverseMomentOfInertia<T>> for &InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad.clone() / rhs.per_kgm2.clone()}
+	}
+}
+
+// InverseAngularMomentum * MomentOfInertia -> InverseAngularVelocity
+/// Multiplying a InverseAngularMomentum by a MomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<MomentOfInertia<T>> for InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad * rhs.kgm2}
+	}
+}
+/// Multiplying a InverseAngularMomentum by a MomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<MomentOfInertia<T>> for &InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: MomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad.clone() * rhs.kgm2}
+	}
+}
+/// Multiplying a InverseAngularMomentum by a MomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&MomentOfInertia<T>> for InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &MomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad * rhs.kgm2.clone()}
+	}
+}
+/// Multiplying a InverseAngularMomentum by a MomentOfInertia returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&MomentOfInertia<T>> for &InverseAngularMomentum<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &MomentOfInertia<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.s_per_kgm2rad.clone() * rhs.kgm2.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// 1/InverseAngularMomentum -> AngularMomentum
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularMomentum unit value returns a value of type AngularMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: T::from(self.clone()) / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+/// The inverse of angular velocity unit type, defined as seconds per radian in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseAngularVelocity<T: NumLike>{
+	/// The value of this Inverse angular velocity in seconds per radian
+	pub s_per_rad: T
+}
+
+impl<T> InverseAngularVelocity<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse angular velocity: "seconds per radian"
+	pub fn unit_name() -> &'static str { "seconds per radian" }
+	
+	/// Returns the abbreviated name or symbol of inverse angular velocity: "s/rad" for seconds per radian
+	pub fn unit_symbol() -> &'static str { "s/rad" }
+	
+	/// Returns a new inverse angular velocity value from the given number of seconds per radian
+	///
+	/// # Arguments
+	/// * `s_per_rad` - Any number-like type, representing a quantity of seconds per radian
+	pub fn from_s_per_rad(s_per_rad: T) -> Self { InverseAngularVelocity{s_per_rad: s_per_rad} }
+	
+	/// Returns a copy of this inverse angular velocity value in seconds per radian
+	pub fn to_s_per_rad(&self) -> T { self.s_per_rad.clone() }
+
+	/// Returns a new inverse angular velocity value from the given number of seconds per radian
+	///
+	/// # Arguments
+	/// * `seconds_per_radian` - Any number-like type, representing a quantity of seconds per radian
+	pub fn from_seconds_per_radian(seconds_per_radian: T) -> Self { InverseAngularVelocity{s_per_rad: seconds_per_radian} }
+	
+	/// Returns a copy of this inverse angular velocity value in seconds per radian
+	pub fn to_seconds_per_radian(&self) -> T { self.s_per_rad.clone() }
+
+}
+
+impl<T> fmt::Display for InverseAngularVelocity<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.s_per_rad, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseAngularVelocity<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse angular velocity value in seconds per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_seconds_per_degree(&self) -> T {
+		return self.s_per_rad.clone() * T::from(0.0174532925199433_f64);
+	}
+
+	/// Returns a new inverse angular velocity value from the given number of seconds per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `seconds_per_degree` - Any number-like type, representing a quantity of seconds per degree
+	pub fn from_seconds_per_degree(seconds_per_degree: T) -> Self {
+		InverseAngularVelocity{s_per_rad: seconds_per_degree * T::from(57.2957795130823_f64)}
+	}
+
+	/// Returns a copy of this inverse angular velocity value in seconds per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s_per_deg(&self) -> T {
+		return self.s_per_rad.clone() * T::from(0.0174532925199433_f64);
+	}
+
+	/// Returns a new inverse angular velocity value from the given number of seconds per degree
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s_per_deg` - Any number-like type, representing a quantity of seconds per degree
+	pub fn from_s_per_deg(s_per_deg: T) -> Self {
+		InverseAngularVelocity{s_per_rad: s_per_deg * T::from(57.2957795130823_f64)}
+	}
+
+	/// Returns a copy of this inverse angular velocity value in seconds per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_spr(&self) -> T {
+		return self.s_per_rad.clone() * T::from(6.28318530717959_f64);
+	}
+
+	/// Returns a new inverse angular velocity value from the given number of seconds per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `spr` - Any number-like type, representing a quantity of seconds per revolution
+	pub fn from_spr(spr: T) -> Self {
+		InverseAngularVelocity{s_per_rad: spr * T::from(0.159154943091895_f64)}
+	}
+
+	/// Returns a copy of this inverse angular velocity value in minutes per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_mpr(&self) -> T {
+		return self.s_per_rad.clone() * T::from(0.10471975511966_f64);
+	}
+
+	/// Returns a new inverse angular velocity value from the given number of minutes per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `mpr` - Any number-like type, representing a quantity of minutes per revolution
+	pub fn from_mpr(mpr: T) -> Self {
+		InverseAngularVelocity{s_per_rad: mpr * T::from(9.54929658551372_f64)}
+	}
+
+	/// Returns a copy of this inverse angular velocity value in hours per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_hpr(&self) -> T {
+		return self.s_per_rad.clone() * T::from(0.0017453292519943_f64);
+	}
+
+	/// Returns a new inverse angular velocity value from the given number of hours per revolution
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `hpr` - Any number-like type, representing a quantity of hours per revolution
+	pub fn from_hpr(hpr: T) -> Self {
+		InverseAngularVelocity{s_per_rad: hpr * T::from(572.957795130823_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularVelocity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularVelocity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularVelocity<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseAngularVelocity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularVelocity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseAngularVelocity<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularVelocity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseAngularVelocity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseAngularVelocity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseAngularVelocity<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularVelocity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularVelocity<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularVelocity<num_complex::Complex32>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularVelocity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularVelocity<num_complex::Complex32>;
+	fn mul(self, rhs: InverseAngularVelocity<num_complex::Complex32>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularVelocity<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseAngularVelocity<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_complex::Complex32>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularVelocity<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseAngularVelocity<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_complex::Complex32>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularVelocity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularVelocity<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularVelocity<num_complex::Complex64>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseAngularVelocity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularVelocity<num_complex::Complex64>;
+	fn mul(self, rhs: InverseAngularVelocity<num_complex::Complex64>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularVelocity<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseAngularVelocity<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_complex::Complex64>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseAngularVelocity<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseAngularVelocity<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseAngularVelocity<num_complex::Complex64>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+
+
+
+// InverseAngularVelocity * Time -> InverseAngularAcceleration
+/// Multiplying a InverseAngularVelocity by a Time returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Mul<Time<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad * rhs.s}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Time returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Mul<Time<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad.clone() * rhs.s}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Time returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Mul<&Time<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad * rhs.s.clone()}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Time returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Mul<&Time<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad.clone() * rhs.s.clone()}
+	}
+}
+
+// InverseAngularVelocity / Time -> InverseAngle
+/// Dividing a InverseAngularVelocity by a Time returns a value of type InverseAngle
+impl<T> core::ops::Div<Time<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad / rhs.s}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Time returns a value of type InverseAngle
+impl<T> core::ops::Div<Time<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad.clone() / rhs.s}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Time returns a value of type InverseAngle
+impl<T> core::ops::Div<&Time<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad / rhs.s.clone()}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Time returns a value of type InverseAngle
+impl<T> core::ops::Div<&Time<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad.clone() / rhs.s.clone()}
+	}
+}
+
+// InverseAngularVelocity * Angle -> Time
+/// Multiplying a InverseAngularVelocity by a Angle returns a value of type Time
+impl<T> core::ops::Mul<Angle<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Angle<T>) -> Self::Output {
+		Time{s: self.s_per_rad * rhs.rad}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Angle returns a value of type Time
+impl<T> core::ops::Mul<Angle<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Angle<T>) -> Self::Output {
+		Time{s: self.s_per_rad.clone() * rhs.rad}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Angle returns a value of type Time
+impl<T> core::ops::Mul<&Angle<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Angle<T>) -> Self::Output {
+		Time{s: self.s_per_rad * rhs.rad.clone()}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Angle returns a value of type Time
+impl<T> core::ops::Mul<&Angle<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Angle<T>) -> Self::Output {
+		Time{s: self.s_per_rad.clone() * rhs.rad.clone()}
+	}
+}
+
+// InverseAngularVelocity / InverseAngle -> Time
+/// Dividing a InverseAngularVelocity by a InverseAngle returns a value of type Time
+impl<T> core::ops::Div<InverseAngle<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseAngle<T>) -> Self::Output {
+		Time{s: self.s_per_rad / rhs.per_rad}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngle returns a value of type Time
+impl<T> core::ops::Div<InverseAngle<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseAngle<T>) -> Self::Output {
+		Time{s: self.s_per_rad.clone() / rhs.per_rad}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngle returns a value of type Time
+impl<T> core::ops::Div<&InverseAngle<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseAngle<T>) -> Self::Output {
+		Time{s: self.s_per_rad / rhs.per_rad.clone()}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngle returns a value of type Time
+impl<T> core::ops::Div<&InverseAngle<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseAngle<T>) -> Self::Output {
+		Time{s: self.s_per_rad.clone() / rhs.per_rad.clone()}
+	}
+}
+
+// InverseAngularVelocity * AngularAcceleration -> Frequency
+/// Multiplying a InverseAngularVelocity by a AngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Mul<AngularAcceleration<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad * rhs.radps2}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a AngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Mul<AngularAcceleration<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: AngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad.clone() * rhs.radps2}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a AngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Mul<&AngularAcceleration<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad * rhs.radps2.clone()}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a AngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Mul<&AngularAcceleration<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &AngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad.clone() * rhs.radps2.clone()}
+	}
+}
+
+// InverseAngularVelocity * Frequency -> InverseAngle
+/// Multiplying a InverseAngularVelocity by a Frequency returns a value of type InverseAngle
+impl<T> core::ops::Mul<Frequency<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Frequency returns a value of type InverseAngle
+impl<T> core::ops::Mul<Frequency<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Frequency returns a value of type InverseAngle
+impl<T> core::ops::Mul<&Frequency<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a Frequency returns a value of type InverseAngle
+impl<T> core::ops::Mul<&Frequency<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngle<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngle{per_rad: self.s_per_rad.clone() * rhs.Hz.clone()}
+	}
+}
+
+// InverseAngularVelocity / Frequency -> InverseAngularAcceleration
+/// Dividing a InverseAngularVelocity by a Frequency returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<Frequency<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad / rhs.Hz}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Frequency returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<Frequency<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad.clone() / rhs.Hz}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Frequency returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&Frequency<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad / rhs.Hz.clone()}
+	}
+}
+/// Dividing a InverseAngularVelocity by a Frequency returns a value of type InverseAngularAcceleration
+impl<T> core::ops::Div<&Frequency<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularAcceleration<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAngularAcceleration{s2prad: self.s_per_rad.clone() / rhs.Hz.clone()}
+	}
+}
+
+// InverseAngularVelocity / InverseAngularAcceleration -> Frequency
+/// Dividing a InverseAngularVelocity by a InverseAngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad / rhs.s2prad}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<InverseAngularAcceleration<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseAngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad.clone() / rhs.s2prad}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad / rhs.s2prad.clone()}
+	}
+}
+/// Dividing a InverseAngularVelocity by a InverseAngularAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<&InverseAngularAcceleration<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseAngularAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_rad.clone() / rhs.s2prad.clone()}
+	}
+}
+
+// InverseAngularVelocity * InverseMomentOfInertia -> InverseAngularMomentum
+/// Multiplying a InverseAngularVelocity by a InverseMomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<InverseMomentOfInertia<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad * rhs.per_kgm2}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a InverseMomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<InverseMomentOfInertia<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad.clone() * rhs.per_kgm2}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a InverseMomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<&InverseMomentOfInertia<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad * rhs.per_kgm2.clone()}
+	}
+}
+/// Multiplying a InverseAngularVelocity by a InverseMomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<&InverseMomentOfInertia<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: &InverseMomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad.clone() * rhs.per_kgm2.clone()}
+	}
+}
+
+// InverseAngularVelocity / MomentOfInertia -> InverseAngularMomentum
+/// Dividing a InverseAngularVelocity by a MomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<MomentOfInertia<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad / rhs.kgm2}
+	}
+}
+/// Dividing a InverseAngularVelocity by a MomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<MomentOfInertia<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: MomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad.clone() / rhs.kgm2}
+	}
+}
+/// Dividing a InverseAngularVelocity by a MomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&MomentOfInertia<T>> for InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &MomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad / rhs.kgm2.clone()}
+	}
+}
+/// Dividing a InverseAngularVelocity by a MomentOfInertia returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&MomentOfInertia<T>> for &InverseAngularVelocity<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &MomentOfInertia<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.s_per_rad.clone() / rhs.kgm2.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+// 1/InverseAngularVelocity -> AngularVelocity
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self) / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseAngularVelocity unit value returns a value of type AngularVelocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularVelocity{radps: T::from(self.clone()) / rhs.s_per_rad.clone()}
+	}
+}
+
+/// The inverse of energy unit type, defined as inverse joules in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseEnergy<T: NumLike>{
+	/// The value of this Inverse energy in inverse joules
+	pub per_J: T
+}
+
+impl<T> InverseEnergy<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse energy: "inverse joules"
+	pub fn unit_name() -> &'static str { "inverse joules" }
+	
+	/// Returns the abbreviated name or symbol of inverse energy: "1/J" for inverse joules
+	pub fn unit_symbol() -> &'static str { "1/J" }
+	
+	/// Returns a new inverse energy value from the given number of inverse joules
+	///
+	/// # Arguments
+	/// * `per_J` - Any number-like type, representing a quantity of inverse joules
+	pub fn from_per_J(per_J: T) -> Self { InverseEnergy{per_J: per_J} }
+	
+	/// Returns a copy of this inverse energy value in inverse joules
+	pub fn to_per_J(&self) -> T { self.per_J.clone() }
+
+	/// Returns a new inverse energy value from the given number of inverse joules
+	///
+	/// # Arguments
+	/// * `per_joule` - Any number-like type, representing a quantity of inverse joules
+	pub fn from_per_joule(per_joule: T) -> Self { InverseEnergy{per_J: per_joule} }
+	
+	/// Returns a copy of this inverse energy value in inverse joules
+	pub fn to_per_joule(&self) -> T { self.per_J.clone() }
+
+}
+
+impl<T> fmt::Display for InverseEnergy<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_J, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseEnergy<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse energy value in inverse millijoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mJ(&self) -> T {
+		return self.per_J.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse millijoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mJ` - Any number-like type, representing a quantity of inverse millijoules
+	pub fn from_per_mJ(per_mJ: T) -> Self {
+		InverseEnergy{per_J: per_mJ * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse microjoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uJ(&self) -> T {
+		return self.per_J.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse microjoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uJ` - Any number-like type, representing a quantity of inverse microjoules
+	pub fn from_per_uJ(per_uJ: T) -> Self {
+		InverseEnergy{per_J: per_uJ * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse nanojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nJ(&self) -> T {
+		return self.per_J.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse nanojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nJ` - Any number-like type, representing a quantity of inverse nanojoules
+	pub fn from_per_nJ(per_nJ: T) -> Self {
+		InverseEnergy{per_J: per_nJ * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse kilojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kJ(&self) -> T {
+		return self.per_J.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse kilojoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kJ` - Any number-like type, representing a quantity of inverse kilojoules
+	pub fn from_per_kJ(per_kJ: T) -> Self {
+		InverseEnergy{per_J: per_kJ * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse megajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MJ(&self) -> T {
+		return self.per_J.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse megajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MJ` - Any number-like type, representing a quantity of inverse megajoules
+	pub fn from_per_MJ(per_MJ: T) -> Self {
+		InverseEnergy{per_J: per_MJ * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse gigajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GJ(&self) -> T {
+		return self.per_J.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse gigajoules
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GJ` - Any number-like type, representing a quantity of inverse gigajoules
+	pub fn from_per_GJ(per_GJ: T) -> Self {
+		InverseEnergy{per_J: per_GJ * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse calories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_cal(&self) -> T {
+		return self.per_J.clone() * T::from(4.184_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse calories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_cal` - Any number-like type, representing a quantity of inverse calories
+	pub fn from_per_cal(per_cal: T) -> Self {
+		InverseEnergy{per_J: per_cal * T::from(0.239005736137667_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse kilocalories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kcal(&self) -> T {
+		return self.per_J.clone() * T::from(4184.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse kilocalories
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kcal` - Any number-like type, representing a quantity of inverse kilocalories
+	pub fn from_per_kcal(per_kcal: T) -> Self {
+		InverseEnergy{per_J: per_kcal * T::from(0.0002390057361376_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse watt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_Whr(&self) -> T {
+		return self.per_J.clone() * T::from(3600.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse watt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_Whr` - Any number-like type, representing a quantity of inverse watt-hours
+	pub fn from_per_Whr(per_Whr: T) -> Self {
+		InverseEnergy{per_J: per_Whr * T::from(0.0002777777777777_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse kilowatt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kWhr(&self) -> T {
+		return self.per_J.clone() * T::from(3600000.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse kilowatt-hours
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kWhr` - Any number-like type, representing a quantity of inverse kilowatt-hours
+	pub fn from_per_kWhr(per_kWhr: T) -> Self {
+		InverseEnergy{per_J: per_kWhr * T::from(2.78e-07_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse electron-volts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_eV(&self) -> T {
+		return self.per_J.clone() * T::from(1.6e-19_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse electron-volts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_eV` - Any number-like type, representing a quantity of inverse electron-volts
+	pub fn from_per_eV(per_eV: T) -> Self {
+		InverseEnergy{per_J: per_eV * T::from(6.24e+18_f64)}
+	}
+
+	/// Returns a copy of this inverse energy value in inverse british thermal units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_BTU(&self) -> T {
+		return self.per_J.clone() * T::from(1055.0_f64);
+	}
+
+	/// Returns a new inverse energy value from the given number of inverse british thermal units
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_BTU` - Any number-like type, representing a quantity of inverse british thermal units
+	pub fn from_per_BTU(per_BTU: T) -> Self {
+		InverseEnergy{per_J: per_BTU * T::from(0.0009478672985781_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseEnergy<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseEnergy<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseEnergy<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseEnergy<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseEnergy<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseEnergy<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseEnergy<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseEnergy<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseEnergy<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseEnergy<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseEnergy<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseEnergy<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseEnergy<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseEnergy<num_complex::Complex32>;
+	fn mul(self, rhs: InverseEnergy<num_complex::Complex32>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseEnergy<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseEnergy<num_complex::Complex32>;
+	fn mul(self, rhs: InverseEnergy<num_complex::Complex32>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseEnergy<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseEnergy<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseEnergy<num_complex::Complex32>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseEnergy<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseEnergy<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseEnergy<num_complex::Complex32>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseEnergy<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseEnergy<num_complex::Complex64>;
+	fn mul(self, rhs: InverseEnergy<num_complex::Complex64>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseEnergy<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseEnergy<num_complex::Complex64>;
+	fn mul(self, rhs: InverseEnergy<num_complex::Complex64>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseEnergy<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseEnergy<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseEnergy<num_complex::Complex64>) -> Self::Output {
+		InverseEnergy{per_J: self * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseEnergy<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseEnergy<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseEnergy<num_complex::Complex64>) -> Self::Output {
+		InverseEnergy{per_J: self.clone() * rhs.per_J.clone()}
+	}
+}
+
+
+
+
+// InverseEnergy * Current -> InverseMagneticFlux
+/// Multiplying a InverseEnergy by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<Current<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J * rhs.A}
+	}
+}
+/// Multiplying a InverseEnergy by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<Current<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J.clone() * rhs.A}
+	}
+}
+/// Multiplying a InverseEnergy by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&Current<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J * rhs.A.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&Current<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J.clone() * rhs.A.clone()}
+	}
+}
+
+// InverseEnergy * Distance -> InverseForce
+/// Multiplying a InverseEnergy by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<Distance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J * rhs.m}
+	}
+}
+/// Multiplying a InverseEnergy by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<Distance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J.clone() * rhs.m}
+	}
+}
+/// Multiplying a InverseEnergy by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<&Distance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J * rhs.m.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<&Distance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J.clone() * rhs.m.clone()}
+	}
+}
+
+// InverseEnergy / InverseCurrent -> InverseMagneticFlux
+/// Dividing a InverseEnergy by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<InverseCurrent<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J / rhs.per_A}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<InverseCurrent<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J.clone() / rhs.per_A}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&InverseCurrent<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J / rhs.per_A.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&InverseCurrent<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_J.clone() / rhs.per_A.clone()}
+	}
+}
+
+// InverseEnergy / InverseDistance -> InverseForce
+/// Dividing a InverseEnergy by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<InverseDistance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J / rhs.per_m}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<InverseDistance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J.clone() / rhs.per_m}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&InverseDistance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J / rhs.per_m.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&InverseDistance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_J.clone() / rhs.per_m.clone()}
+	}
+}
+
+// InverseEnergy * Time -> InversePower
+/// Multiplying a InverseEnergy by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<Time<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_J * rhs.s}
+	}
+}
+/// Multiplying a InverseEnergy by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<Time<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_J.clone() * rhs.s}
+	}
+}
+/// Multiplying a InverseEnergy by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<&Time<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_J * rhs.s.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<&Time<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_J.clone() * rhs.s.clone()}
+	}
+}
+
+// InverseEnergy * Charge -> InverseVoltage
+/// Multiplying a InverseEnergy by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Charge<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J * rhs.C}
+	}
+}
+/// Multiplying a InverseEnergy by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Charge<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J.clone() * rhs.C}
+	}
+}
+/// Multiplying a InverseEnergy by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Charge<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J * rhs.C.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Charge<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J.clone() * rhs.C.clone()}
+	}
+}
+
+// InverseEnergy / InverseCharge -> InverseVoltage
+/// Dividing a InverseEnergy by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCharge<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J / rhs.per_C}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCharge<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J.clone() / rhs.per_C}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCharge<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J / rhs.per_C.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCharge<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_J.clone() / rhs.per_C.clone()}
+	}
+}
+
+// InverseEnergy / InverseMagneticFlux -> InverseCurrent
+/// Dividing a InverseEnergy by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J / rhs.per_Wb}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J.clone() / rhs.per_Wb}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J / rhs.per_Wb.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J.clone() / rhs.per_Wb.clone()}
+	}
+}
+
+// InverseEnergy / InverseVoltage -> InverseCharge
+/// Dividing a InverseEnergy by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<InverseVoltage<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J / rhs.per_V}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<InverseVoltage<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J.clone() / rhs.per_V}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<&InverseVoltage<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J / rhs.per_V.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<&InverseVoltage<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J.clone() / rhs.per_V.clone()}
+	}
+}
+
+// InverseEnergy * MagneticFlux -> InverseCurrent
+/// Multiplying a InverseEnergy by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<MagneticFlux<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J * rhs.Wb}
+	}
+}
+/// Multiplying a InverseEnergy by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<MagneticFlux<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J.clone() * rhs.Wb}
+	}
+}
+/// Multiplying a InverseEnergy by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&MagneticFlux<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J * rhs.Wb.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&MagneticFlux<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_J.clone() * rhs.Wb.clone()}
+	}
+}
+
+// InverseEnergy * Voltage -> InverseCharge
+/// Multiplying a InverseEnergy by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<Voltage<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J * rhs.V}
+	}
+}
+/// Multiplying a InverseEnergy by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<Voltage<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J.clone() * rhs.V}
+	}
+}
+/// Multiplying a InverseEnergy by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<&Voltage<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J * rhs.V.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<&Voltage<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_J.clone() * rhs.V.clone()}
+	}
+}
+
+// InverseEnergy / InverseVolume -> InversePressure
+/// Dividing a InverseEnergy by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<InverseVolume<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J / rhs.per_m3}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<InverseVolume<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J.clone() / rhs.per_m3}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseVolume<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J / rhs.per_m3.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseVolume<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J.clone() / rhs.per_m3.clone()}
+	}
+}
+
+// InverseEnergy * Volume -> InversePressure
+/// Multiplying a InverseEnergy by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<Volume<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J * rhs.m3}
+	}
+}
+/// Multiplying a InverseEnergy by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<Volume<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J.clone() * rhs.m3}
+	}
+}
+/// Multiplying a InverseEnergy by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<&Volume<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J * rhs.m3.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<&Volume<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_J.clone() * rhs.m3.clone()}
+	}
+}
+
+// InverseEnergy * Force -> InverseDistance
+/// Multiplying a InverseEnergy by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<Force<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J * rhs.N}
+	}
+}
+/// Multiplying a InverseEnergy by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<Force<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J.clone() * rhs.N}
+	}
+}
+/// Multiplying a InverseEnergy by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Force<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J * rhs.N.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Force<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J.clone() * rhs.N.clone()}
+	}
+}
+
+// InverseEnergy / Frequency -> InversePower
+/// Dividing a InverseEnergy by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<Frequency<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_J / rhs.Hz}
+	}
+}
+/// Dividing a InverseEnergy by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<Frequency<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_J.clone() / rhs.Hz}
+	}
+}
+/// Dividing a InverseEnergy by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<&Frequency<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_J / rhs.Hz.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<&Frequency<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_J.clone() / rhs.Hz.clone()}
+	}
+}
+
+// InverseEnergy / InverseForce -> InverseDistance
+/// Dividing a InverseEnergy by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseForce<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J / rhs.per_N}
+	}
+}
+/// Dividing a InverseEnergy by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseForce<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InverseEnergy by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseForce<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseForce<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_J.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InverseEnergy / InverseMomentum -> TimePerDistance
+/// Dividing a InverseEnergy by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMomentum<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMomentum<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMomentum<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMomentum<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// InverseEnergy / InversePower -> Frequency
+/// Dividing a InverseEnergy by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<InversePower<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_J / rhs.per_W}
+	}
+}
+/// Dividing a InverseEnergy by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<InversePower<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_J.clone() / rhs.per_W}
+	}
+}
+/// Dividing a InverseEnergy by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<&InversePower<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_J / rhs.per_W.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<&InversePower<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_J.clone() / rhs.per_W.clone()}
+	}
+}
+
+// InverseEnergy / InversePressure -> InverseVolume
+/// Dividing a InverseEnergy by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<InversePressure<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseEnergy by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<InversePressure<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseEnergy by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<&InversePressure<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseEnergy * Momentum -> TimePerDistance
+/// Multiplying a InverseEnergy by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Momentum<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseEnergy by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Momentum<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J.clone() * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseEnergy by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Momentum<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J * rhs.kgmps.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Momentum<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_J.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// InverseEnergy * Power -> Frequency
+/// Multiplying a InverseEnergy by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<Power<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_J * rhs.W}
+	}
+}
+/// Multiplying a InverseEnergy by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<Power<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_J.clone() * rhs.W}
+	}
+}
+/// Multiplying a InverseEnergy by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<&Power<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_J * rhs.W.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<&Power<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_J.clone() * rhs.W.clone()}
+	}
+}
+
+// InverseEnergy * Pressure -> InverseVolume
+/// Multiplying a InverseEnergy by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<Pressure<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J * rhs.Pa}
+	}
+}
+/// Multiplying a InverseEnergy by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<Pressure<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseEnergy by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<&Pressure<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_J.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseEnergy / TimePerDistance -> InverseMomentum
+/// Dividing a InverseEnergy by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J / rhs.spm}
+	}
+}
+/// Dividing a InverseEnergy by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseEnergy by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseEnergy * Velocity -> InverseMomentum
+/// Multiplying a InverseEnergy by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Velocity<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J * rhs.mps}
+	}
+}
+/// Multiplying a InverseEnergy by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Velocity<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseEnergy by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Velocity<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseEnergy by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_J.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseEnergy / InverseAbsorbedDose -> InverseMass
+/// Dividing a InverseEnergy by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseEnergy by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseEnergy by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// InverseEnergy / InverseDoseEquivalent -> InverseMass
+/// Dividing a InverseEnergy by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a InverseEnergy by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &InverseEnergy<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_J.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseEnergy<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseEnergy<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseEnergy<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseEnergy<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseEnergy<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseEnergy<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+// 1/InverseEnergy -> Energy
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseEnergy<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseEnergy<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_J.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseEnergy unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseEnergy<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_J.clone()}
+	}
+}
+
+/// The inverse of force unit type, defined as inverse newtons in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseForce<T: NumLike>{
+	/// The value of this Inverse force in inverse newtons
+	pub per_N: T
+}
+
+impl<T> InverseForce<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse force: "inverse newtons"
+	pub fn unit_name() -> &'static str { "inverse newtons" }
+	
+	/// Returns the abbreviated name or symbol of inverse force: "1/N" for inverse newtons
+	pub fn unit_symbol() -> &'static str { "1/N" }
+	
+	/// Returns a new inverse force value from the given number of inverse newtons
+	///
+	/// # Arguments
+	/// * `per_N` - Any number-like type, representing a quantity of inverse newtons
+	pub fn from_per_N(per_N: T) -> Self { InverseForce{per_N: per_N} }
+	
+	/// Returns a copy of this inverse force value in inverse newtons
+	pub fn to_per_N(&self) -> T { self.per_N.clone() }
+
+	/// Returns a new inverse force value from the given number of inverse newtons
+	///
+	/// # Arguments
+	/// * `per_newton` - Any number-like type, representing a quantity of inverse newtons
+	pub fn from_per_newton(per_newton: T) -> Self { InverseForce{per_N: per_newton} }
+	
+	/// Returns a copy of this inverse force value in inverse newtons
+	pub fn to_per_newton(&self) -> T { self.per_N.clone() }
+
+}
+
+impl<T> fmt::Display for InverseForce<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_N, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseForce<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse force value in inverse pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_lb(&self) -> T {
+		return self.per_N.clone() * T::from(4.45756819483586_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_lb` - Any number-like type, representing a quantity of inverse pounds
+	pub fn from_per_lb(per_lb: T) -> Self {
+		InverseForce{per_N: per_lb * T::from(0.224337566199999_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse kilogram-force
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kgG(&self) -> T {
+		return self.per_N.clone() * T::from(9.8066500286389_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse kilogram-force
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kgG` - Any number-like type, representing a quantity of inverse kilogram-force
+	pub fn from_per_kgG(per_kgG: T) -> Self {
+		InverseForce{per_N: per_kgG * T::from(0.101971620999999_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse millinewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mN(&self) -> T {
+		return self.per_N.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse millinewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mN` - Any number-like type, representing a quantity of inverse millinewtons
+	pub fn from_per_mN(per_mN: T) -> Self {
+		InverseForce{per_N: per_mN * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse micronewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uN(&self) -> T {
+		return self.per_N.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse micronewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uN` - Any number-like type, representing a quantity of inverse micronewtons
+	pub fn from_per_uN(per_uN: T) -> Self {
+		InverseForce{per_N: per_uN * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse nanonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nN(&self) -> T {
+		return self.per_N.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse nanonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nN` - Any number-like type, representing a quantity of inverse nanonewtons
+	pub fn from_per_nN(per_nN: T) -> Self {
+		InverseForce{per_N: per_nN * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse kilonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kN(&self) -> T {
+		return self.per_N.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse kilonewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kN` - Any number-like type, representing a quantity of inverse kilonewtons
+	pub fn from_per_kN(per_kN: T) -> Self {
+		InverseForce{per_N: per_kN * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse meganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MN(&self) -> T {
+		return self.per_N.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse meganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MN` - Any number-like type, representing a quantity of inverse meganewtons
+	pub fn from_per_MN(per_MN: T) -> Self {
+		InverseForce{per_N: per_MN * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse force value in inverse giganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GN(&self) -> T {
+		return self.per_N.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse force value from the given number of inverse giganewtons
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GN` - Any number-like type, representing a quantity of inverse giganewtons
+	pub fn from_per_GN(per_GN: T) -> Self {
+		InverseForce{per_N: per_GN * T::from(1e-09_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseForce<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseForce<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseForce<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseForce<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseForce<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseForce<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseForce<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseForce<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseForce<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseForce<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseForce<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseForce<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseForce<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseForce<num_complex::Complex32>;
+	fn mul(self, rhs: InverseForce<num_complex::Complex32>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseForce<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseForce<num_complex::Complex32>;
+	fn mul(self, rhs: InverseForce<num_complex::Complex32>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseForce<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseForce<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseForce<num_complex::Complex32>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseForce<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseForce<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseForce<num_complex::Complex32>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseForce<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseForce<num_complex::Complex64>;
+	fn mul(self, rhs: InverseForce<num_complex::Complex64>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseForce<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseForce<num_complex::Complex64>;
+	fn mul(self, rhs: InverseForce<num_complex::Complex64>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseForce<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseForce<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseForce<num_complex::Complex64>) -> Self::Output {
+		InverseForce{per_N: self * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseForce<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseForce<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseForce<num_complex::Complex64>) -> Self::Output {
+		InverseForce{per_N: self.clone() * rhs.per_N.clone()}
+	}
+}
+
+
+
+
+// InverseForce / Distance -> InverseEnergy
+/// Dividing a InverseForce by a Distance returns a value of type InverseEnergy
+impl<T> core::ops::Div<Distance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Distance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N / rhs.m}
+	}
+}
+/// Dividing a InverseForce by a Distance returns a value of type InverseEnergy
+impl<T> core::ops::Div<Distance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Distance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N.clone() / rhs.m}
+	}
+}
+/// Dividing a InverseForce by a Distance returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Distance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Distance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N / rhs.m.clone()}
+	}
+}
+/// Dividing a InverseForce by a Distance returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Distance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Distance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N.clone() / rhs.m.clone()}
+	}
+}
+
+// InverseForce * InverseDistance -> InverseEnergy
+/// Multiplying a InverseForce by a InverseDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseDistance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N * rhs.per_m}
+	}
+}
+/// Multiplying a InverseForce by a InverseDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseDistance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a InverseForce by a InverseDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseDistance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a InverseForce by a InverseDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseDistance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_N.clone() * rhs.per_m.clone()}
+	}
+}
+
+// InverseForce / InverseMass -> InverseAcceleration
+/// Dividing a InverseForce by a InverseMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseMass<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N / rhs.per_kg}
+	}
+}
+/// Dividing a InverseForce by a InverseMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseMass<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a InverseForce by a InverseMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseMass<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseMass<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N.clone() / rhs.per_kg.clone()}
+	}
+}
+
+// InverseForce * Mass -> InverseAcceleration
+/// Multiplying a InverseForce by a Mass returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Mass<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N * rhs.kg}
+	}
+}
+/// Multiplying a InverseForce by a Mass returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Mass<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N.clone() * rhs.kg}
+	}
+}
+/// Multiplying a InverseForce by a Mass returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Mass<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N * rhs.kg.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Mass returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Mass<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_N.clone() * rhs.kg.clone()}
+	}
+}
+
+// InverseForce / Time -> InverseMomentum
+/// Dividing a InverseForce by a Time returns a value of type InverseMomentum
+impl<T> core::ops::Div<Time<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N / rhs.s}
+	}
+}
+/// Dividing a InverseForce by a Time returns a value of type InverseMomentum
+impl<T> core::ops::Div<Time<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N.clone() / rhs.s}
+	}
+}
+/// Dividing a InverseForce by a Time returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Time<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N / rhs.s.clone()}
+	}
+}
+/// Dividing a InverseForce by a Time returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Time<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N.clone() / rhs.s.clone()}
+	}
+}
+
+// InverseForce * Area -> InversePressure
+/// Multiplying a InverseForce by a Area returns a value of type InversePressure
+impl<T> core::ops::Mul<Area<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N * rhs.m2}
+	}
+}
+/// Multiplying a InverseForce by a Area returns a value of type InversePressure
+impl<T> core::ops::Mul<Area<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N.clone() * rhs.m2}
+	}
+}
+/// Multiplying a InverseForce by a Area returns a value of type InversePressure
+impl<T> core::ops::Mul<&Area<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N * rhs.m2.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Area returns a value of type InversePressure
+impl<T> core::ops::Mul<&Area<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N.clone() * rhs.m2.clone()}
+	}
+}
+
+// InverseForce / InverseArea -> InversePressure
+/// Dividing a InverseForce by a InverseArea returns a value of type InversePressure
+impl<T> core::ops::Div<InverseArea<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N / rhs.per_m2}
+	}
+}
+/// Dividing a InverseForce by a InverseArea returns a value of type InversePressure
+impl<T> core::ops::Div<InverseArea<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N.clone() / rhs.per_m2}
+	}
+}
+/// Dividing a InverseForce by a InverseArea returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseArea<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N / rhs.per_m2.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseArea returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseArea<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_N.clone() / rhs.per_m2.clone()}
+	}
+}
+
+// InverseForce * Acceleration -> InverseMass
+/// Multiplying a InverseForce by a Acceleration returns a value of type InverseMass
+impl<T> core::ops::Mul<Acceleration<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N * rhs.mps2}
+	}
+}
+/// Multiplying a InverseForce by a Acceleration returns a value of type InverseMass
+impl<T> core::ops::Mul<Acceleration<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a InverseForce by a Acceleration returns a value of type InverseMass
+impl<T> core::ops::Mul<&Acceleration<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Acceleration returns a value of type InverseMass
+impl<T> core::ops::Mul<&Acceleration<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N.clone() * rhs.mps2.clone()}
+	}
+}
+
+// InverseForce * Energy -> Distance
+/// Multiplying a InverseForce by a Energy returns a value of type Distance
+impl<T> core::ops::Mul<Energy<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Distance{m: self.per_N * rhs.J}
+	}
+}
+/// Multiplying a InverseForce by a Energy returns a value of type Distance
+impl<T> core::ops::Mul<Energy<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() * rhs.J}
+	}
+}
+/// Multiplying a InverseForce by a Energy returns a value of type Distance
+impl<T> core::ops::Mul<&Energy<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Distance{m: self.per_N * rhs.J.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Energy returns a value of type Distance
+impl<T> core::ops::Mul<&Energy<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() * rhs.J.clone()}
+	}
+}
+
+// InverseForce * Torque -> Distance
+/// Multiplying a InverseForce by a Torque returns a value of type Distance
+impl<T> core::ops::Mul<Torque<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Distance{m: self.per_N * rhs.Nm}
+	}
+}
+/// Multiplying a InverseForce by a Torque returns a value of type Distance
+impl<T> core::ops::Mul<Torque<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InverseForce by a Torque returns a value of type Distance
+impl<T> core::ops::Mul<&Torque<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Distance{m: self.per_N * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Torque returns a value of type Distance
+impl<T> core::ops::Mul<&Torque<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InverseForce * Frequency -> InverseMomentum
+/// Multiplying a InverseForce by a Frequency returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Frequency<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N * rhs.Hz}
+	}
+}
+/// Multiplying a InverseForce by a Frequency returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Frequency<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a InverseForce by a Frequency returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Frequency<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Frequency returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Frequency<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_N.clone() * rhs.Hz.clone()}
+	}
+}
+
+// InverseForce / InverseAcceleration -> InverseMass
+/// Dividing a InverseForce by a InverseAcceleration returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAcceleration<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N / rhs.s2pm}
+	}
+}
+/// Dividing a InverseForce by a InverseAcceleration returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAcceleration<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a InverseForce by a InverseAcceleration returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAcceleration<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseAcceleration returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_N.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// InverseForce / InverseEnergy -> Distance
+/// Dividing a InverseForce by a InverseEnergy returns a value of type Distance
+impl<T> core::ops::Div<InverseEnergy<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Distance{m: self.per_N / rhs.per_J}
+	}
+}
+/// Dividing a InverseForce by a InverseEnergy returns a value of type Distance
+impl<T> core::ops::Div<InverseEnergy<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InverseForce by a InverseEnergy returns a value of type Distance
+impl<T> core::ops::Div<&InverseEnergy<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Distance{m: self.per_N / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseEnergy returns a value of type Distance
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InverseForce / InverseTorque -> Distance
+/// Dividing a InverseForce by a InverseTorque returns a value of type Distance
+impl<T> core::ops::Div<InverseTorque<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Distance{m: self.per_N / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseForce by a InverseTorque returns a value of type Distance
+impl<T> core::ops::Div<InverseTorque<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseForce by a InverseTorque returns a value of type Distance
+impl<T> core::ops::Div<&InverseTorque<T>> for InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Distance{m: self.per_N / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseTorque returns a value of type Distance
+impl<T> core::ops::Div<&InverseTorque<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Distance{m: self.per_N.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InverseForce / InverseMomentum -> Time
+/// Dividing a InverseForce by a InverseMomentum returns a value of type Time
+impl<T> core::ops::Div<InverseMomentum<T>> for InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Time{s: self.per_N / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseForce by a InverseMomentum returns a value of type Time
+impl<T> core::ops::Div<InverseMomentum<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Time{s: self.per_N.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseForce by a InverseMomentum returns a value of type Time
+impl<T> core::ops::Div<&InverseMomentum<T>> for InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Time{s: self.per_N / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a InverseForce by a InverseMomentum returns a value of type Time
+impl<T> core::ops::Div<&InverseMomentum<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Time{s: self.per_N.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// InverseForce / InversePower -> Velocity
+/// Dividing a InverseForce by a InversePower returns a value of type Velocity
+impl<T> core::ops::Div<InversePower<T>> for InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Velocity{mps: self.per_N / rhs.per_W}
+	}
+}
+/// Dividing a InverseForce by a InversePower returns a value of type Velocity
+impl<T> core::ops::Div<InversePower<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Velocity{mps: self.per_N.clone() / rhs.per_W}
+	}
+}
+/// Dividing a InverseForce by a InversePower returns a value of type Velocity
+impl<T> core::ops::Div<&InversePower<T>> for InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Velocity{mps: self.per_N / rhs.per_W.clone()}
+	}
+}
+/// Dividing a InverseForce by a InversePower returns a value of type Velocity
+impl<T> core::ops::Div<&InversePower<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Velocity{mps: self.per_N.clone() / rhs.per_W.clone()}
+	}
+}
+
+// InverseForce / InversePressure -> InverseArea
+/// Dividing a InverseForce by a InversePressure returns a value of type InverseArea
+impl<T> core::ops::Div<InversePressure<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseForce by a InversePressure returns a value of type InverseArea
+impl<T> core::ops::Div<InversePressure<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseForce by a InversePressure returns a value of type InverseArea
+impl<T> core::ops::Div<&InversePressure<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseForce by a InversePressure returns a value of type InverseArea
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseForce * Momentum -> Time
+/// Multiplying a InverseForce by a Momentum returns a value of type Time
+impl<T> core::ops::Mul<Momentum<T>> for InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		Time{s: self.per_N * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseForce by a Momentum returns a value of type Time
+impl<T> core::ops::Mul<Momentum<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		Time{s: self.per_N.clone() * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseForce by a Momentum returns a value of type Time
+impl<T> core::ops::Mul<&Momentum<T>> for InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		Time{s: self.per_N * rhs.kgmps.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Momentum returns a value of type Time
+impl<T> core::ops::Mul<&Momentum<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		Time{s: self.per_N.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// InverseForce * Power -> Velocity
+/// Multiplying a InverseForce by a Power returns a value of type Velocity
+impl<T> core::ops::Mul<Power<T>> for InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Velocity{mps: self.per_N * rhs.W}
+	}
+}
+/// Multiplying a InverseForce by a Power returns a value of type Velocity
+impl<T> core::ops::Mul<Power<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Velocity{mps: self.per_N.clone() * rhs.W}
+	}
+}
+/// Multiplying a InverseForce by a Power returns a value of type Velocity
+impl<T> core::ops::Mul<&Power<T>> for InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Velocity{mps: self.per_N * rhs.W.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Power returns a value of type Velocity
+impl<T> core::ops::Mul<&Power<T>> for &InverseForce<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Velocity{mps: self.per_N.clone() * rhs.W.clone()}
+	}
+}
+
+// InverseForce * Pressure -> InverseArea
+/// Multiplying a InverseForce by a Pressure returns a value of type InverseArea
+impl<T> core::ops::Mul<Pressure<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N * rhs.Pa}
+	}
+}
+/// Multiplying a InverseForce by a Pressure returns a value of type InverseArea
+impl<T> core::ops::Mul<Pressure<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseForce by a Pressure returns a value of type InverseArea
+impl<T> core::ops::Mul<&Pressure<T>> for InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseForce by a Pressure returns a value of type InverseArea
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_N.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseForce * TimePerDistance -> InversePower
+/// Multiplying a InverseForce by a TimePerDistance returns a value of type InversePower
+impl<T> core::ops::Mul<TimePerDistance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InversePower{per_W: self.per_N * rhs.spm}
+	}
+}
+/// Multiplying a InverseForce by a TimePerDistance returns a value of type InversePower
+impl<T> core::ops::Mul<TimePerDistance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InversePower{per_W: self.per_N.clone() * rhs.spm}
+	}
+}
+/// Multiplying a InverseForce by a TimePerDistance returns a value of type InversePower
+impl<T> core::ops::Mul<&TimePerDistance<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InversePower{per_W: self.per_N * rhs.spm.clone()}
+	}
+}
+/// Multiplying a InverseForce by a TimePerDistance returns a value of type InversePower
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InversePower{per_W: self.per_N.clone() * rhs.spm.clone()}
+	}
+}
+
+// InverseForce / Velocity -> InversePower
+/// Dividing a InverseForce by a Velocity returns a value of type InversePower
+impl<T> core::ops::Div<Velocity<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InversePower{per_W: self.per_N / rhs.mps}
+	}
+}
+/// Dividing a InverseForce by a Velocity returns a value of type InversePower
+impl<T> core::ops::Div<Velocity<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InversePower{per_W: self.per_N.clone() / rhs.mps}
+	}
+}
+/// Dividing a InverseForce by a Velocity returns a value of type InversePower
+impl<T> core::ops::Div<&Velocity<T>> for InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InversePower{per_W: self.per_N / rhs.mps.clone()}
+	}
+}
+/// Dividing a InverseForce by a Velocity returns a value of type InversePower
+impl<T> core::ops::Div<&Velocity<T>> for &InverseForce<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InversePower{per_W: self.per_N.clone() / rhs.mps.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<InverseForce<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+impl<T> core::ops::Div<&InverseForce<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseForce<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseForce<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseForce<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseForce<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseForce<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseForce<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseForce<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseForce<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+// 1/InverseForce -> Force
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseForce<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseForce<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseForce<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self) / rhs.per_N.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseForce unit value returns a value of type Force
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseForce<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Force{N: T::from(self.clone()) / rhs.per_N.clone()}
+	}
+}
+
+/// The inverse of moment of inertia unit type, defined as inverse kilogram meters squared in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseMomentOfInertia<T: NumLike>{
+	/// The value of this Inverse moment of inertia in inverse kilogram meters squared
+	pub per_kgm2: T
+}
+
+impl<T> InverseMomentOfInertia<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse moment of inertia: "inverse kilogram meters squared"
+	pub fn unit_name() -> &'static str { "inverse kilogram meters squared" }
+	
+	/// Returns the abbreviated name or symbol of inverse moment of inertia: "1/kg·m²" for inverse kilogram meters squared
+	pub fn unit_symbol() -> &'static str { "1/kg·m²" }
+	
+	/// Returns a new inverse moment of inertia value from the given number of inverse kilogram meters squared
+	///
+	/// # Arguments
+	/// * `per_kgm2` - Any number-like type, representing a quantity of inverse kilogram meters squared
+	pub fn from_per_kgm2(per_kgm2: T) -> Self { InverseMomentOfInertia{per_kgm2: per_kgm2} }
+	
+	/// Returns a copy of this inverse moment of inertia value in inverse kilogram meters squared
+	pub fn to_per_kgm2(&self) -> T { self.per_kgm2.clone() }
+
+	/// Returns a new inverse moment of inertia value from the given number of inverse kilogram meters squared
+	///
+	/// # Arguments
+	/// * `per_kilogram_meters_squared` - Any number-like type, representing a quantity of inverse kilogram meters squared
+	pub fn from_per_kilogram_meters_squared(per_kilogram_meters_squared: T) -> Self { InverseMomentOfInertia{per_kgm2: per_kilogram_meters_squared} }
+	
+	/// Returns a copy of this inverse moment of inertia value in inverse kilogram meters squared
+	pub fn to_per_kilogram_meters_squared(&self) -> T { self.per_kgm2.clone() }
+
+}
+
+impl<T> fmt::Display for InverseMomentOfInertia<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_kgm2, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseMomentOfInertia<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse moment of inertia value in inverse gram cm squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_gcm2(&self) -> T {
+		return self.per_kgm2.clone() * T::from(10.0_f64);
+	}
+
+	/// Returns a new inverse moment of inertia value from the given number of inverse gram cm squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_gcm2` - Any number-like type, representing a quantity of inverse gram cm squared
+	pub fn from_per_gcm2(per_gcm2: T) -> Self {
+		InverseMomentOfInertia{per_kgm2: per_gcm2 * T::from(0.1_f64)}
+	}
+
+	/// Returns a copy of this inverse moment of inertia value in inverse gram meters squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_gm2(&self) -> T {
+		return self.per_kgm2.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse moment of inertia value from the given number of inverse gram meters squared
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_gm2` - Any number-like type, representing a quantity of inverse gram meters squared
+	pub fn from_per_gm2(per_gm2: T) -> Self {
+		InverseMomentOfInertia{per_kgm2: per_gm2 * T::from(1000.0_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseMomentOfInertia<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseMomentOfInertia<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseMomentOfInertia<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseMomentOfInertia<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseMomentOfInertia<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseMomentOfInertia<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentOfInertia<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseMomentOfInertia<num_complex::Complex32>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_complex::Complex32>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentOfInertia<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseMomentOfInertia<num_complex::Complex32>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_complex::Complex32>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseMomentOfInertia<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_complex::Complex32>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseMomentOfInertia<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_complex::Complex32>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentOfInertia<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseMomentOfInertia<num_complex::Complex64>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_complex::Complex64>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentOfInertia<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseMomentOfInertia<num_complex::Complex64>;
+	fn mul(self, rhs: InverseMomentOfInertia<num_complex::Complex64>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseMomentOfInertia<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_complex::Complex64>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self * rhs.per_kgm2.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentOfInertia<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseMomentOfInertia<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseMomentOfInertia<num_complex::Complex64>) -> Self::Output {
+		InverseMomentOfInertia{per_kgm2: self.clone() * rhs.per_kgm2.clone()}
+	}
+}
+
+
+
+
+// InverseMomentOfInertia / InverseMass -> InverseArea
+/// Dividing a InverseMomentOfInertia by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Div<InverseMass<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2 / rhs.per_kg}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Div<InverseMass<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Div<&InverseMass<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2 / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseMass returns a value of type InverseArea
+impl<T> core::ops::Div<&InverseMass<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2.clone() / rhs.per_kg.clone()}
+	}
+}
+
+// InverseMomentOfInertia * Mass -> InverseArea
+/// Multiplying a InverseMomentOfInertia by a Mass returns a value of type InverseArea
+impl<T> core::ops::Mul<Mass<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2 * rhs.kg}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Mass returns a value of type InverseArea
+impl<T> core::ops::Mul<Mass<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2.clone() * rhs.kg}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Mass returns a value of type InverseArea
+impl<T> core::ops::Mul<&Mass<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2 * rhs.kg.clone()}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Mass returns a value of type InverseArea
+impl<T> core::ops::Mul<&Mass<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		InverseArea{per_m2: self.per_kgm2.clone() * rhs.kg.clone()}
+	}
+}
+
+// InverseMomentOfInertia * Area -> InverseMass
+/// Multiplying a InverseMomentOfInertia by a Area returns a value of type InverseMass
+impl<T> core::ops::Mul<Area<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2 * rhs.m2}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Area returns a value of type InverseMass
+impl<T> core::ops::Mul<Area<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2.clone() * rhs.m2}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Area returns a value of type InverseMass
+impl<T> core::ops::Mul<&Area<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2 * rhs.m2.clone()}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a Area returns a value of type InverseMass
+impl<T> core::ops::Mul<&Area<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Area<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2.clone() * rhs.m2.clone()}
+	}
+}
+
+// InverseMomentOfInertia / InverseArea -> InverseMass
+/// Dividing a InverseMomentOfInertia by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Div<InverseArea<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2 / rhs.per_m2}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Div<InverseArea<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2.clone() / rhs.per_m2}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseArea<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2 / rhs.per_m2.clone()}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseArea returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseArea<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_kgm2.clone() / rhs.per_m2.clone()}
+	}
+}
+
+// InverseMomentOfInertia * AngularMomentum -> AngularVelocity
+/// Multiplying a InverseMomentOfInertia by a AngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Mul<AngularMomentum<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: AngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2 * rhs.kgm2radps}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a AngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Mul<AngularMomentum<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: AngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2.clone() * rhs.kgm2radps}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a AngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Mul<&AngularMomentum<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2 * rhs.kgm2radps.clone()}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a AngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Mul<&AngularMomentum<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn mul(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2.clone() * rhs.kgm2radps.clone()}
+	}
+}
+
+// InverseMomentOfInertia / AngularVelocity -> InverseAngularMomentum
+/// Dividing a InverseMomentOfInertia by a AngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularVelocity<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2 / rhs.radps}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a AngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<AngularVelocity<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: AngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2.clone() / rhs.radps}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a AngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularVelocity<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2 / rhs.radps.clone()}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a AngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Div<&AngularVelocity<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn div(self, rhs: &AngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2.clone() / rhs.radps.clone()}
+	}
+}
+
+// InverseMomentOfInertia / InverseAngularMomentum -> AngularVelocity
+/// Dividing a InverseMomentOfInertia by a InverseAngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2 / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseAngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Div<InverseAngularMomentum<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2.clone() / rhs.s_per_kgm2rad}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseAngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2 / rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Dividing a InverseMomentOfInertia by a InverseAngularMomentum returns a value of type AngularVelocity
+impl<T> core::ops::Div<&InverseAngularMomentum<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = AngularVelocity<T>;
+	fn div(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		AngularVelocity{radps: self.per_kgm2.clone() / rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// InverseMomentOfInertia * InverseAngularVelocity -> InverseAngularMomentum
+/// Multiplying a InverseMomentOfInertia by a InverseAngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2 * rhs.s_per_rad}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a InverseAngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<InverseAngularVelocity<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2.clone() * rhs.s_per_rad}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a InverseAngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2 * rhs.s_per_rad.clone()}
+	}
+}
+/// Multiplying a InverseMomentOfInertia by a InverseAngularVelocity returns a value of type InverseAngularMomentum
+impl<T> core::ops::Mul<&InverseAngularVelocity<T>> for &InverseMomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularMomentum<T>;
+	fn mul(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		InverseAngularMomentum{s_per_kgm2rad: self.per_kgm2.clone() * rhs.s_per_rad.clone()}
+	}
+}
+
+/// The inverse of momentum unit type, defined as seconds per kilogram meter in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseMomentum<T: NumLike>{
+	/// The value of this Inverse momentum in seconds per kilogram meter
+	pub s_per_kgm: T
+}
+
+impl<T> InverseMomentum<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse momentum: "seconds per kilogram meter"
+	pub fn unit_name() -> &'static str { "seconds per kilogram meter" }
+	
+	/// Returns the abbreviated name or symbol of inverse momentum: "s/kg·m" for seconds per kilogram meter
+	pub fn unit_symbol() -> &'static str { "s/kg·m" }
+	
+	/// Returns a new inverse momentum value from the given number of seconds per kilogram meter
+	///
+	/// # Arguments
+	/// * `s_per_kgm` - Any number-like type, representing a quantity of seconds per kilogram meter
+	pub fn from_s_per_kgm(s_per_kgm: T) -> Self { InverseMomentum{s_per_kgm: s_per_kgm} }
+	
+	/// Returns a copy of this inverse momentum value in seconds per kilogram meter
+	pub fn to_s_per_kgm(&self) -> T { self.s_per_kgm.clone() }
+
+	/// Returns a new inverse momentum value from the given number of seconds per kilogram meter
+	///
+	/// # Arguments
+	/// * `seconds_per_kilogram_meter` - Any number-like type, representing a quantity of seconds per kilogram meter
+	pub fn from_seconds_per_kilogram_meter(seconds_per_kilogram_meter: T) -> Self { InverseMomentum{s_per_kgm: seconds_per_kilogram_meter} }
+	
+	/// Returns a copy of this inverse momentum value in seconds per kilogram meter
+	pub fn to_seconds_per_kilogram_meter(&self) -> T { self.s_per_kgm.clone() }
+
+}
+
+impl<T> fmt::Display for InverseMomentum<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.s_per_kgm, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseMomentum<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse momentum value in seconds per gram centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s_per_gcm(&self) -> T {
+		return self.s_per_kgm.clone() * T::from(1e-05_f64);
+	}
+
+	/// Returns a new inverse momentum value from the given number of seconds per gram centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s_per_gcm` - Any number-like type, representing a quantity of seconds per gram centimeter
+	pub fn from_s_per_gcm(s_per_gcm: T) -> Self {
+		InverseMomentum{s_per_kgm: s_per_gcm * T::from(100000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse momentum value in seconds per gram centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_seconds_per_gram_centimeter(&self) -> T {
+		return self.s_per_kgm.clone() * T::from(1e-05_f64);
+	}
+
+	/// Returns a new inverse momentum value from the given number of seconds per gram centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `seconds_per_gram_centimeter` - Any number-like type, representing a quantity of seconds per gram centimeter
+	pub fn from_seconds_per_gram_centimeter(seconds_per_gram_centimeter: T) -> Self {
+		InverseMomentum{s_per_kgm: seconds_per_gram_centimeter * T::from(100000.0_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseMomentum<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseMomentum<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseMomentum<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseMomentum<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseMomentum<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseMomentum<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentum<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: InverseMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentum<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: InverseMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentum<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentum<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseMomentum<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseMomentum<num_complex::Complex32>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentum<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: InverseMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseMomentum<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: InverseMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentum<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseMomentum<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseMomentum<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseMomentum<num_complex::Complex64>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+
+
+
+// InverseMomentum / InverseMass -> TimePerDistance
+/// Dividing a InverseMomentum by a InverseMass returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMass<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm / rhs.per_kg}
+	}
+}
+/// Dividing a InverseMomentum by a InverseMass returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMass<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a InverseMomentum by a InverseMass returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMass<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a InverseMass returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMass<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm.clone() / rhs.per_kg.clone()}
+	}
+}
+
+// InverseMomentum * Mass -> TimePerDistance
+/// Multiplying a InverseMomentum by a Mass returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Mass<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm * rhs.kg}
+	}
+}
+/// Multiplying a InverseMomentum by a Mass returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Mass<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm.clone() * rhs.kg}
+	}
+}
+/// Multiplying a InverseMomentum by a Mass returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Mass<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm * rhs.kg.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Mass returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Mass<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		TimePerDistance{spm: self.s_per_kgm.clone() * rhs.kg.clone()}
+	}
+}
+
+// InverseMomentum * Time -> InverseForce
+/// Multiplying a InverseMomentum by a Time returns a value of type InverseForce
+impl<T> core::ops::Mul<Time<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm * rhs.s}
+	}
+}
+/// Multiplying a InverseMomentum by a Time returns a value of type InverseForce
+impl<T> core::ops::Mul<Time<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm.clone() * rhs.s}
+	}
+}
+/// Multiplying a InverseMomentum by a Time returns a value of type InverseForce
+impl<T> core::ops::Mul<&Time<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm * rhs.s.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Time returns a value of type InverseForce
+impl<T> core::ops::Mul<&Time<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm.clone() * rhs.s.clone()}
+	}
+}
+
+// InverseMomentum / Acceleration -> InversePower
+/// Dividing a InverseMomentum by a Acceleration returns a value of type InversePower
+impl<T> core::ops::Div<Acceleration<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm / rhs.mps2}
+	}
+}
+/// Dividing a InverseMomentum by a Acceleration returns a value of type InversePower
+impl<T> core::ops::Div<Acceleration<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Acceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm.clone() / rhs.mps2}
+	}
+}
+/// Dividing a InverseMomentum by a Acceleration returns a value of type InversePower
+impl<T> core::ops::Div<&Acceleration<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm / rhs.mps2.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a Acceleration returns a value of type InversePower
+impl<T> core::ops::Div<&Acceleration<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Acceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm.clone() / rhs.mps2.clone()}
+	}
+}
+
+// InverseMomentum * Energy -> Velocity
+/// Multiplying a InverseMomentum by a Energy returns a value of type Velocity
+impl<T> core::ops::Mul<Energy<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm * rhs.J}
+	}
+}
+/// Multiplying a InverseMomentum by a Energy returns a value of type Velocity
+impl<T> core::ops::Mul<Energy<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() * rhs.J}
+	}
+}
+/// Multiplying a InverseMomentum by a Energy returns a value of type Velocity
+impl<T> core::ops::Mul<&Energy<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm * rhs.J.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Energy returns a value of type Velocity
+impl<T> core::ops::Mul<&Energy<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() * rhs.J.clone()}
+	}
+}
+
+// InverseMomentum * Torque -> Velocity
+/// Multiplying a InverseMomentum by a Torque returns a value of type Velocity
+impl<T> core::ops::Mul<Torque<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm * rhs.Nm}
+	}
+}
+/// Multiplying a InverseMomentum by a Torque returns a value of type Velocity
+impl<T> core::ops::Mul<Torque<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InverseMomentum by a Torque returns a value of type Velocity
+impl<T> core::ops::Mul<&Torque<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Torque returns a value of type Velocity
+impl<T> core::ops::Mul<&Torque<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InverseMomentum * Force -> Frequency
+/// Multiplying a InverseMomentum by a Force returns a value of type Frequency
+impl<T> core::ops::Mul<Force<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm * rhs.N}
+	}
+}
+/// Multiplying a InverseMomentum by a Force returns a value of type Frequency
+impl<T> core::ops::Mul<Force<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm.clone() * rhs.N}
+	}
+}
+/// Multiplying a InverseMomentum by a Force returns a value of type Frequency
+impl<T> core::ops::Mul<&Force<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm * rhs.N.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Force returns a value of type Frequency
+impl<T> core::ops::Mul<&Force<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm.clone() * rhs.N.clone()}
+	}
+}
+
+// InverseMomentum / Frequency -> InverseForce
+/// Dividing a InverseMomentum by a Frequency returns a value of type InverseForce
+impl<T> core::ops::Div<Frequency<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm / rhs.Hz}
+	}
+}
+/// Dividing a InverseMomentum by a Frequency returns a value of type InverseForce
+impl<T> core::ops::Div<Frequency<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm.clone() / rhs.Hz}
+	}
+}
+/// Dividing a InverseMomentum by a Frequency returns a value of type InverseForce
+impl<T> core::ops::Div<&Frequency<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm / rhs.Hz.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a Frequency returns a value of type InverseForce
+impl<T> core::ops::Div<&Frequency<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseForce{per_N: self.s_per_kgm.clone() / rhs.Hz.clone()}
+	}
+}
+
+// InverseMomentum * InverseAcceleration -> InversePower
+/// Multiplying a InverseMomentum by a InverseAcceleration returns a value of type InversePower
+impl<T> core::ops::Mul<InverseAcceleration<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm * rhs.s2pm}
+	}
+}
+/// Multiplying a InverseMomentum by a InverseAcceleration returns a value of type InversePower
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a InverseMomentum by a InverseAcceleration returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a InverseAcceleration returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InversePower{per_W: self.s_per_kgm.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// InverseMomentum / InverseEnergy -> Velocity
+/// Dividing a InverseMomentum by a InverseEnergy returns a value of type Velocity
+impl<T> core::ops::Div<InverseEnergy<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm / rhs.per_J}
+	}
+}
+/// Dividing a InverseMomentum by a InverseEnergy returns a value of type Velocity
+impl<T> core::ops::Div<InverseEnergy<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InverseMomentum by a InverseEnergy returns a value of type Velocity
+impl<T> core::ops::Div<&InverseEnergy<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a InverseEnergy returns a value of type Velocity
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InverseMomentum / InverseTorque -> Velocity
+/// Dividing a InverseMomentum by a InverseTorque returns a value of type Velocity
+impl<T> core::ops::Div<InverseTorque<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseMomentum by a InverseTorque returns a value of type Velocity
+impl<T> core::ops::Div<InverseTorque<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InverseMomentum by a InverseTorque returns a value of type Velocity
+impl<T> core::ops::Div<&InverseTorque<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a InverseTorque returns a value of type Velocity
+impl<T> core::ops::Div<&InverseTorque<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Velocity{mps: self.s_per_kgm.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InverseMomentum / InverseForce -> Frequency
+/// Dividing a InverseMomentum by a InverseForce returns a value of type Frequency
+impl<T> core::ops::Div<InverseForce<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm / rhs.per_N}
+	}
+}
+/// Dividing a InverseMomentum by a InverseForce returns a value of type Frequency
+impl<T> core::ops::Div<InverseForce<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InverseMomentum by a InverseForce returns a value of type Frequency
+impl<T> core::ops::Div<&InverseForce<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a InverseForce returns a value of type Frequency
+impl<T> core::ops::Div<&InverseForce<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Frequency{Hz: self.s_per_kgm.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InverseMomentum / InversePower -> Acceleration
+/// Dividing a InverseMomentum by a InversePower returns a value of type Acceleration
+impl<T> core::ops::Div<InversePower<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm / rhs.per_W}
+	}
+}
+/// Dividing a InverseMomentum by a InversePower returns a value of type Acceleration
+impl<T> core::ops::Div<InversePower<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm.clone() / rhs.per_W}
+	}
+}
+/// Dividing a InverseMomentum by a InversePower returns a value of type Acceleration
+impl<T> core::ops::Div<&InversePower<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm / rhs.per_W.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a InversePower returns a value of type Acceleration
+impl<T> core::ops::Div<&InversePower<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm.clone() / rhs.per_W.clone()}
+	}
+}
+
+// InverseMomentum * Power -> Acceleration
+/// Multiplying a InverseMomentum by a Power returns a value of type Acceleration
+impl<T> core::ops::Mul<Power<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm * rhs.W}
+	}
+}
+/// Multiplying a InverseMomentum by a Power returns a value of type Acceleration
+impl<T> core::ops::Mul<Power<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm.clone() * rhs.W}
+	}
+}
+/// Multiplying a InverseMomentum by a Power returns a value of type Acceleration
+impl<T> core::ops::Mul<&Power<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm * rhs.W.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Power returns a value of type Acceleration
+impl<T> core::ops::Mul<&Power<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Acceleration{mps2: self.s_per_kgm.clone() * rhs.W.clone()}
+	}
+}
+
+// InverseMomentum * TimePerDistance -> InverseEnergy
+/// Multiplying a InverseMomentum by a TimePerDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<TimePerDistance<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm * rhs.spm}
+	}
+}
+/// Multiplying a InverseMomentum by a TimePerDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<TimePerDistance<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm.clone() * rhs.spm}
+	}
+}
+/// Multiplying a InverseMomentum by a TimePerDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&TimePerDistance<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm * rhs.spm.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a TimePerDistance returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm.clone() * rhs.spm.clone()}
+	}
+}
+
+// InverseMomentum / TimePerDistance -> InverseMass
+/// Dividing a InverseMomentum by a TimePerDistance returns a value of type InverseMass
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm / rhs.spm}
+	}
+}
+/// Dividing a InverseMomentum by a TimePerDistance returns a value of type InverseMass
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseMomentum by a TimePerDistance returns a value of type InverseMass
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a TimePerDistance returns a value of type InverseMass
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseMomentum * Velocity -> InverseMass
+/// Multiplying a InverseMomentum by a Velocity returns a value of type InverseMass
+impl<T> core::ops::Mul<Velocity<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm * rhs.mps}
+	}
+}
+/// Multiplying a InverseMomentum by a Velocity returns a value of type InverseMass
+impl<T> core::ops::Mul<Velocity<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseMomentum by a Velocity returns a value of type InverseMass
+impl<T> core::ops::Mul<&Velocity<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseMomentum by a Velocity returns a value of type InverseMass
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMass{per_kg: self.s_per_kgm.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseMomentum / Velocity -> InverseEnergy
+/// Dividing a InverseMomentum by a Velocity returns a value of type InverseEnergy
+impl<T> core::ops::Div<Velocity<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm / rhs.mps}
+	}
+}
+/// Dividing a InverseMomentum by a Velocity returns a value of type InverseEnergy
+impl<T> core::ops::Div<Velocity<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm.clone() / rhs.mps}
+	}
+}
+/// Dividing a InverseMomentum by a Velocity returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Velocity<T>> for InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm / rhs.mps.clone()}
+	}
+}
+/// Dividing a InverseMomentum by a Velocity returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Velocity<T>> for &InverseMomentum<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseEnergy{per_J: self.s_per_kgm.clone() / rhs.mps.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<InverseMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMomentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+// 1/InverseMomentum -> Momentum
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self) / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseMomentum unit value returns a value of type Momentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseMomentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Momentum{kgmps: T::from(self.clone()) / rhs.s_per_kgm.clone()}
+	}
+}
+
+/// The inverse of power (aka watts) unit type, defined as inverse watts in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InversePower<T: NumLike>{
+	/// The value of this Inverse power in inverse watts
+	pub per_W: T
+}
+
+impl<T> InversePower<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse power: "inverse watts"
+	pub fn unit_name() -> &'static str { "inverse watts" }
+	
+	/// Returns the abbreviated name or symbol of inverse power: "1/W" for inverse watts
+	pub fn unit_symbol() -> &'static str { "1/W" }
+	
+	/// Returns a new inverse power value from the given number of inverse watts
+	///
+	/// # Arguments
+	/// * `per_W` - Any number-like type, representing a quantity of inverse watts
+	pub fn from_per_W(per_W: T) -> Self { InversePower{per_W: per_W} }
+	
+	/// Returns a copy of this inverse power value in inverse watts
+	pub fn to_per_W(&self) -> T { self.per_W.clone() }
+
+	/// Returns a new inverse power value from the given number of inverse watts
+	///
+	/// # Arguments
+	/// * `per_watt` - Any number-like type, representing a quantity of inverse watts
+	pub fn from_per_watt(per_watt: T) -> Self { InversePower{per_W: per_watt} }
+	
+	/// Returns a copy of this inverse power value in inverse watts
+	pub fn to_per_watt(&self) -> T { self.per_W.clone() }
+
+}
+
+impl<T> fmt::Display for InversePower<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_W, Self::unit_symbol())
+	}
+}
+
+impl<T> InversePower<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse power value in inverse milliwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mW(&self) -> T {
+		return self.per_W.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse milliwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mW` - Any number-like type, representing a quantity of inverse milliwatts
+	pub fn from_per_mW(per_mW: T) -> Self {
+		InversePower{per_W: per_mW * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse microwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uW(&self) -> T {
+		return self.per_W.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse microwatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uW` - Any number-like type, representing a quantity of inverse microwatts
+	pub fn from_per_uW(per_uW: T) -> Self {
+		InversePower{per_W: per_uW * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse nanowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nW(&self) -> T {
+		return self.per_W.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse nanowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nW` - Any number-like type, representing a quantity of inverse nanowatts
+	pub fn from_per_nW(per_nW: T) -> Self {
+		InversePower{per_W: per_nW * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse kilowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kW(&self) -> T {
+		return self.per_W.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse kilowatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kW` - Any number-like type, representing a quantity of inverse kilowatts
+	pub fn from_per_kW(per_kW: T) -> Self {
+		InversePower{per_W: per_kW * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse megawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MW(&self) -> T {
+		return self.per_W.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse megawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MW` - Any number-like type, representing a quantity of inverse megawatts
+	pub fn from_per_MW(per_MW: T) -> Self {
+		InversePower{per_W: per_MW * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse gigawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GW(&self) -> T {
+		return self.per_W.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse gigawatts
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GW` - Any number-like type, representing a quantity of inverse gigawatts
+	pub fn from_per_GW(per_GW: T) -> Self {
+		InversePower{per_W: per_GW * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inverse power value in inverse horse power
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_horsepower(&self) -> T {
+		return self.per_W.clone() * T::from(745.7_f64);
+	}
+
+	/// Returns a new inverse power value from the given number of inverse horse power
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_horsepower` - Any number-like type, representing a quantity of inverse horse power
+	pub fn from_per_horsepower(per_horsepower: T) -> Self {
+		InversePower{per_W: per_horsepower * T::from(0.0013410218586563_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InversePower<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InversePower<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InversePower<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InversePower<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InversePower<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InversePower<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InversePower<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InversePower<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InversePower<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InversePower<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InversePower<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InversePower<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePower<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InversePower<num_complex::Complex32>;
+	fn mul(self, rhs: InversePower<num_complex::Complex32>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePower<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InversePower<num_complex::Complex32>;
+	fn mul(self, rhs: InversePower<num_complex::Complex32>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePower<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InversePower<num_complex::Complex32>;
+	fn mul(self, rhs: &InversePower<num_complex::Complex32>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePower<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InversePower<num_complex::Complex32>;
+	fn mul(self, rhs: &InversePower<num_complex::Complex32>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePower<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InversePower<num_complex::Complex64>;
+	fn mul(self, rhs: InversePower<num_complex::Complex64>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePower<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InversePower<num_complex::Complex64>;
+	fn mul(self, rhs: InversePower<num_complex::Complex64>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePower<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InversePower<num_complex::Complex64>;
+	fn mul(self, rhs: &InversePower<num_complex::Complex64>) -> Self::Output {
+		InversePower{per_W: self * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePower<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InversePower<num_complex::Complex64>;
+	fn mul(self, rhs: &InversePower<num_complex::Complex64>) -> Self::Output {
+		InversePower{per_W: self.clone() * rhs.per_W.clone()}
+	}
+}
+
+
+
+
+// InversePower * Current -> InverseVoltage
+/// Multiplying a InversePower by a Current returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Current<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W * rhs.A}
+	}
+}
+/// Multiplying a InversePower by a Current returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Current<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W.clone() * rhs.A}
+	}
+}
+/// Multiplying a InversePower by a Current returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Current<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W * rhs.A.clone()}
+	}
+}
+/// Multiplying a InversePower by a Current returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Current<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W.clone() * rhs.A.clone()}
+	}
+}
+
+// InversePower / InverseCurrent -> InverseVoltage
+/// Dividing a InversePower by a InverseCurrent returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCurrent<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W / rhs.per_A}
+	}
+}
+/// Dividing a InversePower by a InverseCurrent returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCurrent<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W.clone() / rhs.per_A}
+	}
+}
+/// Dividing a InversePower by a InverseCurrent returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCurrent<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W / rhs.per_A.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseCurrent returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCurrent<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_W.clone() / rhs.per_A.clone()}
+	}
+}
+
+// InversePower / Time -> InverseEnergy
+/// Dividing a InversePower by a Time returns a value of type InverseEnergy
+impl<T> core::ops::Div<Time<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W / rhs.s}
+	}
+}
+/// Dividing a InversePower by a Time returns a value of type InverseEnergy
+impl<T> core::ops::Div<Time<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W.clone() / rhs.s}
+	}
+}
+/// Dividing a InversePower by a Time returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Time<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W / rhs.s.clone()}
+	}
+}
+/// Dividing a InversePower by a Time returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Time<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W.clone() / rhs.s.clone()}
+	}
+}
+
+// InversePower / InverseVoltage -> InverseCurrent
+/// Dividing a InversePower by a InverseVoltage returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseVoltage<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W / rhs.per_V}
+	}
+}
+/// Dividing a InversePower by a InverseVoltage returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseVoltage<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W.clone() / rhs.per_V}
+	}
+}
+/// Dividing a InversePower by a InverseVoltage returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseVoltage<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W / rhs.per_V.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseVoltage returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseVoltage<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W.clone() / rhs.per_V.clone()}
+	}
+}
+
+// InversePower * Voltage -> InverseCurrent
+/// Multiplying a InversePower by a Voltage returns a value of type InverseCurrent
+impl<T> core::ops::Mul<Voltage<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W * rhs.V}
+	}
+}
+/// Multiplying a InversePower by a Voltage returns a value of type InverseCurrent
+impl<T> core::ops::Mul<Voltage<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W.clone() * rhs.V}
+	}
+}
+/// Multiplying a InversePower by a Voltage returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&Voltage<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W * rhs.V.clone()}
+	}
+}
+/// Multiplying a InversePower by a Voltage returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&Voltage<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_W.clone() * rhs.V.clone()}
+	}
+}
+
+// InversePower * Acceleration -> InverseMomentum
+/// Multiplying a InversePower by a Acceleration returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Acceleration<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W * rhs.mps2}
+	}
+}
+/// Multiplying a InversePower by a Acceleration returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Acceleration<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a InversePower by a Acceleration returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Acceleration<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a InversePower by a Acceleration returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Acceleration<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W.clone() * rhs.mps2.clone()}
+	}
+}
+
+// InversePower * Energy -> Time
+/// Multiplying a InversePower by a Energy returns a value of type Time
+impl<T> core::ops::Mul<Energy<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Time{s: self.per_W * rhs.J}
+	}
+}
+/// Multiplying a InversePower by a Energy returns a value of type Time
+impl<T> core::ops::Mul<Energy<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Time{s: self.per_W.clone() * rhs.J}
+	}
+}
+/// Multiplying a InversePower by a Energy returns a value of type Time
+impl<T> core::ops::Mul<&Energy<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Time{s: self.per_W * rhs.J.clone()}
+	}
+}
+/// Multiplying a InversePower by a Energy returns a value of type Time
+impl<T> core::ops::Mul<&Energy<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Time{s: self.per_W.clone() * rhs.J.clone()}
+	}
+}
+
+// InversePower * Torque -> Time
+/// Multiplying a InversePower by a Torque returns a value of type Time
+impl<T> core::ops::Mul<Torque<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Time{s: self.per_W * rhs.Nm}
+	}
+}
+/// Multiplying a InversePower by a Torque returns a value of type Time
+impl<T> core::ops::Mul<Torque<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Time{s: self.per_W.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InversePower by a Torque returns a value of type Time
+impl<T> core::ops::Mul<&Torque<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Time{s: self.per_W * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InversePower by a Torque returns a value of type Time
+impl<T> core::ops::Mul<&Torque<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Time{s: self.per_W.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InversePower * Force -> TimePerDistance
+/// Multiplying a InversePower by a Force returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Force<T>> for InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W * rhs.N}
+	}
+}
+/// Multiplying a InversePower by a Force returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Force<T>> for &InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W.clone() * rhs.N}
+	}
+}
+/// Multiplying a InversePower by a Force returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Force<T>> for InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W * rhs.N.clone()}
+	}
+}
+/// Multiplying a InversePower by a Force returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Force<T>> for &InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W.clone() * rhs.N.clone()}
+	}
+}
+
+// InversePower * Frequency -> InverseEnergy
+/// Multiplying a InversePower by a Frequency returns a value of type InverseEnergy
+impl<T> core::ops::Mul<Frequency<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W * rhs.Hz}
+	}
+}
+/// Multiplying a InversePower by a Frequency returns a value of type InverseEnergy
+impl<T> core::ops::Mul<Frequency<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a InversePower by a Frequency returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&Frequency<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a InversePower by a Frequency returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&Frequency<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_W.clone() * rhs.Hz.clone()}
+	}
+}
+
+// InversePower / InverseAcceleration -> InverseMomentum
+/// Dividing a InversePower by a InverseAcceleration returns a value of type InverseMomentum
+impl<T> core::ops::Div<InverseAcceleration<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W / rhs.s2pm}
+	}
+}
+/// Dividing a InversePower by a InverseAcceleration returns a value of type InverseMomentum
+impl<T> core::ops::Div<InverseAcceleration<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a InversePower by a InverseAcceleration returns a value of type InverseMomentum
+impl<T> core::ops::Div<&InverseAcceleration<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseAcceleration returns a value of type InverseMomentum
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_W.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// InversePower / InverseEnergy -> Time
+/// Dividing a InversePower by a InverseEnergy returns a value of type Time
+impl<T> core::ops::Div<InverseEnergy<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Time{s: self.per_W / rhs.per_J}
+	}
+}
+/// Dividing a InversePower by a InverseEnergy returns a value of type Time
+impl<T> core::ops::Div<InverseEnergy<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Time{s: self.per_W.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InversePower by a InverseEnergy returns a value of type Time
+impl<T> core::ops::Div<&InverseEnergy<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Time{s: self.per_W / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseEnergy returns a value of type Time
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Time{s: self.per_W.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InversePower / InverseTorque -> Time
+/// Dividing a InversePower by a InverseTorque returns a value of type Time
+impl<T> core::ops::Div<InverseTorque<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Time{s: self.per_W / rhs.per_Nm}
+	}
+}
+/// Dividing a InversePower by a InverseTorque returns a value of type Time
+impl<T> core::ops::Div<InverseTorque<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Time{s: self.per_W.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InversePower by a InverseTorque returns a value of type Time
+impl<T> core::ops::Div<&InverseTorque<T>> for InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Time{s: self.per_W / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseTorque returns a value of type Time
+impl<T> core::ops::Div<&InverseTorque<T>> for &InversePower<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Time{s: self.per_W.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InversePower / InverseForce -> TimePerDistance
+/// Dividing a InversePower by a InverseForce returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseForce<T>> for InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W / rhs.per_N}
+	}
+}
+/// Dividing a InversePower by a InverseForce returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseForce<T>> for &InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InversePower by a InverseForce returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseForce<T>> for InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseForce returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseForce<T>> for &InversePower<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_W.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InversePower / InverseMomentum -> InverseAcceleration
+/// Dividing a InversePower by a InverseMomentum returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseMomentum<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InversePower by a InverseMomentum returns a value of type InverseAcceleration
+impl<T> core::ops::Div<InverseMomentum<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InversePower by a InverseMomentum returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseMomentum<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a InversePower by a InverseMomentum returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&InverseMomentum<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// InversePower * Momentum -> InverseAcceleration
+/// Multiplying a InversePower by a Momentum returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Momentum<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W * rhs.kgmps}
+	}
+}
+/// Multiplying a InversePower by a Momentum returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Momentum<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W.clone() * rhs.kgmps}
+	}
+}
+/// Multiplying a InversePower by a Momentum returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Momentum<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W * rhs.kgmps.clone()}
+	}
+}
+/// Multiplying a InversePower by a Momentum returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Momentum<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_W.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// InversePower / TimePerDistance -> InverseForce
+/// Dividing a InversePower by a TimePerDistance returns a value of type InverseForce
+impl<T> core::ops::Div<TimePerDistance<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W / rhs.spm}
+	}
+}
+/// Dividing a InversePower by a TimePerDistance returns a value of type InverseForce
+impl<T> core::ops::Div<TimePerDistance<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W.clone() / rhs.spm}
+	}
+}
+/// Dividing a InversePower by a TimePerDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&TimePerDistance<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W / rhs.spm.clone()}
+	}
+}
+/// Dividing a InversePower by a TimePerDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W.clone() / rhs.spm.clone()}
+	}
+}
+
+// InversePower * Velocity -> InverseForce
+/// Multiplying a InversePower by a Velocity returns a value of type InverseForce
+impl<T> core::ops::Mul<Velocity<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W * rhs.mps}
+	}
+}
+/// Multiplying a InversePower by a Velocity returns a value of type InverseForce
+impl<T> core::ops::Mul<Velocity<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InversePower by a Velocity returns a value of type InverseForce
+impl<T> core::ops::Mul<&Velocity<T>> for InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InversePower by a Velocity returns a value of type InverseForce
+impl<T> core::ops::Mul<&Velocity<T>> for &InversePower<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseForce{per_N: self.per_W.clone() * rhs.mps.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<InversePower<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+impl<T> core::ops::Div<&InversePower<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InversePower<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InversePower<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InversePower<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InversePower<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePower<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePower<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePower<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePower<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+// 1/InversePower -> Power
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePower<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePower<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Power<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePower<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self) / rhs.per_W.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePower unit value returns a value of type Power
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePower<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Power<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Power{W: T::from(self.clone()) / rhs.per_W.clone()}
+	}
+}
+
+/// The inverse of pressure unit type, defined as inverse pascals in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InversePressure<T: NumLike>{
+	/// The value of this Inverse pressure in inverse pascals
+	pub per_Pa: T
+}
+
+impl<T> InversePressure<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse pressure: "inverse pascals"
+	pub fn unit_name() -> &'static str { "inverse pascals" }
+	
+	/// Returns the abbreviated name or symbol of inverse pressure: "1/Pa" for inverse pascals
+	pub fn unit_symbol() -> &'static str { "1/Pa" }
+	
+	/// Returns a new inverse pressure value from the given number of inverse pascals
+	///
+	/// # Arguments
+	/// * `per_Pa` - Any number-like type, representing a quantity of inverse pascals
+	pub fn from_per_Pa(per_Pa: T) -> Self { InversePressure{per_Pa: per_Pa} }
+	
+	/// Returns a copy of this inverse pressure value in inverse pascals
+	pub fn to_per_Pa(&self) -> T { self.per_Pa.clone() }
+
+	/// Returns a new inverse pressure value from the given number of inverse pascals
+	///
+	/// # Arguments
+	/// * `per_pascal` - Any number-like type, representing a quantity of inverse pascals
+	pub fn from_per_pascal(per_pascal: T) -> Self { InversePressure{per_Pa: per_pascal} }
+	
+	/// Returns a copy of this inverse pressure value in inverse pascals
+	pub fn to_per_pascal(&self) -> T { self.per_Pa.clone() }
+
+}
+
+impl<T> fmt::Display for InversePressure<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_Pa, Self::unit_symbol())
+	}
+}
+
+impl<T> InversePressure<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse pressure value in square inches per pound
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_psi(&self) -> T {
+		return self.per_Pa.clone() * T::from(6894.7572931783_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of square inches per pound
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_psi` - Any number-like type, representing a quantity of square inches per pound
+	pub fn from_per_psi(per_psi: T) -> Self {
+		InversePressure{per_Pa: per_psi * T::from(0.00014503773773_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse millipascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse millipascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mPa` - Any number-like type, representing a quantity of inverse millipascals
+	pub fn from_per_mPa(per_mPa: T) -> Self {
+		InversePressure{per_Pa: per_mPa * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse micropascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_uPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(1e-06_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse micropascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_uPa` - Any number-like type, representing a quantity of inverse micropascals
+	pub fn from_per_uPa(per_uPa: T) -> Self {
+		InversePressure{per_Pa: per_uPa * T::from(1000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse nanopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_nPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(1e-09_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse nanopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_nPa` - Any number-like type, representing a quantity of inverse nanopascals
+	pub fn from_per_nPa(per_nPa: T) -> Self {
+		InversePressure{per_Pa: per_nPa * T::from(1000000000.0_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse kilopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_kPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse kilopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_kPa` - Any number-like type, representing a quantity of inverse kilopascals
+	pub fn from_per_kPa(per_kPa: T) -> Self {
+		InversePressure{per_Pa: per_kPa * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse megapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_MPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(1000000.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse megapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_MPa` - Any number-like type, representing a quantity of inverse megapascals
+	pub fn from_per_MPa(per_MPa: T) -> Self {
+		InversePressure{per_Pa: per_MPa * T::from(1e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse gigapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_GPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(1000000000.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse gigapascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_GPa` - Any number-like type, representing a quantity of inverse gigapascals
+	pub fn from_per_GPa(per_GPa: T) -> Self {
+		InversePressure{per_Pa: per_GPa * T::from(1e-09_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse hectopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_hPa(&self) -> T {
+		return self.per_Pa.clone() * T::from(100.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse hectopascals
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_hPa` - Any number-like type, representing a quantity of inverse hectopascals
+	pub fn from_per_hPa(per_hPa: T) -> Self {
+		InversePressure{per_Pa: per_hPa * T::from(0.01_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse bar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_bar(&self) -> T {
+		return self.per_Pa.clone() * T::from(100000.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse bar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_bar` - Any number-like type, representing a quantity of inverse bar
+	pub fn from_per_bar(per_bar: T) -> Self {
+		InversePressure{per_Pa: per_bar * T::from(1e-05_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse millibar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mbar(&self) -> T {
+		return self.per_Pa.clone() * T::from(100.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse millibar
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mbar` - Any number-like type, representing a quantity of inverse millibar
+	pub fn from_per_mbar(per_mbar: T) -> Self {
+		InversePressure{per_Pa: per_mbar * T::from(0.01_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse atmospheres
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_atm(&self) -> T {
+		return self.per_Pa.clone() * T::from(101325.0_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse atmospheres
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_atm` - Any number-like type, representing a quantity of inverse atmospheres
+	pub fn from_per_atm(per_atm: T) -> Self {
+		InversePressure{per_Pa: per_atm * T::from(9.87e-06_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse torr
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_torr(&self) -> T {
+		return self.per_Pa.clone() * T::from(133.3223684211_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse torr
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_torr` - Any number-like type, representing a quantity of inverse torr
+	pub fn from_per_torr(per_torr: T) -> Self {
+		InversePressure{per_Pa: per_torr * T::from(0.007500616827039_f64)}
+	}
+
+	/// Returns a copy of this inverse pressure value in inverse mm Hg
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_mmHg(&self) -> T {
+		return self.per_Pa.clone() * T::from(133.3223684211_f64);
+	}
+
+	/// Returns a new inverse pressure value from the given number of inverse mm Hg
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_mmHg` - Any number-like type, representing a quantity of inverse mm Hg
+	pub fn from_per_mmHg(per_mmHg: T) -> Self {
+		InversePressure{per_Pa: per_mmHg * T::from(0.007500616827039_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InversePressure<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InversePressure<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InversePressure<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InversePressure<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InversePressure<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InversePressure<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InversePressure<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InversePressure<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InversePressure<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InversePressure<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InversePressure<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InversePressure<num_bigfloat::BigFloat>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePressure<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InversePressure<num_complex::Complex32>;
+	fn mul(self, rhs: InversePressure<num_complex::Complex32>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePressure<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InversePressure<num_complex::Complex32>;
+	fn mul(self, rhs: InversePressure<num_complex::Complex32>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePressure<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InversePressure<num_complex::Complex32>;
+	fn mul(self, rhs: &InversePressure<num_complex::Complex32>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePressure<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InversePressure<num_complex::Complex32>;
+	fn mul(self, rhs: &InversePressure<num_complex::Complex32>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePressure<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InversePressure<num_complex::Complex64>;
+	fn mul(self, rhs: InversePressure<num_complex::Complex64>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InversePressure<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InversePressure<num_complex::Complex64>;
+	fn mul(self, rhs: InversePressure<num_complex::Complex64>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePressure<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InversePressure<num_complex::Complex64>;
+	fn mul(self, rhs: &InversePressure<num_complex::Complex64>) -> Self::Output {
+		InversePressure{per_Pa: self * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InversePressure<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InversePressure<num_complex::Complex64>;
+	fn mul(self, rhs: &InversePressure<num_complex::Complex64>) -> Self::Output {
+		InversePressure{per_Pa: self.clone() * rhs.per_Pa.clone()}
+	}
+}
+
+
+
+
+// InversePressure / Area -> InverseForce
+/// Dividing a InversePressure by a Area returns a value of type InverseForce
+impl<T> core::ops::Div<Area<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa / rhs.m2}
+	}
+}
+/// Dividing a InversePressure by a Area returns a value of type InverseForce
+impl<T> core::ops::Div<Area<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Area<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa.clone() / rhs.m2}
+	}
+}
+/// Dividing a InversePressure by a Area returns a value of type InverseForce
+impl<T> core::ops::Div<&Area<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa / rhs.m2.clone()}
+	}
+}
+/// Dividing a InversePressure by a Area returns a value of type InverseForce
+impl<T> core::ops::Div<&Area<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Area<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa.clone() / rhs.m2.clone()}
+	}
+}
+
+// InversePressure * InverseArea -> InverseForce
+/// Multiplying a InversePressure by a InverseArea returns a value of type InverseForce
+impl<T> core::ops::Mul<InverseArea<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa * rhs.per_m2}
+	}
+}
+/// Multiplying a InversePressure by a InverseArea returns a value of type InverseForce
+impl<T> core::ops::Mul<InverseArea<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa.clone() * rhs.per_m2}
+	}
+}
+/// Multiplying a InversePressure by a InverseArea returns a value of type InverseForce
+impl<T> core::ops::Mul<&InverseArea<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa * rhs.per_m2.clone()}
+	}
+}
+/// Multiplying a InversePressure by a InverseArea returns a value of type InverseForce
+impl<T> core::ops::Mul<&InverseArea<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Pa.clone() * rhs.per_m2.clone()}
+	}
+}
+
+// InversePressure * InverseVolume -> InverseEnergy
+/// Multiplying a InversePressure by a InverseVolume returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseVolume<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa * rhs.per_m3}
+	}
+}
+/// Multiplying a InversePressure by a InverseVolume returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseVolume<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa.clone() * rhs.per_m3}
+	}
+}
+/// Multiplying a InversePressure by a InverseVolume returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseVolume<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa * rhs.per_m3.clone()}
+	}
+}
+/// Multiplying a InversePressure by a InverseVolume returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseVolume<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa.clone() * rhs.per_m3.clone()}
+	}
+}
+
+// InversePressure / Volume -> InverseEnergy
+/// Dividing a InversePressure by a Volume returns a value of type InverseEnergy
+impl<T> core::ops::Div<Volume<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa / rhs.m3}
+	}
+}
+/// Dividing a InversePressure by a Volume returns a value of type InverseEnergy
+impl<T> core::ops::Div<Volume<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa.clone() / rhs.m3}
+	}
+}
+/// Dividing a InversePressure by a Volume returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Volume<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa / rhs.m3.clone()}
+	}
+}
+/// Dividing a InversePressure by a Volume returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Volume<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		InverseEnergy{per_J: self.per_Pa.clone() / rhs.m3.clone()}
+	}
+}
+
+// InversePressure * Acceleration -> AreaPerMass
+/// Multiplying a InversePressure by a Acceleration returns a value of type AreaPerMass
+impl<T> core::ops::Mul<Acceleration<T>> for InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa * rhs.mps2}
+	}
+}
+/// Multiplying a InversePressure by a Acceleration returns a value of type AreaPerMass
+impl<T> core::ops::Mul<Acceleration<T>> for &InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a InversePressure by a Acceleration returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&Acceleration<T>> for InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a InversePressure by a Acceleration returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&Acceleration<T>> for &InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa.clone() * rhs.mps2.clone()}
+	}
+}
+
+// InversePressure * AreaDensity -> InverseAcceleration
+/// Multiplying a InversePressure by a AreaDensity returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<AreaDensity<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa * rhs.kgpm2}
+	}
+}
+/// Multiplying a InversePressure by a AreaDensity returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<AreaDensity<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa.clone() * rhs.kgpm2}
+	}
+}
+/// Multiplying a InversePressure by a AreaDensity returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&AreaDensity<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa * rhs.kgpm2.clone()}
+	}
+}
+/// Multiplying a InversePressure by a AreaDensity returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&AreaDensity<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &AreaDensity<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa.clone() * rhs.kgpm2.clone()}
+	}
+}
+
+// InversePressure / AreaPerMass -> InverseAcceleration
+/// Dividing a InversePressure by a AreaPerMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<AreaPerMass<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa / rhs.m2_per_kg}
+	}
+}
+/// Dividing a InversePressure by a AreaPerMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<AreaPerMass<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa.clone() / rhs.m2_per_kg}
+	}
+}
+/// Dividing a InversePressure by a AreaPerMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&AreaPerMass<T>> for InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a InversePressure by a AreaPerMass returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&AreaPerMass<T>> for &InversePressure<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.per_Pa.clone() / rhs.m2_per_kg.clone()}
+	}
+}
+
+// InversePressure * Energy -> Volume
+/// Multiplying a InversePressure by a Energy returns a value of type Volume
+impl<T> core::ops::Mul<Energy<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa * rhs.J}
+	}
+}
+/// Multiplying a InversePressure by a Energy returns a value of type Volume
+impl<T> core::ops::Mul<Energy<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() * rhs.J}
+	}
+}
+/// Multiplying a InversePressure by a Energy returns a value of type Volume
+impl<T> core::ops::Mul<&Energy<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa * rhs.J.clone()}
+	}
+}
+/// Multiplying a InversePressure by a Energy returns a value of type Volume
+impl<T> core::ops::Mul<&Energy<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() * rhs.J.clone()}
+	}
+}
+
+// InversePressure * Torque -> Volume
+/// Multiplying a InversePressure by a Torque returns a value of type Volume
+impl<T> core::ops::Mul<Torque<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa * rhs.Nm}
+	}
+}
+/// Multiplying a InversePressure by a Torque returns a value of type Volume
+impl<T> core::ops::Mul<Torque<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a InversePressure by a Torque returns a value of type Volume
+impl<T> core::ops::Mul<&Torque<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a InversePressure by a Torque returns a value of type Volume
+impl<T> core::ops::Mul<&Torque<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() * rhs.Nm.clone()}
+	}
+}
+
+// InversePressure * Force -> Area
+/// Multiplying a InversePressure by a Force returns a value of type Area
+impl<T> core::ops::Mul<Force<T>> for InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Area{m2: self.per_Pa * rhs.N}
+	}
+}
+/// Multiplying a InversePressure by a Force returns a value of type Area
+impl<T> core::ops::Mul<Force<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		Area{m2: self.per_Pa.clone() * rhs.N}
+	}
+}
+/// Multiplying a InversePressure by a Force returns a value of type Area
+impl<T> core::ops::Mul<&Force<T>> for InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Area{m2: self.per_Pa * rhs.N.clone()}
+	}
+}
+/// Multiplying a InversePressure by a Force returns a value of type Area
+impl<T> core::ops::Mul<&Force<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		Area{m2: self.per_Pa.clone() * rhs.N.clone()}
+	}
+}
+
+// InversePressure / InverseAcceleration -> AreaPerMass
+/// Dividing a InversePressure by a InverseAcceleration returns a value of type AreaPerMass
+impl<T> core::ops::Div<InverseAcceleration<T>> for InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa / rhs.s2pm}
+	}
+}
+/// Dividing a InversePressure by a InverseAcceleration returns a value of type AreaPerMass
+impl<T> core::ops::Div<InverseAcceleration<T>> for &InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a InversePressure by a InverseAcceleration returns a value of type AreaPerMass
+impl<T> core::ops::Div<&InverseAcceleration<T>> for InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseAcceleration returns a value of type AreaPerMass
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &InversePressure<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.per_Pa.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// InversePressure / InverseEnergy -> Volume
+/// Dividing a InversePressure by a InverseEnergy returns a value of type Volume
+impl<T> core::ops::Div<InverseEnergy<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa / rhs.per_J}
+	}
+}
+/// Dividing a InversePressure by a InverseEnergy returns a value of type Volume
+impl<T> core::ops::Div<InverseEnergy<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() / rhs.per_J}
+	}
+}
+/// Dividing a InversePressure by a InverseEnergy returns a value of type Volume
+impl<T> core::ops::Div<&InverseEnergy<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa / rhs.per_J.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseEnergy returns a value of type Volume
+impl<T> core::ops::Div<&InverseEnergy<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() / rhs.per_J.clone()}
+	}
+}
+
+// InversePressure / InverseTorque -> Volume
+/// Dividing a InversePressure by a InverseTorque returns a value of type Volume
+impl<T> core::ops::Div<InverseTorque<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa / rhs.per_Nm}
+	}
+}
+/// Dividing a InversePressure by a InverseTorque returns a value of type Volume
+impl<T> core::ops::Div<InverseTorque<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a InversePressure by a InverseTorque returns a value of type Volume
+impl<T> core::ops::Div<&InverseTorque<T>> for InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseTorque returns a value of type Volume
+impl<T> core::ops::Div<&InverseTorque<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Volume{m3: self.per_Pa.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// InversePressure / InverseForce -> Area
+/// Dividing a InversePressure by a InverseForce returns a value of type Area
+impl<T> core::ops::Div<InverseForce<T>> for InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Area{m2: self.per_Pa / rhs.per_N}
+	}
+}
+/// Dividing a InversePressure by a InverseForce returns a value of type Area
+impl<T> core::ops::Div<InverseForce<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Area{m2: self.per_Pa.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InversePressure by a InverseForce returns a value of type Area
+impl<T> core::ops::Div<&InverseForce<T>> for InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Area{m2: self.per_Pa / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseForce returns a value of type Area
+impl<T> core::ops::Div<&InverseForce<T>> for &InversePressure<T> where T: NumLike {
+	type Output = Area<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Area{m2: self.per_Pa.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InversePressure / InverseAbsorbedDose -> VolumePerMass
+/// Dividing a InversePressure by a InverseAbsorbedDose returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa / rhs.per_Gy}
+	}
+}
+/// Dividing a InversePressure by a InverseAbsorbedDose returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a InversePressure by a InverseAbsorbedDose returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseAbsorbedDose returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// InversePressure / InverseDoseEquivalent -> VolumePerMass
+/// Dividing a InversePressure by a InverseDoseEquivalent returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa / rhs.per_Sv}
+	}
+}
+/// Dividing a InversePressure by a InverseDoseEquivalent returns a value of type VolumePerMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a InversePressure by a InverseDoseEquivalent returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a InversePressure by a InverseDoseEquivalent returns a value of type VolumePerMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &InversePressure<T> where T: NumLike {
+	type Output = VolumePerMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.per_Pa.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<InversePressure<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+impl<T> core::ops::Div<&InversePressure<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InversePressure<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InversePressure<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InversePressure<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InversePressure<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePressure<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePressure<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePressure<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePressure<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+// 1/InversePressure -> Pressure
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePressure<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InversePressure<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePressure<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self) / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a InversePressure unit value returns a value of type Pressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InversePressure<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Pressure<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		Pressure{Pa: T::from(self.clone()) / rhs.per_Pa.clone()}
+	}
+}
+
+/// The inverse of torque unit type, defined as inverse newton meters in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct InverseTorque<T: NumLike>{
+	/// The value of this Inverse torque in inverse newton meters
+	pub per_Nm: T
+}
+
+impl<T> InverseTorque<T> where T: NumLike {
+
+	/// Returns the standard unit name of inverse torque: "inverse newton meters"
+	pub fn unit_name() -> &'static str { "inverse newton meters" }
+	
+	/// Returns the abbreviated name or symbol of inverse torque: "1/Nm" for inverse newton meters
+	pub fn unit_symbol() -> &'static str { "1/Nm" }
+	
+	/// Returns a new inverse torque value from the given number of inverse newton meters
+	///
+	/// # Arguments
+	/// * `per_Nm` - Any number-like type, representing a quantity of inverse newton meters
+	pub fn from_per_Nm(per_Nm: T) -> Self { InverseTorque{per_Nm: per_Nm} }
+	
+	/// Returns a copy of this inverse torque value in inverse newton meters
+	pub fn to_per_Nm(&self) -> T { self.per_Nm.clone() }
+
+	/// Returns a new inverse torque value from the given number of inverse newton meters
+	///
+	/// # Arguments
+	/// * `per_newton_meter` - Any number-like type, representing a quantity of inverse newton meters
+	pub fn from_per_newton_meter(per_newton_meter: T) -> Self { InverseTorque{per_Nm: per_newton_meter} }
+	
+	/// Returns a copy of this inverse torque value in inverse newton meters
+	pub fn to_per_newton_meter(&self) -> T { self.per_Nm.clone() }
+
+}
+
+impl<T> fmt::Display for InverseTorque<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.per_Nm, Self::unit_symbol())
+	}
+}
+
+impl<T> InverseTorque<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this inverse torque value in inverse foot-pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_per_ftlb(&self) -> T {
+		return self.per_Nm.clone() * T::from(1.35581794833139_f64);
+	}
+
+	/// Returns a new inverse torque value from the given number of inverse foot-pounds
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `per_ftlb` - Any number-like type, representing a quantity of inverse foot-pounds
+	pub fn from_per_ftlb(per_ftlb: T) -> Self {
+		InverseTorque{per_Nm: per_ftlb * T::from(0.73756214927727_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseTorque<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseTorque<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseTorque<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<InverseTorque<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseTorque<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: InverseTorque<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseTorque<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = InverseTorque<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseTorque<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&InverseTorque<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = InverseTorque<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &InverseTorque<num_bigfloat::BigFloat>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseTorque<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseTorque<num_complex::Complex32>;
+	fn mul(self, rhs: InverseTorque<num_complex::Complex32>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseTorque<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseTorque<num_complex::Complex32>;
+	fn mul(self, rhs: InverseTorque<num_complex::Complex32>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseTorque<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = InverseTorque<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseTorque<num_complex::Complex32>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseTorque<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = InverseTorque<num_complex::Complex32>;
+	fn mul(self, rhs: &InverseTorque<num_complex::Complex32>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseTorque<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseTorque<num_complex::Complex64>;
+	fn mul(self, rhs: InverseTorque<num_complex::Complex64>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<InverseTorque<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseTorque<num_complex::Complex64>;
+	fn mul(self, rhs: InverseTorque<num_complex::Complex64>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseTorque<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = InverseTorque<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseTorque<num_complex::Complex64>) -> Self::Output {
+		InverseTorque{per_Nm: self * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&InverseTorque<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = InverseTorque<num_complex::Complex64>;
+	fn mul(self, rhs: &InverseTorque<num_complex::Complex64>) -> Self::Output {
+		InverseTorque{per_Nm: self.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+
+
+
+// InverseTorque * Current -> InverseMagneticFlux
+/// Multiplying a InverseTorque by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<Current<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm * rhs.A}
+	}
+}
+/// Multiplying a InverseTorque by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<Current<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm.clone() * rhs.A}
+	}
+}
+/// Multiplying a InverseTorque by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&Current<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm * rhs.A.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Current returns a value of type InverseMagneticFlux
+impl<T> core::ops::Mul<&Current<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn mul(self, rhs: &Current<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm.clone() * rhs.A.clone()}
+	}
+}
+
+// InverseTorque * Distance -> InverseForce
+/// Multiplying a InverseTorque by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<Distance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm * rhs.m}
+	}
+}
+/// Multiplying a InverseTorque by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<Distance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm.clone() * rhs.m}
+	}
+}
+/// Multiplying a InverseTorque by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<&Distance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm * rhs.m.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Distance returns a value of type InverseForce
+impl<T> core::ops::Mul<&Distance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm.clone() * rhs.m.clone()}
+	}
+}
+
+// InverseTorque / InverseCurrent -> InverseMagneticFlux
+/// Dividing a InverseTorque by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<InverseCurrent<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm / rhs.per_A}
+	}
+}
+/// Dividing a InverseTorque by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<InverseCurrent<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm.clone() / rhs.per_A}
+	}
+}
+/// Dividing a InverseTorque by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&InverseCurrent<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm / rhs.per_A.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseCurrent returns a value of type InverseMagneticFlux
+impl<T> core::ops::Div<&InverseCurrent<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMagneticFlux<T>;
+	fn div(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		InverseMagneticFlux{per_Wb: self.per_Nm.clone() / rhs.per_A.clone()}
+	}
+}
+
+// InverseTorque / InverseDistance -> InverseForce
+/// Dividing a InverseTorque by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<InverseDistance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm / rhs.per_m}
+	}
+}
+/// Dividing a InverseTorque by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<InverseDistance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm.clone() / rhs.per_m}
+	}
+}
+/// Dividing a InverseTorque by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&InverseDistance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm / rhs.per_m.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseDistance returns a value of type InverseForce
+impl<T> core::ops::Div<&InverseDistance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		InverseForce{per_N: self.per_Nm.clone() / rhs.per_m.clone()}
+	}
+}
+
+// InverseTorque * Time -> InversePower
+/// Multiplying a InverseTorque by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<Time<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm * rhs.s}
+	}
+}
+/// Multiplying a InverseTorque by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<Time<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm.clone() * rhs.s}
+	}
+}
+/// Multiplying a InverseTorque by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<&Time<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm * rhs.s.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Time returns a value of type InversePower
+impl<T> core::ops::Mul<&Time<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm.clone() * rhs.s.clone()}
+	}
+}
+
+// InverseTorque * Charge -> InverseVoltage
+/// Multiplying a InverseTorque by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Charge<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm * rhs.C}
+	}
+}
+/// Multiplying a InverseTorque by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<Charge<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm.clone() * rhs.C}
+	}
+}
+/// Multiplying a InverseTorque by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Charge<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm * rhs.C.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Charge returns a value of type InverseVoltage
+impl<T> core::ops::Mul<&Charge<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn mul(self, rhs: &Charge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm.clone() * rhs.C.clone()}
+	}
+}
+
+// InverseTorque / InverseCharge -> InverseVoltage
+/// Dividing a InverseTorque by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCharge<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm / rhs.per_C}
+	}
+}
+/// Dividing a InverseTorque by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<InverseCharge<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm.clone() / rhs.per_C}
+	}
+}
+/// Dividing a InverseTorque by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCharge<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm / rhs.per_C.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseCharge returns a value of type InverseVoltage
+impl<T> core::ops::Div<&InverseCharge<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVoltage<T>;
+	fn div(self, rhs: &InverseCharge<T>) -> Self::Output {
+		InverseVoltage{per_V: self.per_Nm.clone() / rhs.per_C.clone()}
+	}
+}
+
+// InverseTorque / InverseMagneticFlux -> InverseCurrent
+/// Dividing a InverseTorque by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm / rhs.per_Wb}
+	}
+}
+/// Dividing a InverseTorque by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<InverseMagneticFlux<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm.clone() / rhs.per_Wb}
+	}
+}
+/// Dividing a InverseTorque by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm / rhs.per_Wb.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseMagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Div<&InverseMagneticFlux<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn div(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm.clone() / rhs.per_Wb.clone()}
+	}
+}
+
+// InverseTorque / InverseVoltage -> InverseCharge
+/// Dividing a InverseTorque by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<InverseVoltage<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm / rhs.per_V}
+	}
+}
+/// Dividing a InverseTorque by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<InverseVoltage<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm.clone() / rhs.per_V}
+	}
+}
+/// Dividing a InverseTorque by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<&InverseVoltage<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm / rhs.per_V.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseVoltage returns a value of type InverseCharge
+impl<T> core::ops::Div<&InverseVoltage<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn div(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm.clone() / rhs.per_V.clone()}
+	}
+}
+
+// InverseTorque * MagneticFlux -> InverseCurrent
+/// Multiplying a InverseTorque by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<MagneticFlux<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm * rhs.Wb}
+	}
+}
+/// Multiplying a InverseTorque by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<MagneticFlux<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm.clone() * rhs.Wb}
+	}
+}
+/// Multiplying a InverseTorque by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&MagneticFlux<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm * rhs.Wb.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a MagneticFlux returns a value of type InverseCurrent
+impl<T> core::ops::Mul<&MagneticFlux<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCurrent<T>;
+	fn mul(self, rhs: &MagneticFlux<T>) -> Self::Output {
+		InverseCurrent{per_A: self.per_Nm.clone() * rhs.Wb.clone()}
+	}
+}
+
+// InverseTorque * Voltage -> InverseCharge
+/// Multiplying a InverseTorque by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<Voltage<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm * rhs.V}
+	}
+}
+/// Multiplying a InverseTorque by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<Voltage<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm.clone() * rhs.V}
+	}
+}
+/// Multiplying a InverseTorque by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<&Voltage<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm * rhs.V.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Voltage returns a value of type InverseCharge
+impl<T> core::ops::Mul<&Voltage<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseCharge<T>;
+	fn mul(self, rhs: &Voltage<T>) -> Self::Output {
+		InverseCharge{per_C: self.per_Nm.clone() * rhs.V.clone()}
+	}
+}
+
+// InverseTorque / InverseVolume -> InversePressure
+/// Dividing a InverseTorque by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<InverseVolume<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm / rhs.per_m3}
+	}
+}
+/// Dividing a InverseTorque by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<InverseVolume<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm.clone() / rhs.per_m3}
+	}
+}
+/// Dividing a InverseTorque by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseVolume<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm / rhs.per_m3.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseVolume returns a value of type InversePressure
+impl<T> core::ops::Div<&InverseVolume<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm.clone() / rhs.per_m3.clone()}
+	}
+}
+
+// InverseTorque * Volume -> InversePressure
+/// Multiplying a InverseTorque by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<Volume<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm * rhs.m3}
+	}
+}
+/// Multiplying a InverseTorque by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<Volume<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm.clone() * rhs.m3}
+	}
+}
+/// Multiplying a InverseTorque by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<&Volume<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm * rhs.m3.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Volume returns a value of type InversePressure
+impl<T> core::ops::Mul<&Volume<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &Volume<T>) -> Self::Output {
+		InversePressure{per_Pa: self.per_Nm.clone() * rhs.m3.clone()}
+	}
+}
+
+// InverseTorque * Force -> InverseDistance
+/// Multiplying a InverseTorque by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<Force<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm * rhs.N}
+	}
+}
+/// Multiplying a InverseTorque by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<Force<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm.clone() * rhs.N}
+	}
+}
+/// Multiplying a InverseTorque by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Force<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm * rhs.N.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Force returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Force<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Force<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm.clone() * rhs.N.clone()}
+	}
+}
+
+// InverseTorque / Frequency -> InversePower
+/// Dividing a InverseTorque by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<Frequency<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm / rhs.Hz}
+	}
+}
+/// Dividing a InverseTorque by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<Frequency<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm.clone() / rhs.Hz}
+	}
+}
+/// Dividing a InverseTorque by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<&Frequency<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm / rhs.Hz.clone()}
+	}
+}
+/// Dividing a InverseTorque by a Frequency returns a value of type InversePower
+impl<T> core::ops::Div<&Frequency<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InversePower{per_W: self.per_Nm.clone() / rhs.Hz.clone()}
+	}
+}
+
+// InverseTorque / InverseForce -> InverseDistance
+/// Dividing a InverseTorque by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseForce<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm / rhs.per_N}
+	}
+}
+/// Dividing a InverseTorque by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<InverseForce<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm.clone() / rhs.per_N}
+	}
+}
+/// Dividing a InverseTorque by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseForce<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm / rhs.per_N.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseForce returns a value of type InverseDistance
+impl<T> core::ops::Div<&InverseForce<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseDistance{per_m: self.per_Nm.clone() / rhs.per_N.clone()}
+	}
+}
+
+// InverseTorque / InverseMomentum -> TimePerDistance
+/// Dividing a InverseTorque by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMomentum<T>> for InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseTorque by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<InverseMomentum<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a InverseTorque by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMomentum<T>> for InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseMomentum returns a value of type TimePerDistance
+impl<T> core::ops::Div<&InverseMomentum<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// InverseTorque / InversePower -> Frequency
+/// Dividing a InverseTorque by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<InversePower<T>> for InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm / rhs.per_W}
+	}
+}
+/// Dividing a InverseTorque by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<InversePower<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm.clone() / rhs.per_W}
+	}
+}
+/// Dividing a InverseTorque by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<&InversePower<T>> for InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm / rhs.per_W.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InversePower returns a value of type Frequency
+impl<T> core::ops::Div<&InversePower<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm.clone() / rhs.per_W.clone()}
+	}
+}
+
+// InverseTorque / InversePressure -> InverseVolume
+/// Dividing a InverseTorque by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<InversePressure<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseTorque by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<InversePressure<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm.clone() / rhs.per_Pa}
+	}
+}
+/// Dividing a InverseTorque by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<&InversePressure<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm / rhs.per_Pa.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InversePressure returns a value of type InverseVolume
+impl<T> core::ops::Div<&InversePressure<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &InversePressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm.clone() / rhs.per_Pa.clone()}
+	}
+}
+
+// InverseTorque * Momentum -> TimePerDistance
+/// Multiplying a InverseTorque by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Momentum<T>> for InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseTorque by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<Momentum<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm.clone() * rhs.kgmps}
+	}
+}
+/// Multiplying a InverseTorque by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Momentum<T>> for InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm * rhs.kgmps.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Momentum returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&Momentum<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		TimePerDistance{spm: self.per_Nm.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// InverseTorque * Power -> Frequency
+/// Multiplying a InverseTorque by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<Power<T>> for InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm * rhs.W}
+	}
+}
+/// Multiplying a InverseTorque by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<Power<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm.clone() * rhs.W}
+	}
+}
+/// Multiplying a InverseTorque by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<&Power<T>> for InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm * rhs.W.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Power returns a value of type Frequency
+impl<T> core::ops::Mul<&Power<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Frequency{Hz: self.per_Nm.clone() * rhs.W.clone()}
+	}
+}
+
+// InverseTorque * Pressure -> InverseVolume
+/// Multiplying a InverseTorque by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<Pressure<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm * rhs.Pa}
+	}
+}
+/// Multiplying a InverseTorque by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<Pressure<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm.clone() * rhs.Pa}
+	}
+}
+/// Multiplying a InverseTorque by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<&Pressure<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm * rhs.Pa.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Pressure returns a value of type InverseVolume
+impl<T> core::ops::Mul<&Pressure<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &Pressure<T>) -> Self::Output {
+		InverseVolume{per_m3: self.per_Nm.clone() * rhs.Pa.clone()}
+	}
+}
+
+// InverseTorque / TimePerDistance -> InverseMomentum
+/// Dividing a InverseTorque by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<TimePerDistance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm / rhs.spm}
+	}
+}
+/// Dividing a InverseTorque by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<TimePerDistance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm.clone() / rhs.spm}
+	}
+}
+/// Dividing a InverseTorque by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<&TimePerDistance<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm / rhs.spm.clone()}
+	}
+}
+/// Dividing a InverseTorque by a TimePerDistance returns a value of type InverseMomentum
+impl<T> core::ops::Div<&TimePerDistance<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm.clone() / rhs.spm.clone()}
+	}
+}
+
+// InverseTorque * Velocity -> InverseMomentum
+/// Multiplying a InverseTorque by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Velocity<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm * rhs.mps}
+	}
+}
+/// Multiplying a InverseTorque by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<Velocity<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm.clone() * rhs.mps}
+	}
+}
+/// Multiplying a InverseTorque by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Velocity<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm * rhs.mps.clone()}
+	}
+}
+/// Multiplying a InverseTorque by a Velocity returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&Velocity<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &Velocity<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.per_Nm.clone() * rhs.mps.clone()}
+	}
+}
+
+// InverseTorque / InverseAbsorbedDose -> InverseMass
+/// Dividing a InverseTorque by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseTorque by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a InverseTorque by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseAbsorbedDose returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// InverseTorque / InverseDoseEquivalent -> InverseMass
+/// Dividing a InverseTorque by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseTorque by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a InverseTorque by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a InverseTorque by a InverseDoseEquivalent returns a value of type InverseMass
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &InverseTorque<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InverseMass{per_kg: self.per_Nm.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<InverseTorque<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+impl<T> core::ops::Div<&InverseTorque<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseTorque<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<InverseTorque<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseTorque<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&InverseTorque<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseTorque<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseTorque<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseTorque<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseTorque<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
+// 1/InverseTorque -> Energy
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseTorque<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<InverseTorque<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseTorque<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self) / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a InverseTorque unit value returns a value of type Energy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&InverseTorque<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Energy{J: T::from(self.clone()) / rhs.per_Nm.clone()}
+	}
+}
+
 /// The moment of inertia unit type, defined as kilogram meters squared in SI units
 #[derive(UnitStruct, Debug, Clone)]
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
@@ -4713,6 +19974,36 @@ impl<T> From<uom::si::f64::MomentOfInertia> for MomentOfInertia<T> where T: NumL
 }
 
 
+// MomentOfInertia * InverseMass -> Area
+/// Multiplying a MomentOfInertia by a InverseMass returns a value of type Area
+impl<T> core::ops::Mul<InverseMass<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Area{m2: self.kgm2 * rhs.per_kg}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseMass returns a value of type Area
+impl<T> core::ops::Mul<InverseMass<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Area{m2: self.kgm2.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseMass returns a value of type Area
+impl<T> core::ops::Mul<&InverseMass<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Area{m2: self.kgm2 * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseMass returns a value of type Area
+impl<T> core::ops::Mul<&InverseMass<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = Area<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Area{m2: self.kgm2.clone() * rhs.per_kg.clone()}
+	}
+}
+
 // MomentOfInertia / Mass -> Area
 /// Dividing a MomentOfInertia by a Mass returns a value of type Area
 impl<T> core::ops::Div<Mass<T>> for MomentOfInertia<T> where T: NumLike {
@@ -4773,6 +20064,66 @@ impl<T> core::ops::Div<&Area<T>> for &MomentOfInertia<T> where T: NumLike {
 	}
 }
 
+// MomentOfInertia * InverseArea -> Mass
+/// Multiplying a MomentOfInertia by a InverseArea returns a value of type Mass
+impl<T> core::ops::Mul<InverseArea<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgm2 * rhs.per_m2}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseArea returns a value of type Mass
+impl<T> core::ops::Mul<InverseArea<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgm2.clone() * rhs.per_m2}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseArea returns a value of type Mass
+impl<T> core::ops::Mul<&InverseArea<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgm2 * rhs.per_m2.clone()}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseArea returns a value of type Mass
+impl<T> core::ops::Mul<&InverseArea<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseArea<T>) -> Self::Output {
+		Mass{kg: self.kgm2.clone() * rhs.per_m2.clone()}
+	}
+}
+
+// MomentOfInertia / AngularMomentum -> InverseAngularVelocity
+/// Dividing a MomentOfInertia by a AngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularMomentum<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2 / rhs.kgm2radps}
+	}
+}
+/// Dividing a MomentOfInertia by a AngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<AngularMomentum<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: AngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2.clone() / rhs.kgm2radps}
+	}
+}
+/// Dividing a MomentOfInertia by a AngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularMomentum<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2 / rhs.kgm2radps.clone()}
+	}
+}
+/// Dividing a MomentOfInertia by a AngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Div<&AngularMomentum<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn div(self, rhs: &AngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2.clone() / rhs.kgm2radps.clone()}
+	}
+}
+
 // MomentOfInertia * AngularVelocity -> AngularMomentum
 /// Multiplying a MomentOfInertia by a AngularVelocity returns a value of type AngularMomentum
 impl<T> core::ops::Mul<AngularVelocity<T>> for MomentOfInertia<T> where T: NumLike {
@@ -4800,6 +20151,66 @@ impl<T> core::ops::Mul<&AngularVelocity<T>> for &MomentOfInertia<T> where T: Num
 	type Output = AngularMomentum<T>;
 	fn mul(self, rhs: &AngularVelocity<T>) -> Self::Output {
 		AngularMomentum{kgm2radps: self.kgm2.clone() * rhs.radps.clone()}
+	}
+}
+
+// MomentOfInertia * InverseAngularMomentum -> InverseAngularVelocity
+/// Multiplying a MomentOfInertia by a InverseAngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<InverseAngularMomentum<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2 * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseAngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<InverseAngularMomentum<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: InverseAngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2.clone() * rhs.s_per_kgm2rad}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseAngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&InverseAngularMomentum<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2 * rhs.s_per_kgm2rad.clone()}
+	}
+}
+/// Multiplying a MomentOfInertia by a InverseAngularMomentum returns a value of type InverseAngularVelocity
+impl<T> core::ops::Mul<&InverseAngularMomentum<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = InverseAngularVelocity<T>;
+	fn mul(self, rhs: &InverseAngularMomentum<T>) -> Self::Output {
+		InverseAngularVelocity{s_per_rad: self.kgm2.clone() * rhs.s_per_kgm2rad.clone()}
+	}
+}
+
+// MomentOfInertia / InverseAngularVelocity -> AngularMomentum
+/// Dividing a MomentOfInertia by a InverseAngularVelocity returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.kgm2 / rhs.s_per_rad}
+	}
+}
+/// Dividing a MomentOfInertia by a InverseAngularVelocity returns a value of type AngularMomentum
+impl<T> core::ops::Div<InverseAngularVelocity<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: InverseAngularVelocity<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.kgm2.clone() / rhs.s_per_rad}
+	}
+}
+/// Dividing a MomentOfInertia by a InverseAngularVelocity returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for MomentOfInertia<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.kgm2 / rhs.s_per_rad.clone()}
+	}
+}
+/// Dividing a MomentOfInertia by a InverseAngularVelocity returns a value of type AngularMomentum
+impl<T> core::ops::Div<&InverseAngularVelocity<T>> for &MomentOfInertia<T> where T: NumLike {
+	type Output = AngularMomentum<T>;
+	fn div(self, rhs: &InverseAngularVelocity<T>) -> Self::Output {
+		AngularMomentum{kgm2radps: self.kgm2.clone() / rhs.s_per_rad.clone()}
 	}
 }
 
@@ -5018,6 +20429,36 @@ impl<T> From<uom::si::f64::Momentum> for Momentum<T> where T: NumLike+From<f64> 
 }
 
 
+// Momentum * InverseMass -> Velocity
+/// Multiplying a Momentum by a InverseMass returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMass<T>> for Momentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Velocity{mps: self.kgmps * rhs.per_kg}
+	}
+}
+/// Multiplying a Momentum by a InverseMass returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMass<T>> for &Momentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		Velocity{mps: self.kgmps.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a Momentum by a InverseMass returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMass<T>> for Momentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Velocity{mps: self.kgmps * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a Momentum by a InverseMass returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMass<T>> for &Momentum<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		Velocity{mps: self.kgmps.clone() * rhs.per_kg.clone()}
+	}
+}
+
 // Momentum / Mass -> Velocity
 /// Dividing a Momentum by a Mass returns a value of type Velocity
 impl<T> core::ops::Div<Mass<T>> for Momentum<T> where T: NumLike {
@@ -5108,6 +20549,66 @@ impl<T> core::ops::Mul<&Acceleration<T>> for &Momentum<T> where T: NumLike {
 	}
 }
 
+// Momentum / Energy -> TimePerDistance
+/// Dividing a Momentum by a Energy returns a value of type TimePerDistance
+impl<T> core::ops::Div<Energy<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps / rhs.J}
+	}
+}
+/// Dividing a Momentum by a Energy returns a value of type TimePerDistance
+impl<T> core::ops::Div<Energy<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() / rhs.J}
+	}
+}
+/// Dividing a Momentum by a Energy returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Energy<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps / rhs.J.clone()}
+	}
+}
+/// Dividing a Momentum by a Energy returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Energy<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() / rhs.J.clone()}
+	}
+}
+
+// Momentum / Torque -> TimePerDistance
+/// Dividing a Momentum by a Torque returns a value of type TimePerDistance
+impl<T> core::ops::Div<Torque<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps / rhs.Nm}
+	}
+}
+/// Dividing a Momentum by a Torque returns a value of type TimePerDistance
+impl<T> core::ops::Div<Torque<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() / rhs.Nm}
+	}
+}
+/// Dividing a Momentum by a Torque returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Torque<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps / rhs.Nm.clone()}
+	}
+}
+/// Dividing a Momentum by a Torque returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Torque<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() / rhs.Nm.clone()}
+	}
+}
+
 // Momentum / Force -> Time
 /// Dividing a Momentum by a Force returns a value of type Time
 impl<T> core::ops::Div<Force<T>> for Momentum<T> where T: NumLike {
@@ -5168,6 +20669,246 @@ impl<T> core::ops::Mul<&Frequency<T>> for &Momentum<T> where T: NumLike {
 	}
 }
 
+// Momentum / InverseAcceleration -> Power
+/// Dividing a Momentum by a InverseAcceleration returns a value of type Power
+impl<T> core::ops::Div<InverseAcceleration<T>> for Momentum<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Power{W: self.kgmps / rhs.s2pm}
+	}
+}
+/// Dividing a Momentum by a InverseAcceleration returns a value of type Power
+impl<T> core::ops::Div<InverseAcceleration<T>> for &Momentum<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Power{W: self.kgmps.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a Momentum by a InverseAcceleration returns a value of type Power
+impl<T> core::ops::Div<&InverseAcceleration<T>> for Momentum<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Power{W: self.kgmps / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a Momentum by a InverseAcceleration returns a value of type Power
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &Momentum<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Power{W: self.kgmps.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// Momentum * InverseEnergy -> TimePerDistance
+/// Multiplying a Momentum by a InverseEnergy returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseEnergy<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps * rhs.per_J}
+	}
+}
+/// Multiplying a Momentum by a InverseEnergy returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseEnergy<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a Momentum by a InverseEnergy returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseEnergy<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a Momentum by a InverseEnergy returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseEnergy<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() * rhs.per_J.clone()}
+	}
+}
+
+// Momentum * InverseTorque -> TimePerDistance
+/// Multiplying a Momentum by a InverseTorque returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseTorque<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps * rhs.per_Nm}
+	}
+}
+/// Multiplying a Momentum by a InverseTorque returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseTorque<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a Momentum by a InverseTorque returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseTorque<T>> for Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a Momentum by a InverseTorque returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseTorque<T>> for &Momentum<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		TimePerDistance{spm: self.kgmps.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+// Momentum * InverseForce -> Time
+/// Multiplying a Momentum by a InverseForce returns a value of type Time
+impl<T> core::ops::Mul<InverseForce<T>> for Momentum<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Time{s: self.kgmps * rhs.per_N}
+	}
+}
+/// Multiplying a Momentum by a InverseForce returns a value of type Time
+impl<T> core::ops::Mul<InverseForce<T>> for &Momentum<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Time{s: self.kgmps.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Momentum by a InverseForce returns a value of type Time
+impl<T> core::ops::Mul<&InverseForce<T>> for Momentum<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Time{s: self.kgmps * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Momentum by a InverseForce returns a value of type Time
+impl<T> core::ops::Mul<&InverseForce<T>> for &Momentum<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Time{s: self.kgmps.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Momentum * InversePower -> InverseAcceleration
+/// Multiplying a Momentum by a InversePower returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<InversePower<T>> for Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps * rhs.per_W}
+	}
+}
+/// Multiplying a Momentum by a InversePower returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<InversePower<T>> for &Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Momentum by a InversePower returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&InversePower<T>> for Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Momentum by a InversePower returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&InversePower<T>> for &Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps.clone() * rhs.per_W.clone()}
+	}
+}
+
+// Momentum / Power -> InverseAcceleration
+/// Dividing a Momentum by a Power returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Power<T>> for Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps / rhs.W}
+	}
+}
+/// Dividing a Momentum by a Power returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Power<T>> for &Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps.clone() / rhs.W}
+	}
+}
+/// Dividing a Momentum by a Power returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Power<T>> for Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps / rhs.W.clone()}
+	}
+}
+/// Dividing a Momentum by a Power returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Power<T>> for &Momentum<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.kgmps.clone() / rhs.W.clone()}
+	}
+}
+
+// Momentum * TimePerDistance -> Mass
+/// Multiplying a Momentum by a TimePerDistance returns a value of type Mass
+impl<T> core::ops::Mul<TimePerDistance<T>> for Momentum<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Mass{kg: self.kgmps * rhs.spm}
+	}
+}
+/// Multiplying a Momentum by a TimePerDistance returns a value of type Mass
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Momentum<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Mass{kg: self.kgmps.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Momentum by a TimePerDistance returns a value of type Mass
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Momentum<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Mass{kg: self.kgmps * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Momentum by a TimePerDistance returns a value of type Mass
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Momentum<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Mass{kg: self.kgmps.clone() * rhs.spm.clone()}
+	}
+}
+
+// Momentum / TimePerDistance -> Energy
+/// Dividing a Momentum by a TimePerDistance returns a value of type Energy
+impl<T> core::ops::Div<TimePerDistance<T>> for Momentum<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Energy{J: self.kgmps / rhs.spm}
+	}
+}
+/// Dividing a Momentum by a TimePerDistance returns a value of type Energy
+impl<T> core::ops::Div<TimePerDistance<T>> for &Momentum<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Energy{J: self.kgmps.clone() / rhs.spm}
+	}
+}
+/// Dividing a Momentum by a TimePerDistance returns a value of type Energy
+impl<T> core::ops::Div<&TimePerDistance<T>> for Momentum<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Energy{J: self.kgmps / rhs.spm.clone()}
+	}
+}
+/// Dividing a Momentum by a TimePerDistance returns a value of type Energy
+impl<T> core::ops::Div<&TimePerDistance<T>> for &Momentum<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Energy{J: self.kgmps.clone() / rhs.spm.clone()}
+	}
+}
+
 // Momentum * Velocity -> Energy
 /// Multiplying a Momentum by a Velocity returns a value of type Energy
 impl<T> core::ops::Mul<Velocity<T>> for Momentum<T> where T: NumLike {
@@ -5225,6 +20966,228 @@ impl<T> core::ops::Div<&Velocity<T>> for &Momentum<T> where T: NumLike {
 	type Output = Mass<T>;
 	fn div(self, rhs: &Velocity<T>) -> Self::Output {
 		Mass{kg: self.kgmps.clone() / rhs.mps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<Momentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Momentum<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Momentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Momentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Momentum<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Momentum<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Momentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Momentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Momentum<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Momentum<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
+	}
+}
+
+// 1/Momentum -> InverseMomentum
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Momentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Momentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Momentum<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self) / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a scalar value by a Momentum unit value returns a value of type InverseMomentum
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Momentum<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: T::from(self.clone()) / rhs.kgmps.clone()}
 	}
 }
 
@@ -5558,6 +21521,36 @@ impl<T> core::ops::Div<&Current<T>> for &Power<T> where T: NumLike {
 	}
 }
 
+// Power * InverseCurrent -> Voltage
+/// Multiplying a Power by a InverseCurrent returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCurrent<T>> for Power<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		Voltage{V: self.W * rhs.per_A}
+	}
+}
+/// Multiplying a Power by a InverseCurrent returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCurrent<T>> for &Power<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		Voltage{V: self.W.clone() * rhs.per_A}
+	}
+}
+/// Multiplying a Power by a InverseCurrent returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCurrent<T>> for Power<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		Voltage{V: self.W * rhs.per_A.clone()}
+	}
+}
+/// Multiplying a Power by a InverseCurrent returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCurrent<T>> for &Power<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		Voltage{V: self.W.clone() * rhs.per_A.clone()}
+	}
+}
+
 // Power * Time -> Energy
 /// Multiplying a Power by a Time returns a value of type Energy
 impl<T> core::ops::Mul<Time<T>> for Power<T> where T: NumLike {
@@ -5585,6 +21578,36 @@ impl<T> core::ops::Mul<&Time<T>> for &Power<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Time<T>) -> Self::Output {
 		Energy{J: self.W.clone() * rhs.s.clone()}
+	}
+}
+
+// Power * InverseVoltage -> Current
+/// Multiplying a Power by a InverseVoltage returns a value of type Current
+impl<T> core::ops::Mul<InverseVoltage<T>> for Power<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Current{A: self.W * rhs.per_V}
+	}
+}
+/// Multiplying a Power by a InverseVoltage returns a value of type Current
+impl<T> core::ops::Mul<InverseVoltage<T>> for &Power<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Current{A: self.W.clone() * rhs.per_V}
+	}
+}
+/// Multiplying a Power by a InverseVoltage returns a value of type Current
+impl<T> core::ops::Mul<&InverseVoltage<T>> for Power<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Current{A: self.W * rhs.per_V.clone()}
+	}
+}
+/// Multiplying a Power by a InverseVoltage returns a value of type Current
+impl<T> core::ops::Mul<&InverseVoltage<T>> for &Power<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Current{A: self.W.clone() * rhs.per_V.clone()}
 	}
 }
 
@@ -5768,6 +21791,156 @@ impl<T> core::ops::Div<&Frequency<T>> for &Power<T> where T: NumLike {
 	}
 }
 
+// Power * InverseAcceleration -> Momentum
+/// Multiplying a Power by a InverseAcceleration returns a value of type Momentum
+impl<T> core::ops::Mul<InverseAcceleration<T>> for Power<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Momentum{kgmps: self.W * rhs.s2pm}
+	}
+}
+/// Multiplying a Power by a InverseAcceleration returns a value of type Momentum
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &Power<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Momentum{kgmps: self.W.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a Power by a InverseAcceleration returns a value of type Momentum
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for Power<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Momentum{kgmps: self.W * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a Power by a InverseAcceleration returns a value of type Momentum
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &Power<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Momentum{kgmps: self.W.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// Power * InverseEnergy -> Frequency
+/// Multiplying a Power by a InverseEnergy returns a value of type Frequency
+impl<T> core::ops::Mul<InverseEnergy<T>> for Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Frequency{Hz: self.W * rhs.per_J}
+	}
+}
+/// Multiplying a Power by a InverseEnergy returns a value of type Frequency
+impl<T> core::ops::Mul<InverseEnergy<T>> for &Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Frequency{Hz: self.W.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a Power by a InverseEnergy returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseEnergy<T>> for Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Frequency{Hz: self.W * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a Power by a InverseEnergy returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseEnergy<T>> for &Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Frequency{Hz: self.W.clone() * rhs.per_J.clone()}
+	}
+}
+
+// Power * InverseTorque -> Frequency
+/// Multiplying a Power by a InverseTorque returns a value of type Frequency
+impl<T> core::ops::Mul<InverseTorque<T>> for Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		Frequency{Hz: self.W * rhs.per_Nm}
+	}
+}
+/// Multiplying a Power by a InverseTorque returns a value of type Frequency
+impl<T> core::ops::Mul<InverseTorque<T>> for &Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		Frequency{Hz: self.W.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a Power by a InverseTorque returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseTorque<T>> for Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Frequency{Hz: self.W * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a Power by a InverseTorque returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseTorque<T>> for &Power<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Frequency{Hz: self.W.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+// Power * InverseForce -> Velocity
+/// Multiplying a Power by a InverseForce returns a value of type Velocity
+impl<T> core::ops::Mul<InverseForce<T>> for Power<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Velocity{mps: self.W * rhs.per_N}
+	}
+}
+/// Multiplying a Power by a InverseForce returns a value of type Velocity
+impl<T> core::ops::Mul<InverseForce<T>> for &Power<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Velocity{mps: self.W.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Power by a InverseForce returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseForce<T>> for Power<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Velocity{mps: self.W * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Power by a InverseForce returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseForce<T>> for &Power<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Velocity{mps: self.W.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Power * InverseMomentum -> Acceleration
+/// Multiplying a Power by a InverseMomentum returns a value of type Acceleration
+impl<T> core::ops::Mul<InverseMomentum<T>> for Power<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Acceleration{mps2: self.W * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Power by a InverseMomentum returns a value of type Acceleration
+impl<T> core::ops::Mul<InverseMomentum<T>> for &Power<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Acceleration{mps2: self.W.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Power by a InverseMomentum returns a value of type Acceleration
+impl<T> core::ops::Mul<&InverseMomentum<T>> for Power<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Acceleration{mps2: self.W * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a Power by a InverseMomentum returns a value of type Acceleration
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &Power<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Acceleration{mps2: self.W.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
 // Power / Momentum -> Acceleration
 /// Dividing a Power by a Momentum returns a value of type Acceleration
 impl<T> core::ops::Div<Momentum<T>> for Power<T> where T: NumLike {
@@ -5798,6 +21971,36 @@ impl<T> core::ops::Div<&Momentum<T>> for &Power<T> where T: NumLike {
 	}
 }
 
+// Power * TimePerDistance -> Force
+/// Multiplying a Power by a TimePerDistance returns a value of type Force
+impl<T> core::ops::Mul<TimePerDistance<T>> for Power<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Force{N: self.W * rhs.spm}
+	}
+}
+/// Multiplying a Power by a TimePerDistance returns a value of type Force
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Power<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Force{N: self.W.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Power by a TimePerDistance returns a value of type Force
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Power<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Force{N: self.W * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Power by a TimePerDistance returns a value of type Force
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Power<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Force{N: self.W.clone() * rhs.spm.clone()}
+	}
+}
+
 // Power / Velocity -> Force
 /// Dividing a Power by a Velocity returns a value of type Force
 impl<T> core::ops::Div<Velocity<T>> for Power<T> where T: NumLike {
@@ -5825,6 +22028,228 @@ impl<T> core::ops::Div<&Velocity<T>> for &Power<T> where T: NumLike {
 	type Output = Force<T>;
 	fn div(self, rhs: &Velocity<T>) -> Self::Output {
 		Force{N: self.W.clone() / rhs.mps.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<Power<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+impl<T> core::ops::Div<&Power<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Power<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Power<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Power<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Power<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Power<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Power<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Power<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Power<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
+	}
+}
+
+// 1/Power -> InversePower
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Power<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Power<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Power<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self) / rhs.W.clone()}
+	}
+}
+/// Dividing a scalar value by a Power unit value returns a value of type InversePower
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Power<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InversePower{per_W: T::from(self.clone()) / rhs.W.clone()}
 	}
 }
 
@@ -6260,6 +22685,66 @@ impl<T> core::ops::Mul<&Area<T>> for &Pressure<T> where T: NumLike {
 	}
 }
 
+// Pressure / InverseArea -> Force
+/// Dividing a Pressure by a InverseArea returns a value of type Force
+impl<T> core::ops::Div<InverseArea<T>> for Pressure<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		Force{N: self.Pa / rhs.per_m2}
+	}
+}
+/// Dividing a Pressure by a InverseArea returns a value of type Force
+impl<T> core::ops::Div<InverseArea<T>> for &Pressure<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InverseArea<T>) -> Self::Output {
+		Force{N: self.Pa.clone() / rhs.per_m2}
+	}
+}
+/// Dividing a Pressure by a InverseArea returns a value of type Force
+impl<T> core::ops::Div<&InverseArea<T>> for Pressure<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		Force{N: self.Pa / rhs.per_m2.clone()}
+	}
+}
+/// Dividing a Pressure by a InverseArea returns a value of type Force
+impl<T> core::ops::Div<&InverseArea<T>> for &Pressure<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InverseArea<T>) -> Self::Output {
+		Force{N: self.Pa.clone() / rhs.per_m2.clone()}
+	}
+}
+
+// Pressure / InverseVolume -> Energy
+/// Dividing a Pressure by a InverseVolume returns a value of type Energy
+impl<T> core::ops::Div<InverseVolume<T>> for Pressure<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		Energy{J: self.Pa / rhs.per_m3}
+	}
+}
+/// Dividing a Pressure by a InverseVolume returns a value of type Energy
+impl<T> core::ops::Div<InverseVolume<T>> for &Pressure<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseVolume<T>) -> Self::Output {
+		Energy{J: self.Pa.clone() / rhs.per_m3}
+	}
+}
+/// Dividing a Pressure by a InverseVolume returns a value of type Energy
+impl<T> core::ops::Div<&InverseVolume<T>> for Pressure<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Energy{J: self.Pa / rhs.per_m3.clone()}
+	}
+}
+/// Dividing a Pressure by a InverseVolume returns a value of type Energy
+impl<T> core::ops::Div<&InverseVolume<T>> for &Pressure<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Energy{J: self.Pa.clone() / rhs.per_m3.clone()}
+	}
+}
+
 // Pressure * Volume -> Energy
 /// Multiplying a Pressure by a Volume returns a value of type Energy
 impl<T> core::ops::Mul<Volume<T>> for Pressure<T> where T: NumLike {
@@ -6347,6 +22832,1687 @@ impl<T> core::ops::Div<&AreaDensity<T>> for &Pressure<T> where T: NumLike {
 	type Output = Acceleration<T>;
 	fn div(self, rhs: &AreaDensity<T>) -> Self::Output {
 		Acceleration{mps2: self.Pa.clone() / rhs.kgpm2.clone()}
+	}
+}
+
+// Pressure * AreaPerMass -> Acceleration
+/// Multiplying a Pressure by a AreaPerMass returns a value of type Acceleration
+impl<T> core::ops::Mul<AreaPerMass<T>> for Pressure<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Acceleration{mps2: self.Pa * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a Pressure by a AreaPerMass returns a value of type Acceleration
+impl<T> core::ops::Mul<AreaPerMass<T>> for &Pressure<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Acceleration{mps2: self.Pa.clone() * rhs.m2_per_kg}
+	}
+}
+/// Multiplying a Pressure by a AreaPerMass returns a value of type Acceleration
+impl<T> core::ops::Mul<&AreaPerMass<T>> for Pressure<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Acceleration{mps2: self.Pa * rhs.m2_per_kg.clone()}
+	}
+}
+/// Multiplying a Pressure by a AreaPerMass returns a value of type Acceleration
+impl<T> core::ops::Mul<&AreaPerMass<T>> for &Pressure<T> where T: NumLike {
+	type Output = Acceleration<T>;
+	fn mul(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Acceleration{mps2: self.Pa.clone() * rhs.m2_per_kg.clone()}
+	}
+}
+
+// Pressure / Energy -> InverseVolume
+/// Dividing a Pressure by a Energy returns a value of type InverseVolume
+impl<T> core::ops::Div<Energy<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa / rhs.J}
+	}
+}
+/// Dividing a Pressure by a Energy returns a value of type InverseVolume
+impl<T> core::ops::Div<Energy<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() / rhs.J}
+	}
+}
+/// Dividing a Pressure by a Energy returns a value of type InverseVolume
+impl<T> core::ops::Div<&Energy<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa / rhs.J.clone()}
+	}
+}
+/// Dividing a Pressure by a Energy returns a value of type InverseVolume
+impl<T> core::ops::Div<&Energy<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() / rhs.J.clone()}
+	}
+}
+
+// Pressure / Torque -> InverseVolume
+/// Dividing a Pressure by a Torque returns a value of type InverseVolume
+impl<T> core::ops::Div<Torque<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa / rhs.Nm}
+	}
+}
+/// Dividing a Pressure by a Torque returns a value of type InverseVolume
+impl<T> core::ops::Div<Torque<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() / rhs.Nm}
+	}
+}
+/// Dividing a Pressure by a Torque returns a value of type InverseVolume
+impl<T> core::ops::Div<&Torque<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa / rhs.Nm.clone()}
+	}
+}
+/// Dividing a Pressure by a Torque returns a value of type InverseVolume
+impl<T> core::ops::Div<&Torque<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() / rhs.Nm.clone()}
+	}
+}
+
+// Pressure / Force -> InverseArea
+/// Dividing a Pressure by a Force returns a value of type InverseArea
+impl<T> core::ops::Div<Force<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa / rhs.N}
+	}
+}
+/// Dividing a Pressure by a Force returns a value of type InverseArea
+impl<T> core::ops::Div<Force<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa.clone() / rhs.N}
+	}
+}
+/// Dividing a Pressure by a Force returns a value of type InverseArea
+impl<T> core::ops::Div<&Force<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa / rhs.N.clone()}
+	}
+}
+/// Dividing a Pressure by a Force returns a value of type InverseArea
+impl<T> core::ops::Div<&Force<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa.clone() / rhs.N.clone()}
+	}
+}
+
+// Pressure * InverseAcceleration -> AreaDensity
+/// Multiplying a Pressure by a InverseAcceleration returns a value of type AreaDensity
+impl<T> core::ops::Mul<InverseAcceleration<T>> for Pressure<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.Pa * rhs.s2pm}
+	}
+}
+/// Multiplying a Pressure by a InverseAcceleration returns a value of type AreaDensity
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &Pressure<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.Pa.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a Pressure by a InverseAcceleration returns a value of type AreaDensity
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for Pressure<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.Pa * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseAcceleration returns a value of type AreaDensity
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &Pressure<T> where T: NumLike {
+	type Output = AreaDensity<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		AreaDensity{kgpm2: self.Pa.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// Pressure * InverseEnergy -> InverseVolume
+/// Multiplying a Pressure by a InverseEnergy returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseEnergy<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa * rhs.per_J}
+	}
+}
+/// Multiplying a Pressure by a InverseEnergy returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseEnergy<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a Pressure by a InverseEnergy returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseEnergy<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseEnergy returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseEnergy<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() * rhs.per_J.clone()}
+	}
+}
+
+// Pressure * InverseTorque -> InverseVolume
+/// Multiplying a Pressure by a InverseTorque returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseTorque<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa * rhs.per_Nm}
+	}
+}
+/// Multiplying a Pressure by a InverseTorque returns a value of type InverseVolume
+impl<T> core::ops::Mul<InverseTorque<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a Pressure by a InverseTorque returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseTorque<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseTorque returns a value of type InverseVolume
+impl<T> core::ops::Mul<&InverseTorque<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseVolume<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseVolume{per_m3: self.Pa.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+// Pressure * InverseForce -> InverseArea
+/// Multiplying a Pressure by a InverseForce returns a value of type InverseArea
+impl<T> core::ops::Mul<InverseForce<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa * rhs.per_N}
+	}
+}
+/// Multiplying a Pressure by a InverseForce returns a value of type InverseArea
+impl<T> core::ops::Mul<InverseForce<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Pressure by a InverseForce returns a value of type InverseArea
+impl<T> core::ops::Mul<&InverseForce<T>> for Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseForce returns a value of type InverseArea
+impl<T> core::ops::Mul<&InverseForce<T>> for &Pressure<T> where T: NumLike {
+	type Output = InverseArea<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InverseArea{per_m2: self.Pa.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Pressure * InverseAbsorbedDose -> Density
+/// Multiplying a Pressure by a InverseAbsorbedDose returns a value of type Density
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Density{kgpm3: self.Pa * rhs.per_Gy}
+	}
+}
+/// Multiplying a Pressure by a InverseAbsorbedDose returns a value of type Density
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Density{kgpm3: self.Pa.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a Pressure by a InverseAbsorbedDose returns a value of type Density
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Density{kgpm3: self.Pa * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseAbsorbedDose returns a value of type Density
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Density{kgpm3: self.Pa.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// Pressure * InverseDoseEquivalent -> Density
+/// Multiplying a Pressure by a InverseDoseEquivalent returns a value of type Density
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Density{kgpm3: self.Pa * rhs.per_Sv}
+	}
+}
+/// Multiplying a Pressure by a InverseDoseEquivalent returns a value of type Density
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Density{kgpm3: self.Pa.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a Pressure by a InverseDoseEquivalent returns a value of type Density
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Density{kgpm3: self.Pa * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a Pressure by a InverseDoseEquivalent returns a value of type Density
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &Pressure<T> where T: NumLike {
+	type Output = Density<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Density{kgpm3: self.Pa.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<Pressure<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+impl<T> core::ops::Div<&Pressure<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Pressure<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Pressure<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Pressure<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Pressure<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Pressure<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Pressure<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Pressure<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Pressure<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+// 1/Pressure -> InversePressure
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Pressure<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Pressure<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Pressure<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self) / rhs.Pa.clone()}
+	}
+}
+/// Dividing a scalar value by a Pressure unit value returns a value of type InversePressure
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Pressure<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InversePressure<T>;
+	fn div(self, rhs: &Pressure<T>) -> Self::Output {
+		InversePressure{per_Pa: T::from(self.clone()) / rhs.Pa.clone()}
+	}
+}
+
+/// The inverse of velocity unit type, defined as seconds per meter in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct TimePerDistance<T: NumLike>{
+	/// The value of this Time per distance in seconds per meter
+	pub spm: T
+}
+
+impl<T> TimePerDistance<T> where T: NumLike {
+
+	/// Returns the standard unit name of time per distance: "seconds per meter"
+	pub fn unit_name() -> &'static str { "seconds per meter" }
+	
+	/// Returns the abbreviated name or symbol of time per distance: "s/m" for seconds per meter
+	pub fn unit_symbol() -> &'static str { "s/m" }
+	
+	/// Returns a new time per distance value from the given number of seconds per meter
+	///
+	/// # Arguments
+	/// * `spm` - Any number-like type, representing a quantity of seconds per meter
+	pub fn from_spm(spm: T) -> Self { TimePerDistance{spm: spm} }
+	
+	/// Returns a copy of this time per distance value in seconds per meter
+	pub fn to_spm(&self) -> T { self.spm.clone() }
+
+	/// Returns a new time per distance value from the given number of seconds per meter
+	///
+	/// # Arguments
+	/// * `seconds_per_meter` - Any number-like type, representing a quantity of seconds per meter
+	pub fn from_seconds_per_meter(seconds_per_meter: T) -> Self { TimePerDistance{spm: seconds_per_meter} }
+	
+	/// Returns a copy of this time per distance value in seconds per meter
+	pub fn to_seconds_per_meter(&self) -> T { self.spm.clone() }
+
+}
+
+impl<T> fmt::Display for TimePerDistance<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.spm, Self::unit_symbol())
+	}
+}
+
+impl<T> TimePerDistance<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this time per distance value in seconds per centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s_per_cm(&self) -> T {
+		return self.spm.clone() * T::from(0.01_f64);
+	}
+
+	/// Returns a new time per distance value from the given number of seconds per centimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s_per_cm` - Any number-like type, representing a quantity of seconds per centimeter
+	pub fn from_s_per_cm(s_per_cm: T) -> Self {
+		TimePerDistance{spm: s_per_cm * T::from(100.0_f64)}
+	}
+
+	/// Returns a copy of this time per distance value in seconds per millimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_s_per_mm(&self) -> T {
+		return self.spm.clone() * T::from(0.001_f64);
+	}
+
+	/// Returns a new time per distance value from the given number of seconds per millimeter
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `s_per_mm` - Any number-like type, representing a quantity of seconds per millimeter
+	pub fn from_s_per_mm(s_per_mm: T) -> Self {
+		TimePerDistance{spm: s_per_mm * T::from(1000.0_f64)}
+	}
+
+	/// Returns a copy of this time per distance value in hours per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_hr_per_km(&self) -> T {
+		return self.spm.clone() * T::from(0.277777777777778_f64);
+	}
+
+	/// Returns a new time per distance value from the given number of hours per kilometer
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `hr_per_km` - Any number-like type, representing a quantity of hours per kilometer
+	pub fn from_hr_per_km(hr_per_km: T) -> Self {
+		TimePerDistance{spm: hr_per_km * T::from(3.6_f64)}
+	}
+
+	/// Returns a copy of this time per distance value in hours per mile
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_hr_per_mi(&self) -> T {
+		return self.spm.clone() * T::from(0.44704_f64);
+	}
+
+	/// Returns a new time per distance value from the given number of hours per mile
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `hr_per_mi` - Any number-like type, representing a quantity of hours per mile
+	pub fn from_hr_per_mi(hr_per_mi: T) -> Self {
+		TimePerDistance{spm: hr_per_mi * T::from(2.2369362920544_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<TimePerDistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = TimePerDistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: TimePerDistance<num_bigfloat::BigFloat>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<TimePerDistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = TimePerDistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: TimePerDistance<num_bigfloat::BigFloat>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&TimePerDistance<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = TimePerDistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &TimePerDistance<num_bigfloat::BigFloat>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&TimePerDistance<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = TimePerDistance<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &TimePerDistance<num_bigfloat::BigFloat>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<TimePerDistance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = TimePerDistance<num_complex::Complex32>;
+	fn mul(self, rhs: TimePerDistance<num_complex::Complex32>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<TimePerDistance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = TimePerDistance<num_complex::Complex32>;
+	fn mul(self, rhs: TimePerDistance<num_complex::Complex32>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&TimePerDistance<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = TimePerDistance<num_complex::Complex32>;
+	fn mul(self, rhs: &TimePerDistance<num_complex::Complex32>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&TimePerDistance<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = TimePerDistance<num_complex::Complex32>;
+	fn mul(self, rhs: &TimePerDistance<num_complex::Complex32>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<TimePerDistance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = TimePerDistance<num_complex::Complex64>;
+	fn mul(self, rhs: TimePerDistance<num_complex::Complex64>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<TimePerDistance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = TimePerDistance<num_complex::Complex64>;
+	fn mul(self, rhs: TimePerDistance<num_complex::Complex64>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&TimePerDistance<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = TimePerDistance<num_complex::Complex64>;
+	fn mul(self, rhs: &TimePerDistance<num_complex::Complex64>) -> Self::Output {
+		TimePerDistance{spm: self * rhs.spm.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&TimePerDistance<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = TimePerDistance<num_complex::Complex64>;
+	fn mul(self, rhs: &TimePerDistance<num_complex::Complex64>) -> Self::Output {
+		TimePerDistance{spm: self.clone() * rhs.spm.clone()}
+	}
+}
+
+
+
+
+// TimePerDistance * Distance -> Time
+/// Multiplying a TimePerDistance by a Distance returns a value of type Time
+impl<T> core::ops::Mul<Distance<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		Time{s: self.spm * rhs.m}
+	}
+}
+/// Multiplying a TimePerDistance by a Distance returns a value of type Time
+impl<T> core::ops::Mul<Distance<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: Distance<T>) -> Self::Output {
+		Time{s: self.spm.clone() * rhs.m}
+	}
+}
+/// Multiplying a TimePerDistance by a Distance returns a value of type Time
+impl<T> core::ops::Mul<&Distance<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		Time{s: self.spm * rhs.m.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Distance returns a value of type Time
+impl<T> core::ops::Mul<&Distance<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &Distance<T>) -> Self::Output {
+		Time{s: self.spm.clone() * rhs.m.clone()}
+	}
+}
+
+// TimePerDistance / InverseDistance -> Time
+/// Dividing a TimePerDistance by a InverseDistance returns a value of type Time
+impl<T> core::ops::Div<InverseDistance<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Time{s: self.spm / rhs.per_m}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDistance returns a value of type Time
+impl<T> core::ops::Div<InverseDistance<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: InverseDistance<T>) -> Self::Output {
+		Time{s: self.spm.clone() / rhs.per_m}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDistance returns a value of type Time
+impl<T> core::ops::Div<&InverseDistance<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Time{s: self.spm / rhs.per_m.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDistance returns a value of type Time
+impl<T> core::ops::Div<&InverseDistance<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Time<T>;
+	fn div(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Time{s: self.spm.clone() / rhs.per_m.clone()}
+	}
+}
+
+// TimePerDistance * InverseMass -> InverseMomentum
+/// Multiplying a TimePerDistance by a InverseMass returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseMass<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm * rhs.per_kg}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMass returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseMass<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseMass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm.clone() * rhs.per_kg}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMass returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseMass<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm * rhs.per_kg.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMass returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseMass<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseMass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm.clone() * rhs.per_kg.clone()}
+	}
+}
+
+// TimePerDistance / Mass -> InverseMomentum
+/// Dividing a TimePerDistance by a Mass returns a value of type InverseMomentum
+impl<T> core::ops::Div<Mass<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm / rhs.kg}
+	}
+}
+/// Dividing a TimePerDistance by a Mass returns a value of type InverseMomentum
+impl<T> core::ops::Div<Mass<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Mass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm.clone() / rhs.kg}
+	}
+}
+/// Dividing a TimePerDistance by a Mass returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Mass<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm / rhs.kg.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a Mass returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Mass<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Mass<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.spm.clone() / rhs.kg.clone()}
+	}
+}
+
+// TimePerDistance * Time -> InverseAcceleration
+/// Multiplying a TimePerDistance by a Time returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Time<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm * rhs.s}
+	}
+}
+/// Multiplying a TimePerDistance by a Time returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<Time<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: Time<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm.clone() * rhs.s}
+	}
+}
+/// Multiplying a TimePerDistance by a Time returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Time<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm * rhs.s.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Time returns a value of type InverseAcceleration
+impl<T> core::ops::Mul<&Time<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn mul(self, rhs: &Time<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm.clone() * rhs.s.clone()}
+	}
+}
+
+// TimePerDistance / Time -> InverseDistance
+/// Dividing a TimePerDistance by a Time returns a value of type InverseDistance
+impl<T> core::ops::Div<Time<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm / rhs.s}
+	}
+}
+/// Dividing a TimePerDistance by a Time returns a value of type InverseDistance
+impl<T> core::ops::Div<Time<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: Time<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm.clone() / rhs.s}
+	}
+}
+/// Dividing a TimePerDistance by a Time returns a value of type InverseDistance
+impl<T> core::ops::Div<&Time<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm / rhs.s.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a Time returns a value of type InverseDistance
+impl<T> core::ops::Div<&Time<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn div(self, rhs: &Time<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm.clone() / rhs.s.clone()}
+	}
+}
+
+// TimePerDistance * Acceleration -> Frequency
+/// Multiplying a TimePerDistance by a Acceleration returns a value of type Frequency
+impl<T> core::ops::Mul<Acceleration<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm * rhs.mps2}
+	}
+}
+/// Multiplying a TimePerDistance by a Acceleration returns a value of type Frequency
+impl<T> core::ops::Mul<Acceleration<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: Acceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm.clone() * rhs.mps2}
+	}
+}
+/// Multiplying a TimePerDistance by a Acceleration returns a value of type Frequency
+impl<T> core::ops::Mul<&Acceleration<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm * rhs.mps2.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Acceleration returns a value of type Frequency
+impl<T> core::ops::Mul<&Acceleration<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &Acceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm.clone() * rhs.mps2.clone()}
+	}
+}
+
+// TimePerDistance * Energy -> Momentum
+/// Multiplying a TimePerDistance by a Energy returns a value of type Momentum
+impl<T> core::ops::Mul<Energy<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm * rhs.J}
+	}
+}
+/// Multiplying a TimePerDistance by a Energy returns a value of type Momentum
+impl<T> core::ops::Mul<Energy<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Energy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() * rhs.J}
+	}
+}
+/// Multiplying a TimePerDistance by a Energy returns a value of type Momentum
+impl<T> core::ops::Mul<&Energy<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm * rhs.J.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Energy returns a value of type Momentum
+impl<T> core::ops::Mul<&Energy<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Energy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() * rhs.J.clone()}
+	}
+}
+
+// TimePerDistance * Torque -> Momentum
+/// Multiplying a TimePerDistance by a Torque returns a value of type Momentum
+impl<T> core::ops::Mul<Torque<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm * rhs.Nm}
+	}
+}
+/// Multiplying a TimePerDistance by a Torque returns a value of type Momentum
+impl<T> core::ops::Mul<Torque<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: Torque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() * rhs.Nm}
+	}
+}
+/// Multiplying a TimePerDistance by a Torque returns a value of type Momentum
+impl<T> core::ops::Mul<&Torque<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm * rhs.Nm.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Torque returns a value of type Momentum
+impl<T> core::ops::Mul<&Torque<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &Torque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() * rhs.Nm.clone()}
+	}
+}
+
+// TimePerDistance / Force -> InversePower
+/// Dividing a TimePerDistance by a Force returns a value of type InversePower
+impl<T> core::ops::Div<Force<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InversePower{per_W: self.spm / rhs.N}
+	}
+}
+/// Dividing a TimePerDistance by a Force returns a value of type InversePower
+impl<T> core::ops::Div<Force<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: Force<T>) -> Self::Output {
+		InversePower{per_W: self.spm.clone() / rhs.N}
+	}
+}
+/// Dividing a TimePerDistance by a Force returns a value of type InversePower
+impl<T> core::ops::Div<&Force<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InversePower{per_W: self.spm / rhs.N.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a Force returns a value of type InversePower
+impl<T> core::ops::Div<&Force<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn div(self, rhs: &Force<T>) -> Self::Output {
+		InversePower{per_W: self.spm.clone() / rhs.N.clone()}
+	}
+}
+
+// TimePerDistance * Frequency -> InverseDistance
+/// Multiplying a TimePerDistance by a Frequency returns a value of type InverseDistance
+impl<T> core::ops::Mul<Frequency<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm * rhs.Hz}
+	}
+}
+/// Multiplying a TimePerDistance by a Frequency returns a value of type InverseDistance
+impl<T> core::ops::Mul<Frequency<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: Frequency<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm.clone() * rhs.Hz}
+	}
+}
+/// Multiplying a TimePerDistance by a Frequency returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Frequency<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm * rhs.Hz.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Frequency returns a value of type InverseDistance
+impl<T> core::ops::Mul<&Frequency<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseDistance<T>;
+	fn mul(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseDistance{per_m: self.spm.clone() * rhs.Hz.clone()}
+	}
+}
+
+// TimePerDistance / Frequency -> InverseAcceleration
+/// Dividing a TimePerDistance by a Frequency returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Frequency<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm / rhs.Hz}
+	}
+}
+/// Dividing a TimePerDistance by a Frequency returns a value of type InverseAcceleration
+impl<T> core::ops::Div<Frequency<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: Frequency<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm.clone() / rhs.Hz}
+	}
+}
+/// Dividing a TimePerDistance by a Frequency returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Frequency<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm / rhs.Hz.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a Frequency returns a value of type InverseAcceleration
+impl<T> core::ops::Div<&Frequency<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseAcceleration<T>;
+	fn div(self, rhs: &Frequency<T>) -> Self::Output {
+		InverseAcceleration{s2pm: self.spm.clone() / rhs.Hz.clone()}
+	}
+}
+
+// TimePerDistance / InverseAcceleration -> Frequency
+/// Dividing a TimePerDistance by a InverseAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<InverseAcceleration<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm / rhs.s2pm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<InverseAcceleration<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm.clone() / rhs.s2pm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<&InverseAcceleration<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm / rhs.s2pm.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAcceleration returns a value of type Frequency
+impl<T> core::ops::Div<&InverseAcceleration<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn div(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Frequency{Hz: self.spm.clone() / rhs.s2pm.clone()}
+	}
+}
+
+// TimePerDistance / InverseEnergy -> Momentum
+/// Dividing a TimePerDistance by a InverseEnergy returns a value of type Momentum
+impl<T> core::ops::Div<InverseEnergy<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm / rhs.per_J}
+	}
+}
+/// Dividing a TimePerDistance by a InverseEnergy returns a value of type Momentum
+impl<T> core::ops::Div<InverseEnergy<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseEnergy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() / rhs.per_J}
+	}
+}
+/// Dividing a TimePerDistance by a InverseEnergy returns a value of type Momentum
+impl<T> core::ops::Div<&InverseEnergy<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm / rhs.per_J.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseEnergy returns a value of type Momentum
+impl<T> core::ops::Div<&InverseEnergy<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() / rhs.per_J.clone()}
+	}
+}
+
+// TimePerDistance / InverseTorque -> Momentum
+/// Dividing a TimePerDistance by a InverseTorque returns a value of type Momentum
+impl<T> core::ops::Div<InverseTorque<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm / rhs.per_Nm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseTorque returns a value of type Momentum
+impl<T> core::ops::Div<InverseTorque<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseTorque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() / rhs.per_Nm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseTorque returns a value of type Momentum
+impl<T> core::ops::Div<&InverseTorque<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm / rhs.per_Nm.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseTorque returns a value of type Momentum
+impl<T> core::ops::Div<&InverseTorque<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseTorque<T>) -> Self::Output {
+		Momentum{kgmps: self.spm.clone() / rhs.per_Nm.clone()}
+	}
+}
+
+// TimePerDistance * InverseForce -> InversePower
+/// Multiplying a TimePerDistance by a InverseForce returns a value of type InversePower
+impl<T> core::ops::Mul<InverseForce<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InversePower{per_W: self.spm * rhs.per_N}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseForce returns a value of type InversePower
+impl<T> core::ops::Mul<InverseForce<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		InversePower{per_W: self.spm.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseForce returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseForce<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InversePower{per_W: self.spm * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseForce returns a value of type InversePower
+impl<T> core::ops::Mul<&InverseForce<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InversePower<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		InversePower{per_W: self.spm.clone() * rhs.per_N.clone()}
+	}
+}
+
+// TimePerDistance * InverseMomentum -> InverseEnergy
+/// Multiplying a TimePerDistance by a InverseMomentum returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMomentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMomentum returns a value of type InverseEnergy
+impl<T> core::ops::Mul<InverseMomentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMomentum returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMomentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a InverseMomentum returns a value of type InverseEnergy
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// TimePerDistance / InverseMomentum -> Mass
+/// Dividing a TimePerDistance by a InverseMomentum returns a value of type Mass
+impl<T> core::ops::Div<InverseMomentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Mass{kg: self.spm / rhs.s_per_kgm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseMomentum returns a value of type Mass
+impl<T> core::ops::Div<InverseMomentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Mass{kg: self.spm.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a TimePerDistance by a InverseMomentum returns a value of type Mass
+impl<T> core::ops::Div<&InverseMomentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Mass{kg: self.spm / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseMomentum returns a value of type Mass
+impl<T> core::ops::Div<&InverseMomentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Mass{kg: self.spm.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// TimePerDistance / InversePower -> Force
+/// Dividing a TimePerDistance by a InversePower returns a value of type Force
+impl<T> core::ops::Div<InversePower<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Force{N: self.spm / rhs.per_W}
+	}
+}
+/// Dividing a TimePerDistance by a InversePower returns a value of type Force
+impl<T> core::ops::Div<InversePower<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: InversePower<T>) -> Self::Output {
+		Force{N: self.spm.clone() / rhs.per_W}
+	}
+}
+/// Dividing a TimePerDistance by a InversePower returns a value of type Force
+impl<T> core::ops::Div<&InversePower<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Force{N: self.spm / rhs.per_W.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InversePower returns a value of type Force
+impl<T> core::ops::Div<&InversePower<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn div(self, rhs: &InversePower<T>) -> Self::Output {
+		Force{N: self.spm.clone() / rhs.per_W.clone()}
+	}
+}
+
+// TimePerDistance * Momentum -> Mass
+/// Multiplying a TimePerDistance by a Momentum returns a value of type Mass
+impl<T> core::ops::Mul<Momentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		Mass{kg: self.spm * rhs.kgmps}
+	}
+}
+/// Multiplying a TimePerDistance by a Momentum returns a value of type Mass
+impl<T> core::ops::Mul<Momentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: Momentum<T>) -> Self::Output {
+		Mass{kg: self.spm.clone() * rhs.kgmps}
+	}
+}
+/// Multiplying a TimePerDistance by a Momentum returns a value of type Mass
+impl<T> core::ops::Mul<&Momentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		Mass{kg: self.spm * rhs.kgmps.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Momentum returns a value of type Mass
+impl<T> core::ops::Mul<&Momentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
+		Mass{kg: self.spm.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// TimePerDistance / Momentum -> InverseEnergy
+/// Dividing a TimePerDistance by a Momentum returns a value of type InverseEnergy
+impl<T> core::ops::Div<Momentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm / rhs.kgmps}
+	}
+}
+/// Dividing a TimePerDistance by a Momentum returns a value of type InverseEnergy
+impl<T> core::ops::Div<Momentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm.clone() / rhs.kgmps}
+	}
+}
+/// Dividing a TimePerDistance by a Momentum returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Momentum<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a Momentum returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Momentum<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseEnergy{per_J: self.spm.clone() / rhs.kgmps.clone()}
+	}
+}
+
+// TimePerDistance * Power -> Force
+/// Multiplying a TimePerDistance by a Power returns a value of type Force
+impl<T> core::ops::Mul<Power<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Force{N: self.spm * rhs.W}
+	}
+}
+/// Multiplying a TimePerDistance by a Power returns a value of type Force
+impl<T> core::ops::Mul<Power<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: Power<T>) -> Self::Output {
+		Force{N: self.spm.clone() * rhs.W}
+	}
+}
+/// Multiplying a TimePerDistance by a Power returns a value of type Force
+impl<T> core::ops::Mul<&Power<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Force{N: self.spm * rhs.W.clone()}
+	}
+}
+/// Multiplying a TimePerDistance by a Power returns a value of type Force
+impl<T> core::ops::Mul<&Power<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &Power<T>) -> Self::Output {
+		Force{N: self.spm.clone() * rhs.W.clone()}
+	}
+}
+
+// TimePerDistance / InverseAbsorbedDose -> Velocity
+/// Dividing a TimePerDistance by a InverseAbsorbedDose returns a value of type Velocity
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Velocity{mps: self.spm / rhs.per_Gy}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAbsorbedDose returns a value of type Velocity
+impl<T> core::ops::Div<InverseAbsorbedDose<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Velocity{mps: self.spm.clone() / rhs.per_Gy}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAbsorbedDose returns a value of type Velocity
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Velocity{mps: self.spm / rhs.per_Gy.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseAbsorbedDose returns a value of type Velocity
+impl<T> core::ops::Div<&InverseAbsorbedDose<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Velocity{mps: self.spm.clone() / rhs.per_Gy.clone()}
+	}
+}
+
+// TimePerDistance / InverseDoseEquivalent -> Velocity
+/// Dividing a TimePerDistance by a InverseDoseEquivalent returns a value of type Velocity
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Velocity{mps: self.spm / rhs.per_Sv}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDoseEquivalent returns a value of type Velocity
+impl<T> core::ops::Div<InverseDoseEquivalent<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Velocity{mps: self.spm.clone() / rhs.per_Sv}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDoseEquivalent returns a value of type Velocity
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Velocity{mps: self.spm / rhs.per_Sv.clone()}
+	}
+}
+/// Dividing a TimePerDistance by a InverseDoseEquivalent returns a value of type Velocity
+impl<T> core::ops::Div<&InverseDoseEquivalent<T>> for &TimePerDistance<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Velocity{mps: self.spm.clone() / rhs.per_Sv.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<TimePerDistance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+impl<T> core::ops::Div<&TimePerDistance<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<TimePerDistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<TimePerDistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<TimePerDistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<TimePerDistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
+	}
+}
+
+// 1/TimePerDistance -> Velocity
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<TimePerDistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<TimePerDistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self) / rhs.spm.clone()}
+	}
+}
+/// Dividing a scalar value by a TimePerDistance unit value returns a value of type Velocity
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&TimePerDistance<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Velocity<T>;
+	fn div(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Velocity{mps: T::from(self.clone()) / rhs.spm.clone()}
 	}
 }
 
@@ -6608,6 +24774,66 @@ impl<T> core::ops::Div<&Distance<T>> for &Torque<T> where T: NumLike {
 	}
 }
 
+// Torque * InverseCurrent -> MagneticFlux
+/// Multiplying a Torque by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<InverseCurrent<T>> for Torque<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.Nm * rhs.per_A}
+	}
+}
+/// Multiplying a Torque by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<InverseCurrent<T>> for &Torque<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.Nm.clone() * rhs.per_A}
+	}
+}
+/// Multiplying a Torque by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<&InverseCurrent<T>> for Torque<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.Nm * rhs.per_A.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseCurrent returns a value of type MagneticFlux
+impl<T> core::ops::Mul<&InverseCurrent<T>> for &Torque<T> where T: NumLike {
+	type Output = MagneticFlux<T>;
+	fn mul(self, rhs: &InverseCurrent<T>) -> Self::Output {
+		MagneticFlux{Wb: self.Nm.clone() * rhs.per_A.clone()}
+	}
+}
+
+// Torque * InverseDistance -> Force
+/// Multiplying a Torque by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<InverseDistance<T>> for Torque<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Force{N: self.Nm * rhs.per_m}
+	}
+}
+/// Multiplying a Torque by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<InverseDistance<T>> for &Torque<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Force{N: self.Nm.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a Torque by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<&InverseDistance<T>> for Torque<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Force{N: self.Nm * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseDistance returns a value of type Force
+impl<T> core::ops::Mul<&InverseDistance<T>> for &Torque<T> where T: NumLike {
+	type Output = Force<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Force{N: self.Nm.clone() * rhs.per_m.clone()}
+	}
+}
+
 // Torque / Time -> Power
 /// Dividing a Torque by a Time returns a value of type Power
 impl<T> core::ops::Div<Time<T>> for Torque<T> where T: NumLike {
@@ -6668,6 +24894,96 @@ impl<T> core::ops::Div<&Charge<T>> for &Torque<T> where T: NumLike {
 	}
 }
 
+// Torque * InverseCharge -> Voltage
+/// Multiplying a Torque by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCharge<T>> for Torque<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.Nm * rhs.per_C}
+	}
+}
+/// Multiplying a Torque by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<InverseCharge<T>> for &Torque<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.Nm.clone() * rhs.per_C}
+	}
+}
+/// Multiplying a Torque by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCharge<T>> for Torque<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.Nm * rhs.per_C.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseCharge returns a value of type Voltage
+impl<T> core::ops::Mul<&InverseCharge<T>> for &Torque<T> where T: NumLike {
+	type Output = Voltage<T>;
+	fn mul(self, rhs: &InverseCharge<T>) -> Self::Output {
+		Voltage{V: self.Nm.clone() * rhs.per_C.clone()}
+	}
+}
+
+// Torque * InverseMagneticFlux -> Current
+/// Multiplying a Torque by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<InverseMagneticFlux<T>> for Torque<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.Nm * rhs.per_Wb}
+	}
+}
+/// Multiplying a Torque by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<InverseMagneticFlux<T>> for &Torque<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.Nm.clone() * rhs.per_Wb}
+	}
+}
+/// Multiplying a Torque by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<&InverseMagneticFlux<T>> for Torque<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.Nm * rhs.per_Wb.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseMagneticFlux returns a value of type Current
+impl<T> core::ops::Mul<&InverseMagneticFlux<T>> for &Torque<T> where T: NumLike {
+	type Output = Current<T>;
+	fn mul(self, rhs: &InverseMagneticFlux<T>) -> Self::Output {
+		Current{A: self.Nm.clone() * rhs.per_Wb.clone()}
+	}
+}
+
+// Torque * InverseVoltage -> Charge
+/// Multiplying a Torque by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<InverseVoltage<T>> for Torque<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.Nm * rhs.per_V}
+	}
+}
+/// Multiplying a Torque by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<InverseVoltage<T>> for &Torque<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.Nm.clone() * rhs.per_V}
+	}
+}
+/// Multiplying a Torque by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<&InverseVoltage<T>> for Torque<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.Nm * rhs.per_V.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseVoltage returns a value of type Charge
+impl<T> core::ops::Mul<&InverseVoltage<T>> for &Torque<T> where T: NumLike {
+	type Output = Charge<T>;
+	fn mul(self, rhs: &InverseVoltage<T>) -> Self::Output {
+		Charge{C: self.Nm.clone() * rhs.per_V.clone()}
+	}
+}
+
 // Torque / MagneticFlux -> Current
 /// Dividing a Torque by a MagneticFlux returns a value of type Current
 impl<T> core::ops::Div<MagneticFlux<T>> for Torque<T> where T: NumLike {
@@ -6725,6 +25041,36 @@ impl<T> core::ops::Div<&Voltage<T>> for &Torque<T> where T: NumLike {
 	type Output = Charge<T>;
 	fn div(self, rhs: &Voltage<T>) -> Self::Output {
 		Charge{C: self.Nm.clone() / rhs.V.clone()}
+	}
+}
+
+// Torque * InverseVolume -> Pressure
+/// Multiplying a Torque by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<InverseVolume<T>> for Torque<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.Nm * rhs.per_m3}
+	}
+}
+/// Multiplying a Torque by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<InverseVolume<T>> for &Torque<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.Nm.clone() * rhs.per_m3}
+	}
+}
+/// Multiplying a Torque by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseVolume<T>> for Torque<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.Nm * rhs.per_m3.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseVolume returns a value of type Pressure
+impl<T> core::ops::Mul<&InverseVolume<T>> for &Torque<T> where T: NumLike {
+	type Output = Pressure<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		Pressure{Pa: self.Nm.clone() * rhs.per_m3.clone()}
 	}
 }
 
@@ -6818,6 +25164,126 @@ impl<T> core::ops::Mul<&Frequency<T>> for &Torque<T> where T: NumLike {
 	}
 }
 
+// Torque * InverseForce -> Distance
+/// Multiplying a Torque by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<InverseForce<T>> for Torque<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Distance{m: self.Nm * rhs.per_N}
+	}
+}
+/// Multiplying a Torque by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<InverseForce<T>> for &Torque<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: InverseForce<T>) -> Self::Output {
+		Distance{m: self.Nm.clone() * rhs.per_N}
+	}
+}
+/// Multiplying a Torque by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<&InverseForce<T>> for Torque<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Distance{m: self.Nm * rhs.per_N.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseForce returns a value of type Distance
+impl<T> core::ops::Mul<&InverseForce<T>> for &Torque<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &InverseForce<T>) -> Self::Output {
+		Distance{m: self.Nm.clone() * rhs.per_N.clone()}
+	}
+}
+
+// Torque * InverseMomentum -> Velocity
+/// Multiplying a Torque by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMomentum<T>> for Torque<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.Nm * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Torque by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<InverseMomentum<T>> for &Torque<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.Nm.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Torque by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMomentum<T>> for Torque<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.Nm * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseMomentum returns a value of type Velocity
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &Torque<T> where T: NumLike {
+	type Output = Velocity<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Velocity{mps: self.Nm.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// Torque * InversePower -> Time
+/// Multiplying a Torque by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<InversePower<T>> for Torque<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		Time{s: self.Nm * rhs.per_W}
+	}
+}
+/// Multiplying a Torque by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<InversePower<T>> for &Torque<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		Time{s: self.Nm.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Torque by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<&InversePower<T>> for Torque<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		Time{s: self.Nm * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Torque by a InversePower returns a value of type Time
+impl<T> core::ops::Mul<&InversePower<T>> for &Torque<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		Time{s: self.Nm.clone() * rhs.per_W.clone()}
+	}
+}
+
+// Torque * InversePressure -> Volume
+/// Multiplying a Torque by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<InversePressure<T>> for Torque<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Volume{m3: self.Nm * rhs.per_Pa}
+	}
+}
+/// Multiplying a Torque by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<InversePressure<T>> for &Torque<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: InversePressure<T>) -> Self::Output {
+		Volume{m3: self.Nm.clone() * rhs.per_Pa}
+	}
+}
+/// Multiplying a Torque by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<&InversePressure<T>> for Torque<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Volume{m3: self.Nm * rhs.per_Pa.clone()}
+	}
+}
+/// Multiplying a Torque by a InversePressure returns a value of type Volume
+impl<T> core::ops::Mul<&InversePressure<T>> for &Torque<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &InversePressure<T>) -> Self::Output {
+		Volume{m3: self.Nm.clone() * rhs.per_Pa.clone()}
+	}
+}
+
 // Torque / Momentum -> Velocity
 /// Dividing a Torque by a Momentum returns a value of type Velocity
 impl<T> core::ops::Div<Momentum<T>> for Torque<T> where T: NumLike {
@@ -6908,6 +25374,36 @@ impl<T> core::ops::Div<&Pressure<T>> for &Torque<T> where T: NumLike {
 	}
 }
 
+// Torque * TimePerDistance -> Momentum
+/// Multiplying a Torque by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<TimePerDistance<T>> for Torque<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.Nm * rhs.spm}
+	}
+}
+/// Multiplying a Torque by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<TimePerDistance<T>> for &Torque<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.Nm.clone() * rhs.spm}
+	}
+}
+/// Multiplying a Torque by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<&TimePerDistance<T>> for Torque<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.Nm * rhs.spm.clone()}
+	}
+}
+/// Multiplying a Torque by a TimePerDistance returns a value of type Momentum
+impl<T> core::ops::Mul<&TimePerDistance<T>> for &Torque<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn mul(self, rhs: &TimePerDistance<T>) -> Self::Output {
+		Momentum{kgmps: self.Nm.clone() * rhs.spm.clone()}
+	}
+}
+
 // Torque / Velocity -> Momentum
 /// Dividing a Torque by a Velocity returns a value of type Momentum
 impl<T> core::ops::Div<Velocity<T>> for Torque<T> where T: NumLike {
@@ -6935,6 +25431,288 @@ impl<T> core::ops::Div<&Velocity<T>> for &Torque<T> where T: NumLike {
 	type Output = Momentum<T>;
 	fn div(self, rhs: &Velocity<T>) -> Self::Output {
 		Momentum{kgmps: self.Nm.clone() / rhs.mps.clone()}
+	}
+}
+
+// Torque * InverseAbsorbedDose -> Mass
+/// Multiplying a Torque by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.Nm * rhs.per_Gy}
+	}
+}
+/// Multiplying a Torque by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.Nm.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a Torque by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.Nm * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseAbsorbedDose returns a value of type Mass
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		Mass{kg: self.Nm.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// Torque * InverseDoseEquivalent -> Mass
+/// Multiplying a Torque by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.Nm * rhs.per_Sv}
+	}
+}
+/// Multiplying a Torque by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.Nm.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a Torque by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.Nm * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a Torque by a InverseDoseEquivalent returns a value of type Mass
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &Torque<T> where T: NumLike {
+	type Output = Mass<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		Mass{kg: self.Nm.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<Torque<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+impl<T> core::ops::Div<&Torque<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Torque<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Torque<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Torque<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Torque<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Torque<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Torque<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Torque<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Torque<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
+	}
+}
+
+// 1/Torque -> InverseEnergy
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Torque<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Torque<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Torque<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self) / rhs.Nm.clone()}
+	}
+}
+/// Dividing a scalar value by a Torque unit value returns a value of type InverseEnergy
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Torque<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = InverseEnergy<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseEnergy{per_J: T::from(self.clone()) / rhs.Nm.clone()}
 	}
 }
 
@@ -7268,6 +26046,66 @@ impl<T> core::ops::Div<&Distance<T>> for &Velocity<T> where T: NumLike {
 	}
 }
 
+// Velocity * InverseDistance -> Frequency
+/// Multiplying a Velocity by a InverseDistance returns a value of type Frequency
+impl<T> core::ops::Mul<InverseDistance<T>> for Velocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps * rhs.per_m}
+	}
+}
+/// Multiplying a Velocity by a InverseDistance returns a value of type Frequency
+impl<T> core::ops::Mul<InverseDistance<T>> for &Velocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a Velocity by a InverseDistance returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseDistance<T>> for Velocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseDistance returns a value of type Frequency
+impl<T> core::ops::Mul<&InverseDistance<T>> for &Velocity<T> where T: NumLike {
+	type Output = Frequency<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		Frequency{Hz: self.mps.clone() * rhs.per_m.clone()}
+	}
+}
+
+// Velocity / InverseMass -> Momentum
+/// Dividing a Velocity by a InverseMass returns a value of type Momentum
+impl<T> core::ops::Div<InverseMass<T>> for Velocity<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Momentum{kgmps: self.mps / rhs.per_kg}
+	}
+}
+/// Dividing a Velocity by a InverseMass returns a value of type Momentum
+impl<T> core::ops::Div<InverseMass<T>> for &Velocity<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Momentum{kgmps: self.mps.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a Velocity by a InverseMass returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMass<T>> for Velocity<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Momentum{kgmps: self.mps / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a Velocity by a InverseMass returns a value of type Momentum
+impl<T> core::ops::Div<&InverseMass<T>> for &Velocity<T> where T: NumLike {
+	type Output = Momentum<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Momentum{kgmps: self.mps.clone() / rhs.per_kg.clone()}
+	}
+}
+
 // Velocity * Mass -> Momentum
 /// Multiplying a Velocity by a Mass returns a value of type Momentum
 impl<T> core::ops::Mul<Mass<T>> for Velocity<T> where T: NumLike {
@@ -7388,6 +26226,66 @@ impl<T> core::ops::Div<&Acceleration<T>> for &Velocity<T> where T: NumLike {
 	}
 }
 
+// Velocity / Energy -> InverseMomentum
+/// Dividing a Velocity by a Energy returns a value of type InverseMomentum
+impl<T> core::ops::Div<Energy<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps / rhs.J}
+	}
+}
+/// Dividing a Velocity by a Energy returns a value of type InverseMomentum
+impl<T> core::ops::Div<Energy<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Energy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() / rhs.J}
+	}
+}
+/// Dividing a Velocity by a Energy returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Energy<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps / rhs.J.clone()}
+	}
+}
+/// Dividing a Velocity by a Energy returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Energy<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Energy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() / rhs.J.clone()}
+	}
+}
+
+// Velocity / Torque -> InverseMomentum
+/// Dividing a Velocity by a Torque returns a value of type InverseMomentum
+impl<T> core::ops::Div<Torque<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps / rhs.Nm}
+	}
+}
+/// Dividing a Velocity by a Torque returns a value of type InverseMomentum
+impl<T> core::ops::Div<Torque<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: Torque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() / rhs.Nm}
+	}
+}
+/// Dividing a Velocity by a Torque returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Torque<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps / rhs.Nm.clone()}
+	}
+}
+/// Dividing a Velocity by a Torque returns a value of type InverseMomentum
+impl<T> core::ops::Div<&Torque<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn div(self, rhs: &Torque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() / rhs.Nm.clone()}
+	}
+}
+
 // Velocity * Force -> Power
 /// Multiplying a Velocity by a Force returns a value of type Power
 impl<T> core::ops::Mul<Force<T>> for Velocity<T> where T: NumLike {
@@ -7478,6 +26376,216 @@ impl<T> core::ops::Div<&Frequency<T>> for &Velocity<T> where T: NumLike {
 	}
 }
 
+// Velocity * InverseAcceleration -> Time
+/// Multiplying a Velocity by a InverseAcceleration returns a value of type Time
+impl<T> core::ops::Mul<InverseAcceleration<T>> for Velocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Time{s: self.mps * rhs.s2pm}
+	}
+}
+/// Multiplying a Velocity by a InverseAcceleration returns a value of type Time
+impl<T> core::ops::Mul<InverseAcceleration<T>> for &Velocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: InverseAcceleration<T>) -> Self::Output {
+		Time{s: self.mps.clone() * rhs.s2pm}
+	}
+}
+/// Multiplying a Velocity by a InverseAcceleration returns a value of type Time
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for Velocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Time{s: self.mps * rhs.s2pm.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseAcceleration returns a value of type Time
+impl<T> core::ops::Mul<&InverseAcceleration<T>> for &Velocity<T> where T: NumLike {
+	type Output = Time<T>;
+	fn mul(self, rhs: &InverseAcceleration<T>) -> Self::Output {
+		Time{s: self.mps.clone() * rhs.s2pm.clone()}
+	}
+}
+
+// Velocity * InverseEnergy -> InverseMomentum
+/// Multiplying a Velocity by a InverseEnergy returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseEnergy<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps * rhs.per_J}
+	}
+}
+/// Multiplying a Velocity by a InverseEnergy returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseEnergy<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseEnergy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() * rhs.per_J}
+	}
+}
+/// Multiplying a Velocity by a InverseEnergy returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseEnergy<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps * rhs.per_J.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseEnergy returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseEnergy<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseEnergy<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() * rhs.per_J.clone()}
+	}
+}
+
+// Velocity * InverseTorque -> InverseMomentum
+/// Multiplying a Velocity by a InverseTorque returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseTorque<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps * rhs.per_Nm}
+	}
+}
+/// Multiplying a Velocity by a InverseTorque returns a value of type InverseMomentum
+impl<T> core::ops::Mul<InverseTorque<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: InverseTorque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() * rhs.per_Nm}
+	}
+}
+/// Multiplying a Velocity by a InverseTorque returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseTorque<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps * rhs.per_Nm.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseTorque returns a value of type InverseMomentum
+impl<T> core::ops::Mul<&InverseTorque<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMomentum<T>;
+	fn mul(self, rhs: &InverseTorque<T>) -> Self::Output {
+		InverseMomentum{s_per_kgm: self.mps.clone() * rhs.per_Nm.clone()}
+	}
+}
+
+// Velocity / InverseForce -> Power
+/// Dividing a Velocity by a InverseForce returns a value of type Power
+impl<T> core::ops::Div<InverseForce<T>> for Velocity<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Power{W: self.mps / rhs.per_N}
+	}
+}
+/// Dividing a Velocity by a InverseForce returns a value of type Power
+impl<T> core::ops::Div<InverseForce<T>> for &Velocity<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: InverseForce<T>) -> Self::Output {
+		Power{W: self.mps.clone() / rhs.per_N}
+	}
+}
+/// Dividing a Velocity by a InverseForce returns a value of type Power
+impl<T> core::ops::Div<&InverseForce<T>> for Velocity<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Power{W: self.mps / rhs.per_N.clone()}
+	}
+}
+/// Dividing a Velocity by a InverseForce returns a value of type Power
+impl<T> core::ops::Div<&InverseForce<T>> for &Velocity<T> where T: NumLike {
+	type Output = Power<T>;
+	fn div(self, rhs: &InverseForce<T>) -> Self::Output {
+		Power{W: self.mps.clone() / rhs.per_N.clone()}
+	}
+}
+
+// Velocity * InverseMomentum -> InverseMass
+/// Multiplying a Velocity by a InverseMomentum returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseMomentum<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Velocity by a InverseMomentum returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseMomentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseMomentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps.clone() * rhs.s_per_kgm}
+	}
+}
+/// Multiplying a Velocity by a InverseMomentum returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseMomentum<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps * rhs.s_per_kgm.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseMomentum returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseMomentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps.clone() * rhs.s_per_kgm.clone()}
+	}
+}
+
+// Velocity / InverseMomentum -> Energy
+/// Dividing a Velocity by a InverseMomentum returns a value of type Energy
+impl<T> core::ops::Div<InverseMomentum<T>> for Velocity<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Energy{J: self.mps / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Velocity by a InverseMomentum returns a value of type Energy
+impl<T> core::ops::Div<InverseMomentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: InverseMomentum<T>) -> Self::Output {
+		Energy{J: self.mps.clone() / rhs.s_per_kgm}
+	}
+}
+/// Dividing a Velocity by a InverseMomentum returns a value of type Energy
+impl<T> core::ops::Div<&InverseMomentum<T>> for Velocity<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Energy{J: self.mps / rhs.s_per_kgm.clone()}
+	}
+}
+/// Dividing a Velocity by a InverseMomentum returns a value of type Energy
+impl<T> core::ops::Div<&InverseMomentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = Energy<T>;
+	fn div(self, rhs: &InverseMomentum<T>) -> Self::Output {
+		Energy{J: self.mps.clone() / rhs.s_per_kgm.clone()}
+	}
+}
+
+// Velocity * InversePower -> InverseForce
+/// Multiplying a Velocity by a InversePower returns a value of type InverseForce
+impl<T> core::ops::Mul<InversePower<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseForce{per_N: self.mps * rhs.per_W}
+	}
+}
+/// Multiplying a Velocity by a InversePower returns a value of type InverseForce
+impl<T> core::ops::Mul<InversePower<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: InversePower<T>) -> Self::Output {
+		InverseForce{per_N: self.mps.clone() * rhs.per_W}
+	}
+}
+/// Multiplying a Velocity by a InversePower returns a value of type InverseForce
+impl<T> core::ops::Mul<&InversePower<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseForce{per_N: self.mps * rhs.per_W.clone()}
+	}
+}
+/// Multiplying a Velocity by a InversePower returns a value of type InverseForce
+impl<T> core::ops::Mul<&InversePower<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn mul(self, rhs: &InversePower<T>) -> Self::Output {
+		InverseForce{per_N: self.mps.clone() * rhs.per_W.clone()}
+	}
+}
+
 // Velocity * Momentum -> Energy
 /// Multiplying a Velocity by a Momentum returns a value of type Energy
 impl<T> core::ops::Mul<Momentum<T>> for Velocity<T> where T: NumLike {
@@ -7505,6 +26613,1239 @@ impl<T> core::ops::Mul<&Momentum<T>> for &Velocity<T> where T: NumLike {
 	type Output = Energy<T>;
 	fn mul(self, rhs: &Momentum<T>) -> Self::Output {
 		Energy{J: self.mps.clone() * rhs.kgmps.clone()}
+	}
+}
+
+// Velocity / Momentum -> InverseMass
+/// Dividing a Velocity by a Momentum returns a value of type InverseMass
+impl<T> core::ops::Div<Momentum<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps / rhs.kgmps}
+	}
+}
+/// Dividing a Velocity by a Momentum returns a value of type InverseMass
+impl<T> core::ops::Div<Momentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Momentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps.clone() / rhs.kgmps}
+	}
+}
+/// Dividing a Velocity by a Momentum returns a value of type InverseMass
+impl<T> core::ops::Div<&Momentum<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps / rhs.kgmps.clone()}
+	}
+}
+/// Dividing a Velocity by a Momentum returns a value of type InverseMass
+impl<T> core::ops::Div<&Momentum<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Momentum<T>) -> Self::Output {
+		InverseMass{per_kg: self.mps.clone() / rhs.kgmps.clone()}
+	}
+}
+
+// Velocity / Power -> InverseForce
+/// Dividing a Velocity by a Power returns a value of type InverseForce
+impl<T> core::ops::Div<Power<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseForce{per_N: self.mps / rhs.W}
+	}
+}
+/// Dividing a Velocity by a Power returns a value of type InverseForce
+impl<T> core::ops::Div<Power<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: Power<T>) -> Self::Output {
+		InverseForce{per_N: self.mps.clone() / rhs.W}
+	}
+}
+/// Dividing a Velocity by a Power returns a value of type InverseForce
+impl<T> core::ops::Div<&Power<T>> for Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseForce{per_N: self.mps / rhs.W.clone()}
+	}
+}
+/// Dividing a Velocity by a Power returns a value of type InverseForce
+impl<T> core::ops::Div<&Power<T>> for &Velocity<T> where T: NumLike {
+	type Output = InverseForce<T>;
+	fn div(self, rhs: &Power<T>) -> Self::Output {
+		InverseForce{per_N: self.mps.clone() / rhs.W.clone()}
+	}
+}
+
+// Velocity * InverseAbsorbedDose -> TimePerDistance
+/// Multiplying a Velocity by a InverseAbsorbedDose returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps * rhs.per_Gy}
+	}
+}
+/// Multiplying a Velocity by a InverseAbsorbedDose returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a Velocity by a InverseAbsorbedDose returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseAbsorbedDose returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// Velocity * InverseDoseEquivalent -> TimePerDistance
+/// Multiplying a Velocity by a InverseDoseEquivalent returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps * rhs.per_Sv}
+	}
+}
+/// Multiplying a Velocity by a InverseDoseEquivalent returns a value of type TimePerDistance
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a Velocity by a InverseDoseEquivalent returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a Velocity by a InverseDoseEquivalent returns a value of type TimePerDistance
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &Velocity<T> where T: NumLike {
+	type Output = TimePerDistance<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		TimePerDistance{spm: self.mps.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for f64 where T: NumLike+From<f64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for f32 where T: NumLike+From<f32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for i64 where T: NumLike+From<i64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<Velocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for i32 where T: NumLike+From<i32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+impl<T> core::ops::Div<&Velocity<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Velocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<Velocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Velocity<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&Velocity<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Velocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Velocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Velocity<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Velocity<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+// 1/Velocity -> TimePerDistance
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Velocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<Velocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Velocity<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self) / rhs.mps.clone()}
+	}
+}
+/// Dividing a scalar value by a Velocity unit value returns a value of type TimePerDistance
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&Velocity<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = TimePerDistance<T>;
+	fn div(self, rhs: &Velocity<T>) -> Self::Output {
+		TimePerDistance{spm: T::from(self.clone()) / rhs.mps.clone()}
+	}
+}
+
+/// The inverse of density unit type, defined as cubic meters per kilogram in SI units
+#[derive(UnitStruct, Debug, Clone)]
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+pub struct VolumePerMass<T: NumLike>{
+	/// The value of this Volume per mass in cubic meters per kilogram
+	pub m3_per_kg: T
+}
+
+impl<T> VolumePerMass<T> where T: NumLike {
+
+	/// Returns the standard unit name of volume per mass: "cubic meters per kilogram"
+	pub fn unit_name() -> &'static str { "cubic meters per kilogram" }
+	
+	/// Returns the abbreviated name or symbol of volume per mass: "m³/kg" for cubic meters per kilogram
+	pub fn unit_symbol() -> &'static str { "m³/kg" }
+	
+	/// Returns a new volume per mass value from the given number of cubic meters per kilogram
+	///
+	/// # Arguments
+	/// * `m3_per_kg` - Any number-like type, representing a quantity of cubic meters per kilogram
+	pub fn from_m3_per_kg(m3_per_kg: T) -> Self { VolumePerMass{m3_per_kg: m3_per_kg} }
+	
+	/// Returns a copy of this volume per mass value in cubic meters per kilogram
+	pub fn to_m3_per_kg(&self) -> T { self.m3_per_kg.clone() }
+
+	/// Returns a new volume per mass value from the given number of cubic meters per kilogram
+	///
+	/// # Arguments
+	/// * `cubic_meters_per_kilogram` - Any number-like type, representing a quantity of cubic meters per kilogram
+	pub fn from_cubic_meters_per_kilogram(cubic_meters_per_kilogram: T) -> Self { VolumePerMass{m3_per_kg: cubic_meters_per_kilogram} }
+	
+	/// Returns a copy of this volume per mass value in cubic meters per kilogram
+	pub fn to_cubic_meters_per_kilogram(&self) -> T { self.m3_per_kg.clone() }
+
+}
+
+impl<T> fmt::Display for VolumePerMass<T> where T: NumLike {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{} {}", &self.m3_per_kg, Self::unit_symbol())
+	}
+}
+
+impl<T> VolumePerMass<T> where T: NumLike+From<f64> {
+	
+	/// Returns a copy of this volume per mass value in liter per kilograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_L_per_kg(&self) -> T {
+		return self.m3_per_kg.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new volume per mass value from the given number of liter per kilograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `L_per_kg` - Any number-like type, representing a quantity of liter per kilograms
+	pub fn from_L_per_kg(L_per_kg: T) -> Self {
+		VolumePerMass{m3_per_kg: L_per_kg * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this volume per mass value in liter per kilograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_liters_per_kilogram(&self) -> T {
+		return self.m3_per_kg.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new volume per mass value from the given number of liter per kilograms
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `liters_per_kilogram` - Any number-like type, representing a quantity of liter per kilograms
+	pub fn from_liters_per_kilogram(liters_per_kilogram: T) -> Self {
+		VolumePerMass{m3_per_kg: liters_per_kilogram * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this volume per mass value in cc per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_cc_per_g(&self) -> T {
+		return self.m3_per_kg.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new volume per mass value from the given number of cc per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `cc_per_g` - Any number-like type, representing a quantity of cc per gram
+	pub fn from_cc_per_g(cc_per_g: T) -> Self {
+		VolumePerMass{m3_per_kg: cc_per_g * T::from(0.001_f64)}
+	}
+
+	/// Returns a copy of this volume per mass value in cc per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	pub fn to_cubic_centimeters_per_gram(&self) -> T {
+		return self.m3_per_kg.clone() * T::from(1000.0_f64);
+	}
+
+	/// Returns a new volume per mass value from the given number of cc per gram
+	/// 
+	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
+	///
+	/// # Arguments
+	/// * `cubic_centimeters_per_gram` - Any number-like type, representing a quantity of cc per gram
+	pub fn from_cubic_centimeters_per_gram(cubic_centimeters_per_gram: T) -> Self {
+		VolumePerMass{m3_per_kg: cubic_centimeters_per_gram * T::from(0.001_f64)}
+	}
+
+}
+
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<VolumePerMass<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = VolumePerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: VolumePerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<VolumePerMass<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = VolumePerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: VolumePerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&VolumePerMass<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
+	type Output = VolumePerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &VolumePerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-bigfloat")]
+impl core::ops::Mul<&VolumePerMass<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
+	type Output = VolumePerMass<num_bigfloat::BigFloat>;
+	fn mul(self, rhs: &VolumePerMass<num_bigfloat::BigFloat>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<VolumePerMass<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = VolumePerMass<num_complex::Complex32>;
+	fn mul(self, rhs: VolumePerMass<num_complex::Complex32>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<VolumePerMass<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = VolumePerMass<num_complex::Complex32>;
+	fn mul(self, rhs: VolumePerMass<num_complex::Complex32>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&VolumePerMass<num_complex::Complex32>> for num_complex::Complex32 {
+	type Output = VolumePerMass<num_complex::Complex32>;
+	fn mul(self, rhs: &VolumePerMass<num_complex::Complex32>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&VolumePerMass<num_complex::Complex32>> for &num_complex::Complex32 {
+	type Output = VolumePerMass<num_complex::Complex32>;
+	fn mul(self, rhs: &VolumePerMass<num_complex::Complex32>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg.clone()}
+	}
+}
+
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<VolumePerMass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = VolumePerMass<num_complex::Complex64>;
+	fn mul(self, rhs: VolumePerMass<num_complex::Complex64>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<VolumePerMass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = VolumePerMass<num_complex::Complex64>;
+	fn mul(self, rhs: VolumePerMass<num_complex::Complex64>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&VolumePerMass<num_complex::Complex64>> for num_complex::Complex64 {
+	type Output = VolumePerMass<num_complex::Complex64>;
+	fn mul(self, rhs: &VolumePerMass<num_complex::Complex64>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self * rhs.m3_per_kg.clone()}
+	}
+}
+/// Multiplying a unit value by a scalar value returns a unit value
+#[cfg(feature="num-complex")]
+impl core::ops::Mul<&VolumePerMass<num_complex::Complex64>> for &num_complex::Complex64 {
+	type Output = VolumePerMass<num_complex::Complex64>;
+	fn mul(self, rhs: &VolumePerMass<num_complex::Complex64>) -> Self::Output {
+		VolumePerMass{m3_per_kg: self.clone() * rhs.m3_per_kg.clone()}
+	}
+}
+
+
+
+/// Converts a VolumePerMass into the equivalent [uom](https://crates.io/crates/uom) type [SpecificVolume](https://docs.rs/uom/0.34.0/uom/si/f32/type.SpecificVolume.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f32::SpecificVolume> for VolumePerMass<T> where T: NumLike+Into<f32> {
+	fn into(self) -> uom::si::f32::SpecificVolume {
+		uom::si::f32::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(self.m3_per_kg.into())
+	}
+}
+
+/// Creates a VolumePerMass from the equivalent [uom](https://crates.io/crates/uom) type [SpecificVolume](https://docs.rs/uom/0.34.0/uom/si/f32/type.SpecificVolume.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f32::SpecificVolume> for VolumePerMass<T> where T: NumLike+From<f32> {
+	fn from(src: uom::si::f32::SpecificVolume) -> Self {
+		VolumePerMass{m3_per_kg: T::from(src.value)}
+	}
+}
+
+/// Converts a VolumePerMass into the equivalent [uom](https://crates.io/crates/uom) type [SpecificVolume](https://docs.rs/uom/0.34.0/uom/si/f64/type.SpecificVolume.html)
+#[cfg(feature = "uom")]
+impl<T> Into<uom::si::f64::SpecificVolume> for VolumePerMass<T> where T: NumLike+Into<f64> {
+	fn into(self) -> uom::si::f64::SpecificVolume {
+		uom::si::f64::SpecificVolume::new::<uom::si::specific_volume::cubic_meter_per_kilogram>(self.m3_per_kg.into())
+	}
+}
+
+/// Creates a VolumePerMass from the equivalent [uom](https://crates.io/crates/uom) type [SpecificVolume](https://docs.rs/uom/0.34.0/uom/si/f64/type.SpecificVolume.html)
+#[cfg(feature = "uom")]
+impl<T> From<uom::si::f64::SpecificVolume> for VolumePerMass<T> where T: NumLike+From<f64> {
+	fn from(src: uom::si::f64::SpecificVolume) -> Self {
+		VolumePerMass{m3_per_kg: T::from(src.value)}
+	}
+}
+
+
+// VolumePerMass / Distance -> AreaPerMass
+/// Dividing a VolumePerMass by a Distance returns a value of type AreaPerMass
+impl<T> core::ops::Div<Distance<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: Distance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg / rhs.m}
+	}
+}
+/// Dividing a VolumePerMass by a Distance returns a value of type AreaPerMass
+impl<T> core::ops::Div<Distance<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: Distance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg.clone() / rhs.m}
+	}
+}
+/// Dividing a VolumePerMass by a Distance returns a value of type AreaPerMass
+impl<T> core::ops::Div<&Distance<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &Distance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg / rhs.m.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a Distance returns a value of type AreaPerMass
+impl<T> core::ops::Div<&Distance<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn div(self, rhs: &Distance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg.clone() / rhs.m.clone()}
+	}
+}
+
+// VolumePerMass * InverseDistance -> AreaPerMass
+/// Multiplying a VolumePerMass by a InverseDistance returns a value of type AreaPerMass
+impl<T> core::ops::Mul<InverseDistance<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg * rhs.per_m}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDistance returns a value of type AreaPerMass
+impl<T> core::ops::Mul<InverseDistance<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: InverseDistance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg.clone() * rhs.per_m}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDistance returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&InverseDistance<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg * rhs.per_m.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDistance returns a value of type AreaPerMass
+impl<T> core::ops::Mul<&InverseDistance<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = AreaPerMass<T>;
+	fn mul(self, rhs: &InverseDistance<T>) -> Self::Output {
+		AreaPerMass{m2_per_kg: self.m3_per_kg.clone() * rhs.per_m.clone()}
+	}
+}
+
+// VolumePerMass / InverseMass -> Volume
+/// Dividing a VolumePerMass by a InverseMass returns a value of type Volume
+impl<T> core::ops::Div<InverseMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg / rhs.per_kg}
+	}
+}
+/// Dividing a VolumePerMass by a InverseMass returns a value of type Volume
+impl<T> core::ops::Div<InverseMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: InverseMass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg.clone() / rhs.per_kg}
+	}
+}
+/// Dividing a VolumePerMass by a InverseMass returns a value of type Volume
+impl<T> core::ops::Div<&InverseMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg / rhs.per_kg.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a InverseMass returns a value of type Volume
+impl<T> core::ops::Div<&InverseMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn div(self, rhs: &InverseMass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg.clone() / rhs.per_kg.clone()}
+	}
+}
+
+// VolumePerMass * Mass -> Volume
+/// Multiplying a VolumePerMass by a Mass returns a value of type Volume
+impl<T> core::ops::Mul<Mass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg * rhs.kg}
+	}
+}
+/// Multiplying a VolumePerMass by a Mass returns a value of type Volume
+impl<T> core::ops::Mul<Mass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: Mass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg.clone() * rhs.kg}
+	}
+}
+/// Multiplying a VolumePerMass by a Mass returns a value of type Volume
+impl<T> core::ops::Mul<&Mass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg * rhs.kg.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a Mass returns a value of type Volume
+impl<T> core::ops::Mul<&Mass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Volume<T>;
+	fn mul(self, rhs: &Mass<T>) -> Self::Output {
+		Volume{m3: self.m3_per_kg.clone() * rhs.kg.clone()}
+	}
+}
+
+// VolumePerMass * Concentration -> Molality
+/// Multiplying a VolumePerMass by a Concentration returns a value of type Molality
+impl<T> core::ops::Mul<Concentration<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn mul(self, rhs: Concentration<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg * rhs.molpm3}
+	}
+}
+/// Multiplying a VolumePerMass by a Concentration returns a value of type Molality
+impl<T> core::ops::Mul<Concentration<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn mul(self, rhs: Concentration<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg.clone() * rhs.molpm3}
+	}
+}
+/// Multiplying a VolumePerMass by a Concentration returns a value of type Molality
+impl<T> core::ops::Mul<&Concentration<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn mul(self, rhs: &Concentration<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg * rhs.molpm3.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a Concentration returns a value of type Molality
+impl<T> core::ops::Mul<&Concentration<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn mul(self, rhs: &Concentration<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg.clone() * rhs.molpm3.clone()}
+	}
+}
+
+// VolumePerMass / Molality -> MolarVolume
+/// Dividing a VolumePerMass by a Molality returns a value of type MolarVolume
+impl<T> core::ops::Div<Molality<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn div(self, rhs: Molality<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg / rhs.molpkg}
+	}
+}
+/// Dividing a VolumePerMass by a Molality returns a value of type MolarVolume
+impl<T> core::ops::Div<Molality<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn div(self, rhs: Molality<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg.clone() / rhs.molpkg}
+	}
+}
+/// Dividing a VolumePerMass by a Molality returns a value of type MolarVolume
+impl<T> core::ops::Div<&Molality<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn div(self, rhs: &Molality<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg / rhs.molpkg.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a Molality returns a value of type MolarVolume
+impl<T> core::ops::Div<&Molality<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn div(self, rhs: &Molality<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg.clone() / rhs.molpkg.clone()}
+	}
+}
+
+// VolumePerMass * MolarMass -> MolarVolume
+/// Multiplying a VolumePerMass by a MolarMass returns a value of type MolarVolume
+impl<T> core::ops::Mul<MolarMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn mul(self, rhs: MolarMass<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg * rhs.kgpmol}
+	}
+}
+/// Multiplying a VolumePerMass by a MolarMass returns a value of type MolarVolume
+impl<T> core::ops::Mul<MolarMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn mul(self, rhs: MolarMass<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg.clone() * rhs.kgpmol}
+	}
+}
+/// Multiplying a VolumePerMass by a MolarMass returns a value of type MolarVolume
+impl<T> core::ops::Mul<&MolarMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn mul(self, rhs: &MolarMass<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg * rhs.kgpmol.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a MolarMass returns a value of type MolarVolume
+impl<T> core::ops::Mul<&MolarMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = MolarVolume<T>;
+	fn mul(self, rhs: &MolarMass<T>) -> Self::Output {
+		MolarVolume{m3_per_mol: self.m3_per_kg.clone() * rhs.kgpmol.clone()}
+	}
+}
+
+// VolumePerMass / MolarVolume -> Molality
+/// Dividing a VolumePerMass by a MolarVolume returns a value of type Molality
+impl<T> core::ops::Div<MolarVolume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: MolarVolume<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg / rhs.m3_per_mol}
+	}
+}
+/// Dividing a VolumePerMass by a MolarVolume returns a value of type Molality
+impl<T> core::ops::Div<MolarVolume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: MolarVolume<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg.clone() / rhs.m3_per_mol}
+	}
+}
+/// Dividing a VolumePerMass by a MolarVolume returns a value of type Molality
+impl<T> core::ops::Div<&MolarVolume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: &MolarVolume<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg / rhs.m3_per_mol.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a MolarVolume returns a value of type Molality
+impl<T> core::ops::Div<&MolarVolume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Molality<T>;
+	fn div(self, rhs: &MolarVolume<T>) -> Self::Output {
+		Molality{molpkg: self.m3_per_kg.clone() / rhs.m3_per_mol.clone()}
+	}
+}
+
+// VolumePerMass * InverseVolume -> InverseMass
+/// Multiplying a VolumePerMass by a InverseVolume returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseVolume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg * rhs.per_m3}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseVolume returns a value of type InverseMass
+impl<T> core::ops::Mul<InverseVolume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: InverseVolume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg.clone() * rhs.per_m3}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseVolume returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseVolume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg * rhs.per_m3.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseVolume returns a value of type InverseMass
+impl<T> core::ops::Mul<&InverseVolume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn mul(self, rhs: &InverseVolume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg.clone() * rhs.per_m3.clone()}
+	}
+}
+
+// VolumePerMass / Volume -> InverseMass
+/// Dividing a VolumePerMass by a Volume returns a value of type InverseMass
+impl<T> core::ops::Div<Volume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg / rhs.m3}
+	}
+}
+/// Dividing a VolumePerMass by a Volume returns a value of type InverseMass
+impl<T> core::ops::Div<Volume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: Volume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg.clone() / rhs.m3}
+	}
+}
+/// Dividing a VolumePerMass by a Volume returns a value of type InverseMass
+impl<T> core::ops::Div<&Volume<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg / rhs.m3.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a Volume returns a value of type InverseMass
+impl<T> core::ops::Div<&Volume<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InverseMass<T>;
+	fn div(self, rhs: &Volume<T>) -> Self::Output {
+		InverseMass{per_kg: self.m3_per_kg.clone() / rhs.m3.clone()}
+	}
+}
+
+// VolumePerMass * AreaDensity -> Distance
+/// Multiplying a VolumePerMass by a AreaDensity returns a value of type Distance
+impl<T> core::ops::Mul<AreaDensity<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg * rhs.kgpm2}
+	}
+}
+/// Multiplying a VolumePerMass by a AreaDensity returns a value of type Distance
+impl<T> core::ops::Mul<AreaDensity<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: AreaDensity<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg.clone() * rhs.kgpm2}
+	}
+}
+/// Multiplying a VolumePerMass by a AreaDensity returns a value of type Distance
+impl<T> core::ops::Mul<&AreaDensity<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &AreaDensity<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg * rhs.kgpm2.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a AreaDensity returns a value of type Distance
+impl<T> core::ops::Mul<&AreaDensity<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn mul(self, rhs: &AreaDensity<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg.clone() * rhs.kgpm2.clone()}
+	}
+}
+
+// VolumePerMass / AreaPerMass -> Distance
+/// Dividing a VolumePerMass by a AreaPerMass returns a value of type Distance
+impl<T> core::ops::Div<AreaPerMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg / rhs.m2_per_kg}
+	}
+}
+/// Dividing a VolumePerMass by a AreaPerMass returns a value of type Distance
+impl<T> core::ops::Div<AreaPerMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: AreaPerMass<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg.clone() / rhs.m2_per_kg}
+	}
+}
+/// Dividing a VolumePerMass by a AreaPerMass returns a value of type Distance
+impl<T> core::ops::Div<&AreaPerMass<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg / rhs.m2_per_kg.clone()}
+	}
+}
+/// Dividing a VolumePerMass by a AreaPerMass returns a value of type Distance
+impl<T> core::ops::Div<&AreaPerMass<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = Distance<T>;
+	fn div(self, rhs: &AreaPerMass<T>) -> Self::Output {
+		Distance{m: self.m3_per_kg.clone() / rhs.m2_per_kg.clone()}
+	}
+}
+
+// VolumePerMass * InverseAbsorbedDose -> InversePressure
+/// Multiplying a VolumePerMass by a InverseAbsorbedDose returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg * rhs.per_Gy}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseAbsorbedDose returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseAbsorbedDose<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseAbsorbedDose<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg.clone() * rhs.per_Gy}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseAbsorbedDose returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg * rhs.per_Gy.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseAbsorbedDose returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseAbsorbedDose<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseAbsorbedDose<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg.clone() * rhs.per_Gy.clone()}
+	}
+}
+
+// VolumePerMass * InverseDoseEquivalent -> InversePressure
+/// Multiplying a VolumePerMass by a InverseDoseEquivalent returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg * rhs.per_Sv}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDoseEquivalent returns a value of type InversePressure
+impl<T> core::ops::Mul<InverseDoseEquivalent<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: InverseDoseEquivalent<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg.clone() * rhs.per_Sv}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDoseEquivalent returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg * rhs.per_Sv.clone()}
+	}
+}
+/// Multiplying a VolumePerMass by a InverseDoseEquivalent returns a value of type InversePressure
+impl<T> core::ops::Mul<&InverseDoseEquivalent<T>> for &VolumePerMass<T> where T: NumLike {
+	type Output = InversePressure<T>;
+	fn mul(self, rhs: &InverseDoseEquivalent<T>) -> Self::Output {
+		InversePressure{per_Pa: self.m3_per_kg.clone() * rhs.per_Sv.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for f64 where T: NumLike+From<f64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for &f64 where T: NumLike+From<f64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for f32 where T: NumLike+From<f32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for &f32 where T: NumLike+From<f32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for i64 where T: NumLike+From<i64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for &i64 where T: NumLike+From<i64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<VolumePerMass<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for i32 where T: NumLike+From<i32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+impl<T> core::ops::Div<&VolumePerMass<T>> for &i32 where T: NumLike+From<i32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<VolumePerMass<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<VolumePerMass<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-bigfloat")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for &num_bigfloat::BigFloat where T: NumLike+From<num_bigfloat::BigFloat> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<VolumePerMass<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<VolumePerMass<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for &num_complex::Complex32 where T: NumLike+From<num_complex::Complex32> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
+	}
+}
+
+// 1/VolumePerMass -> Density
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<VolumePerMass<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<VolumePerMass<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Density<T>;
+	fn div(self, rhs: VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self) / rhs.m3_per_kg.clone()}
+	}
+}
+/// Dividing a scalar value by a VolumePerMass unit value returns a value of type Density
+#[cfg(feature="num-complex")]
+impl<T> core::ops::Div<&VolumePerMass<T>> for &num_complex::Complex64 where T: NumLike+From<num_complex::Complex64> {
+	type Output = Density<T>;
+	fn div(self, rhs: &VolumePerMass<T>) -> Self::Output {
+		Density{kgpm3: T::from(self.clone()) / rhs.m3_per_kg.clone()}
 	}
 }
 
