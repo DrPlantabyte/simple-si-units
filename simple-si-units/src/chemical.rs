@@ -1896,7 +1896,7 @@ impl<T> core::ops::Div<&MolarMass<T>> for &num_complex::Complex64 where T: NumLi
 #[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct SpecificHeatCapacity<T: NumLike>{
 	/// The value of this Specific heat capacity in joules per kilogram per kelvin
-	pub JpkgK: T
+	pub J_per_kgK: T
 }
 
 impl<T> SpecificHeatCapacity<T> where T: NumLike {
@@ -1911,25 +1911,25 @@ impl<T> SpecificHeatCapacity<T> where T: NumLike {
 	///
 	/// # Arguments
 	/// * `joules_per_kilogram_kelvin` - Any number-like type, representing a quantity of joules per kilogram per kelvin
-	pub fn from_joules_per_kilogram_kelvin(joules_per_kilogram_kelvin: T) -> Self { SpecificHeatCapacity{JpkgK: joules_per_kilogram_kelvin} }
+	pub fn from_joules_per_kilogram_kelvin(joules_per_kilogram_kelvin: T) -> Self { SpecificHeatCapacity{J_per_kgK: joules_per_kilogram_kelvin} }
 	
 	/// Returns a copy of this specific heat capacity value in joules per kilogram per kelvin
-	pub fn to_joules_per_kilogram_kelvin(&self) -> T { self.JpkgK.clone() }
+	pub fn to_joules_per_kilogram_kelvin(&self) -> T { self.J_per_kgK.clone() }
 
 	/// Returns a new specific heat capacity value from the given number of joules per kilogram per kelvin
 	///
 	/// # Arguments
-	/// * `JpkgK ` - Any number-like type, representing a quantity of joules per kilogram per kelvin
-	pub fn from_JpkgK (JpkgK : T) -> Self { SpecificHeatCapacity{JpkgK: JpkgK } }
+	/// * `J_per_kgK ` - Any number-like type, representing a quantity of joules per kilogram per kelvin
+	pub fn from_J_per_kgK (J_per_kgK : T) -> Self { SpecificHeatCapacity{J_per_kgK: J_per_kgK } }
 	
 	/// Returns a copy of this specific heat capacity value in joules per kilogram per kelvin
-	pub fn to_JpkgK (&self) -> T { self.JpkgK.clone() }
+	pub fn to_J_per_kgK (&self) -> T { self.J_per_kgK.clone() }
 
 }
 
 impl<T> fmt::Display for SpecificHeatCapacity<T> where T: NumLike {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{} {}", &self.JpkgK, Self::unit_symbol())
+		write!(f, "{} {}", &self.J_per_kgK, Self::unit_symbol())
 	}
 }
 
@@ -1939,7 +1939,7 @@ impl<T> SpecificHeatCapacity<T> where T: NumLike+From<f64> {
 	/// 
 	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_joules_per_gram_kelvin(&self) -> T {
-		return self.JpkgK.clone() * T::from(0.001_f64);
+		return self.J_per_kgK.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new specific heat capacity value from the given number of joules per gram per kelvin
@@ -1949,14 +1949,14 @@ impl<T> SpecificHeatCapacity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `joules_per_gram_kelvin` - Any number-like type, representing a quantity of joules per gram per kelvin
 	pub fn from_joules_per_gram_kelvin(joules_per_gram_kelvin: T) -> Self {
-		SpecificHeatCapacity{JpkgK: joules_per_gram_kelvin * T::from(1000.0_f64)}
+		SpecificHeatCapacity{J_per_kgK: joules_per_gram_kelvin * T::from(1000.0_f64)}
 	}
 
 	/// Returns a copy of this specific heat capacity value in joules per gram per kelvin
 	/// 
 	/// *Note: This method is not available for `f32` and other number types lacking the `From<f64>` trait*
 	pub fn to_JpgK (&self) -> T {
-		return self.JpkgK.clone() * T::from(0.001_f64);
+		return self.J_per_kgK.clone() * T::from(0.001_f64);
 	}
 
 	/// Returns a new specific heat capacity value from the given number of joules per gram per kelvin
@@ -1966,7 +1966,7 @@ impl<T> SpecificHeatCapacity<T> where T: NumLike+From<f64> {
 	/// # Arguments
 	/// * `JpgK ` - Any number-like type, representing a quantity of joules per gram per kelvin
 	pub fn from_JpgK (JpgK : T) -> Self {
-		SpecificHeatCapacity{JpkgK: JpgK  * T::from(0.0_f64)}
+		SpecificHeatCapacity{J_per_kgK: JpgK  * T::from(0.0_f64)}
 	}
 
 }
@@ -1977,7 +1977,7 @@ impl<T> SpecificHeatCapacity<T> where T: NumLike+From<f64> {
 impl core::ops::Mul<SpecificHeatCapacity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = SpecificHeatCapacity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_bigfloat::BigFloat>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -1985,7 +1985,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_bigfloat::BigFloat>> for num_bigflo
 impl core::ops::Mul<SpecificHeatCapacity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = SpecificHeatCapacity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_bigfloat::BigFloat>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -1993,7 +1993,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_bigfloat::BigFloat>> for &num_bigfl
 impl core::ops::Mul<&SpecificHeatCapacity<num_bigfloat::BigFloat>> for num_bigfloat::BigFloat {
 	type Output = SpecificHeatCapacity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_bigfloat::BigFloat>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK.clone()}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2001,7 +2001,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_bigfloat::BigFloat>> for num_bigfl
 impl core::ops::Mul<&SpecificHeatCapacity<num_bigfloat::BigFloat>> for &num_bigfloat::BigFloat {
 	type Output = SpecificHeatCapacity<num_bigfloat::BigFloat>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_bigfloat::BigFloat>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK.clone()}
 	}
 }
 
@@ -2010,7 +2010,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_bigfloat::BigFloat>> for &num_bigf
 impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = SpecificHeatCapacity<num_complex::Complex32>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_complex::Complex32>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2018,7 +2018,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex32>> for num_comple
 impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = SpecificHeatCapacity<num_complex::Complex32>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_complex::Complex32>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2026,7 +2026,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex32>> for &num_compl
 impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex32>> for num_complex::Complex32 {
 	type Output = SpecificHeatCapacity<num_complex::Complex32>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_complex::Complex32>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK.clone()}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2034,7 +2034,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex32>> for num_compl
 impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex32>> for &num_complex::Complex32 {
 	type Output = SpecificHeatCapacity<num_complex::Complex32>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_complex::Complex32>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK.clone()}
 	}
 }
 
@@ -2043,7 +2043,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex32>> for &num_comp
 impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = SpecificHeatCapacity<num_complex::Complex64>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_complex::Complex64>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2051,7 +2051,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex64>> for num_comple
 impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = SpecificHeatCapacity<num_complex::Complex64>;
 	fn mul(self, rhs: SpecificHeatCapacity<num_complex::Complex64>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2059,7 +2059,7 @@ impl core::ops::Mul<SpecificHeatCapacity<num_complex::Complex64>> for &num_compl
 impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex64>> for num_complex::Complex64 {
 	type Output = SpecificHeatCapacity<num_complex::Complex64>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_complex::Complex64>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self * rhs.J_per_kgK.clone()}
 	}
 }
 /// Multiplying a unit value by a scalar value returns a unit value
@@ -2067,7 +2067,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex64>> for num_compl
 impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex64>> for &num_complex::Complex64 {
 	type Output = SpecificHeatCapacity<num_complex::Complex64>;
 	fn mul(self, rhs: &SpecificHeatCapacity<num_complex::Complex64>) -> Self::Output {
-		SpecificHeatCapacity{JpkgK: self.clone() * rhs.JpkgK.clone()}
+		SpecificHeatCapacity{J_per_kgK: self.clone() * rhs.J_per_kgK.clone()}
 	}
 }
 
@@ -2077,7 +2077,7 @@ impl core::ops::Mul<&SpecificHeatCapacity<num_complex::Complex64>> for &num_comp
 #[cfg(feature = "uom")]
 impl<T> Into<uom::si::f32::SpecificHeatCapacity> for SpecificHeatCapacity<T> where T: NumLike+Into<f32> {
 	fn into(self) -> uom::si::f32::SpecificHeatCapacity {
-		uom::si::f32::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(self.JpkgK.into())
+		uom::si::f32::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(self.J_per_kgK.into())
 	}
 }
 
@@ -2085,7 +2085,7 @@ impl<T> Into<uom::si::f32::SpecificHeatCapacity> for SpecificHeatCapacity<T> whe
 #[cfg(feature = "uom")]
 impl<T> From<uom::si::f32::SpecificHeatCapacity> for SpecificHeatCapacity<T> where T: NumLike+From<f32> {
 	fn from(src: uom::si::f32::SpecificHeatCapacity) -> Self {
-		SpecificHeatCapacity{JpkgK: T::from(src.value)}
+		SpecificHeatCapacity{J_per_kgK: T::from(src.value)}
 	}
 }
 
@@ -2093,7 +2093,7 @@ impl<T> From<uom::si::f32::SpecificHeatCapacity> for SpecificHeatCapacity<T> whe
 #[cfg(feature = "uom")]
 impl<T> Into<uom::si::f64::SpecificHeatCapacity> for SpecificHeatCapacity<T> where T: NumLike+Into<f64> {
 	fn into(self) -> uom::si::f64::SpecificHeatCapacity {
-		uom::si::f64::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(self.JpkgK.into())
+		uom::si::f64::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(self.J_per_kgK.into())
 	}
 }
 
@@ -2101,7 +2101,7 @@ impl<T> Into<uom::si::f64::SpecificHeatCapacity> for SpecificHeatCapacity<T> whe
 #[cfg(feature = "uom")]
 impl<T> From<uom::si::f64::SpecificHeatCapacity> for SpecificHeatCapacity<T> where T: NumLike+From<f64> {
 	fn from(src: uom::si::f64::SpecificHeatCapacity) -> Self {
-		SpecificHeatCapacity{JpkgK: T::from(src.value)}
+		SpecificHeatCapacity{J_per_kgK: T::from(src.value)}
 	}
 }
 

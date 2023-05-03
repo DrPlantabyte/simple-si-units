@@ -215,7 +215,7 @@ mod unit_tests {
 			mul_div_check!(Concentration{molpm3: x.clone()}, y.clone(), Concentration{molpm3: xy.clone()}, Concentration{molpm3: xovery.clone()});
 			mul_div_check!(Molality{molpkg: x.clone()}, y.clone(), Molality{molpkg: xy.clone()}, Molality{molpkg: xovery.clone()});
 			mul_div_check!(MolarMass{kgpmol: x.clone()}, y.clone(), MolarMass{kgpmol: xy.clone()}, MolarMass{kgpmol: xovery.clone()});
-			mul_div_check!(SpecificHeatCapacity{JpkgK: x.clone()}, y.clone(), SpecificHeatCapacity{JpkgK: xy.clone()}, SpecificHeatCapacity{JpkgK: xovery.clone()});
+			mul_div_check!(SpecificHeatCapacity{J_per_kgK: x.clone()}, y.clone(), SpecificHeatCapacity{J_per_kgK: xy.clone()}, SpecificHeatCapacity{J_per_kgK: xovery.clone()});
 			mul_div_check!(Capacitance{F: x.clone()}, y.clone(), Capacitance{F: xy.clone()}, Capacitance{F: xovery.clone()});
 			mul_div_check!(Charge{C: x.clone()}, y.clone(), Charge{C: xy.clone()}, Charge{C: xovery.clone()});
 			mul_div_check!(Conductance{S: x.clone()}, y.clone(), Conductance{S: xy.clone()}, Conductance{S: xovery.clone()});
@@ -379,7 +379,7 @@ mod unit_tests {
 		println!("{}", Concentration{molpm3: 1});
 		println!("{}", Molality{molpkg: 1});
 		println!("{}", MolarMass{kgpmol: 1});
-		println!("{}", SpecificHeatCapacity{JpkgK: 1});
+		println!("{}", SpecificHeatCapacity{J_per_kgK: 1});
 		println!("{}", Capacitance{F: 1});
 		println!("{}", Charge{C: 1});
 		println!("{}", Conductance{S: 1});
@@ -1509,20 +1509,20 @@ mod unit_tests {
 	#[test]
 	fn specific_heat_capacity_units() {
 		assert_approx_equal(
-			SpecificHeatCapacity::from_JpkgK(1000.0_f64).to_JpkgK(),
-			SpecificHeatCapacity::from_joules_per_gram_kelvin(1.0_f64).to_JpkgK(), 9
+			SpecificHeatCapacity::from_J_per_kgK(1000.0_f64).to_J_per_kgK(),
+			SpecificHeatCapacity::from_joules_per_gram_kelvin(1.0_f64).to_J_per_kgK(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpkgK() * 0.001,
-			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_joules_per_gram_kelvin(), 9
+			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_J_per_kgK() * 0.001,
+			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_joules_per_gram_kelvin(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_JpkgK(0.0_f64).to_JpkgK(),
-			SpecificHeatCapacity::from_JpgK (1.0_f64).to_JpkgK(), 9
+			SpecificHeatCapacity::from_J_per_kgK(0.0_f64).to_J_per_kgK(),
+			SpecificHeatCapacity::from_JpgK (1.0_f64).to_J_per_kgK(), 9
 		);
 		assert_approx_equal(
-			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpkgK() * 0.001,
-			SpecificHeatCapacity::from_JpkgK(1.0_f64).to_JpgK (), 9
+			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_J_per_kgK() * 0.001,
+			SpecificHeatCapacity::from_J_per_kgK(1.0_f64).to_JpgK (), 9
 		);
 	}
 

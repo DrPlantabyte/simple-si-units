@@ -61,7 +61,7 @@ mod uom_integration {
 			uom::si::f64::Molality::new::<uom::si::molality::mole_per_kilogram>(x).value);
 		assert_eq!(simple_si_units::chemical::MolarMass{kgpmol: x}.kgpmol,
 			uom::si::f64::MolarMass::new::<uom::si::molar_mass::kilogram_per_mole>(x).value);
-		assert_eq!(simple_si_units::chemical::SpecificHeatCapacity{JpkgK: x}.JpkgK,
+		assert_eq!(simple_si_units::chemical::SpecificHeatCapacity{J_per_kgK: x}.J_per_kgK,
 			uom::si::f64::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(x).value);
 		assert_eq!(simple_si_units::electromagnetic::Conductance{S: x}.S,
 			uom::si::f64::ElectricalConductance::new::<uom::si::electrical_conductance::siemens>(x).value);
@@ -145,7 +145,7 @@ mod uom_integration {
 		assert!(uom::si::f64::MolarMass::new::<uom::si::molar_mass::kilogram_per_mole>(x)
 			== simple_si_units::chemical::MolarMass{kgpmol: x}.into());
 		assert!(uom::si::f64::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(x)
-			== simple_si_units::chemical::SpecificHeatCapacity{JpkgK: x}.into());
+			== simple_si_units::chemical::SpecificHeatCapacity{J_per_kgK: x}.into());
 		assert!(uom::si::f64::Capacitance::new::<uom::si::capacitance::farad>(x)
 			== simple_si_units::electromagnetic::Capacitance{F: x}.into());
 		assert!(uom::si::f64::ElectricCharge::new::<uom::si::electric_charge::coulomb>(x)
@@ -228,7 +228,7 @@ mod uom_integration {
 		assert!(uom::si::f32::MolarMass::new::<uom::si::molar_mass::kilogram_per_mole>(x)
 			== simple_si_units::chemical::MolarMass{kgpmol: x}.into());
 		assert!(uom::si::f32::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(x)
-			== simple_si_units::chemical::SpecificHeatCapacity{JpkgK: x}.into());
+			== simple_si_units::chemical::SpecificHeatCapacity{J_per_kgK: x}.into());
 		assert!(uom::si::f32::Capacitance::new::<uom::si::capacitance::farad>(x)
 			== simple_si_units::electromagnetic::Capacitance{F: x}.into());
 		assert!(uom::si::f32::ElectricCharge::new::<uom::si::electric_charge::coulomb>(x)
@@ -322,7 +322,7 @@ mod uom_integration {
 			) == simple_si_units::chemical::MolarMass{kgpmol: x});
 		assert!(simple_si_units::chemical::SpecificHeatCapacity::from(
 				uom::si::f64::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(x)
-			) == simple_si_units::chemical::SpecificHeatCapacity{JpkgK: x});
+			) == simple_si_units::chemical::SpecificHeatCapacity{J_per_kgK: x});
 		assert!(simple_si_units::electromagnetic::Capacitance::from(
 				uom::si::f64::Capacitance::new::<uom::si::capacitance::farad>(x)
 			) == simple_si_units::electromagnetic::Capacitance{F: x});
@@ -441,7 +441,7 @@ mod uom_integration {
 		) == simple_si_units::chemical::MolarMass{kgpmol: x});
 		assert!(simple_si_units::chemical::SpecificHeatCapacity::from(
 			uom::si::f32::SpecificHeatCapacity::new::<uom::si::specific_heat_capacity::joule_per_kilogram_kelvin>(x)
-		) == simple_si_units::chemical::SpecificHeatCapacity{JpkgK: x});
+		) == simple_si_units::chemical::SpecificHeatCapacity{J_per_kgK: x});
 		assert!(simple_si_units::chemical::Concentration::from(
 			uom::si::f32::MolarConcentration::new::<uom::si::molar_concentration::mole_per_cubic_meter>(x)
 		) == simple_si_units::chemical::Concentration{molpm3: x});
