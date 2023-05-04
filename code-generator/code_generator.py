@@ -116,7 +116,7 @@ def generate_modules(module: str, data: DataFrame, conversions: DataFrame, from_
 		'category': module,
 		'crate imports': generate_local_imports(module, data, conversions, test_recs),
 		'example1': mod_units['desc first name'].iloc[0],
-		'example2': mod_units['desc first name'].iloc[min(1 + len(mod_units)//2, len(mod_units)-1)],
+		'example2': mod_units['desc first name'].iloc[2],
 		'content': generate_unit_structs(mod_units, conversions, from_to_unit_conversions, all_units=data.copy(), test_recs=test_recs),
 		'appendix': get_appendix_for_module(module)
 	}

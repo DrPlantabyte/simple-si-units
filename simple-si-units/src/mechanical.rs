@@ -1,6 +1,6 @@
 
 //! This module provides mechanical SI units, such as acceleration 
-//! and inverse of force.
+//! and angular momentum.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;

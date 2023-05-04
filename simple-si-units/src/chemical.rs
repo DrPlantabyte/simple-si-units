@@ -1,6 +1,6 @@
 
 //! This module provides chemical SI units, such as catalytic activity 
-//! and molar mass.
+//! and inverse of catalytic activity.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;

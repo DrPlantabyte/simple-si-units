@@ -1,6 +1,6 @@
 
 //! This module provides geometry SI units, such as angle 
-//! and inverse of volume.
+//! and inverse of angle.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;

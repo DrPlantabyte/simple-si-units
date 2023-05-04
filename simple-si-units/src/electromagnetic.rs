@@ -1,6 +1,6 @@
 
 //! This module provides electromagnetic SI units, such as inverse of illuminance 
-//! and inverse of magnetic flux.
+//! and electric charge (aka coulombs).
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;

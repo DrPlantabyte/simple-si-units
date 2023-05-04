@@ -1,6 +1,6 @@
 
 //! This module provides base SI units, such as amount 
-//! and inverse of mass.
+//! and distance (aka length).
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;

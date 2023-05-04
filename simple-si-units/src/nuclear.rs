@@ -1,6 +1,6 @@
 
 //! This module provides nuclear SI units, such as absorbed radiation dose 
-//! and inverse of radiation dose equivalent.
+//! and inverse of absorbed radiation dose.
 use core::fmt;
 use super::UnitStruct;
 use super::NumLike;
