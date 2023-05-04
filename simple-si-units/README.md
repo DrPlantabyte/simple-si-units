@@ -31,9 +31,9 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 |---------------------------------|---------------------------------------|------------------|---------------------------------|--------------------------------|
 | Catalytic Activity (mol/s)      | Capacitance (C/V, aka F)              | Angle (rad)      | Acceleration (m/s^2)            | Absorbed Dose (J/kg, aka Gy)   |
 | Concentration (mol/m^3, aka mM) | Charge, aka Coulomb (A.s, aka C)      | Area (m^2)       | Angular Acceleration (rad/s^2)  | Dose Equivalent (J/kg, aka Sv) |
-|                                 | Conductance (1/ohm, aka S)            | Solid Angle (sr) | Angular Momentum (kg.m^2.rad/s) | Radioactivity (1/s, aka Bq)    |
-|                                 | Illuminance (lm/m^2, aka lux)         | Volume (m^3)     | Angular Velocity (rad/s)        |
-|                                 | Inductance (Wb/A, aka H)              |                  | Area Density (kg.m^2)           |
+| Molar Mass (kg/mol)             | Conductance (1/ohm, aka S)            | Solid Angle (sr) | Angular Momentum (kg.m^2.rad/s) | Radioactivity (1/s, aka Bq)    |
+| Molality (mol/kg)               | Illuminance (lm/m^2, aka lux)         | Volume (m^3)     | Angular Velocity (rad/s)        |
+| Specific Heat Capacity (J/kg.K) | Inductance (Wb/A, aka H)              |                  | Area Density (kg.m^2)           |
 |                                 | Luminous Flux (cd.sr, aka lm)         |                  | Density (kg/L)                  |
 |                                 | Magnetic Flux (V.s, aka Wb)           |                  | Energy (kg.m^2/s^2, aka J)      |
 |                                 | Magnetic Flux Density (Wb/m^2, aka T) |                  | Force (kg.m/s^2, aka N)         |
@@ -57,9 +57,9 @@ enabled to provide additional compatibility:
 * **serde** - Adds [serde](https://crates.io/crates/serde) serialization/deserialization compatibility
 * **uom** - If enabled, then unit structs will implement the `Into` and `From` traits
 to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)** types
-* **num-bigfloat** - Adds `std::ops::Mul` and `std::ops::Div` implementations
+* **num-bigfloat** - Adds `core::ops::Mul` and `core::ops::Div` implementations
   for multiplying and dividing unit structs by `num-bigfloat` scalar values
-* **num-complex** - Adds `std::ops::Mul` and `std::ops::Div` implementations
+* **num-complex** - Adds `core::ops::Mul` and `core::ops::Div` implementations
   for multiplying and dividing unit structs by `num-complex` scalar values
 
 ## Quickstart guide
@@ -84,7 +84,7 @@ fn main() {
   println!("Your box has a weight of {}", box_weight);
 }
 ```
-Note that **simple-si-units** structs all implement `std::ops::{Add,Sub,Mul,Div}` 
+Note that **simple-si-units** structs all implement `core::ops::{Add,Sub,Mul,Div}` 
 for both values and references, which is useful for number type which do not 
 implement the `Copy` trait.
 
@@ -146,17 +146,17 @@ Here's a table comparing **simple-si-units** v1.0 and
 **[uom](https://crates.io/crates/uom)** v0.34 to help you decide which to use:
 
 | Feature                                                           | [simple-si-units](https://crates.io/crates/simple-si-units) | [uom](https://crates.io/crates/uom) |
-|-------------------------------------------------------------------|-------------------------------------------------------------|------------------------------------|
-| Zero-cost measurement unit type safety                            | ✅                                                           | ✅                                  |
-| All primary and secondary SI units as defined by NIST             | ✅                                                           | ✅                                  |
-| Angular units (angular velocity, momentum, and intertia)          | ✅                                                           | ❌                                  |
-| Support for standard decimal types (eg f64)                       | ✅                                                           | ✅                                  |
+|-------------------------------------------------------------------|-------------------------------------------------------------|-------------------------------------|
+| Zero-cost measurement unit type safety                            | ✅                                                           | ✅                                   |
+| All primary and secondary SI units as defined by NIST             | ✅                                                           | ✅                                   |
+| Inverse (aka reciprical) of SI units                              | ✅                                                           | partial                             |
+| Support for standard decimal types (eg f64)                       | ✅                                                           | ✅                                   |
 | Support for standard integer types (eg i32)                       | partial**                                                   | partial**                           |
-| Support for [num-bigfloat](https://crates.io/crates/num-bigfloat) | ✅                                                           | ❌                                  |
-| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                  |
-| Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                  |
-| Support for user-defined and other number types                   | ✅                                                           | ❌                                  |
-| Compile-time dimensional analysis                                 | ❌                                                           | ✅                                  |
+| Support for [num-bigfloat](https://crates.io/crates/num-bigfloat) | ✅                                                           | ❌                                   |
+| Support for [num-complex](https://crates.io/crates/num-complex)   | ✅                                                           | ✅                                   |
+| Support for [num-rational](https://crates.io/crates/num-rational) | partial**                                                   | ✅                                   |
+| Support for user-defined and other number types                   | ✅                                                           | ❌                                   |
+| Compile-time dimensional analysis                                 | ❌                                                           | ✅                                   |
 
 ** *integer types and int-based number types are not fully supported in simple-si-units*
 
@@ -251,7 +251,7 @@ pub fn calc_gravity_generic<T>(mass: Mass<T>, dist: Distance<T>) -> Acceleration
 Simple SI Units does not provide an exhaustive list of possible units of 
 measure. To create your own units, use the `UnitStruct` procedural macro and 
 `NumLike` trait bundle (`NumLike` is just shorthand for 
-`std::ops::*<Output=Self>+Clone+Debug+Display`, you could instead use the `Num`
+`core::ops::*<Output=Self>+Clone+Debug+Display`, you could instead use the `Num`
 trait from the [num-traits crate](https://crates.io/crates/num-traits) if you 
 prefer):
 

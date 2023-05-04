@@ -8,19 +8,22 @@ base,temperature,temperature,temperature,degrees kelvin,K,K,K,ThermodynamicTempe
 base,time,time,time,seconds,s,s,s,Time,time,second
 chemical,catalytic activity,catalytic activity,catalytic activity,moles per second,molps,mol/s,mol/s,CatalyticActivity,catalytic_activity,mole_per_second
 chemical,concentration,chemical concentration,chemical concentration,moles per cubic meter,molpm3,mol/m^3,mol/m³,MolarConcentration,molar_concentration,mole_per_cubic_meter
+chemical,molar mass,molar mass,molar mass,kilograms per mole,kgpmol,kg/mol,kg/mol,MolarMass,molar_mass,kilogram_per_mole
+chemical,molality,molality,molality,moles per kilogram,molpkg,mol/kg,mol/kg,Molality,molality,mole_per_kilogram
+chemical,specific heat capacity,specific heat capacity,specific heat capacity,joules per kilogram per kelvin,J_per_kgK,m^2/s^2.K,J/kg·K,SpecificHeatCapacity,specific_heat_capacity,joule_per_kilogram_kelvin
 electromagnetic,capacitance,electrical capacitance,electrical capacitance,farads,F,s^4.A^2/kg.m^2,F,Capacitance,capacitance,farad
 electromagnetic,charge,electric charge (aka coulombs),electric charge,coulombs,C,A.s,C,ElectricCharge,electric_charge,coulomb
 electromagnetic,conductance,electrical conductance,electrical conductance,siemens,S,A^2.s^3/kg.m^2,S,ElectricalConductance,electrical_conductance,siemens
-electromagnetic,illuminance,illuminance,illuminance,lux,lux,cd.sr/m^2,lux,Luminance,luminance,candela_per_square_meter
+electromagnetic,illuminance,illuminance,illuminance,lux,lux,cd.rad^2/m^2,lux,Luminance,luminance,candela_per_square_meter
 electromagnetic,inductance,inductance,inductance,henries,H,kg.m^2/A^2.s^2,H,Inductance,inductance,henry
-electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.sr,lm,,,
+electromagnetic,luminous flux,luminous flux,luminous flux,lumens,lm,cd.rad^2,lm,,,
 electromagnetic,magnetic flux,magnetic flux,magnetic flux,webers,Wb,kg.m^2/A.s^2,Wb,MagneticFlux,magnetic_flux,weber
 electromagnetic,magnetic flux density,magnetic flux density,magnetic flux density,teslas,T,kg/A.s^2,T,MagneticFluxDensity,magnetic_flux_density,tesla
 electromagnetic,resistance,electrical resistance,electrical resistance,ohms,Ohm,kg.m^2/A^2.s^3,Ohm,ElectricalResistance,electrical_resistance,ohm
 electromagnetic,voltage,voltage,voltage,volts,V,kg.m^2/A.s^3,V,ElectricPotential,electric_potential,volt
 geometry,angle,angle,angle,radians,rad,rad,rad,Angle,angle,radian
 geometry,area,area,area,square meters,m2,m^2,m²,Area,area,square_meter
-geometry,solid angle,solid angle,solid angle,steradian,sr,sr,sr,,,
+geometry,solid angle,solid angle,solid angle,steradian,sr,rad^2,sr,SolidAngle,solid_angle,steradian
 geometry,volume,volume,volume,cubic meters,m3,m^3,m³,Volume,volume,cubic_meter
 mechanical,acceleration,acceleration,acceleration,meters per second squared,mps2,m/s^2,m/s²,Acceleration,acceleration,meter_per_second_squared
 mechanical,angular acceleration,angular acceleration,angular acceleration,radians per second squared,radps2,rad/s^2,rad/s²,AngularAcceleration,angular_acceleration,radian_per_second_squared
@@ -40,3 +43,40 @@ mechanical,velocity,velocity,velocity,meters per second,mps,m/s,m/s,Velocity,vel
 nuclear,absorbed dose,absorbed radiation dose,absorbed dose,grays,Gy,m^2/s^2,Gy,,,
 nuclear,dose equivalent,radiation dose equivalent,dose equivalent,sieverts,Sv,m^2/s^2,Sv,,,
 nuclear,radioactivity,radioactivity,radioactivity,becquerels,Bq,1/s,Bq,Radioactivity,radioactivity,becquerel
+base,inverse amount,inverse of amount,inverse amount,inverse moles,per_mol,1/mol,1/mol,,,
+base,inverse current,inverse of electrical current,inverse electrical current,inverse amperes,per_A,1/A,1/A,,,
+base,inverse distance,inverse of distance,inverse distance,inverse meters,per_m,1/m,1/m,LinearNumberDensity,linear_number_density,per_meter
+base,inverse luminosity,inverse of luminosity,inverse luminosity,inverse candela,per_cd,1/cd,1/cd,,,
+base,inverse mass,inverse of mass,inverse mass,inverse kilograms,per_kg,1/kg,1/kg,,,
+base,inverse temperature,inverse of temperature,inverse temperature,inverse degrees kelvin,per_K,1/K,1/K,TemperatureCoefficient,temperature_coefficient,per_kelvin
+chemical,inverse catalytic activity,inverse of catalytic activity,inverse catalytic activity,seconds per mole,s_per_mol,s/mol,s/mol,,,
+chemical,molar volume,volume per mole,molar volume,cubic meters per mole,m3_per_mol,m^3/mol,m³/mol,MolarVolume,molar_volume,cubic_meter_per_mole
+chemical,inverse specific heat capacity,inverse of specific heat capacity,inverse specific heat capacity,kilogram per kelvin per joules,kgK_per_J,s^2.K/m^2,kg·K/J,,,
+electromagnetic,elastance,electrical elastance,electrical elastance,inverse farads,per_F,kg.m^2/s^4.A^2,1/F,,,
+electromagnetic,inverse charge,inverse of electric charge (aka coulombs),inverse electric charge,inverse coulombs,per_C,1/A.s,1/C,,,
+electromagnetic,area per lumen,inverse of illuminance,area per lumen,square meters per lumen,m2_per_lm,m^2/cd.rad^2,m²/lm,,,
+electromagnetic,inverse inductance,inverse of inductance,inverse inductance,inverse henries,per_H,A^2.s^2/kg.m^2,1/H,,,
+electromagnetic,inverse luminous flux,inverse of luminous flux,inverse luminous flux,inverse lumens,per_lm,1/cd.rad^2,1/lm,,,
+electromagnetic,inverse magnetic flux,inverse of magnetic flux,inverse magnetic flux,inverse webers,per_Wb,A.s^2/kg.m^2,1/Wb,,,
+electromagnetic,inverse magnetic flux density,inverse of magnetic flux density,inverse magnetic flux density,square meters per weber,m2_per_Wb,A.s^2/kg,m²/Wb,,,
+electromagnetic,inverse voltage,inverse of voltage,inverse voltage,inverse volts,per_V,A.s^3/kg.m^2,1/V,,,
+geometry,inverse angle,inverse of angle,inverse angle,inverse radians,per_rad,1/rad,1/rad,,,
+geometry,inverse area,inverse of area,inverse area,inverse square meters,per_m2,1/m^2,1/m²,ArealNumberDensity,areal_number_density,per_square_meter
+geometry,inverse solid angle,inverse of solid angle,inverse solid angle,inverse steradian,per_sr,1/rad^2,1/sr,,,
+geometry,inverse volume,inverse of volume,inverse volume,inverse cubic meters,per_m3,1/m^3,1/m³,VolumetricNumberDensity,volumetric_number_density,per_cubic_meter
+mechanical,inverse acceleration,inverse of acceleration,inverse acceleration,seconds squared per meter,s2pm,s^2/m,s²/m,,,
+mechanical,inverse angular acceleration,inverse of angular acceleration,inverse angular acceleration,seconds squared per radian,s2prad,s^2/rad,s²/rad,,,
+mechanical,inverse angular momentum,inverse of angular momentum,inverse angular momentum,seconds per kilogram meters squared radian,s_per_kgm2rad,s/kg.m^2.rad,s/kg·m²·rad,,,
+mechanical,inverse angular velocity,inverse of angular velocity,inverse angular velocity,seconds per radian,s_per_rad,s/rad,s/rad,,,
+mechanical,area per mass,inverse of area density,area per mass,square meters per kilogram,m2_per_kg,m^2/kg,m²/kg,SpecificArea,specific_area,square_meter_per_kilogram
+mechanical,volume per mass,inverse of density,volume per mass,cubic meters per kilogram,m3_per_kg,m^3/kg,m³/kg,SpecificVolume,specific_volume,cubic_meter_per_kilogram
+mechanical,inverse energy,inverse of energy,inverse energy,inverse joules,per_J,s^2/kg.m^2,1/J,,,
+mechanical,inverse force,inverse of force,inverse force,inverse newtons,per_N,s^2/kg.m,1/N,,,
+mechanical,inverse moment of inertia,inverse of moment of inertia,inverse moment of inertia,inverse kilogram meters squared,per_kgm2,1/kg.m^2,1/kg·m²,,,
+mechanical,inverse momentum,inverse of momentum,inverse momentum,seconds per kilogram meter,s_per_kgm,s/kg.m,s/kg·m,,,
+mechanical,inverse power,inverse of power (aka watts),inverse power,inverse watts,per_W,s^3/kg.m^2,1/W,,,
+mechanical,inverse pressure,inverse of pressure,inverse pressure,inverse pascals,per_Pa,m.s^2/kg,1/Pa,,,
+mechanical,inverse torque,inverse of torque,inverse torque,inverse newton meters,per_Nm,s^2/kg.m^2,1/Nm,,,
+mechanical,time per distance,inverse of velocity,time per distance,seconds per meter,spm,s/m,s/m,,,
+nuclear,inverse absorbed dose,inverse of absorbed radiation dose,inverse absorbed dose,inverse grays,per_Gy,s^2/m^2,1/Gy,,,
+nuclear,inverse dose equivalent,inverse of radiation dose equivalent,inverse dose equivalent,inverse sieverts,per_Sv,s^2/m^2,1/Sv,,,
