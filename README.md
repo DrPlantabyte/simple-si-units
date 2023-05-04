@@ -63,7 +63,7 @@ to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)
   for multiplying and dividing unit structs by `num-complex` scalar values
 
 To enable these features in your project, add the following to your `Cargo.toml` file under `[dependencies]`:
-```
+```toml
 simple-si-units = { version = "1.1", features = ["serde", "uom", "num-bigfloat", "num-complex"] }
 ```
 
