@@ -62,9 +62,14 @@ to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)
 * **num-complex** - Adds `core::ops::Mul` and `core::ops::Div` implementations
   for multiplying and dividing unit structs by `num-complex` scalar values
 
+To enable these features in your project, add the following to your `Cargo.toml` file under `[dependencies]`:
+```
+simple-si-units = { version = "1.1", features = ["serde", "uom", "num-bigfloat", "num-complex"] }
+```
+
 ## Quickstart guide
 ### Basic usage
-To use **simple-si-units**, just add `simple-si-units = "1.0"` to the `[dependencies]` 
+To use **simple-si-units**, just add `simple-si-units = "1.1"` to the `[dependencies]` 
 section of your `Cargo.toml` file, then import the units you need like this:
 ```rust
 use simple_si_units::base::*;
