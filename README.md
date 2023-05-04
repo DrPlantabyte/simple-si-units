@@ -31,9 +31,9 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 |---------------------------------|---------------------------------------|------------------|---------------------------------|--------------------------------|
 | Catalytic Activity (mol/s)      | Capacitance (C/V, aka F)              | Angle (rad)      | Acceleration (m/s^2)            | Absorbed Dose (J/kg, aka Gy)   |
 | Concentration (mol/m^3, aka mM) | Charge, aka Coulomb (A.s, aka C)      | Area (m^2)       | Angular Acceleration (rad/s^2)  | Dose Equivalent (J/kg, aka Sv) |
-|                                 | Conductance (1/ohm, aka S)            | Solid Angle (sr) | Angular Momentum (kg.m^2.rad/s) | Radioactivity (1/s, aka Bq)    |
-|                                 | Illuminance (lm/m^2, aka lux)         | Volume (m^3)     | Angular Velocity (rad/s)        |
-|                                 | Inductance (Wb/A, aka H)              |                  | Area Density (kg.m^2)           |
+| Molar Mass (kg/mol)             | Conductance (1/ohm, aka S)            | Solid Angle (sr) | Angular Momentum (kg.m^2.rad/s) | Radioactivity (1/s, aka Bq)    |
+| Molality (mol/kg)               | Illuminance (lm/m^2, aka lux)         | Volume (m^3)     | Angular Velocity (rad/s)        |
+| Specific Heat Capacity (J/kg.K) | Inductance (Wb/A, aka H)              |                  | Area Density (kg.m^2)           |
 |                                 | Luminous Flux (cd.sr, aka lm)         |                  | Density (kg/L)                  |
 |                                 | Magnetic Flux (V.s, aka Wb)           |                  | Energy (kg.m^2/s^2, aka J)      |
 |                                 | Magnetic Flux Density (Wb/m^2, aka T) |                  | Force (kg.m/s^2, aka N)         |
@@ -51,9 +51,25 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
   this library to implement your own)
 * Not supporting integer number types (use at your own risk)
 
+## Features
+The **simple-si-units** crate has the following optional features which can be
+enabled to provide additional compatibility:
+* **serde** - Adds [serde](https://crates.io/crates/serde) serialization/deserialization compatibility
+* **uom** - If enabled, then unit structs will implement the `Into` and `From` traits
+to convert between **simple-si-units** and **[uom](https://crates.io/crates/uom)** types
+* **num-bigfloat** - Adds `core::ops::Mul` and `core::ops::Div` implementations
+  for multiplying and dividing unit structs by `num-bigfloat` scalar values
+* **num-complex** - Adds `core::ops::Mul` and `core::ops::Div` implementations
+  for multiplying and dividing unit structs by `num-complex` scalar values
+
+To enable these features in your project, add the following to your `Cargo.toml` file under `[dependencies]`:
+```
+simple-si-units = { version = "1.1", features = ["serde", "uom", "num-bigfloat", "num-complex"] }
+```
+
 ## Quickstart guide
 ### Basic usage
-To use **simple-si-units**, just add `simple-si-units = "1"` to the `[dependencies]` 
+To use **simple-si-units**, just add `simple-si-units = "1.1"` to the `[dependencies]` 
 section of your `Cargo.toml` file, then import the units you need like this:
 ```rust
 use simple_si_units::base::*;
@@ -145,7 +161,7 @@ The version of this library will be incremented to reflect progress through the 
 * **V0.8.0 (Done!)** - Optional `Into` and `From` conversion to/from [uom](https://crates.io/crates/uom) types
 * **V0.9.0 (Done!)** - Full documentation coverage
 * **V1.0.0 (Done!)** - Done
-* **V1.1.0** - Add inverse of all provided units that don't already have an 
+* **V1.1.0 (Done!)** - Add inverse of all provided units that don't already have an 
   inverse equivalent (eg InverseArea = 1/Area)
 
 ### Units
@@ -183,6 +199,8 @@ quantities not listed below (eg jolt) are beyond the scope of this crate.
 * Magnetic Flux Density (Wb/m^2, aka T)
 * Catalytic Activity (mol/s)
 * Concentration (mol/m^3)
+* Molar Mass (kg/mol)
+* Specific Heat Capacity (J/kg.K)
 * Luminous Flux (cd.sr, aka lm)
 * Illuminance (lm/m^2, aka lux)
 * Radioactivity (1/s, aka Bq)
@@ -199,6 +217,7 @@ Each type has a single public field, named for the reference unit of measure
 for that type (eg meters for Distance), and numerous to_* and from_* methods 
 for converting to/from basic number types with a given unit of measure (eg 
 `Distance::from_km(1.72)`).
+
 
 ## How it works
 For each type of unit (eg Distance), Simple SI Units provides a generic struct 
@@ -345,15 +364,17 @@ It's highly recommended that you also implement the `std::ops::*` operators for
 all combinations of values and reference types (eg `X + X`, `X + &X`, `&X + X`, and `&X + &X`),
 as this will make your number type much easier to use and integrate with **simple-si-units**.
 
+
+## License
+This library is open source, licensed under the [Mozilla Public License version 2.0](https://www.mozilla.org/en-US/MPL/). In summary, you may include this source code *as-is* in both open-source and proprietary projects without requesting permission from me, but if you modify the source code from this library then you must make your modified version of this library available under an open-source license.
+
+
 ## Developer notes
 Note that the unit struct source files (excluding `lib.rs`), were all generated
 by a Python program which performs dimensional analysis and other code generation 
 activities, found in the [code-generator](https://github.com/DrPlantabyte/simple-si-units/tree/main/code-generator) 
-folder.
+folder of the [GitHub repository](https://github.com/DrPlantabyte/simple-si-units).
 
 If you wish to contribute, please start by adding the unit tests for your new 
 feature and then modify the Python project to generate the Rust implementation
 of the new feature. Thanks! 
-
-## License
-This library is open source, licensed under the [Mozilla Public License version 2.0](https://www.mozilla.org/en-US/MPL/). In summary, you may include this source code *as-is* in both open-source and proprietary projects without requesting permission from me, but if you modify the source code from this library then you must make your modified version of this library available under an open-source license.
