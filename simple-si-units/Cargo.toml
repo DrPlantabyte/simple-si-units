@@ -22,7 +22,7 @@ simple-si-units-core = "1.0.1"
 #simple-si-units-core = { path = "../simple-si-units-core" }
 # optional
 serde = { version = "1.0", optional = true, features = ["derive"] }
-uom = { version = "0.34", optional = true, features = ["si", "std", "f64"]}
+uom = { version = "0.34", optional = true, features = ["si", "f64"]}
 num-complex = { version = "0.4", optional = true }
 num-bigfloat = { version = "1.6", optional = true }
 
